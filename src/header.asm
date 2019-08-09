@@ -14,8 +14,3 @@ INES_SRAM   = 0 ; 1 = battery backed SRAM at $6000-7FFF
 .byte (INES_MAPPER & %11110000)
 .byte $0, $0, $0, $0, $0, $0, $0, $0 ; padding
 
-
-.segment "VECTORS" ; ADDRESSES FOR INTERUPTS
-.word NMI
-.word RESET
-.word IRQ
