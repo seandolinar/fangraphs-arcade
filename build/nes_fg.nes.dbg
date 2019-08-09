@@ -1,0 +1,13 @@
+version	major=2,minor=0
+info	csym=0,file=1,lib=0,line=1,mod=1,scope=1,seg=6,span=1,sym=0,type=0
+file	id=0,name="./src/main.asm",size=8,mtime=0x5D4D7305,mod=0
+line	id=0,file=0,line=1,span=0
+mod	id=0,name="main.o",file=0
+seg	id=0,name="CODE",start=0x008000,size=0x0002,addrsize=absolute,type=ro,oname="nes_fg.nes",ooffs=16
+seg	id=1,name="RODATA",start=0x000000,size=0x0000,addrsize=absolute,type=rw
+seg	id=2,name="BSS",start=0x000300,size=0x0000,addrsize=absolute,type=rw
+seg	id=3,name="DATA",start=0x000000,size=0x0000,addrsize=absolute,type=rw
+seg	id=4,name="ZEROPAGE",start=0x000000,size=0x0000,addrsize=zeropage,type=rw
+seg	id=5,name="NULL",start=0x000000,size=0x0000,addrsize=absolute,type=rw
+span	id=0,seg=0,start=0,size=2
+scope	id=0,name="",mod=0,size=2,span=0
