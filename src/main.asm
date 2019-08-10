@@ -1,6 +1,7 @@
 .include "./header.asm"
 .include "./res.asm"
 .include "./controller.asm"
+.include "./position.asm"
 
 .include "./reset.asm"
 .include "./pallete.asm"
@@ -15,17 +16,20 @@
 NMI:
   JSR readController
 
+  ; SPRITE TRANSFER
   LDA #$00
   STA $2003  ; set the low byte (00) of the RAM address
   LDA #>oam ; this works and so does $02
   STA $4014  ; set the high byte (02) of the RAM address, start the transfer
 
+  JSR updatePosition
   LDA controllerBits
-  AND #%00000001
-  BEQ dumpNMI
+  AND #CONTROL_P1_UP
+  BEQ dumpNMI ; dumps if we have no A push
 
+  ; MOVING SPRITE
   LDA #$10
-  STA $0200
+  ;STA $0200
 
 
   dumpNMI:

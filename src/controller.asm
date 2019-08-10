@@ -2,8 +2,6 @@
 readController:
 
 
-
-
     LatchController:
         LDA #$01
         STA $4016
