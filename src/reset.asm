@@ -31,3 +31,10 @@ ClearMemory:
     WarmUp:
         BIT $2002
 		BPL WarmUp
+
+
+  LDA #$00
+  STA controllerBits
+
+
+  JMP InitialLoad
