@@ -14,7 +14,11 @@
 
 .segment "CODE"
 NMI:
-  JSR readController
+
+  
+  JSR readController 
+  JSR updatePosition    
+  
 
   ; SPRITE TRANSFER
   LDA #$00
@@ -22,18 +26,9 @@ NMI:
   LDA #>oam ; this works and so does $02
   STA $4014  ; set the high byte (02) of the RAM address, start the transfer
 
-  JSR updatePosition
-  LDA controllerBits
-  AND #CONTROL_P1_UP
-  BEQ dumpNMI ; dumps if we have no A push
-
-  ; MOVING SPRITE
-  LDA #$10
-  ;STA $0200
 
 
-  dumpNMI:
-
+dumpNMI:
     RTI
 
 IRQ:

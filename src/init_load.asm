@@ -72,6 +72,10 @@ FillAttrib0Loop:
 
 
    ;INITIAL VARS
+    LDA #$00
+    STA controllerTimer
+
+
     LDA #$30
     STA playerLocationX
     STA playerLocationY

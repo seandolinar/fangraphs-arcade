@@ -1,11 +1,13 @@
 .segment "CODE"
 updatePosition:
   LDA controllerBits
+  ;EOR controllerBitsPrev
   AND #CONTROL_P1_UP ;UP
   BEQ dumpControlUp ; dumps if we have no A push
   JSR moveUp
 dumpControlUp:
   LDA controllerBits
+  ;EOR controllerBitsPrev
   AND #CONTROL_P1_DOWN ;UP
   BEQ dumpControlDown ; dumps if we have no A push
   JSR moveDown
@@ -17,6 +19,7 @@ dumpControlDown:
  
 dumpControlLeft:
   LDA controllerBits
+  ;EOR controllerBitsPrev
   AND #CONTROL_P1_RIGHT ;UP
   BEQ dumpUpdatePosition ; dumps if we have no A push
   JSR moveRight
@@ -24,8 +27,7 @@ dumpControlLeft:
 
 dumpUpdatePosition:
 
-    LDA #$01         ; 0 means 
-    STA collisionFlag
+   
 
     LDA playerLocationX
     STA $0203
@@ -45,41 +47,41 @@ moveRight:
         LDA playerLocationX
         CMP #$80                ;; CHECK COLLISION
         BCS dumpMoveRight
+        CLC
+        ADC #$08
+        STA playerLocationXBuffer
 
         JSR checkCollision
         LDA collisionFlag
         BEQ dumpMoveRight ; branch if 0
         
-        LDA playerLocationX
-        CLC
-        ADC #$01
+        LDA playerLocationXBuffer
         STA playerLocationX
+        RTS
 dumpMoveRight:
+        LDA playerLocationX
+        STA playerLocationXBuffer
         RTS
 
 moveLeft:
         LDA #$08                ;; CHECK COLLISION
         CMP playerLocationX
         BCS dumpMoveLeft
+        LDA playerLocationX
+        SEC
+        SBC #$08
+        STA playerLocationXBuffer
 
-    ;checkEnemyX:
-     ;   LDX #$01
-      ;  LDA enemyX
-       ; CLC
-      ;  ADC enemyH
-       ; CMP playerLocationX
-      ;  BCS dumpMoveLeft
-      ;  DEX
-      ;  BNE checkEnemyX
         JSR checkCollision
         LDA collisionFlag
         BEQ dumpMoveLeft ; branch if 0
 
-        LDA playerLocationX
-        SEC
-        SBC #$01
+        LDA playerLocationXBuffer
         STA playerLocationX
+        RTS
 dumpMoveLeft:
+        LDA playerLocationX
+        STA playerLocationXBuffer
         RTS
 
 
@@ -88,15 +90,21 @@ moveUp:
         CMP playerLocationY
         BCS dumpMoveUp
 
+        LDA playerLocationY
+        SEC
+        SBC #$08
+        STA playerLocationYBuffer
+
         JSR checkCollision
         LDA collisionFlag
         BEQ dumpMoveUp ; branch if 0
 
-        LDA playerLocationY
-        SEC
-        SBC #$01
+        LDA playerLocationYBuffer
         STA playerLocationY
+        RTS
 dumpMoveUp:
+        LDA playerLocationY
+        STA playerLocationYBuffer
         RTS
 
 
@@ -105,15 +113,21 @@ moveDown:
         CMP #$d0
         BCS dumpMoveDown
 
+        LDA playerLocationY
+        CLC
+        ADC #$08
+        STA playerLocationYBuffer
+
         JSR checkCollision
         LDA collisionFlag
         BEQ dumpMoveDown ; branch if 0
         
-        LDA playerLocationY
-        CLC
-        ADC #$01
+        LDA playerLocationYBuffer
         STA playerLocationY
+        RTS
 dumpMoveDown:
+        LDA playerLocationY
+        STA playerLocationYBuffer
         RTS
 
 
@@ -121,24 +135,32 @@ dumpMoveDown:
 playerOffset = $08
 enemyOffset = $08
 checkCollision:
-    
+    LDA #$00         ; 0 means 
+    STA collisionFlag    
 
     ; checking if player is on right edge
     LDA enemyX
     CLC
-    ADC enemyW
-    CMP playerLocationX
-    BMI allowPass ; should want this
+    ADC enemyW    
+    CMP playerLocationXBuffer
+    BEQ allowPass ; should want this
+
+    LDA playerLocationXBuffer
+    SEC
+    SBC enemyW    
+    ;SBC #$01
+    CMP enemyX
+    BPL allowPass ; should want this
 
     ; checking if player is on left edge
-    LDA playerLocationX
+    LDA playerLocationXBuffer
     CLC
     ADC #$08
     CMP enemyX
     BMI allowPass ; should want this
 
     ; checking if player is above
-    LDA playerLocationY ; greater > lesser ==> pass
+    LDA playerLocationYBuffer ; greater > lesser ==> pass
     CLC
     ADC #$08
     CMP enemyY
@@ -148,7 +170,7 @@ checkCollision:
     LDA enemyY ; 
     CLC
     ADC enemyH
-    CMP playerLocationY
+    CMP playerLocationYBuffer
     BMI allowPass ; should want this
 
 

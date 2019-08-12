@@ -2,19 +2,23 @@
 readController:
 
 
+
     LatchController:
+        LDA controllerBits
+        STA controllerBitsPrev
+        LDA #$00
+        STA controllerBits
+
         LDA #$01
         STA $4016
         LDA #$00
         STA $4016       ; tell both the controllers to latch buttons
         STA controllerBits
-        
+   
 
     ; we'll read 4016 8 times
     ReadA: 
 
-
-    
         LDA $4016       
         AND #%00000001  ;
         BEQ ReadADone  
@@ -22,9 +26,6 @@ readController:
         LDA controllerBits
         ORA #%00000001
         STA controllerBits
-      
-
-
 
     ReadADone:
 
@@ -106,5 +107,26 @@ readController:
         STA controllerBits
         
     ReadRightDone:
+
+    LDA controllerBits ; probably don't need this
+    BEQ resetTimer
+    LDA controllerTimer
+    BNE dumpTimerController
+    LDA #$10
+    STA controllerTimer
+    RTS
+
+
+resetTimer:
+    LDA #$00
+    STA controllerTimer
+    STA controllerBits
+    RTS
+
+dumpTimerController:
+    LDA #$00 
+    STA controllerBits
+
+    DEC controllerTimer
 
     RTS
