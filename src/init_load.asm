@@ -5,10 +5,29 @@ InitialLoad:
     LDX #$00              ; start at 0
   LoadSpritesLoop:
     LDA sprites, x        ; load data from address (sprites +  x)
-    STA oam, x          ; store into RAM address ($0200 + x)
+    STA player_oam, x          ; store into RAM address ($0200 + x)
     INX                   ; X = X + 1
-    CPX #$08           ; Compare X to hex $10, decimal 16
+    CPX #$04           ; Compare X to hex $10, decimal 16
     BNE LoadSpritesLoop   ; Branch to LoadSpritesLoop if compare was Not Equal to zero
+
+  LoadEnemy:
+    LDX #$00
+  LoadEnemyLoop:
+    LDA enemy_array, x       ; load data from address (sprites +  x)
+    STA enemy_oam + 1, x          ; store into RAM address ($0200 + x)
+    LDA enemy_array+1, x        ; load data from address (sprites +  x)
+    STA enemy_oam , x         ; store into RAM address ($0200 + x)
+    LDA enemy_array+2, x        ; load data from address (sprites +  x)
+    STA enemy_oam+3 , x         ; store into RAM address ($0200 + x)
+    LDA #$01
+    STA enemy_oam+2, x              ; X = X + 1
+    INX
+    INX
+    INX
+    INX
+    CPX #$08          ; Compare X to hex $10, decimal 16
+    BNE LoadEnemyLoop   ; Branch to LoadSpritesLoop if compare was Not Equal to zero
+
 
 
 ;; HAVE TO Reunderstand this
@@ -87,6 +106,7 @@ FillAttrib0Loop:
     LDA #$08
     STA enemyH
     STA enemyW
+    ;STA enemy
 
 
     ; STARTS VIDEO DISPLAY
@@ -98,3 +118,8 @@ FillAttrib0Loop:
 
 
 JMP Main
+
+
+
+enemy_array:
+.byte $01, $40, $40, $00, $01, $38, $38, $00

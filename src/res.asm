@@ -22,8 +22,9 @@ CONTROL_P1_RIGHT =  %10000000
 
 
 .segment "OAM"
-oam: .res 256        ; sprite OAM data to be uploaded by DMA
-					 ; .res reserves 256 bytes of storage
+player_oam:                 .res 4
+enemy_oam:                  .res 252        ; sprite OAM data to be uploaded by DMA
+					                        ; .res reserves 256 bytes of storage
 
 
 .segment "ZEROPAGE"
@@ -39,6 +40,11 @@ enemyX:                 .res 1
 enemyY:                 .res 1
 enemyH:                 .res 1
 enemyW:                 .res 1
+
+enemyX1:                .res 1   
+enemyY1:                .res 1
+enemyH1:                .res 1
+enemyW1:                .res 1
 
 collisionFlag:          .res 1
 

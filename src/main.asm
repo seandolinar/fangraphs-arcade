@@ -23,7 +23,7 @@ NMI:
   ; SPRITE TRANSFER
   LDA #$00
   STA $2003  ; set the low byte (00) of the RAM address
-  LDA #>oam ; this works and so does $02
+  LDA #>player_oam ; this works and so does $02
   STA $4014  ; set the high byte (02) of the RAM address, start the transfer
 
 

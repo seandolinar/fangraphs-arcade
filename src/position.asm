@@ -44,6 +44,7 @@ dumpUpdatePosition:
     RTS
 
 moveRight:
+        LDX #$00
         LDA playerLocationX
         CMP #$80                ;; CHECK COLLISION
         BCS dumpMoveRight
@@ -64,6 +65,7 @@ dumpMoveRight:
         RTS
 
 moveLeft:
+        LDX #$00
         LDA #$08                ;; CHECK COLLISION
         CMP playerLocationX
         BCS dumpMoveLeft
@@ -86,6 +88,7 @@ dumpMoveLeft:
 
 
 moveUp:
+        LDX #$00
         LDA #$08                ;; CHECK COLLISION
         CMP playerLocationY
         BCS dumpMoveUp
@@ -95,7 +98,7 @@ moveUp:
         SBC #$08
         STA playerLocationYBuffer
 
-        JSR checkCollision
+        ;JSR checkCollision
         LDA collisionFlag
         BEQ dumpMoveUp ; branch if 0
 
@@ -109,6 +112,7 @@ dumpMoveUp:
 
 
 moveDown:
+        LDX #$00
         LDA playerLocationY               ;; CHECK COLLISION
         CMP #$d0
         BCS dumpMoveDown
@@ -118,7 +122,7 @@ moveDown:
         ADC #$08
         STA playerLocationYBuffer
 
-        JSR checkCollision
+        ;JSR checkCollision
         LDA collisionFlag
         BEQ dumpMoveDown ; branch if 0
         
@@ -137,9 +141,10 @@ enemyOffset = $08
 checkCollision:
     LDA #$00         ; 0 means 
     STA collisionFlag    
+checkCollisionLoop:
 
     ; checking if player is on right edge
-    LDA enemyX
+    LDA enemy_array + 1, X
     CLC
     ADC enemyW    
     CMP playerLocationXBuffer
@@ -148,21 +153,23 @@ checkCollision:
     LDA playerLocationXBuffer
     SEC
     SBC enemyW    
-    ;SBC #$01
-    CMP enemyX
+    ;ADC #$01
+    CMP enemy_array + 1, X ;enemyX
     BPL allowPass ; should want this
 
     ; checking if player is on left edge
     LDA playerLocationXBuffer
     CLC
     ADC #$08
-    CMP enemyX
+    SBC #$01
+    CMP enemy_array + 1, X ;enemyX
     BMI allowPass ; should want this
 
     ; checking if player is above
     LDA playerLocationYBuffer ; greater > lesser ==> pass
     CLC
     ADC #$08
+    SBC #$01
     CMP enemyY
     BMI allowPass ; should want this
 
@@ -170,13 +177,22 @@ checkCollision:
     LDA enemyY ; 
     CLC
     ADC enemyH
+    SBC #$01
     CMP playerLocationYBuffer
     BMI allowPass ; should want this
 
+    INX
+    INX
+    INX
+    INX
+
+    CPX $09
+    BPL checkCollisionLoop
 
 
     RTS
-
+;; this loop won't work because it will only stop if it's the last one.
+;; so i might need to invert this whole thing
 
 allowPass:
     LDA #$01
