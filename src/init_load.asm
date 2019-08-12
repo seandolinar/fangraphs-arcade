@@ -33,17 +33,63 @@ LoadPalettesLoop:
   BNE LoadPalettesLoop 
 
 
+
+FillNametables:
+  LDA $2002             ; read PPU status to reset the high/low latch
+  LDA #$20
+  STA $2006             ; write the high byte of $2000 address (nametable 0)
+  LDA #$00
+  STA $2006             ; write the low byte of $2000 address
+ 
+LDX #$00            
+FillNametablesLoop:
+  LDA background_item, X
+  STA $2007
+  INX
+  CMP #$ff
+  BEQ dumpNameTable
+  JMP FillNametablesLoop
+
+dumpNameTable:
+
+
+  
+
+
+
+FillAttrib0:
+  LDA $2002             ; read PPU status to reset the high/low latch
+  LDA #$27
+  STA $2006             ; write the high byte of $23C0 address (nametable 0 attributes)
+  LDA #$C0
+  STA $2006             ; write the low byte of $23C0 address
+  LDX #$40              ; fill 64 bytes
+  LDA #%11101011
+FillAttrib0Loop:
+  STA $2007
+  DEX
+  BNE FillAttrib0Loop
+
+
    ;INITIAL VARS
     LDA #$30
     STA playerLocationX
     STA playerLocationY
 
+    LDA #$40
+    STA enemyX
+    STA enemyY
+    
+    LDA #$08
+    STA enemyH
+    STA enemyW
+
 
     ; STARTS VIDEO DISPLAY
-    LDA #%10010000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+    LDA #%10000000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
     STA $2000
 
-    LDA #%00010110   ; enable sprites, enable background, no clipping on left side
+    LDA #%00011110   ; enable sprites, enable background, no clipping on left side
     STA $2001
 
 

@@ -29,6 +29,13 @@ oam: .res 256        ; sprite OAM data to be uploaded by DMA
 .segment "ZEROPAGE"
 playerLocationX: .res 1
 playerLocationY: .res 1
-controllerBits: .res 1
+controllerBits:  .res 1
+
+enemyX:          .res 1   
+enemyY:          .res 1
+enemyH:          .res 1
+enemyW:          .res 1
+
+collisionFlag:   .res 1
 
 
