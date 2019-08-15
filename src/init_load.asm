@@ -13,19 +13,19 @@ InitialLoad:
   LoadEnemy:
     LDX #$00
   LoadEnemyLoop:
-    LDA enemy_array, x       ; load data from address (sprites +  x)
-    STA enemy_oam + 1, x          ; store into RAM address ($0200 + x)
-    LDA enemy_array+1, x        ; load data from address (sprites +  x)
-    STA enemy_oam , x         ; store into RAM address ($0200 + x)
-    LDA enemy_array+2, x        ; load data from address (sprites +  x)
-    STA enemy_oam+3 , x         ; store into RAM address ($0200 + x)
-    LDA #$01
-    STA enemy_oam+2, x              ; X = X + 1
+    LDA enemy_array, X       ; load data from address (sprites +  x)
+    STA enemy_oam + 1, X          ; store into RAM address ($0200 + x)
+    LDA enemy_array+1, X        ; load data from address (sprites +  x)
+    STA enemy_oam , X         ; store into RAM address ($0200 + x)
+    LDA enemy_array+2, X        ; load data from address (sprites +  x)
+    STA enemy_oam+3 , X         ; store into RAM address ($0200 + x)
+    LDA enemy_array+3, X
+    STA enemy_oam+2, X              ; X = X + 1
     INX
     INX
     INX
     INX
-    CPX #$08          ; Compare X to hex $10, decimal 16
+    CPX #$10          ; Compare X to hex $10, decimal 16
     BNE LoadEnemyLoop   ; Branch to LoadSpritesLoop if compare was Not Equal to zero
 
 
@@ -122,4 +122,7 @@ JMP Main
 
 
 enemy_array:
-.byte $01, $40, $40, $00, $01, $38, $38, $00
+.byte $01, $20, $18, $02
+.byte $01, $28, $28, $03 
+.byte $01, $30, $30, $01 
+.byte $01, $50, $28, $01
