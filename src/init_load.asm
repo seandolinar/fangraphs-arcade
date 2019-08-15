@@ -53,7 +53,9 @@ LoadPalettesLoop:
 
 
 
-FillNametables:
+  
+
+FillBackground:
   LDA $2002             ; read PPU status to reset the high/low latch
   LDA #$20
   STA $2006             ; write the high byte of $2000 address (nametable 0)
@@ -61,18 +63,16 @@ FillNametables:
   STA $2006             ; write the low byte of $2000 address
  
 LDX #$00            
-FillNametablesLoop:
-  LDA background_item, X
+FillBackgroundLoop:
+  LDA meta_tile0, X
   STA $2007
   INX
   CMP #$ff
-  BEQ dumpNameTable
-  JMP FillNametablesLoop
+  BEQ dumpFillBackground
+  JMP FillBackgroundLoop
 
-dumpNameTable:
+dumpFillBackground:
 
-
-  
 
 
 
@@ -95,7 +95,7 @@ FillAttrib0Loop:
     STA controllerTimer
 
 
-    LDA #$30
+    LDA #$10
     STA playerLocationX
     STA playerLocationY
 
@@ -122,7 +122,11 @@ JMP Main
 
 
 enemy_array:
-.byte $01, $20, $18, $02
+.byte $03, $20, $18, $02
 .byte $01, $28, $28, $03 
 .byte $01, $30, $30, $01 
 .byte $01, $50, $28, $01
+
+
+meta_tile0:
+.byte $01, $01, $03, $00, $01, $02, $00, $01, $01, $00, $03, $02, $ff

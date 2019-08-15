@@ -14,12 +14,10 @@
 
 .segment "CODE"
 NMI:
+    JSR readController 
 
   
-  JSR readController 
-  JSR updatePosition    
-  
-
+      
   ; SPRITE TRANSFER
   LDA #$00
   STA $2003  ; set the low byte (00) of the RAM address
@@ -35,6 +33,10 @@ IRQ:
     RTI
 
 Main:
+    JSR updatePosition
+    LDA #00
+    STA controllerBits
+
 
     JMP Main
 

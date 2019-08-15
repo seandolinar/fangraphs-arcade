@@ -49,3 +49,8 @@ enemyW1:                .res 1
 collisionFlag:          .res 1
 
 
+background_row:         .res $20
+data_x:                 .res 1
+data_y:                 .res 1
+
+

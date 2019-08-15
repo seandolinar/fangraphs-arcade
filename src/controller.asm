@@ -1,8 +1,6 @@
 .segment "CODE"
 readController:
 
-
-
     LatchController:
         LDA controllerBits
         STA controllerBitsPrev
