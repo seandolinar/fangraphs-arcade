@@ -14,9 +14,10 @@
 
 .segment "CODE"
 NMI:
-    JSR readController 
+    
 
-  
+  JSR readController 
+
       
   ; SPRITE TRANSFER
   LDA #$00
@@ -33,10 +34,8 @@ IRQ:
     RTI
 
 Main:
+    LDA controllerBits
+    BEQ Main
     JSR updatePosition
-    LDA #00
-    STA controllerBits
-
-
     JMP Main
 

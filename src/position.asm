@@ -34,7 +34,8 @@ dumpUpdatePosition:
 
     ;LDA enemyY
     ;STA $0207
-
+    LDA #00
+    STA controllerBits
     RTS
 
 moveRight:
