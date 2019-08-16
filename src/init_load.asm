@@ -53,7 +53,21 @@ LoadPalettesLoop:
 
 
 
-  
+FillAttrib0:
+  LDA $2002             ; read PPU status to reset the high/low latch
+  LDA #$27
+  STA $2006             ; write the high byte of $23C0 address (nametable 0 attributes)
+  LDA #$C0
+  STA $2006             ; write the low byte of $23C0 address
+  LDX #$40              ; fill 64 bytes
+  LDA #$02
+  ;LDA #%11101011
+FillAttrib0Loop:
+  STA $2007
+  DEX
+  BNE FillAttrib0Loop
+
+
 
 FillBackground:
   LDA $2002             ; read PPU status to reset the high/low latch
@@ -76,18 +90,6 @@ dumpFillBackground:
 
 
 
-FillAttrib0:
-  LDA $2002             ; read PPU status to reset the high/low latch
-  LDA #$27
-  STA $2006             ; write the high byte of $23C0 address (nametable 0 attributes)
-  LDA #$C0
-  STA $2006             ; write the low byte of $23C0 address
-  LDX #$40              ; fill 64 bytes
-  LDA #%11101011
-FillAttrib0Loop:
-  STA $2007
-  DEX
-  BNE FillAttrib0Loop
 
 
    ;INITIAL VARS
@@ -116,6 +118,9 @@ FillAttrib0Loop:
     LDA #%00011110   ; enable sprites, enable background, no clipping on left side
     STA $2001
 
+    LDA #$00
+    STA $2005
+    STA $2005
 
 JMP Main
 
@@ -129,4 +134,5 @@ enemy_array:
 
 
 meta_tile0:
+.byte $01, $00, $03, $00, $01, $02, $00, $01, $01, $00, $03, $02
 .byte $01, $01, $03, $00, $01, $02, $00, $01, $01, $00, $03, $02, $ff

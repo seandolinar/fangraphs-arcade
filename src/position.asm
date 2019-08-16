@@ -41,7 +41,7 @@ dumpUpdatePosition:
 moveRight:
         LDX #$00
         LDA playerLocationX
-        CMP #$80                ;; CHECK COLLISION
+        CMP #$ff                ;; CHECK COLLISION
         BCS dumpMoveRight
         CLC
         ADC #$08
@@ -61,7 +61,7 @@ dumpMoveRight:
 
 moveLeft:
         LDX #$00
-        LDA #$08                ;; CHECK COLLISION
+        LDA #$00                ;; CHECK COLLISION
         CMP playerLocationX
         BCS dumpMoveLeft
         LDA playerLocationX
@@ -84,7 +84,7 @@ dumpMoveLeft:
 
 moveUp:
         LDX #$00
-        LDA #$08                ;; CHECK COLLISION
+        LDA #$00                ;; CHECK COLLISION
         CMP playerLocationY
         BCS dumpMoveUp
 
@@ -138,6 +138,13 @@ checkCollision:
     LDA #$00         ; 0 means there is a collision
     STA collisionFlag
     LDX #$00
+    
+checkBackgroundCollisionLoop:
+
+
+
+
+
 checkCollisionLoop:
 
     ; checking if player is on right edge
