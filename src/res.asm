@@ -22,8 +22,8 @@ CONTROL_P1_RIGHT =  %10000000
 
 
 .segment "OAM"
-player_oam:                 .res 4
-enemy_oam:                  .res 252        ; sprite OAM data to be uploaded by DMA
+player_oam:              .res 4
+enemy_oam:               .res 252        ; sprite OAM data to be uploaded by DMA
 					                        ; .res reserves 256 bytes of storage
 
 
@@ -32,6 +32,11 @@ playerLocationX:        .res 1
 playerLocationY:        .res 1
 playerLocationXBuffer:  .res 1
 playerLocationYBuffer:  .res 1
+playerGridX:            .res 1
+playerGridY:            .res 1
+playerPointerLo:        .res 1
+playerPointerHi:        .res 1
+
 controllerBits:         .res 1
 controllerBitsPrev:     .res 1
 controllerTimer:        .res 1
@@ -47,6 +52,10 @@ enemyH1:                .res 1
 enemyW1:                .res 1
 
 collisionFlag:          .res 1
+collisionPointerLo:     .res 1
+collisionPointerHi:     .res 1
+backgroundPointerLo:    .res 1
+backgroundPointerHi:    .res 1
 
 
 background_row:         .res $20

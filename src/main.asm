@@ -16,7 +16,6 @@
 NMI:
     
 
-  JSR readController 
 
       
   ; SPRITE TRANSFER
@@ -25,6 +24,7 @@ NMI:
   LDA #>player_oam ; this works and so does $02
   STA $4014  ; set the high byte (02) of the RAM address, start the transfer
 
+  JSR readController 
 
   
 
