@@ -165,6 +165,7 @@ checkBackgroundCollisionLoop:
 
     LDA playerLocationYBuffer
     ASL ;mult x 2
+    ASL
     STA playerGridY
 
     LDA playerLocationXBuffer
@@ -178,21 +179,23 @@ checkBackgroundCollisionLoop:
 
     STA playerPointerLo
     LDA #$00
-    ADC playerPointerHi
+    ADC playerGridY
+    STA playerPointerHi
     
     LDA playerPointerLo
     CLC 
     ADC collisionPointerLo
-    STA collisionPointerLo
-    LDA playerPointerHi
-    ADC playerPointerHi
-    STA collisionPointerHi
+    STA backgroundPointerLo
+    LDA #$00 ;playerPointerHi
+    ADC collisionPointerHi
+    STA backgroundPointerHi
 
     LDY #$00
-    LDA (collisionPointerLo),Y
-    CMP #$ff
-    BEQ checkCollisionSprites
-    CMP #$00 ;; whatever are loading it's all 0s
+    LDA (backgroundPointerLo), Y
+    ;LDA meta_tile0 + 1
+    ;CMP #$01
+    ;BEQ checkCollisionSprites
+    CMP #$02 ;; whatever are loading it's all 0s
     BNE collide
 
 
