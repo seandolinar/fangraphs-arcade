@@ -138,7 +138,7 @@ checkCollision:
     LDA #$00         ; 0 means there is a collision
     STA collisionFlag
     LDX #$00
-    
+
 checkBackgroundCollisionLoop:
 
     ; find 
@@ -163,45 +163,57 @@ checkBackgroundCollisionLoop:
     LDA #>meta_tile0
     STA collisionPointerHi
 
-    LDA playerLocationYBuffer
-    ASL ;mult x 2
-    ASL
-    STA playerGridY
-
+    ; calculates grid position for X (should only be 8-bit)
+    CLC
     LDA playerLocationXBuffer
-    LSR ; divide / 2
+    LSR ; divide / 2 / 2 / 2
     LSR
     LSR
     STA playerGridX
 
-    CLC
-    ADC playerGridY
-
-    STA playerPointerLo
+    ; stores 1 into pointer
     LDA #$00
-    ADC playerGridY
+    STA playerPointerLo
     STA playerPointerHi
-    
+
+    ;calculates the grid position for Y (16-bit)
+
+    CLC
+    LDA playerLocationYBuffer ; 8 pixels
+    ASL ;mult x 2 x 2 ;; divide by 8 pixels then multiply by 32 items across
+    STA playerPointerLo 
+    LDA #$00
+    ADC #$00
+    STA playerPointerHi 
+
     LDA playerPointerLo
+    ASL
+    STA playerPointerLo
+    BCC dumpFirstMult
+    INC playerPointerHi
+dumpFirstMult:
+
+    LDA playerPointerLo
+    CLC
+    ADC playerGridX
+    STA playerPointerLo
+    BCC dumpSecondMult
+    INC playerPointerHi
+dumpSecondMult:
+    
+    LDA playerPointerLo ; loads the low byte of where the player is
     CLC 
     ADC collisionPointerLo
     STA backgroundPointerLo
-    LDA #$00 ;playerPointerHi
+    LDA playerPointerHi ; loads the player high byte
     ADC collisionPointerHi
     STA backgroundPointerHi
 
     LDY #$00
     LDA (backgroundPointerLo), Y
-    ;LDA meta_tile0 + 1
-    ;CMP #$01
-    ;BEQ checkCollisionSprites
     CMP #$02 ;; whatever are loading it's all 0s
     BNE collide
 
-
-;dumpCheckBackgroundCollisions:
- ;   INX
-  ;  JMP checkBackgroundCollisionLoop
 
 checkCollisionSprites:
     LDX #$00
