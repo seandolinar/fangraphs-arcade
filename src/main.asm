@@ -2,6 +2,7 @@
 .include "./res.asm"
 .include "./controller.asm"
 .include "./position.asm"
+.include "./enemy.asm"
 
 .include "./reset.asm"
 .include "./pallete.asm"
@@ -24,9 +25,9 @@ NMI:
   LDA #>player_oam ; this works and so does $02
   STA $4014  ; set the high byte (02) of the RAM address, start the transfer
 
-  JSR readController 
+  JSR readController
+  JSR nextEnemy
 
-  
 
 
 dumpNMI:
@@ -36,6 +37,7 @@ IRQ:
     RTI
 
 Main:
+
     LDA controllerBits
     BEQ Main
     JSR updatePosition

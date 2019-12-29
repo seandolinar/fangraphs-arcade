@@ -52,10 +52,23 @@ enemyH1:                .res 1
 enemyW1:                .res 1
 
 collisionFlag:          .res 1
+collisionFlagEnemy:     .res 1
+collisionTestX:         .res 1
+collisionTestY:         .res 1
 collisionPointerLo:     .res 1
 collisionPointerHi:     .res 1
 backgroundPointerLo:    .res 1
 backgroundPointerHi:    .res 1
+
+
+enemyGridX:            .res 1
+enemyPointerLo:        .res 1
+enemyPointerHi:        .res 1
+backgroundPointerLoEnemy:    .res 1
+backgroundPointerHiEnemy:    .res 1
+collisionPointerLoEnemy:     .res 1
+collisionPointerHiEnemy:     .res 1
+
 
 
 background_row:         .res $20

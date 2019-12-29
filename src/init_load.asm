@@ -60,7 +60,7 @@ FillAttrib0:
   LDA #$C0
   STA $2006             ; write the low byte of $23C0 address
   LDX #$40              ; fill 64 bytes
-  LDA #$02
+  LDA #$00
   ;LDA #%11101011
 FillAttrib0Loop:
   STA $2007
@@ -93,18 +93,11 @@ FillBackgroundLoopOutside:
     INY                 ; inside loop counter
     CPY #$00
     BNE FillBackgroundLoop ; run the inside loop 256 times before continuing down
-    
     INC backgroundPointerHi 
-          
-    ;CMP #$ff
-
     INX
     CPX #$04
     BNE FillBackgroundLoop 
 
-
-    ;BEQ dumpFillBackground
-    ;JMP FillBackgroundLoop
 
 dumpFillBackground:
 
@@ -119,8 +112,9 @@ dumpFillBackground:
     STA playerLocationY
 
     LDA #$40
-    STA enemyX
-    STA enemyY
+    STA enemyX1
+    LDA #$60
+    STA enemyY1
     
     LDA #$08
     STA enemyH
@@ -177,5 +171,9 @@ meta_tile0:
 .byte $01, $01, $02, $02, $02, $02, $02, $02,   $02, $02, $02, $02, $02, $02, $02, $02,    $02, $02, $02, $02, $02, $02, $02, $02,    $02, $02, $02, $02, $02, $02, $01, $01
 .byte $01, $01, $02, $02, $02, $02, $02, $02,   $02, $02, $02, $02, $02, $02, $02, $02,    $02, $02, $02, $02, $02, $02, $02, $02,    $02, $02, $02, $02, $02, $02, $01, $01
 .byte $01, $01, $02, $02, $02, $02, $02, $02,   $02, $02, $02, $02, $02, $02, $02, $02,    $02, $02, $02, $02, $02, $02, $02, $02,    $02, $02, $02, $02, $02, $02, $01, $01
+.byte $01, $01, $02, $02, $02, $02, $02, $02,   $02, $02, $02, $02, $02, $02, $02, $02,    $02, $02, $02, $02, $02, $02, $02, $02,    $02, $02, $02, $02, $02, $02, $01, $01
+.byte $01, $01, $02, $02, $02, $02, $02, $02,   $02, $02, $02, $02, $02, $02, $02, $02,    $02, $02, $02, $02, $02, $02, $02, $02,    $02, $02, $02, $02, $02, $02, $01, $01
+.byte $01, $01, $01, $01, $01, $01, $01, $01,   $01, $01, $01, $01, $01, $01, $01, $01,    $01, $01, $01, $01, $01, $01, $01, $01,    $01, $01, $01, $02, $01, $01, $01, $01   
+
 
 .byte $ff

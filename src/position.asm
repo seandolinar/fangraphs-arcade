@@ -1,5 +1,12 @@
 .segment "CODE"
 updatePosition:
+
+  LDA playerLocationXBuffer
+  STA collisionTestX
+
+  LDA playerLocationYBuffer
+  STA collisionTestY
+
   LDA controllerBits
   AND #CONTROL_P1_UP ;UP
   BEQ dumpControlUp ; dumps if we have no A push
@@ -29,15 +36,15 @@ dumpUpdatePosition:
     LDA playerLocationY
     STA $0200
 
-    ;LDA enemyX
-    ;STA $0204
+   
 
-    ;LDA enemyY
-    ;STA $0207
     LDA #00
     STA controllerBits
     RTS
 
+JSR updateEnemyPosition
+
+ 
 moveRight:
         LDX #$00
         LDA playerLocationX
@@ -46,6 +53,7 @@ moveRight:
         CLC
         ADC #$08
         STA playerLocationXBuffer
+        STA collisionTestX
 
         JSR checkCollision
         LDA collisionFlag
@@ -68,6 +76,7 @@ moveLeft:
         SEC
         SBC #$08
         STA playerLocationXBuffer
+        STA collisionTestX
 
         JSR checkCollision
         LDA collisionFlag
@@ -92,6 +101,7 @@ moveUp:
         SEC
         SBC #$08
         STA playerLocationYBuffer
+        STA collisionTestY
 
         JSR checkCollision
         LDA collisionFlag
@@ -116,6 +126,7 @@ moveDown:
         CLC
         ADC #$08
         STA playerLocationYBuffer
+        STA collisionTestY
 
         JSR checkCollision
         LDA collisionFlag
@@ -165,7 +176,7 @@ checkBackgroundCollisionLoop:
 
     ; calculates grid position for X (should only be 8-bit)
     CLC
-    LDA playerLocationXBuffer
+    LDA collisionTestX
     LSR ; divide / 2 / 2 / 2
     LSR
     LSR
@@ -179,7 +190,7 @@ checkBackgroundCollisionLoop:
     ;calculates the grid position for Y (16-bit)
 
     CLC
-    LDA playerLocationYBuffer ; 8 pixels
+    LDA collisionTestY ; 8 pixels
     ASL ;mult x 2 x 2 ;; divide by 8 pixels then multiply by 32 items across
     STA playerPointerLo 
     LDA #$00
@@ -223,18 +234,17 @@ checkCollisionLoop:
     LDA enemy_array + 2, X
     CLC
     ADC enemyW    
-    CMP playerLocationXBuffer
+    CMP collisionTestX
     BMI allowPass ; should want this
 
-    LDA playerLocationXBuffer
+    LDA collisionTestX
     SEC
     SBC enemyW    
-    ;ADC #$01
     CMP enemy_array + 2, X ;enemyX
     BPL allowPass ; should want this
 
     ; checking if player is on left edge
-    LDA playerLocationXBuffer
+    LDA collisionTestX
     CLC
     ADC #$08
     SBC #$01
@@ -242,7 +252,7 @@ checkCollisionLoop:
     BMI allowPass ; should want this
 
     ; checking if player is above
-    LDA playerLocationYBuffer ; greater > lesser ==> pass
+    LDA collisionTestY ; greater > lesser ==> pass
     CLC
     ADC #$08
     SBC #$01
@@ -254,7 +264,7 @@ checkCollisionLoop:
     CLC
     ADC enemyH
     SBC #$01
-    CMP playerLocationYBuffer
+    CMP collisionTestY
     BMI allowPass ; should want this
 
     LDA #$00
