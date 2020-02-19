@@ -1,15 +1,13 @@
 
 nextEnemy:
-   
-
-    
+   ; this is me trying to figure out how to move the enemy on its own
 
     ;LDA enemyX1
     LDA #$01
     STA collisionFlagEnemy
 
-    ;STA collisionTestX
-    ;STA collisionTestY
+   ; STA collisionTestX
+   ; STA collisionTestY
    
 
     JSR checkBackgroundCollisionEnemy
@@ -18,16 +16,21 @@ nextEnemy:
     LDA collisionFlagEnemy
     BEQ dumpEnemyController
 
-    LDA enemyX1
-    ADC #$08
+    LDA enemy_array + 3
+    ADC #$01
     STA enemyY1
+
+    LDA enemy_array + 2
+    ADC #$08
     STA enemyX1
 
     LDA enemyY1
     STA $0204
+    STA enemy_array + 3
 
     LDA enemyX1
     STA $0207
+    STA enemy_array + 2
 
 dumpEnemyController:
     RTS

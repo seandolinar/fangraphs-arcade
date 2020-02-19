@@ -13,7 +13,6 @@ readController:
         STA $4016       ; tell both the controllers to latch buttons
         STA controllerBits
    
-
     ; we'll read 4016 8 times
     ReadA: 
 

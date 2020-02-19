@@ -14,18 +14,18 @@ updatePosition:
 dumpControlUp:
   LDA controllerBits
   AND #CONTROL_P1_DOWN ;UP
-  BEQ dumpControlDown ; dumps if we have no A push
+  BEQ dumpControlDown ; dumps if we have no UP push
   JSR moveDown
 dumpControlDown:
   LDA controllerBits
   AND #CONTROL_P1_LEFT ;UP
-  BEQ dumpControlLeft ; dumps if we have no A push
+  BEQ dumpControlLeft ; dumps if we have no DOWN push
   JSR moveLeft
  
 dumpControlLeft:
   LDA controllerBits
   AND #CONTROL_P1_RIGHT ;UP
-  BEQ dumpUpdatePosition ; dumps if we have no A push
+  BEQ dumpUpdatePosition ; dumps if we have no LEFT push
   JSR moveRight
   
 dumpUpdatePosition:
@@ -61,6 +61,9 @@ moveRight:
         
         LDA playerLocationXBuffer
         STA playerLocationX
+
+        JSR nextEnemy ;; trying something here
+
         RTS
 dumpMoveRight:
         LDA playerLocationX

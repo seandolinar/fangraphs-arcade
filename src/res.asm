@@ -12,9 +12,6 @@ CONTROL_P1_RIGHT =  %10000000
 
 
 
-
-
-
 .segment "VECTORS" ; ADDRESSES FOR INTERUPTS
 .word NMI
 .word RESET
