@@ -10,6 +10,11 @@ InitialLoad:
     CPX #$04           ; Compare X to hex $10, decimal 16
     BNE LoadSpritesLoop   ; Branch to LoadSpritesLoop if compare was Not Equal to zero
 
+    LDA player_oam + 0
+    STA playerLocationY
+    LDA player_oam + 3
+    STA playerLocationX
+
   LoadEnemy:
     LDX #$00
   LoadEnemyLoop:
@@ -25,7 +30,7 @@ InitialLoad:
     INX
     INX
     INX
-    CPX #$10          ; Compare X to hex $10, decimal 16
+    CPX #$04 ;#$10          ; Compare X to hex $10, decimal 16
     BNE LoadEnemyLoop   ; Branch to LoadSpritesLoop if compare was Not Equal to zero
 
 
@@ -136,12 +141,12 @@ dumpFillBackground:
 JMP Main
 
 
-
+; this is not RAM, huh?
 enemy_array:
-.byte $01, $20, $a0, $02
-.byte $01, $28, $50, $03 
-.byte $01, $30, $30, $01 
-.byte $01, $50, $28, $01
+.byte $01, $20, $80, $92
+; .byte $01, $28, $50, $03 
+; .byte $01, $30, $30, $01 
+; .byte $01, $50, $28, $01
 
 
 meta_tile0:

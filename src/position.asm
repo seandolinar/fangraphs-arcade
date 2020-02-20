@@ -8,35 +8,39 @@ updatePosition:
   STA collisionTestY
 
   LDA controllerBits
+
   AND #CONTROL_P1_UP ;UP
   BEQ dumpControlUp ; dumps if we have no A push
   JSR moveUp
+
 dumpControlUp:
   LDA controllerBits
-  AND #CONTROL_P1_DOWN ;UP
+
+  AND #CONTROL_P1_DOWN ;DOWN
   BEQ dumpControlDown ; dumps if we have no UP push
   JSR moveDown
 dumpControlDown:
+
   LDA controllerBits
-  AND #CONTROL_P1_LEFT ;UP
+
+  AND #CONTROL_P1_LEFT ;LEFT
   BEQ dumpControlLeft ; dumps if we have no DOWN push
   JSR moveLeft
  
 dumpControlLeft:
   LDA controllerBits
-  AND #CONTROL_P1_RIGHT ;UP
+
+  AND #CONTROL_P1_RIGHT ;RIGHT
   BEQ dumpUpdatePosition ; dumps if we have no LEFT push
   JSR moveRight
   
 dumpUpdatePosition:
 
     LDA playerLocationX
-    STA $0203
+    STA $0203 ; place in RAM where the sprite Y is controlled
 
     LDA playerLocationY
-    STA $0200
-
-   
+    STA $0200 ; place in RAM where the sprite X is controlled
 
     LDA #00
     STA controllerBits
@@ -44,7 +48,7 @@ dumpUpdatePosition:
 
 JSR updateEnemyPosition
 
- 
+
 moveRight:
         LDX #$00
         LDA playerLocationX
@@ -87,6 +91,9 @@ moveLeft:
 
         LDA playerLocationXBuffer
         STA playerLocationX
+
+        JSR nextEnemy ;; trying something here
+
         RTS
 dumpMoveLeft:
         LDA playerLocationX
@@ -233,40 +240,44 @@ checkCollisionSprites:
     LDX #$00
 checkCollisionLoop:
 
+; spriteW = #$04
+LDY #$04
+
     ; checking if player is on right edge
-    LDA enemy_array + 2, X
+    LDA enemyX
     CLC
-    ADC enemyW    
+    ADC #$04 ; sprite W
     CMP collisionTestX
     BMI allowPass ; should want this
 
     LDA collisionTestX
     SEC
-    SBC enemyW    
-    CMP enemy_array + 2, X ;enemyX
+    SBC #$04 ; sprite W   
+    CMP enemyX, X ;enemyX
     BPL allowPass ; should want this
 
     ; checking if player is on left edge
     LDA collisionTestX
     CLC
     ADC #$08
-    SBC #$01
-    CMP enemy_array + 2, X ;enemyX
+    SBC #$04 ; sprite W
+    CMP enemyX, X ;enemyX
     BMI allowPass ; should want this
 
     ; checking if player is above
-    LDA collisionTestY ; greater > lesser ==> pass
+    LDA enemyY ; greater > lesser ==> pass
     CLC
     ADC #$08
-    SBC #$01
-    CMP enemy_array + 1, X
+    SBC #$04 ; sprite H
+    CMP enemyY, X
     BMI allowPass ; should want this
 
     ; checking if player is below
-    LDA enemy_array + 1, X
+    LDA enemyY
     CLC
-    ADC enemyH
-    SBC #$01
+    ; ADC enemyH
+    ADC #$08
+    SBC #$04 ; sprite H
     CMP collisionTestY
     BMI allowPass ; should want this
 
@@ -285,8 +296,8 @@ allowPass:
     INX
     INX
 
-    CPX #$18
-    BMI checkCollisionLoop
+    ; CPX #$18
+    ; BMI checkCollisionLoop
 
     LDA #$01
     STA collisionFlag
