@@ -66,7 +66,7 @@ moveRight:
         LDA playerLocationXBuffer
         STA playerLocationX
 
-        JSR nextEnemy ;; trying something here
+        JSR nextEnemyMovement ;; trying something here
 
         RTS
 dumpMoveRight:
@@ -92,7 +92,7 @@ moveLeft:
         LDA playerLocationXBuffer
         STA playerLocationX
 
-        JSR nextEnemy ;; trying something here
+        JSR nextEnemyMovement ;; trying something here
 
         RTS
 dumpMoveLeft:
@@ -156,6 +156,7 @@ playerOffset = $08
 enemyOffset = $08
 
 checkCollision:
+    ; set the collision flag to 0 -- or false
     LDA #$00         ; 0 means there is a collision
     STA collisionFlag
     LDX #$00
@@ -236,32 +237,35 @@ dumpSecondMult:
     BNE collide
 
 
+; this is actually doing something
+; but it's not right
+; let's get rid of the X loop
 checkCollisionSprites:
     LDX #$00
 checkCollisionLoop:
 
-; spriteW = #$04
-LDY #$04
+    ; spriteW = #$04
+    LDY #$04
 
     ; checking if player is on right edge
-    LDA enemyX
-    CLC
-    ADC #$04 ; sprite W
-    CMP collisionTestX
-    BMI allowPass ; should want this
+    ; LDA enemyX
+    ; CLC
+    ; ADC #$04 ; sprite W
+    ; CMP collisionTestX
+    ; BMI allowPass ; should want this
 
-    LDA collisionTestX
-    SEC
-    SBC #$04 ; sprite W   
-    CMP enemyX, X ;enemyX
-    BPL allowPass ; should want this
+    ; LDA collisionTestX
+    ; SEC
+    ; SBC #$04 ; sprite W   
+    ; CMP enemyX ;, X ;enemyX
+    ; BPL allowPass ; should want this
 
-    ; checking if player is on left edge
+    ;checking if player is on left edge
     LDA collisionTestX
-    CLC
-    ADC #$08
-    SBC #$04 ; sprite W
-    CMP enemyX, X ;enemyX
+    ; CLC
+    ; ADC #$08
+    ; SBC #$04 ; sprite W
+    CMP enemyX ;, X ;enemyX
     BMI allowPass ; should want this
 
     ; checking if player is above
@@ -269,7 +273,7 @@ LDY #$04
     CLC
     ADC #$08
     SBC #$04 ; sprite H
-    CMP enemyY, X
+    CMP enemyY ;, X
     BMI allowPass ; should want this
 
     ; checking if player is below

@@ -42,6 +42,7 @@ enemyX:                 .res 1
 enemyY:                 .res 1
 enemyH:                 .res 1
 enemyW:                 .res 1
+enemyQ:					.res 1
 
 enemyX1:                .res 1   
 enemyY1:                .res 1
@@ -66,10 +67,13 @@ backgroundPointerHiEnemy:    .res 1
 collisionPointerLoEnemy:     .res 1
 collisionPointerHiEnemy:     .res 1
 
+masterTimer:			.res 1
+
 
 
 background_row:         .res $20
 data_x:                 .res 1
 data_y:                 .res 1
+
 
 

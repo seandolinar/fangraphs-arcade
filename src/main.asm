@@ -15,6 +15,7 @@
 
 .segment "CODE"
 NMI:
+ ; this runs during the main loop
           
   ; SPRITE TRANSFER
   LDA #$00
@@ -24,6 +25,11 @@ NMI:
 
   JSR readController
 
+    LDX masterTimer
+    DEX
+    STX masterTimer
+    BEQ dumpNMI
+    JSR nextEnemyMovement
 
 
 dumpNMI:
@@ -34,8 +40,11 @@ IRQ:
 
 Main:
 
+ 
+
+MainReadController:
     LDA controllerBits
-    BEQ Main
-    JSR updatePosition
-    JMP Main
+    BEQ Main                ; go loop main if we have no controller bits
+    JSR updatePosition      ; runs the player updates
+    JMP Main                ; loops because of end
 

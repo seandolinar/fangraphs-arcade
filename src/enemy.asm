@@ -1,33 +1,22 @@
 
-nextEnemy:
-   ; this is me trying to figure out how to move the enemy on its own
-
-    ;LDA enemyX1
-    ; LDA #$01
-    ; STA collisionFlagEnemy
-
-   ; STA collisionTestX
-   ; STA collisionTestY
-   
-
-    ; JSR checkBackgroundCollisionEnemy
-
-
-    ; LDA collisionFlagEnemy
-    ; BEQ dumpEnemyController
-
+nextEnemyMovement:
+ 
     LDA enemyX
-    ; LDA $0204
-    ADC #$04
-    ; STA enemyY1
-    STA $0204
+    JSR pickDirection
     STA enemyX
 
     LDA enemyY
-    ADC #$04
-    ; STA enemyX1
-    STA $0207
+    JSR pickDirection
     STA enemyY
+
+
+    ; move this somewhere else
+    LDA enemyX
+    STA $0204 ; sprite RAM x
+
+    LDA enemyY
+    STA $0207 ; sprite RAM y
+
 
 
 dumpEnemyController:
@@ -36,7 +25,6 @@ dumpEnemyController:
 
 
 updateEnemyPosition:
-
 
 RTS
 
@@ -66,12 +54,12 @@ checkBackgroundCollisionEnemy:
     STA collisionPointerHiEnemy
 
     ; calculates grid position for X (should only be 8-bit)
-    CLC
-    LDA enemyX1
-    LSR ; divide / 2 / 2 / 2
-    LSR
-    LSR
-    STA enemyGridX
+    ; CLC
+    ; LDA enemyX1
+    ; LSR ; divide / 2 / 2 / 2
+    ; LSR
+    ; LSR
+    ; STA enemyGridX
 
     ; stores 1 into pointer
     LDA #$00
@@ -116,11 +104,45 @@ dumpSecondMultEnemy:
     CMP #$02 ;; whatever are loading it's all 0s
     BNE collideEnemy
     LDA #$01
-    STA collisionFlagEnemy
+    ; STA collisionFlagEnemy
 
     RTS
 
 collideEnemy:
     LDA #$00
-    STA collisionFlagEnemy
+    ; STA collisionFlagEnemy
     RTS
+
+
+
+pickDirection:
+    LDX enemyQ
+    CPX #$08
+    BCC pickDirectionContinue
+    LDX #$00
+    
+pickDirectionContinue:
+    INX
+    STX enemyQ
+    LDY enemy_direction_random, X
+
+    ; branches if Y is $00
+    BEQ pickDirectionReverse
+    INX
+
+; if Y is $01 we run this
+pickDirectionForward:
+    CLC
+    ADC #$04
+    RTS
+
+; the branched $00 option 
+pickDirectionReverse:
+    SBC #$04
+    RTS
+
+   
+
+    
+
+    

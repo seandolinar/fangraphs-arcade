@@ -1,5 +1,9 @@
 .segment "CODE"
 ; SPRITE LOAD LOOP
+
+; so I can see what goes on
+
+
 InitialLoad:
   LoadSprites:
     LDX #$00              ; start at 0
@@ -19,12 +23,17 @@ InitialLoad:
     LDX #$00
   LoadEnemyLoop:
     LDA enemy_array, X       ; load data from address (sprites +  x)
+    
     STA enemy_oam + 1, X          ; store into RAM address ($0200 + x)
+    STA enemyX                ; stores X-coordinate
+
     LDA enemy_array+1, X        ; load data from address (sprites +  x)
     STA enemy_oam , X         ; store into RAM address ($0200 + x)
     LDA enemy_array+2, X        ; load data from address (sprites +  x)
     STA enemy_oam+3 , X         ; store into RAM address ($0200 + x)
     LDA enemy_array+3, X
+    STA enemyY                  ; store Y-coord
+
     STA enemy_oam+2, X              ; X = X + 1
     INX
     INX
@@ -112,14 +121,19 @@ dumpFillBackground:
     STA controllerTimer
 
 
-    LDA #$10
+    LDA #$80
     STA playerLocationX
     STA playerLocationY
 
     LDA #$40
-    STA enemyX1
+    STA enemyX
     LDA #$60
-    STA enemyY1
+    STA enemyY
+
+    LDA #$40
+    ; STA enemyX1
+    LDA #$60
+    ; STA enemyY1
     
     LDA #$08
     STA enemyH
@@ -138,6 +152,9 @@ dumpFillBackground:
     STA $2005
     STA $2005
 
+LDA #$ff
+STA masterTimer
+
 JMP Main
 
 
@@ -147,6 +164,9 @@ enemy_array:
 ; .byte $01, $28, $50, $03 
 ; .byte $01, $30, $30, $01 
 ; .byte $01, $50, $28, $01
+
+enemy_direction_random:
+.byte $01, $00, $00, $00, $01, $01, $00, $01
 
 
 meta_tile0:
