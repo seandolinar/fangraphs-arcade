@@ -125,15 +125,11 @@ dumpFillBackground:
     STA playerLocationX
     STA playerLocationY
 
-    LDA #$40
+    LDA #$20
     STA enemyX
-    LDA #$60
+    LDA #$20
     STA enemyY
 
-    LDA #$40
-    ; STA enemyX1
-    LDA #$60
-    ; STA enemyY1
     
     LDA #$08
     STA enemyH
@@ -152,7 +148,7 @@ dumpFillBackground:
     STA $2005
     STA $2005
 
-LDA #$ff
+LDA #$10
 STA masterTimer
 
 JMP Main
@@ -160,13 +156,13 @@ JMP Main
 
 ; this is not RAM, huh?
 enemy_array:
-.byte $01, $20, $80, $92
+.byte $01, $20, $80, $01
 ; .byte $01, $28, $50, $03 
 ; .byte $01, $30, $30, $01 
 ; .byte $01, $50, $28, $01
 
 enemy_direction_random:
-.byte $01, $00, $00, $00, $01, $01, $00, $01
+.byte $01, $00, $00, $01, $01, $01, $00, $00, $00
 
 
 meta_tile0:

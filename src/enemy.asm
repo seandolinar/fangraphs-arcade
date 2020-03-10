@@ -1,5 +1,8 @@
 
 nextEnemyMovement:
+
+    LDX collisionFlagEnemy
+    BNE dumpEnemyController
  
     LDA enemyX
     JSR pickDirection
@@ -47,6 +50,9 @@ checkBackgroundCollisionEnemy:
     ; put lower byte into RAM
     ; then store the high byte into X
 
+    LDA #$01
+    STA collisionFlagEnemy
+
     ; fills out pointer for 
     LDA #<meta_tile0
     STA collisionPointerLoEnemy
@@ -54,12 +60,12 @@ checkBackgroundCollisionEnemy:
     STA collisionPointerHiEnemy
 
     ; calculates grid position for X (should only be 8-bit)
-    ; CLC
-    ; LDA enemyX1
-    ; LSR ; divide / 2 / 2 / 2
-    ; LSR
-    ; LSR
-    ; STA enemyGridX
+    CLC
+    LDA enemyX
+    LSR ; divide / 2 / 2 / 2
+    LSR
+    LSR
+    STA enemyGridX
 
     ; stores 1 into pointer
     LDA #$00
@@ -69,7 +75,7 @@ checkBackgroundCollisionEnemy:
     ;calculates the grid position for Y (16-bit)
 
     CLC
-    LDA enemyY1 ; 8 pixels
+    LDA enemyY ; 8 pixels
     ASL ;mult x 2 x 2 ;; divide by 8 pixels then multiply by 32 items across
     STA enemyPointerLo 
     LDA #$00
@@ -81,14 +87,15 @@ checkBackgroundCollisionEnemy:
     STA enemyPointerLo
     BCC dumpFirstMultEnemy
     INC enemyPointerHi
-dumpFirstMultEnemy:
 
+dumpFirstMultEnemy:
     LDA playerPointerLo
     CLC
     ADC enemyGridX
     STA enemyPointerLo
     BCC dumpSecondMultEnemy
     INC enemyPointerHi
+
 dumpSecondMultEnemy:
     
     LDA enemyPointerLo ; loads the low byte of where the player is
@@ -104,13 +111,13 @@ dumpSecondMultEnemy:
     CMP #$02 ;; whatever are loading it's all 0s
     BNE collideEnemy
     LDA #$01
-    ; STA collisionFlagEnemy
+    STA collisionFlagEnemy
 
     RTS
 
 collideEnemy:
-    LDA #$00
-    ; STA collisionFlagEnemy
+    LDA #$01
+    STA collisionFlagEnemy
     RTS
 
 
@@ -125,12 +132,11 @@ pickDirectionContinue:
     INX
     STX enemyQ
     LDY enemy_direction_random, X
-
-    ; branches if Y is $00
-    BEQ pickDirectionReverse
+    BEQ pickDirectionReverse  ; branches if Y is $00
     INX
 
 ; if Y is $01 we run this
+; the CLC and SEC make this work right
 pickDirectionForward:
     CLC
     ADC #$04
@@ -138,6 +144,7 @@ pickDirectionForward:
 
 ; the branched $00 option 
 pickDirectionReverse:
+    SEC
     SBC #$04
     RTS
 

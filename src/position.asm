@@ -66,7 +66,7 @@ moveRight:
         LDA playerLocationXBuffer
         STA playerLocationX
 
-        JSR nextEnemyMovement ;; trying something here
+        ; JSR nextEnemyMovement ;; trying something here
 
         RTS
 dumpMoveRight:
@@ -92,7 +92,7 @@ moveLeft:
         LDA playerLocationXBuffer
         STA playerLocationX
 
-        JSR nextEnemyMovement ;; trying something here
+        ; JSR nextEnemyMovement ;; trying something here
 
         RTS
 dumpMoveLeft:
@@ -248,17 +248,17 @@ checkCollisionLoop:
     LDY #$04
 
     ; checking if player is on right edge
-    ; LDA enemyX
-    ; CLC
-    ; ADC #$04 ; sprite W
-    ; CMP collisionTestX
-    ; BMI allowPass ; should want this
+    LDA enemyX
+    CLC
+    ADC #$04 ; sprite W
+    CMP collisionTestX
+    BMI allowPass ; should want this
 
-    ; LDA collisionTestX
-    ; SEC
-    ; SBC #$04 ; sprite W   
-    ; CMP enemyX ;, X ;enemyX
-    ; BPL allowPass ; should want this
+    LDA collisionTestX
+    SEC
+    SBC #$04 ; sprite W   
+    CMP enemyX ;, X ;enemyX
+    BPL allowPass ; should want this
 
     ;checking if player is on left edge
     LDA collisionTestX
