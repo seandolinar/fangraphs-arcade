@@ -156,7 +156,7 @@ JMP Main
 
 ; this is not RAM, huh?
 enemy_array:
-.byte $01, $20, $80, $01
+.byte $01, $20, $20, $01
 ; .byte $01, $28, $50, $03 
 ; .byte $01, $30, $30, $01 
 ; .byte $01, $50, $28, $01

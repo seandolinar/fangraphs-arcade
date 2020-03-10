@@ -69,6 +69,8 @@ collisionPointerHiEnemy:     .res 1
 
 masterTimer:			.res 1
 
+consoleLogEnemyCollision:	.res 1
+
 
 
 background_row:         .res $20

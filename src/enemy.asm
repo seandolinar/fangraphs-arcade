@@ -1,8 +1,21 @@
 
 nextEnemyMovement:
 
-    LDX collisionFlagEnemy
+    ;;; DEBUG -- We are getting here
+
+    JSR checkBackgroundCollisionEnemy
+    LDY collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE dumpEnemyController
+
+    ;;; DEBUG -- Not getting there
+    ;;; collisionFlagEnemy is getting set to 1 or > somewhere
+    ; LDX consoleLogEnemyCollision
+    ; INX
+    ; STX consoleLogEnemyCollision
+    ; LDA enemyX
+    ; STA consoleLogEnemyCollision
+
+  
  
     LDA enemyX
     JSR pickDirection
@@ -34,6 +47,11 @@ RTS
 
 checkBackgroundCollisionEnemy:
 
+    ; set the collision flag to 0 -- or false
+    ; LDA #$00         ; 0 means there is a collision
+    ; STA collisionFlag
+    ; LDX #$00
+
     ; find 
     ; use a grid system so we can make this easy and only check 255 items
     ; or 960 items
@@ -50,7 +68,7 @@ checkBackgroundCollisionEnemy:
     ; put lower byte into RAM
     ; then store the high byte into X
 
-    LDA #$01
+    LDA #$00
     STA collisionFlagEnemy
 
     ; fills out pointer for 
@@ -67,7 +85,7 @@ checkBackgroundCollisionEnemy:
     LSR
     STA enemyGridX
 
-    ; stores 1 into pointer
+    ; stores 0 into pointer
     LDA #$00
     STA enemyPointerLo
     STA enemyPointerHi
@@ -75,8 +93,8 @@ checkBackgroundCollisionEnemy:
     ;calculates the grid position for Y (16-bit)
 
     CLC
-    LDA enemyY ; 8 pixels
-    ASL ;mult x 2 x 2 ;; divide by 8 pixels then multiply by 32 items across
+    LDA enemyY              ; 8 pixels
+    ASL                     ;mult x 2 x 2 ;; divide by 8 pixels then multiply by 32 items across
     STA enemyPointerLo 
     LDA #$00
     ADC #$00
@@ -98,21 +116,27 @@ dumpFirstMultEnemy:
 
 dumpSecondMultEnemy:
     
-    LDA enemyPointerLo ; loads the low byte of where the player is
+    LDA enemyPointerLo ; loads the low byte of where the enemy is
     CLC 
     ADC collisionPointerLoEnemy
-    STA backgroundPointerLoEnemy
+    STA backgroundPointerLo ;backgroundPointerLoEnemy
     LDA enemyPointerHi ; loads the player high byte
     ADC collisionPointerHi
     STA backgroundPointerHiEnemy
 
-    LDY #$00
-    LDA (backgroundPointerLoEnemy), Y
-    CMP #$02 ;; whatever are loading it's all 0s
-    BNE collideEnemy
-    LDA #$01
-    STA collisionFlagEnemy
 
+    ;;; DEBUG this is making collisionFlagEnemy = 1
+    ;;; though we are starting _IN_ a wall
+    LDY #$00
+    LDA (backgroundPointerLo), Y ;(backgroundPointerLoEnemy), Y
+    LDA #$02
+    STA consoleLogEnemyCollision
+    CMP #$02                            ;; whatever are loading it's all 0s ; clear items are $02???
+    BNE collideEnemy
+  
+allowPassEnemy:
+    LDA #$00
+    STA collisionFlagEnemy
     RTS
 
 collideEnemy:

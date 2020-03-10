@@ -193,7 +193,7 @@ checkBackgroundCollisionLoop:
     LSR
     STA playerGridX
 
-    ; stores 1 into pointer
+    ; stores 0 into pointer
     LDA #$00
     STA playerPointerLo
     STA playerPointerHi
@@ -213,6 +213,8 @@ checkBackgroundCollisionLoop:
     STA playerPointerLo
     BCC dumpFirstMult
     INC playerPointerHi
+
+; what does this mean?
 dumpFirstMult:
 
     LDA playerPointerLo
@@ -221,6 +223,7 @@ dumpFirstMult:
     STA playerPointerLo
     BCC dumpSecondMult
     INC playerPointerHi
+
 dumpSecondMult:
     
     LDA playerPointerLo ; loads the low byte of where the player is
@@ -244,9 +247,13 @@ checkCollisionSprites:
     LDX #$00
 checkCollisionLoop:
 
+    ; SHORT CIRCUIT ;
+    JMP allowPass
+
     ; spriteW = #$04
     LDY #$04
 
+    ; ENEMY CHECK
     ; checking if player is on right edge
     LDA enemyX
     CLC
