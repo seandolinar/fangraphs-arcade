@@ -46,7 +46,6 @@ dumpUpdatePosition:
     STA controllerBits
     RTS
 
-JSR updateEnemyPosition
 
 
 moveRight:

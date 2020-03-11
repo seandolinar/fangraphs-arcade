@@ -3,8 +3,8 @@ nextEnemyMovement:
 
     ;;; DEBUG -- We are getting here
 
-    JSR checkBackgroundCollisionEnemy
-    LDY collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    JSR newCheckBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE dumpEnemyController
 
     ;;; DEBUG -- Not getting there
@@ -18,7 +18,9 @@ nextEnemyMovement:
   
  
     LDA enemyX
-    JSR pickDirection
+    ; JSR pickDirection
+    SEC
+    SBC #$04
     STA enemyX
 
     LDA enemyY
@@ -27,22 +29,36 @@ nextEnemyMovement:
 
 
     ; move this somewhere else
-    LDA enemyX
+    LDA enemyY
     STA $0204 ; sprite RAM x
 
-    LDA enemyY
+    LDA enemyX
     STA $0207 ; sprite RAM y
-
 
 
 dumpEnemyController:
     RTS
 
 
+newCheckBackgroundCollisionEnemy:
 
-updateEnemyPosition:
+    LDA #$00
+    STA collisionFlagEnemy
 
-RTS
+    LDA #<meta_tile0
+    STA collisionPointerLoEnemy
+    LDA #>meta_tile0
+    STA collisionPointerHiEnemy
+
+    CLC
+    LDA enemyX
+    LSR ; divide / 2 / 2 / 2
+    LSR
+    LSR
+    STA enemyGridX
+    STA consoleLogEnemyCollision
+
+    RTS
 
 
 checkBackgroundCollisionEnemy:
@@ -78,71 +94,70 @@ checkBackgroundCollisionEnemy:
     STA collisionPointerHiEnemy
 
     ; calculates grid position for X (should only be 8-bit)
-    CLC
-    LDA enemyX
-    LSR ; divide / 2 / 2 / 2
-    LSR
-    LSR
-    STA enemyGridX
+;     CLC
+;     LDA enemyX
+;     LSR ; divide / 2 / 2 / 2
+;     LSR
+;     LSR
+;     STA enemyGridX
 
-    ; stores 0 into pointer
-    LDA #$00
-    STA enemyPointerLo
-    STA enemyPointerHi
+;     ; stores 0 into pointer
+;     LDA #$00
+;     STA enemyPointerLo
+;     STA enemyPointerHi
 
-    ;calculates the grid position for Y (16-bit)
+;     ;calculates the grid position for Y (16-bit)
 
-    CLC
-    LDA enemyY              ; 8 pixels
-    ASL                     ;mult x 2 x 2 ;; divide by 8 pixels then multiply by 32 items across
-    STA enemyPointerLo 
-    LDA #$00
-    ADC #$00
-    STA enemyPointerHi 
+;     CLC
+;     LDA enemyY              ; 8 pixels
+;     ASL                     ;mult x 2 x 2 ;; divide by 8 pixels then multiply by 32 items across
+;     STA enemyPointerLo 
+;     LDA #$00
+;     ADC #$00
+;     STA enemyPointerHi 
 
-    LDA enemyPointerLo
-    ASL
-    STA enemyPointerLo
-    BCC dumpFirstMultEnemy
-    INC enemyPointerHi
+;     LDA enemyPointerLo
+;     ASL
+;     STA enemyPointerLo
+;     BCC dumpFirstMultEnemy
+;     INC enemyPointerHi
 
-dumpFirstMultEnemy:
-    LDA playerPointerLo
-    CLC
-    ADC enemyGridX
-    STA enemyPointerLo
-    BCC dumpSecondMultEnemy
-    INC enemyPointerHi
+; dumpFirstMultEnemy:
+;     LDA playerPointerLo
+;     CLC
+;     ADC enemyGridX
+;     STA enemyPointerLo
+;     BCC dumpSecondMultEnemy
+;     INC enemyPointerHi
 
-dumpSecondMultEnemy:
+; dumpSecondMultEnemy:
     
-    LDA enemyPointerLo ; loads the low byte of where the enemy is
-    CLC 
-    ADC collisionPointerLoEnemy
-    STA backgroundPointerLo ;backgroundPointerLoEnemy
-    LDA enemyPointerHi ; loads the player high byte
-    ADC collisionPointerHi
-    STA backgroundPointerHiEnemy
+;     LDA enemyPointerLo ; loads the low byte of where the enemy is
+;     CLC 
+;     ADC collisionPointerLoEnemy
+;     STA backgroundPointerLo ;backgroundPointerLoEnemy
+;     LDA enemyPointerHi ; loads the player high byte
+;     ADC collisionPointerHi
+;     STA backgroundPointerHiEnemy
 
 
-    ;;; DEBUG this is making collisionFlagEnemy = 1
-    ;;; though we are starting _IN_ a wall
-    LDY #$00
-    LDA (backgroundPointerLo), Y ;(backgroundPointerLoEnemy), Y
-    LDA #$02
-    STA consoleLogEnemyCollision
-    CMP #$02                            ;; whatever are loading it's all 0s ; clear items are $02???
-    BNE collideEnemy
+;     ;;; DEBUG this is making collisionFlagEnemy = 1
+;     ;;; though we are starting _IN_ a wall
+;     LDY #$00
+;     LDA (backgroundPointerLo), Y ;(backgroundPointerLoEnemy), Y
+;     LDA #$02 ;; changed this
+;     CMP #$02                            ;; whatever are loading it's all 0s ; clear items are $02???
+;     BNE collideEnemy
   
-allowPassEnemy:
-    LDA #$00
-    STA collisionFlagEnemy
-    RTS
+; allowPassEnemy:
+;     LDA #$00
+;     STA collisionFlagEnemy
+;     RTS
 
-collideEnemy:
-    LDA #$01
-    STA collisionFlagEnemy
-    RTS
+; collideEnemy:
+;     LDA #$01
+;     STA collisionFlagEnemy
+;     RTS
 
 
 
