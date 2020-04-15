@@ -197,31 +197,51 @@ checkBackgroundCollisionLoop:
     STA playerPointerLo
     STA playerPointerHi
 
+m1:
     ;calculates the grid position for Y (16-bit)
+    ;mult x 2 x 2 ;; divide by 8 pixels then multiply by 32 items across 
+
+    ; short cutting this because I shouldn't have a carry
+    CLC
+    LDA playerPointerHi 
+    ASL                    ; needed to multiply the high byte
+    STA playerPointerHi
 
     CLC
     LDA collisionTestY ; 8 pixels ; player Y in buffer
-    ASL ;mult x 2 x 2 ;; divide by 8 pixels then multiply by 32 items across 
-    ; why is this only x2 instead of x4?
-    STA playerPointerLo 
+    ASL ; Fist x2
+    STA playerPointerLo ; saves the low byte
     LDA #$00
-    ADC #$00
-    STA playerPointerHi 
+    ADC playerPointerHi
+    STA playerPointerHi
+    
+    ; BCC m2 ; branch on carry clear
+    ; INC playerPointerHi
+
+m2:
+    LDA playerPointerHi 
+    ASL                    ; needed to multiply the high byte
+    STA playerPointerHi
 
     LDA playerPointerLo
-    ASL ; this is where the second x2 is coming in? because I have to carry?
+    ASL ; Second x2
     STA playerPointerLo
-    BCC dumpFirstMult ; branch on carry clear
-    INC playerPointerHi
+        LDA #$00
+    ADC playerPointerHi
+    STA playerPointerHi
+    ; BCC dumpFirstMult ; branch on carry clear
+    ; INC playerPointerHi
 
 ; what does this mean?
 dumpFirstMult:
+    
+  
 
     LDA playerPointerLo
     CLC
     ADC playerGridX
     STA playerPointerLo
-    BCC dumpSecondMult
+    BCC dumpSecondMult   
     INC playerPointerHi
 
 dumpSecondMult:
