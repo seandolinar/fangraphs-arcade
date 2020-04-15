@@ -186,11 +186,11 @@ checkBackgroundCollisionLoop:
 
     ; calculates grid position for X (should only be 8-bit)
     CLC
-    LDA collisionTestX
-    LSR ; divide / 2 / 2 / 2
+    LDA collisionTestX ; playerPosition in the buffer
+    LSR ; divide / 2 / 2 / 2 ; divide by 8 -- size of the icon
     LSR
     LSR
-    STA playerGridX
+    STA playerGridX ; converts to grid
 
     ; stores 0 into pointer
     LDA #$00
@@ -200,17 +200,18 @@ checkBackgroundCollisionLoop:
     ;calculates the grid position for Y (16-bit)
 
     CLC
-    LDA collisionTestY ; 8 pixels
-    ASL ;mult x 2 x 2 ;; divide by 8 pixels then multiply by 32 items across
+    LDA collisionTestY ; 8 pixels ; player Y in buffer
+    ASL ;mult x 2 x 2 ;; divide by 8 pixels then multiply by 32 items across 
+    ; why is this only x2 instead of x4?
     STA playerPointerLo 
     LDA #$00
     ADC #$00
     STA playerPointerHi 
 
     LDA playerPointerLo
-    ASL
+    ASL ; this is where the second x2 is coming in? because I have to carry?
     STA playerPointerLo
-    BCC dumpFirstMult
+    BCC dumpFirstMult ; branch on carry clear
     INC playerPointerHi
 
 ; what does this mean?
@@ -227,14 +228,15 @@ dumpSecondMult:
     
     LDA playerPointerLo ; loads the low byte of where the player is
     CLC 
-    ADC collisionPointerLo
-    STA backgroundPointerLo
+    ADC collisionPointerLo ; adds to the collision pointer?
+    STA backgroundPointerLo ; saves into the background pointer
     LDA playerPointerHi ; loads the player high byte
-    ADC collisionPointerHi
-    STA backgroundPointerHi
+    ADC collisionPointerHi ; adds to high
+    STA backgroundPointerHi ; saves to high
 
-    LDY #$00
-    LDA (backgroundPointerLo), Y
+    LDY #$00 ; resets Y
+    LDA (backgroundPointerLo), Y ; probably don't need to index this, but I do, why?
+    ; I do, this is indirect, I think I have to do it this way
     CMP #$02 ;; whatever are loading it's all 0s
     BNE collide
 

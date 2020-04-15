@@ -1,38 +1,31 @@
 
 nextEnemyMovement:
-
-    ;;; DEBUG -- We are getting here
-
-    JSR newCheckBackgroundCollisionEnemy
-    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-    BNE dumpEnemyController
-
-    ;;; DEBUG -- Not getting there
-    ;;; collisionFlagEnemy is getting set to 1 or > somewhere
-    ; LDX consoleLogEnemyCollision
-    ; INX
-    ; STX consoleLogEnemyCollision
-    ; LDA enemyX
-    ; STA consoleLogEnemyCollision
-
-  
  
     LDA enemyX
-    ; JSR pickDirection
-    SEC
-    SBC #$04
-    STA enemyX
+    JSR pickDirection ; should use the acculumator
+    ; SEC
+    ; SBC #$04
+    STA enemyXBuffer
 
     LDA enemyY
     JSR pickDirection
-    STA enemyY
+    STA enemyYBuffer
+
+    JSR newCheckBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    STA consoleLogEnemyCollision
+    BNE dumpEnemyController
 
 
     ; move this somewhere else
-    LDA enemyY
+    CLC
+    LDA enemyYBuffer
+    STA enemyY
     STA $0204 ; sprite RAM x
 
-    LDA enemyX
+    CLC
+    LDA enemyXBuffer
+    STA enemyX
     STA $0207 ; sprite RAM y
 
 
@@ -40,7 +33,11 @@ dumpEnemyController:
     RTS
 
 
+;; working on this
 newCheckBackgroundCollisionEnemy:
+    ; this was working before beause we never set the collionsFlagEnemy
+    ; now it's outputting 4
+    ; which prevents it from moving
 
     LDA #$00
     STA collisionFlagEnemy
@@ -51,13 +48,66 @@ newCheckBackgroundCollisionEnemy:
     STA collisionPointerHiEnemy
 
     CLC
-    LDA enemyX
+    LDA enemyXBuffer
     LSR ; divide / 2 / 2 / 2
     LSR
     LSR
-    STA enemyGridX
-    STA consoleLogEnemyCollision
+    STA enemyGridX ; finds spot on grid
 
+    LDA #$00
+    STA enemyPointerLo
+    STA enemyPointerHi
+
+    CLC
+    LDA collisionTestY ; 8 pixels ; player Y in buffer
+    ASL ;mult x 2 x 2 ;; divide by 8 pixels then multiply by 32 items across 
+    ; why is this only x2 instead of x4?
+    STA enemyPointerLo 
+    LDA #$00
+    ADC #$00
+    STA enemyPointerHi
+
+    LDA enemyPointerLo
+    ASL ; this is where the second x2 is coming in? because I have to carry?
+    STA enemyPointerLo
+    BCC dumpFirstMultEnemy ; branch on carry clear
+    INC enemyPointerHi
+
+dumpFirstMultEnemy:
+
+    LDA enemyPointerLo
+    CLC
+    ADC enemyGridX
+    STA enemyPointerLo
+    BCC dumpSecondMultEnemy
+    INC enemyPointerHi
+
+dumpSecondMultEnemy:
+
+    ; i'm beginning to question all of this
+    LDA enemyPointerLo ; loads the low byte of where the player is
+    CLC 
+    ADC collisionPointerLoEnemy ; adds to the collision pointer?
+    STA backgroundPointerLo ; saves into the background pointer
+    LDA enemyPointerHi ; loads the player high byte
+    ADC collisionPointerHiEnemy ; adds to high
+    STA backgroundPointerHi ; saves to high
+
+    LDY #$00 ; resets Y
+    LDA (backgroundPointerLo), Y ; i'm getting 1 here
+    ; I do, this is indirect, I think I have to do it this way
+        ; STA consoleLogEnemyCollision
+    STA consoleLogEnemyCollision 
+
+    CMP #$02 ;; whatever are loading it's all 0s
+    BNE collideEnemy ; branch if cmp is not equal to A
+    LDA #$0e
+    STA consoleLogEnemyCollision
+    RTS
+
+collideEnemy:
+    LDA #$01
+    STA collisionFlagEnemy
     RTS
 
 
@@ -163,7 +213,7 @@ checkBackgroundCollisionEnemy:
 
 pickDirection:
     LDX enemyQ
-    CPX #$08
+    CPX #$0b
     BCC pickDirectionContinue
     LDX #$00
     
@@ -178,13 +228,13 @@ pickDirectionContinue:
 ; the CLC and SEC make this work right
 pickDirectionForward:
     CLC
-    ADC #$04
+    ADC #$08
     RTS
 
 ; the branched $00 option 
 pickDirectionReverse:
     SEC
-    SBC #$04
+    SBC #$08
     RTS
 
    
