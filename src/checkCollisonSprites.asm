@@ -15,7 +15,15 @@ checkCollisionLoop:
     CMP playerLocationY
     BNE dumpCheckSpriteCollison
 
-    JSR soundBallCollisionWall
+    LDA gameStateIsPowered
+    CMP #$01
+    BEQ collisionGood
+
+    JSR soundCollision ; Bad collision
+    RTS
+
+collisionGood:
+    JSR soundCollisionGood
 
 dumpCheckSpriteCollison:
    

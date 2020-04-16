@@ -4,6 +4,7 @@
 .include "./position.asm"
 .include "./enemy.asm"
 .include "./checkCollisonSprites.asm"
+.include "./sound.asm"
 
 .include "./reset.asm"
 .include "./pallete.asm"
@@ -41,6 +42,8 @@ IRQ:
     RTI
 
 Main:
+    LDA #$01
+    STA gameStateIsPowered ;; test
 
     JSR checkCollisionSprites
 

@@ -281,9 +281,3 @@ collide:
     RTS
 
 
-soundBallCollisionWall:
-  LDA #$C9    ;0C9 is a C# in NTSC mode
-  STA $4002
-  LDA #$00
-  STA $4003
-  RTS

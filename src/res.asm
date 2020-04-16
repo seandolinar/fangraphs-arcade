@@ -73,6 +73,7 @@ masterTimer:			.res 1      ; 0025
 
 consoleLogEnemyCollision:	.res 1  ; 0026
 
+gameStateIsPowered: .res 1 ; 0027
 
 
 background_row:         .res $20
