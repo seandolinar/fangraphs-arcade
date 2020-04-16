@@ -17,56 +17,6 @@ checkCollisionLoop:
 
     JSR soundBallCollisionWall
 
-
-    ; SHORT CIRCUIT ;
-    JMP dumpCheckSpriteCollison
-
-    ; spriteW = #$04
-    LDY #$04
-
-    ; ENEMY CHECK
-    ; checking if player is on right edge
-    LDA enemyX
-    CLC
-    ; ADC #$04 ; sprite W
-    CMP playerLocationX
-    BMI dumpCheckSpriteCollison 
-
-    LDA playerLocationX
-    SEC
-    ; SBC #$04 ; sprite W   
-    CMP enemyX ;, X ;enemyX
-    BPL dumpCheckSpriteCollison 
-
-    ;checking if player is on left edge
-    LDA playerLocationX
-    ; CLC
-    ; ADC #$08
-    ; SBC #$04 ; sprite W
-    CMP enemyX ;, X ;enemyX
-    BMI dumpCheckSpriteCollison
-
-    ; checking if player is above
-    LDA playerLocationY ; greater > lesser ==> pass
-    CLC
-    ; ADC #$08
-    ; SBC #$04 ; sprite H
-    CMP enemyY ;, X
-    BMI dumpCheckSpriteCollison
-
-    ; checking if player is below
-    LDA enemyY
-    CLC
-    ; ADC enemyH
-    ; ADC #$08
-    ; SBC #$04 ; sprite H
-    CMP playerLocationY
-    BMI dumpCheckSpriteCollison
-
-    ; LDA #$00
-    ; STA collisionFlag
-    JSR soundBallCollisionWall
-
 dumpCheckSpriteCollison:
    
     RTS
