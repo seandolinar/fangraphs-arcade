@@ -3,8 +3,6 @@ nextEnemyMovement:
  
     LDA enemyX
     JSR pickDirection ; should use the acculumator
-    ; SEC
-    ; SBC #$04
     STA enemyXBuffer
 
     LDA enemyY

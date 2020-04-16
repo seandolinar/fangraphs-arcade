@@ -3,6 +3,7 @@
 .include "./controller.asm"
 .include "./position.asm"
 .include "./enemy.asm"
+.include "./checkCollisonSprites.asm"
 
 .include "./reset.asm"
 .include "./pallete.asm"
@@ -41,7 +42,7 @@ IRQ:
 
 Main:
 
- 
+    JSR checkCollisionSprites
 
 MainReadController:
     LDA controllerBits

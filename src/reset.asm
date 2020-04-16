@@ -11,6 +11,9 @@ RESET:
 	LDX #$FF
 	TXS       ; initialize stack
 
+; ENABLE SOUND
+lda #%00000001
+sta $4015 ;enable square 1
 
 ; CLEAR MEMORY
 LDX $00

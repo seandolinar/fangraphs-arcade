@@ -66,8 +66,8 @@ moveRight:
         STA playerLocationX
 
         ; JSR nextEnemyMovement ;; trying something here
-
         RTS
+
 dumpMoveRight:
         LDA playerLocationX
         STA playerLocationXBuffer
@@ -156,7 +156,7 @@ enemyOffset = $08
 
 checkCollision:
     ; set the collision flag to 0 -- or false
-    LDA #$00         ; 0 means there is a collision
+    LDA #$01         ; 0 means there is a collision
     STA collisionFlag
     LDX #$00
 
@@ -258,66 +258,7 @@ dumpSecondMult:
     CMP #$02 ;; whatever are loading it's all 0s
     BNE collide
 
-
-; this is actually doing something
-; but it's not right
-; let's get rid of the X loop
-checkCollisionSprites:
-    LDX #$00
-checkCollisionLoop:
-
-    ; SHORT CIRCUIT ;
-    JMP allowPass
-
-    ; spriteW = #$04
-    LDY #$04
-
-    ; ENEMY CHECK
-    ; checking if player is on right edge
-    LDA enemyX
-    CLC
-    ADC #$04 ; sprite W
-    CMP collisionTestX
-    BMI allowPass ; should want this
-
-    LDA collisionTestX
-    SEC
-    SBC #$04 ; sprite W   
-    CMP enemyX ;, X ;enemyX
-    BPL allowPass ; should want this
-
-    ;checking if player is on left edge
-    LDA collisionTestX
-    ; CLC
-    ; ADC #$08
-    ; SBC #$04 ; sprite W
-    CMP enemyX ;, X ;enemyX
-    BMI allowPass ; should want this
-
-    ; checking if player is above
-    LDA enemyY ; greater > lesser ==> pass
-    CLC
-    ADC #$08
-    SBC #$04 ; sprite H
-    CMP enemyY ;, X
-    BMI allowPass ; should want this
-
-    ; checking if player is below
-    LDA enemyY
-    CLC
-    ; ADC enemyH
-    ADC #$08
-    SBC #$04 ; sprite H
-    CMP collisionTestY
-    BMI allowPass ; should want this
-
-    LDA #$00
-    STA collisionFlag
-   
     RTS
-  
-;; this loop won't work because it will only stop if it's the last one.
-;; so i might need to invert this whole thing
 
 allowPass:
 
@@ -339,3 +280,10 @@ collide:
     STA collisionFlag
     RTS
 
+
+soundBallCollisionWall:
+  LDA #$C9    ;0C9 is a C# in NTSC mode
+  STA $4002
+  LDA #$00
+  STA $4003
+  RTS
