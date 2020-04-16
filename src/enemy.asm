@@ -54,24 +54,46 @@ newCheckBackgroundCollisionEnemy:
     LSR
     STA enemyGridX ; finds spot on grid
 
+    ; stores 0 into pointer
     LDA #$00
     STA enemyPointerLo
+    STA enemyPointerHi
+
+me1:
+
+    ; short cutting this because I shouldn't have a carry
+    ;mult x 2 x 2 ;; divide by 8 pixels then multiply by 32 items across 
+    CLC
+    LDA enemyPointerHi 
+    ASL                    ; needed to multiply the high byte
     STA enemyPointerHi
 
     CLC
     LDA enemyYBuffer ; 8 pixels ; player Y in buffer
-    ASL ;mult x 2 x 2 ;; divide by 8 pixels then multiply by 32 items across 
-    ; why is this only x2 instead of x4?
+    ASL 
     STA enemyPointerLo 
     LDA #$00
-    ADC #$00
+    ADC enemyPointerHi
+    STA enemyPointerHi
+
+    ; LDA enemyPointerLo
+    ; ASL ; this is where the second x2 is coming in? because I have to carry?
+    ; STA enemyPointerLo
+    ; BCC dumpFirstMultEnemy ; branch on carry clear
+    ; INC enemyPointerHi
+
+me2:
+    LDA enemyPointerHi 
+    ASL                    ; needed to multiply the high byte
     STA enemyPointerHi
 
     LDA enemyPointerLo
-    ASL ; this is where the second x2 is coming in? because I have to carry?
+    ASL ; Second x2
     STA enemyPointerLo
-    BCC dumpFirstMultEnemy ; branch on carry clear
-    INC enemyPointerHi
+    LDA #$00
+    ADC enemyPointerHi
+    STA enemyPointerHi
+
 
 dumpFirstMultEnemy:
 

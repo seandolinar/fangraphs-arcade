@@ -235,8 +235,6 @@ m2:
 ; what does this mean?
 dumpFirstMult:
     
-  
-
     LDA playerPointerLo
     CLC
     ADC playerGridX
