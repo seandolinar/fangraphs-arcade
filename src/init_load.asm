@@ -17,29 +17,31 @@ InitialLoad:
     LDA player_oam + 0
     STA playerLocationY
     LDA player_oam + 3
-    STA playerLocationX
+    STA playerLocationX ; we should take this on
+                        ; RAM should flow to the position
+                        ; RAM IS THE STATE
 
+; maybe consolidate all of this
+; CPX #$0c means we'll loop through a 3 different spirtes
   LoadEnemy:
     LDX #$00
   LoadEnemyLoop:
     LDA enemy_array, X       ; load data from address (sprites +  x)
     
     STA enemy_oam + 1, X          ; store into RAM address ($0200 + x)
-    ; STA enemyX                ; stores X-coordinate
 
     LDA enemy_array+1, X        ; load data from address (sprites +  x)
     STA enemy_oam , X         ; store into RAM address ($0200 + x)
     LDA enemy_array+2, X        ; load data from address (sprites +  x)
     STA enemy_oam+3 , X         ; store into RAM address ($0200 + x)
     LDA enemy_array+3, X
-    ; STA enemyY                  ; store Y-coord
 
     STA enemy_oam+2, X              ; X = X + 1
     INX
     INX
     INX
     INX
-    CPX #$08 ;#$10          ; Compare X to hex $10, decimal 16
+    CPX #$0c ;#$10          ; Compare X to hex $10, decimal 16
     BNE LoadEnemyLoop   ; Branch to LoadSpritesLoop if compare was Not Equal to zero
 
 
@@ -165,7 +167,7 @@ JMP Main
 enemy_array:
 .byte $01, $20, $20, $01 ; first enemy (O)
 .byte $00, $30, $30, $02 ; second enemy (X)
-; .byte $01, $30, $30, $01 
+.byte $01, $30, $30, $01 
 ; .byte $01, $50, $28, $01
 
 enemy_direction_random:

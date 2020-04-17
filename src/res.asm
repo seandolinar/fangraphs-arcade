@@ -20,9 +20,9 @@ CONTROL_P1_RIGHT =  %10000000
 
 .segment "OAM"
 player_oam:              .res 4
-enemy_oam:               .res 252        ; sprite OAM data to be uploaded by DMA
-					                        ; .res reserves 256 bytes of storage
-
+enemy_oam:               .res 8     ; sprite OAM data to be uploaded by DMA
+power_up_oam:			 .res 244   ; .res reserves 256 TOTAL bytes of storage
+									; will have to expand if when we expand enemies
 
 .segment "ZEROPAGE"
 playerLocationX:        .res 1 ; 0000
@@ -81,6 +81,8 @@ gameStateIsPowered: .res 1 ; 0027
 tempX:					.res 1
 tempY:					.res 1
 
+powerUpX:				.res 1 ;; if these don't move we can read them from ROM
+powerUpY:				.res 1 ;; then loop through the locations, though I'd have to remember which ones are "gone"
 
 background_row:         .res $20
 data_x:                 .res 1
