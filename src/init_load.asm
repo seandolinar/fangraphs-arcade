@@ -25,14 +25,14 @@ InitialLoad:
     LDA enemy_array, X       ; load data from address (sprites +  x)
     
     STA enemy_oam + 1, X          ; store into RAM address ($0200 + x)
-    STA enemyX                ; stores X-coordinate
+    ; STA enemyX                ; stores X-coordinate
 
     LDA enemy_array+1, X        ; load data from address (sprites +  x)
     STA enemy_oam , X         ; store into RAM address ($0200 + x)
     LDA enemy_array+2, X        ; load data from address (sprites +  x)
     STA enemy_oam+3 , X         ; store into RAM address ($0200 + x)
     LDA enemy_array+3, X
-    STA enemyY                  ; store Y-coord
+    ; STA enemyY                  ; store Y-coord
 
     STA enemy_oam+2, X              ; X = X + 1
     INX
@@ -163,13 +163,15 @@ JMP Main
 
 ; this is not RAM, huh?
 enemy_array:
-.byte $01, $20, $20, $01
-.byte $01, $30, $30, $03
+.byte $01, $20, $20, $01 ; first enemy (O)
+.byte $00, $30, $30, $02 ; second enemy (X)
 ; .byte $01, $30, $30, $01 
 ; .byte $01, $50, $28, $01
 
 enemy_direction_random:
-.byte $01, $01, $00, $01, $00, $00, $01, $00, $01, $01, $01, $01
+; .byte $01, $01, $00, $01, $00, $00, $01, $00, $01, $01, $01, $01
+.byte $01, $FF, $00, $01, $00, $FF, $01, $01, $00, $00, $FF, $FF
+
 
 
 meta_tile0:

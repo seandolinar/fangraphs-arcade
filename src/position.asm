@@ -226,7 +226,7 @@ m2:
     LDA playerPointerLo
     ASL ; Second x2
     STA playerPointerLo
-        LDA #$00
+    LDA #$00
     ADC playerPointerHi
     STA playerPointerHi
     ; BCC dumpFirstMult ; branch on carry clear

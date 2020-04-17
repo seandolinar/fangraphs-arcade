@@ -1,7 +1,7 @@
 
 nextEnemyMovement:
 
-    LDX #$02
+    LDX #$01
     LDY #$00
 forEachEnemyMovement:
     DEX
@@ -19,8 +19,12 @@ forEachEnemyMovement:
     STA consoleLogEnemyCollision
     BNE dumpEnemyController
 
-
+    ; OAM
+    ; 00 -- Player, 00:Y, 01:tile, 02:attr, 03:X 
+    ; 04 -- Enemy1, 04:Y, 05:tile, 06:attr, 07:X
+    ; 08 -- Enemy2, 08:Y, 09:tile, 09:attr, 0A:X
     ; move this somewhere else
+    LDY tempY
     CLC
     LDA enemyYBuffer
     STA enemyY, X
@@ -29,14 +33,14 @@ forEachEnemyMovement:
     CLC
     LDA enemyXBuffer
     STA enemyX, X
-    STA $0207, Y ; sprite RAM y
+    STA $0207, Y ; sprite RAM x
 
     INY
     INY
     INY
     INY
 
-    CPX #$01
+    CPX #$00
     BNE forEachEnemyMovement
 
 
@@ -158,9 +162,13 @@ pickDirectionContinue:
     STX enemyQ
     
     STY tempY
+
     LDY enemy_direction_random, X
+    CPY #$FF
     BEQ pickDirectionReverse  ; branches if Y is $00
-    LDY tempY
+    CPY #$01
+    BEQ pickDirectionForward  ; branches if Y is $00
+
     INX
 
 ; if Y is $01 we run this
@@ -169,6 +177,7 @@ pickDirectionForward:
     CLC
     ADC #$08
     LDX tempX
+    LDY tempY
     RTS
 
 ; the branched $00 option 
@@ -176,6 +185,7 @@ pickDirectionReverse:
     SEC
     SBC #$08
     LDX tempX
+    LDY tempY
     RTS
 
    
