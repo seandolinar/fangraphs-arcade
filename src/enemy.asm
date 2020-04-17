@@ -1,11 +1,15 @@
 
 nextEnemyMovement:
- 
-    LDA enemyX
+
+    LDX #$02
+forEachEnemyMovement:
+    DEX
+
+    LDA enemyX, X
     JSR pickDirection ; should use the acculumator
     STA enemyXBuffer
 
-    LDA enemyY
+    LDA enemyY, X
     JSR pickDirection
     STA enemyYBuffer
 
@@ -18,13 +22,16 @@ nextEnemyMovement:
     ; move this somewhere else
     CLC
     LDA enemyYBuffer
-    STA enemyY
+    STA enemyY, X
     STA $0204 ; sprite RAM x
 
     CLC
     LDA enemyXBuffer
-    STA enemyX
+    STA enemyX, X
     STA $0207 ; sprite RAM y
+
+    CPX #$00
+    BNE forEachEnemyMovement
 
 
 dumpEnemyController:
@@ -131,6 +138,8 @@ collideEnemy:
     RTS
 
 pickDirection:
+    ; TXS ; stack is causing crashes
+    STX tempX
     LDX enemyQ
     CPX #$0b
     BCC pickDirectionContinue
@@ -147,13 +156,15 @@ pickDirectionContinue:
 ; the CLC and SEC make this work right
 pickDirectionForward:
     CLC
-    ADC #$08
+    ; ADC #$08
+    LDX tempX
     RTS
 
 ; the branched $00 option 
 pickDirectionReverse:
     SEC
-    SBC #$08
+    ; SBC #$08
+    LDX tempX
     RTS
 
    

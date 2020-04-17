@@ -39,7 +39,7 @@ InitialLoad:
     INX
     INX
     INX
-    CPX #$04 ;#$10          ; Compare X to hex $10, decimal 16
+    CPX #$08 ;#$10          ; Compare X to hex $10, decimal 16
     BNE LoadEnemyLoop   ; Branch to LoadSpritesLoop if compare was Not Equal to zero
 
 
@@ -132,6 +132,11 @@ dumpFillBackground:
     LDA #$20
     STA enemyY
 
+    LDA #$30
+    STA enemyX2
+    LDA #$30
+    STA enemyY2
+
     
     LDA #$08
     STA enemyH
@@ -159,7 +164,7 @@ JMP Main
 ; this is not RAM, huh?
 enemy_array:
 .byte $01, $24, $24, $01
-; .byte $01, $28, $50, $03 
+.byte $01, $28, $50, $01
 ; .byte $01, $30, $30, $01 
 ; .byte $01, $50, $28, $01
 

@@ -38,42 +38,46 @@ controllerBits:         .res 1 ; 0008
 controllerBitsPrev:     .res 1
 controllerTimer:        .res 1
 
-enemyX:                 .res 1   
-enemyY:                 .res 1 ; 000c
+enemyX:                 .res 1
+enemyX2:				.res 1 ; 000c
+enemyY:                 .res 1 
+enemyY2:				.res 1
 enemyH:                 .res 1
-enemyW:                 .res 1
-enemyQ:					.res 1
-enemyXBuffer:			.res 1 ; 0010
+enemyW:                 .res 1 ; 0010
+enemyQ:					.res 1 
+enemyXBuffer:			.res 1 
 enemyYBuffer:			.res 1
 
-enemyX1:                .res 1   
-enemyY1:                .res 1
-enemyH1:                .res 1 ; 0014
+enemyZ:                 .res 1   
+enemyZ1:                .res 1 ; 0014
+enemyH1:                .res 1 
 enemyW1:                .res 1
 
 collisionFlag:          .res 1 
 collisionFlagEnemy:     .res 1
-collisionTestX:         .res 1 ; 0018
-collisionTestY:         .res 1 ; 0019
-collisionPointerLo:     .res 1 ; 001a
-collisionPointerHi:     .res 1 ; 001b
-backgroundPointerLo:    .res 1 ; 001c
-backgroundPointerHi:    .res 1 ; 001d
+collisionTestX:         .res 1 ; 0019
+collisionTestY:         .res 1 ; 001a
+collisionPointerLo:     .res 1 ; 001b
+collisionPointerHi:     .res 1 ; 001c
+backgroundPointerLo:    .res 1 ; 001d
+backgroundPointerHi:    .res 1 ; 001e
 
 
-enemyGridX:            .res 1  ; 001e
-enemyPointerLo:        .res 1  ; 001f
-enemyPointerHi:        .res 1  ; 0020
-backgroundPointerLoEnemy:    .res 1 ; 0021
-backgroundPointerHiEnemy:    .res 1 ; 0022
-collisionPointerLoEnemy:     .res 1 ; 0023
-collisionPointerHiEnemy:     .res 1 ; 0024
+enemyGridX:            .res 1  ; 001f
+enemyPointerLo:        .res 1  ; 0020
+enemyPointerHi:        .res 1  ; 0021
+backgroundPointerLoEnemy:    .res 1 ; 0022
+backgroundPointerHiEnemy:    .res 1 ; 0023
+collisionPointerLoEnemy:     .res 1 ; 0024
+collisionPointerHiEnemy:     .res 1 ; 0025
 
-masterTimer:			.res 1      ; 0025
+masterTimer:			.res 1      ; 0026
 
-consoleLogEnemyCollision:	.res 1  ; 0026
+consoleLogEnemyCollision:	.res 1  ; 0027
 
 gameStateIsPowered: .res 1 ; 0027
+
+tempX:					.res 1
 
 
 background_row:         .res $20
