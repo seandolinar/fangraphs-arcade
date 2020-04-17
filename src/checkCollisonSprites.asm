@@ -5,13 +5,14 @@
 ; if this is kept on a grid, we can just compare the straight up X/Y RAM coords without much math
 .segment "CODE"
 checkCollisionSprites:
-    LDX #$00
+    LDX #$02
 checkCollisionLoop:
 
-    LDA enemyX
+    DEX
+    LDA enemyX, X
     CMP playerLocationX
     BNE dumpCheckSpriteCollison
-    LDA enemyY
+    LDA enemyY, X
     CMP playerLocationY
     BNE dumpCheckSpriteCollison
 
@@ -26,7 +27,8 @@ collisionGood:
     JSR soundCollisionGood
 
 dumpCheckSpriteCollison:
-   
+    CPX #$00
+    BNE checkCollisionLoop
     RTS
   
 ;; this loop won't work because it will only stop if it's the last one.

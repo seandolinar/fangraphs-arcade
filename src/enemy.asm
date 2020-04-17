@@ -2,6 +2,7 @@
 nextEnemyMovement:
 
     LDX #$02
+    LDY #$00
 forEachEnemyMovement:
     DEX
 
@@ -23,14 +24,19 @@ forEachEnemyMovement:
     CLC
     LDA enemyYBuffer
     STA enemyY, X
-    STA $0204 ; sprite RAM x
+    STA $0204, Y ; sprite RAM y
 
     CLC
     LDA enemyXBuffer
     STA enemyX, X
-    STA $0207 ; sprite RAM y
+    STA $0207, Y ; sprite RAM y
 
-    CPX #$00
+    INY
+    INY
+    INY
+    INY
+
+    CPX #$01
     BNE forEachEnemyMovement
 
 
@@ -120,11 +126,13 @@ dumpSecondMultEnemy:
     ADC collisionPointerHiEnemy ; adds to high
     STA backgroundPointerHi ; saves to high
 
+    STY tempY
     LDY #$00 ; resets Y
     LDA (backgroundPointerLo), Y ; i'm getting 1 here
     ; I do, this is indirect, I think I have to do it this way
         ; STA consoleLogEnemyCollision
-    STA consoleLogEnemyCollision 
+    STA consoleLogEnemyCollision
+    LDY tempY 
 
     CMP #$02 ;; whatever are loading it's all 0s
     BNE collideEnemy ; branch if cmp is not equal to A
@@ -148,22 +156,25 @@ pickDirection:
 pickDirectionContinue:
     INX
     STX enemyQ
+    
+    STY tempY
     LDY enemy_direction_random, X
     BEQ pickDirectionReverse  ; branches if Y is $00
+    LDY tempY
     INX
 
 ; if Y is $01 we run this
 ; the CLC and SEC make this work right
 pickDirectionForward:
     CLC
-    ; ADC #$08
+    ADC #$08
     LDX tempX
     RTS
 
 ; the branched $00 option 
 pickDirectionReverse:
     SEC
-    ; SBC #$08
+    SBC #$08
     LDX tempX
     RTS
 

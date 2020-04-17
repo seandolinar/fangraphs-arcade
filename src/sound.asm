@@ -3,8 +3,8 @@ soundCollision:
 
     ; need timer so that the sound will continue to play if we are sitting on it
     LDA masterTimer
-    CMP #$00
-    BNE dumpSoundCollision
+    ; CMP #$00
+    ; BNE dumpSoundCollision
     ; this makes it go on forever...don't know why
     ; because 5th bit (from right) disables the length counter
     ; LDA #%10111111;
@@ -23,8 +23,8 @@ soundCollisionGood:
 
     ; need timer so that the sound will continue to play if we are sitting on it
     LDA masterTimer
-    CMP #$00
-    BNE dumpSoundCollision
+    ; CMP #$00
+    ; BNE dumpSoundCollision
     ; this makes it go on forever...don't know why
     ; because 5th bit (from right) disables the length counter
     ; LDA #%10111111;

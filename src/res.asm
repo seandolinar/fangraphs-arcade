@@ -77,7 +77,9 @@ consoleLogEnemyCollision:	.res 1  ; 0027
 
 gameStateIsPowered: .res 1 ; 0027
 
+; Wish I knew why I can't use the stack for this
 tempX:					.res 1
+tempY:					.res 1
 
 
 background_row:         .res $20
