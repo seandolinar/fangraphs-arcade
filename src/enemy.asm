@@ -1,7 +1,7 @@
 
 nextEnemyMovement:
 
-    LDX #$01
+    LDX #$02
     LDY #$00
 forEachEnemyMovement:
     DEX
