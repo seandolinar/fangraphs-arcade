@@ -28,12 +28,12 @@ forEachEnemyMovement:
     CLC
     LDA enemyYBuffer
     STA enemyY, X
-    STA $0204, Y ; sprite RAM y
+    STA enemy_oam, Y ; sprite RAM y
 
     CLC
     LDA enemyXBuffer
     STA enemyX, X
-    STA $0207, Y ; sprite RAM x
+    STA enemy_oam + 3, Y ; sprite RAM x
 
     INY
     INY
