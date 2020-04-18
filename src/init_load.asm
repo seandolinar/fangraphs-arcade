@@ -73,8 +73,8 @@ FillAttrib0:
   LDA #$C0
   STA $2006             ; write the low byte of $23C0 address
   LDX #$40              ; fill 64 bytes
-  LDA #$00
-  LDA #%11101011
+  LDA #$02
+  ; LDA #%11101011
 FillAttrib0Loop:
   STA $2007
   DEX
