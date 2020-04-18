@@ -25,6 +25,7 @@ checkCollisionLoop:
 
 collisionGood:
     JSR soundCollisionGood
+    JSR resetOneEnemyPosition
 
 dumpCheckSpriteCollison:
     CPX #$00
@@ -33,3 +34,12 @@ dumpCheckSpriteCollison:
   
 ;; this loop won't work because it will only stop if it's the last one.
 ;; so i might need to invert this whole thing
+
+
+
+; this uses X from checkCollisionSprites
+resetOneEnemyPosition:
+    LDA #$20
+    STA enemyX, X
+    STA enemyY, X
+    RTS

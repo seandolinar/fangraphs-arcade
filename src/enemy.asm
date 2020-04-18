@@ -188,7 +188,40 @@ pickDirectionReverse:
     LDY tempY
     RTS
 
+
+changeEnemyColor:
+
+    STX tempX
+    STY tempY
+
+    LDX #$02
+    LDY #$00
+
+    LDA gameStateIsPowered
+    BNE changeEnemyColorPowerUp ; BNE branches if we LDA a #$00
+
+    LDA #%0000001 ; yellow
+
+changeEnemyColorLoop:
+    DEX 
+    STA enemy_oam + 2, Y
+
+    INY
+    INY
+    INY
+    INY
+
+    CPX #$00
+    BNE changeEnemyColorLoop
+
+    LDX tempX
+    LDY tempY
+    RTS
+
    
+changeEnemyColorPowerUp:
+    LDA #%0000011 ; POWER UP STATE ; RED
+    JMP changeEnemyColorLoop
 
     
 

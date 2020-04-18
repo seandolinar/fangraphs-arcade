@@ -3,6 +3,7 @@
 .include "./controller.asm"
 .include "./position.asm"
 .include "./enemy.asm"
+.include "./checkCollisonPowerUp.asm"
 .include "./checkCollisonSprites.asm"
 .include "./sound.asm"
 
@@ -26,6 +27,7 @@ NMI:
     STA $4014  ; set the high byte (02) of the RAM address, start the transfer
 
     JSR readController
+    JSR incTimerPowerUp
 
     LDX masterTimer
     DEX
@@ -42,10 +44,9 @@ IRQ:
     RTI
 
 Main:
-    LDA #$01
-    STA gameStateIsPowered ;; test
-
+    JSR checkCollisionPowerUp
     JSR checkCollisionSprites
+
 
 MainReadController:
     LDA controllerBits

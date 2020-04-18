@@ -26,21 +26,23 @@ InitialLoad:
   LoadEnemy:
     LDX #$00
   LoadEnemyLoop:
-    LDA enemy_array, X       ; load data from address (sprites +  x)
-    
-    STA enemy_oam + 1, X          ; store into RAM address ($0200 + x)
+    LDA enemy_array, X       ; load data from address (sprites +  x) ; Y    
+    STA enemy_oam , X          ; store into RAM address ($0200 + x)
 
-    LDA enemy_array+1, X        ; load data from address (sprites +  x)
-    STA enemy_oam , X         ; store into RAM address ($0200 + x)
-    LDA enemy_array+2, X        ; load data from address (sprites +  x)
-    STA enemy_oam+3 , X         ; store into RAM address ($0200 + x)
+    LDA enemy_array + 1, X        ; load data from address (sprites +  x) ; TILE
+    STA enemy_oam + 1 , X         ; store into RAM address ($0200 + x)
+
+    LDA enemy_array + 2, X        ; load data from address (sprites +  x) ; ATTR
+    STA enemy_oam + 2, X         ; store into RAM address ($0200 + x)
+
     LDA enemy_array+3, X
+    STA enemy_oam+3, X              ; X = X + 1 ; X
 
-    STA enemy_oam+2, X              ; X = X + 1
     INX
     INX
     INX
     INX
+    
     CPX #$0c ;#$10          ; Compare X to hex $10, decimal 16
     BNE LoadEnemyLoop   ; Branch to LoadSpritesLoop if compare was Not Equal to zero
 
@@ -64,7 +66,7 @@ LoadPalettesLoop:
                           ; etc
   STA $2007               ; write to PPU
   INX                     ; X = X + 1
-  CPX #$08               ; Compare X to hex $20, decimal 32
+  CPX #$20               ; Compare X to hex $20, decimal 32
   BNE LoadPalettesLoop 
 
 
@@ -157,17 +159,25 @@ dumpFillBackground:
     STA $2005
     STA $2005
 
+; initial parameters
 LDA #$10
 STA masterTimer
+
+LDA #$50
+STA powerUpX
+STA powerUpY
+
+LDA #$00
+STA gameStateIsPowered 
 
 JMP Main
 
 
 ; this is not RAM, huh?
 enemy_array:
-.byte $01, $20, $20, $01 ; first enemy (O)
-.byte $00, $30, $30, $02 ; second enemy (X)
-.byte $01, $30, $30, $01 
+.byte $20, $01, %00000001, $20 ; first enemy (O)
+.byte $30, $00, %00000001, $30 ; second enemy (X)
+.byte $50, $01, %00000010, $50
 ; .byte $01, $50, $28, $01
 
 enemy_direction_random:

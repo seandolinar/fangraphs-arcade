@@ -83,6 +83,8 @@ tempY:					.res 1
 
 powerUpX:				.res 1 ;; if these don't move we can read them from ROM
 powerUpY:				.res 1 ;; then loop through the locations, though I'd have to remember which ones are "gone"
+powerUpAvailable:		.res 1 ; one byte ;; 7654321 - bit one is if the the first one is available
+powerUpTimer:			.res 1
 
 background_row:         .res $20
 data_x:                 .res 1
