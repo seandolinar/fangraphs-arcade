@@ -16,7 +16,6 @@ forEachEnemyMovement:
 
     JSR newCheckBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-    STA consoleLogEnemyCollision
     BNE dumpEnemyController
 
     ; OAM
@@ -134,14 +133,11 @@ dumpSecondMultEnemy:
     LDY #$00 ; resets Y
     LDA (backgroundPointerLo), Y ; i'm getting 1 here
     ; I do, this is indirect, I think I have to do it this way
-        ; STA consoleLogEnemyCollision
-    STA consoleLogEnemyCollision
     LDY tempY 
 
     CMP #$02 ;; whatever are loading it's all 0s
     BNE collideEnemy ; branch if cmp is not equal to A
     LDA #$0e
-    STA consoleLogEnemyCollision
     RTS
 
 collideEnemy:

@@ -38,7 +38,7 @@ InitialLoad:
     INX
     INX
     
-    CPX #$0c ;#$10          ; Compare X to hex $10, decimal 16
+    CPX #$18 ;#$10          ; Compare X to hex $10, decimal 16
     BNE LoadEnemyLoop   ; Branch to LoadSpritesLoop if compare was Not Equal to zero
 
 
@@ -122,8 +122,10 @@ dumpFillBackground:
 
     LDA #$80
     STA playerLocationX
-    STA playerLocationY
     STA playerLocationXBuffer
+
+    LDA #$C0
+    STA playerLocationY
     STA playerLocationYBuffer
 
     LDA #$20
@@ -162,8 +164,27 @@ LDA #$50
 STA powerUpX
 STA powerUpY
 
+LDA #$A0
+STA powerUpX2
+STA powerUpY2
+
+
+LDA #$A0
+STA powerUpX3
+LDA #$50
+STA powerUpY3
+
+
+LDA #$50
+STA powerUpX4
+LDA #$A0
+STA powerUpY4
+
 LDA #$00
-STA gameStateIsPowered 
+STA gameStateIsPowered
+
+LDA #$01
+STA powerUpAvailable ; first base power up is loaded first
 
 JMP Main
 
@@ -172,7 +193,12 @@ JMP Main
 enemy_array:
 .byte $20, $01, %00000001, $20 ; first enemy (O)
 .byte $30, $00, %00000001, $30 ; second enemy (X)
+; power ups
 .byte $50, $01, %00000010, $50
+.byte $A0, $01, %00000010, $A0
+.byte $50, $01, %00000010, $A0
+.byte $A0, $01, %00000010, $50
+
 ; .byte $01, $50, $28, $01
 
 enemy_direction_random:

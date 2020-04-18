@@ -5,26 +5,37 @@
 ; if this is kept on a grid, we can just compare the straight up X/Y RAM coords without much math
 .segment "CODE"
 checkCollisionPowerUp:
-    LDX #$01
-checkCollisionPowerUpLoop:
-
+    LDX powerUpAvailable
+; checkCollisionPowerUpLoop:
+    
+    ; CPX #$00
+    ; BEQ dumpReally 
     DEX
+
+    STX consoleLogEnemyCollision
+
     LDA powerUpX, X
     CMP playerLocationX
-    BNE dumpCheckCollisionPowerUp
+    BNE dumpReally ;dumpCheckCollisionPowerUp
     LDA powerUpY, X
     CMP playerLocationY
-    BNE dumpCheckCollisionPowerUp
+    BNE dumpReally ;dumpCheckCollisionPowerUp
 
+    ; dumps out
+    
     JSR enablePowerUp
     JSR removePowerUp
+
 
     JSR soundCollision ; Bad collision ; change this!
     RTS
 
-dumpCheckCollisionPowerUp:
-    CPX #$00
-    BNE checkCollisionPowerUpLoop
+; dumpCheckCollisionPowerUp:
+;     CPX #$00
+;     BNE checkCollisionPowerUpLoop
+;     RTS
+
+dumpReally:
     RTS
 
 enablePowerUp:
@@ -33,6 +44,7 @@ enablePowerUp:
 
     JSR changeEnemyColor ; make this enemyState?
     JSR setTimerPowerUp
+    INC powerUpAvailable
 
     RTS
 
@@ -46,13 +58,36 @@ disablePowerUp:
     RTS
   
 
-; spin out
+; turns off sprite and takes off grid
+; this might not be pretty but let's try this
 removePowerUp:
+    STX tempX
+    STY tempY
+
+    ; find how far we have to skip
+    LDY #$00
+removePowerUpCountLoop:
+
+    INY
+    INY
+    INY
+    INY
+
+    DEX
+
+    CPX #$00
+    BNE removePowerUpCountLoop
+
+    LDX tempX
     LDA #$00
     STA powerUpX, X
     STA powerUpY, X
     LDA #$02
-    STA power_up_oam + 1, X ; + 1 is the tile ; #$02 is the empty tile
+    STA power_up_oam + 1, Y ; + 1 is the tile ; #$02 is the empty tile
+    ; crap, that need to jump four Xs
+
+    LDX tempX
+    LDY tempY
     RTS
 
 ; start the timer
