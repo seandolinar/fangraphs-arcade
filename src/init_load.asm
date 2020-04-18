@@ -1,9 +1,4 @@
 .segment "CODE"
-; SPRITE LOAD LOOP
-
-; so I can see what goes on
-
-
 InitialLoad:
   LoadSprites:
     LDX #$00              ; start at 0
@@ -79,7 +74,7 @@ FillAttrib0:
   STA $2006             ; write the low byte of $23C0 address
   LDX #$40              ; fill 64 bytes
   LDA #$00
-  ;LDA #%11101011
+  LDA #%11101011
 FillAttrib0Loop:
   STA $2007
   DEX
