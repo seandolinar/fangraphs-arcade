@@ -12,33 +12,28 @@
 .include "./init_load.asm"
 
 .segment "TILES"
-.incbin "../chr/char01.chr"
+.incbin "../chr/char02.chr"
 
 
 .segment "CODE"
 NMI:
     ; this interrupts the main loop
 
-nmiSpriteTransfer:       
-    ; SPRITE TRANSFER
-    ; does this every frame
-    LDA #$00
-    STA $2003  ; set the low byte (00) of the RAM address
-    LDA #>player_oam ; this works and so does $02
-    STA $4014  ; set the high byte (02) of the RAM address, start the transfer
 
-    JSR readController
-    JSR incTimerPowerUp
+; vertical blanking wait    
+vwait:	
+	lda $2002    ;wait
+	bpl vwait
 
-    LDX masterTimer
-    DEX
-    STX masterTimer
-    BNE dumpNMI
-    JSR nextEnemyMovement ; move this to main?
-    LDX #$10
-    STX masterTimer
+    ; LDA gameStateIsPowered
+    ; BEQ dumpBackground
 
+    JSR changeBackground
+    JSR spriteTransfer
     
+
+
+
 dumpNMI:
     RTI
 
@@ -52,9 +47,6 @@ Main:
 
 ; ???
 
-
-
-
 MainReadController:
     LDA controllerBits
     BEQ Main                ; go loop main if we have no controller bits
@@ -62,3 +54,63 @@ MainReadController:
     JMP Main                ; loops because of end
 
 
+
+
+; ; put this in a PPU file
+
+changeBackground:
+; background
+; I don't have to turn this off
+; I'm not sure why
+    LDA #$00
+	STA $2000 ; disable NMI
+	STA $2001 ; disable rendering
+
+    LDA $2002    ; read PPU status to reset the high/low latch to high
+    LDA #$3F
+    STA $2006    ; write the high byte of $3F10 address
+    LDA #$10
+    STA $2006    ; write the low byte of $3F10 address
+
+    LDX #$00                ; start out at 0
+    LDA bufferBackgroundColor
+    STA $2007
+
+    ; resets scroll
+    ; not sure why I have to do this, but it works!!
+    LDA #$00
+    STA PPU_SCROLL_REG 
+    STA PPU_SCROLL_REG
+    ; STA PPU_CTRL_REG1
+
+    ; ; STARTS VIDEO DISPLAY
+    LDA #%10000000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+    STA $2000
+
+    LDA #%00011110   ; enable sprites, enable background, no clipping on left side
+    STA $2001
+    RTS
+
+
+
+
+spriteTransfer:       
+    ; SPRITE TRANSFER
+    ; does this every frame
+    LDA #$00
+    STA $2003  ; set the low byte (00) of the RAM address
+    LDA #>player_oam ; this works and so does $02
+    STA $4014  ; set the high byte (02) of the RAM address, start the transfer
+
+    JSR readController
+    JSR incTimerPowerUp
+
+    LDX masterTimer
+    DEX
+    STX masterTimer
+    BNE dumpSpriteTransfer
+    JSR nextEnemyMovement ; move this to main?
+    LDX #$10
+    STX masterTimer
+dumpSpriteTransfer:
+    RTS

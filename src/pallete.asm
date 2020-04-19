@@ -3,7 +3,7 @@
 pallete:
 
 .byte $0F,$2a,$1A,$56,  $16,$22,$17,$0F,  $35,$28,$30,$19,  $22,$16,$17,$0F   ; bank 0 ;; SPRITE BANK
-.byte $0F,$0C,$36,$1c,  $16,$0C,$17,$0F,  $16,$0C,$17,$0F,  $16,$0C,$17,$0F   ; bank 1 ;; BACKGROUND BANK
+.byte $0F,$01,$36,$1c,  $16,$01,$17,$17,  $16,$01,$17,$17,  $16,$01,$17,$17   ; bank 1 ;; BACKGROUND BANK
 
 
 sprites:
