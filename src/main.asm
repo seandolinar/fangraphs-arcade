@@ -76,12 +76,23 @@ changeBackground:
     LDA bufferBackgroundColor
     STA $2007
 
+    LDA $2002    ; read PPU status to reset the high/low latch to high
+    LDA #$20
+    STA $2006    ; write the high byte of $3F10 address
+    LDA #$49
+    STA $2006    ; write the low byte of $3F10 address
+
+    LDA #$00
+    STA $2007
+
     ; resets scroll
     ; not sure why I have to do this, but it works!!
     LDA #$00
     STA PPU_SCROLL_REG 
     STA PPU_SCROLL_REG
     ; STA PPU_CTRL_REG1
+
+
 
     ; ; STARTS VIDEO DISPLAY
     LDA #%10000000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
