@@ -178,10 +178,12 @@ checkBackgroundCollisionLoop:
     ; put lower byte into RAM
     ; then store the high byte into X
 
+    ; take this to ram
+    ; encoding might help here
     ; fills out pointer for 
-    LDA #<meta_tile0
+    LDA #<NAMETABLE_BUFFER
     STA collisionPointerLo
-    LDA #>meta_tile0
+    LDA #>NAMETABLE_BUFFER
     STA collisionPointerHi
 
     ; calculates grid position for X (should only be 8-bit)
@@ -255,6 +257,8 @@ dumpSecondMult:
     LDY #$00 ; resets Y
     LDA (backgroundPointerLo), Y ; probably don't need to index this, but I do, why?
     ; I do, this is indirect, I think I have to do it this way
+    CMP #$03
+    BEQ collideDot
     CMP #$02 ;; whatever are loading it's all 0s
     BNE collide
 
@@ -274,10 +278,25 @@ allowPass:
     STA collisionFlag
     RTS
 
+collideDot:
+
+    ; add to $2000
+    ; finds the address for the name table
+    CLC
+    LDA playerPointerLo
+    ADC #$00
+    STA bufferBackgroundValLo
+
+    LDA playerPointerHi
+    ADC #$20
+    STA bufferBackgroundValHi
+    RTS
 
 collide:
     LDA #$00
     STA collisionFlag
+
+dumpCollide:
     RTS
 
 

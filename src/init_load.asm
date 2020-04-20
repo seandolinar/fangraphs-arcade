@@ -89,6 +89,9 @@ STA backgroundPointerLo
 LDA #>meta_tile0
 STA backgroundPointerHi
 
+; LDA #<NAMETABLE_BUFFER
+; STA NAMETABLE_BUFFER_LO
+
 FillBackground:
   LDA $2002             ; read PPU status to reset the high/low latch
   LDA #$20
@@ -102,6 +105,7 @@ FillBackgroundLoopOutside:
   FillBackgroundLoop:
     LDA (backgroundPointerLo), Y
     STA $2007
+    ; STA (NAMETABLE_BUFFER_LO), Y ; not working
 
     INY                 ; inside loop counter
     CPY #$00
@@ -120,11 +124,11 @@ dumpFillBackground:
     STA controllerTimer
 
 
-    LDA #$80
+    LDA #$88
     STA playerLocationX
     STA playerLocationXBuffer
 
-    LDA #$C0
+    LDA #$10
     STA playerLocationY
     STA playerLocationYBuffer
 
@@ -186,6 +190,7 @@ STA gameStateIsPowered
 LDA #$01
 STA powerUpAvailable ; first base power up is loaded first
 
+
 JMP Main
 
 
@@ -194,10 +199,10 @@ enemy_array:
 .byte $20, $01, %00000001, $20 ; first enemy (O)
 .byte $30, $00, %00000001, $30 ; second enemy (X)
 ; power ups
-.byte $50, $01, %00000010, $50
-.byte $A0, $01, %00000010, $A0
-.byte $50, $01, %00000010, $A0
-.byte $A0, $01, %00000010, $50
+.byte $50, $04, %00000010, $50
+.byte $A0, $04, %00000010, $A0
+.byte $50, $04, %00000010, $A0
+.byte $A0, $04, %00000010, $50
 
 ; .byte $01, $50, $28, $01
 

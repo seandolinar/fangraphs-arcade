@@ -72,17 +72,17 @@ changeBackground:
     LDA #$10
     STA $2006    ; write the low byte of $3F10 address
 
-    LDX #$00                ; start out at 0
+    LDX #$00     ; start out at 0
     LDA bufferBackgroundColor
     STA $2007
 
     LDA $2002    ; read PPU status to reset the high/low latch to high
-    LDA #$20
+    LDA bufferBackgroundValHi
     STA $2006    ; write the high byte of $3F10 address
-    LDA #$49
+    LDA bufferBackgroundValLo
     STA $2006    ; write the low byte of $3F10 address
 
-    LDA #$00
+    LDA #$02
     STA $2007
 
     ; resets scroll

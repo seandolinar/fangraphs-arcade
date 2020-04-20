@@ -94,10 +94,13 @@ powerUpAvailable:		.res 1 ; one byte ;; 7654321 - bit one is if the the first on
 powerUpTimer:			.res 1
 
 bufferBackgroundColor:	.res 1
+bufferBackgroundValLo:	.res 1
+bufferBackgroundValHi:	.res 1
 
 background_row:         .res $20
 data_x:                 .res 1
 data_y:                 .res 1
+
 
 ; NES-defined RAM locations
 PPU_CTRL_REG1         = $2000
@@ -109,3 +112,7 @@ PPU_SCROLL_REG        = $2005
 PPU_ADDRESS           = $2006
 PPU_DATA              = $2007
 
+
+.segment "RAM"
+NAMETABLE_BUFFER:		.res $3C0
+NAMETABLE_BUFFER_LO:	.res 1
