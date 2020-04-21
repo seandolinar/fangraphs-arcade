@@ -89,8 +89,11 @@ STA backgroundPointerLo
 LDA #>meta_tile0
 STA backgroundPointerHi
 
-; LDA #<NAMETABLE_BUFFER
-; STA NAMETABLE_BUFFER_LO
+LDA #<nametable_buffer
+STA nametable_buffer_lo
+LDA #>nametable_buffer
+STA nametable_buffer_hi
+
 
 FillBackground:
   LDA $2002             ; read PPU status to reset the high/low latch
@@ -105,12 +108,13 @@ FillBackgroundLoopOutside:
   FillBackgroundLoop:
     LDA (backgroundPointerLo), Y
     STA $2007
-    ; STA (NAMETABLE_BUFFER_LO), Y ; not working
+    STA (nametable_buffer_lo), Y ; not working
 
     INY                 ; inside loop counter
-    CPY #$00
-    BNE FillBackgroundLoop ; run the inside loop 256 times before continuing down
-    INC backgroundPointerHi 
+    CPY #$00            ; run the inside loop 256 times before continuing down
+    BNE FillBackgroundLoop 
+    INC backgroundPointerHi
+    INC nametable_buffer_hi 
     INX
     CPX #$04
     BNE FillBackgroundLoop 
@@ -124,11 +128,11 @@ dumpFillBackground:
     STA controllerTimer
 
 
-    LDA #$88
+    LDA #$80
     STA playerLocationX
     STA playerLocationXBuffer
 
-    LDA #$10
+    LDA #$80
     STA playerLocationY
     STA playerLocationYBuffer
 
@@ -189,6 +193,9 @@ STA gameStateIsPowered
 
 LDA #$01
 STA powerUpAvailable ; first base power up is loaded first
+
+LDA #$00
+STA dotsLeft
 
 
 JMP Main

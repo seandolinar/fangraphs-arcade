@@ -97,9 +97,14 @@ bufferBackgroundColor:	.res 1
 bufferBackgroundValLo:	.res 1
 bufferBackgroundValHi:	.res 1
 
+dotsLeft:				.res 1
+
 background_row:         .res $20
 data_x:                 .res 1
 data_y:                 .res 1
+
+nametable_buffer_lo:	.res 1
+nametable_buffer_hi:	.res 1
 
 
 ; NES-defined RAM locations
@@ -114,5 +119,4 @@ PPU_DATA              = $2007
 
 
 .segment "RAM"
-NAMETABLE_BUFFER:		.res $3C0
-NAMETABLE_BUFFER_LO:	.res 1
+nametable_buffer:		.res $3C0

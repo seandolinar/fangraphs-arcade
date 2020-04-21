@@ -181,9 +181,9 @@ checkBackgroundCollisionLoop:
     ; take this to ram
     ; encoding might help here
     ; fills out pointer for 
-    LDA #<NAMETABLE_BUFFER
+    LDA #<nametable_buffer
     STA collisionPointerLo
-    LDA #>NAMETABLE_BUFFER
+    LDA #>nametable_buffer
     STA collisionPointerHi
 
     ; calculates grid position for X (should only be 8-bit)
@@ -282,6 +282,23 @@ collideDot:
 
     ; add to $2000
     ; finds the address for the name table
+    STY tempY
+    LDY #$00
+
+    ; could make this programatic, but it's hardcoded now
+    CLC
+    LDA playerPointerLo
+    ADC #$00
+    STA bufferBackgroundValLo
+
+    LDA playerPointerHi
+    ADC #$03                
+    STA bufferBackgroundValHi
+
+    LDA #$02
+
+    STA (bufferBackgroundValLo), Y
+
     CLC
     LDA playerPointerLo
     ADC #$00
@@ -290,6 +307,9 @@ collideDot:
     LDA playerPointerHi
     ADC #$20
     STA bufferBackgroundValHi
+
+    LDY tempY
+
     RTS
 
 collide:
@@ -300,3 +320,44 @@ dumpCollide:
     RTS
 
 
+
+
+countDots:
+
+    LDA #<nametable_buffer
+    STA nametable_buffer_lo
+    LDA #>nametable_buffer
+    STA nametable_buffer_hi
+
+
+
+    LDX #$00
+    LDY #$00
+    STX dotsLeft      
+    countDotsLoopOuter:   
+    countDotsLoopInner:
+        LDA (nametable_buffer_lo), Y ; not working
+        CMP #$03
+        BNE countDotsNoInc
+        INC dotsLeft
+
+        countDotsNoInc:
+            INY                 ; inside loop counter
+            CPY #$00            ; run the inside loop 256 times before continuing down
+            BNE countDotsLoopInner 
+            INC nametable_buffer_hi 
+            INX
+            CPX #$04
+            BNE countDotsLoopInner 
+
+    LDA dotsLeft
+    BNE dumpCountDots
+    LDA powerUpAvailable
+    CMP #$05
+    BNE dumpCountDots
+
+    LDA #$16
+    STA bufferBackgroundColor
+
+dumpCountDots:
+    RTS
