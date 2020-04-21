@@ -1,18 +1,12 @@
 
 nextEnemyMovement:
 
-    LDX #$02
+    LDX #$01            ; how many enemyies we have
     LDY #$00
 forEachEnemyMovement:
     DEX
 
-    ; LDA enemyX, X
-    ; JSR pickDirection ; should use the acculumator
-    ; STA enemyXBuffer
-
-    ; LDA enemyY, X
-    ; JSR pickDirection
-    ; STA enemyYBuffer
+enemyMovement:
     JSR pickDirectionNew
     LDA enemyNextDirection
     CMP #$01 ;;
@@ -86,7 +80,7 @@ forEachEnemyMovement:
         INY
 
         CPX #$00
-        BNE forEachEnemyMovement
+        BNE forEachEnemyMovement ; loops for other enemies
 
 
 dumpEnemyController:
@@ -283,8 +277,9 @@ pickDirectionNew:
         STA enemyNextDirection
         STA consoleLogEnemyCollision
 
-        INC enemyQ
-
+        INX
+        STX enemyQ
+        
     LDX tempX
     RTS
     
