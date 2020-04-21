@@ -6,41 +6,87 @@ nextEnemyMovement:
 forEachEnemyMovement:
     DEX
 
-    LDA enemyX, X
-    JSR pickDirection ; should use the acculumator
-    STA enemyXBuffer
+    ; LDA enemyX, X
+    ; JSR pickDirection ; should use the acculumator
+    ; STA enemyXBuffer
 
-    LDA enemyY, X
-    JSR pickDirection
-    STA enemyYBuffer
+    ; LDA enemyY, X
+    ; JSR pickDirection
+    ; STA enemyYBuffer
+    JSR pickDirectionNew
+    LDA enemyNextDirection
+    CMP #$01 ;;
+    BEQ enemyMoveRight
+    CMP #$02
+    BEQ enemyMoveLeft
+    CMP #$03
+    BEQ enemyMoveUp
+    CMP #$04
+    BEQ enemyMoveDown
 
-    JSR newCheckBackgroundCollisionEnemy
-    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-    BNE dumpEnemyController
 
-    ; OAM
-    ; 00 -- Player, 00:Y, 01:tile, 02:attr, 03:X 
-    ; 04 -- Enemy1, 04:Y, 05:tile, 06:attr, 07:X
-    ; 08 -- Enemy2, 08:Y, 09:tile, 09:attr, 0A:X
-    ; move this somewhere else
-    LDY tempY
-    CLC
-    LDA enemyYBuffer
-    STA enemyY, X
-    STA enemy_oam, Y ; sprite RAM y
+    enemyMoveRight:
+        CLC
+        LDA enemyX, X
+        ADC #$08
+        STA enemyXBuffer
+        JMP dumpEnemyMovement
 
-    CLC
-    LDA enemyXBuffer
-    STA enemyX, X
-    STA enemy_oam + 3, Y ; sprite RAM x
+    enemyMoveLeft:
+        SEC
+        LDA enemyX, X
+        SBC #$08
+        STA enemyXBuffer
+        JMP dumpEnemyMovement
 
-    INY
-    INY
-    INY
-    INY
+    enemyMoveUp:
+        SEC
+        LDA enemyY, X
+        SBC #$08
+        STA enemyYBuffer
+        JMP dumpEnemyMovement
 
-    CPX #$00
-    BNE forEachEnemyMovement
+    enemyMoveDown:
+        LDA #$78
+        STA consoleLogEnemyCollision
+        CLC
+        LDA enemyY, X
+        ADC #$08
+        STA enemyYBuffer
+        JMP dumpEnemyMovement
+
+    enemyContinue:
+        ; don't know this yet
+
+
+    dumpEnemyMovement:
+        JSR newCheckBackgroundCollisionEnemy
+        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+        BNE dumpEnemyController
+
+        ; OAM
+        ; 00 -- Player, 00:Y, 01:tile, 02:attr, 03:X 
+        ; 04 -- Enemy1, 04:Y, 05:tile, 06:attr, 07:X
+        ; 08 -- Enemy2, 08:Y, 09:tile, 09:attr, 0A:X
+        ; move this somewhere else
+        LDY tempY
+        CLC
+        LDA enemyYBuffer
+        STA enemyY, X
+        STA enemy_oam, Y ; sprite RAM y
+
+        CLC
+        LDA enemyXBuffer
+        STA enemyX, X
+        STA enemy_oam + 3, Y ; sprite RAM x
+
+        INY
+        INY
+        INY
+        INY
+
+        CPX #$00
+        BNE forEachEnemyMovement
 
 
 dumpEnemyController:
@@ -136,13 +182,16 @@ dumpSecondMultEnemy:
     LDY tempY 
 
     CMP #$02 ;; whatever are loading it's all 0s
-    BNE collideEnemy ; branch if cmp is not equal to A
-    LDA #$0e
-    RTS
+    BEQ dumpCollideEnemy ; branch if cmp is not equal to A
+    CMP #$03
+    BEQ dumpCollideEnemy ; branch if cmp is not equal to A
 
 collideEnemy:
     LDA #$01
     STA collisionFlagEnemy
+    RTS
+dumpCollideEnemy:
+    LDA #$0e
     RTS
 
 pickDirection:
@@ -219,6 +268,25 @@ changeEnemyColorPowerUp:
     LDA #%0000011 ; POWER UP STATE ; RED
     JMP changeEnemyColorLoop
 
+
+; build some AI into this?
+pickDirectionNew:
+
+    STX tempX
+    LDX enemyQ
+    CPX #$0a
+    BCC pickDirectionNewContinue
+    LDX #$00
+
+    pickDirectionNewContinue:
+        LDA enemy_multi_direction_random, X
+        STA enemyNextDirection
+        STA consoleLogEnemyCollision
+
+        INC enemyQ
+
+    LDX tempX
+    RTS
     
 
     

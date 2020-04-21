@@ -48,7 +48,7 @@ enemyQ:					.res 1
 enemyXBuffer:			.res 1 
 enemyYBuffer:			.res 1
 
-enemyZ:                 .res 1   
+enemyNextDirection:     .res 1   
 enemyZ1:                .res 1 ; 0014
 enemyH1:                .res 1 
 enemyW1:                .res 1

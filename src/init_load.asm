@@ -215,6 +215,9 @@ enemy_array:
 enemy_direction_random:
 .byte $01, $FF, $00, $01, $00, $FF, $01, $01, $00, $00, $FF, $FF
 
+enemy_multi_direction_random:
+.byte $04, $01, $02, $01, $03, $02, $04, $04, $01, $02, $01, $01
+
 
 
 meta_tile0:
