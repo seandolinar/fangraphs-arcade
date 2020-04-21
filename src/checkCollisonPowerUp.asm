@@ -12,7 +12,7 @@ checkCollisionPowerUp:
     ; BEQ dumpReally 
     DEX
 
-    STX consoleLogEnemyCollision
+    ; STX consoleLogEnemyCollision
 
     LDA powerUpX, X
     CMP playerLocationX

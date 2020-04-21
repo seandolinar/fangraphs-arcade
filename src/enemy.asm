@@ -1,12 +1,18 @@
 
 nextEnemyMovement:
 
-    LDX #$01            ; how many enemyies we have
+    LDX #$02            ; how many enemyies we have
     LDY #$00
 forEachEnemyMovement:
     DEX
 
 enemyMovement:
+    LDA enemyX, X
+    STA enemyXBuffer
+
+    LDA enemyY, X
+    STA enemyYBuffer
+
     JSR pickDirectionNew
     LDA enemyNextDirection
     CMP #$01 ;;
@@ -41,8 +47,6 @@ enemyMovement:
         JMP dumpEnemyMovement
 
     enemyMoveDown:
-        LDA #$78
-        STA consoleLogEnemyCollision
         CLC
         LDA enemyY, X
         ADC #$08
@@ -63,28 +67,41 @@ enemyMovement:
         ; 04 -- Enemy1, 04:Y, 05:tile, 06:attr, 07:X
         ; 08 -- Enemy2, 08:Y, 09:tile, 09:attr, 0A:X
         ; move this somewhere else
-        LDY tempY
+
+        STX consoleLogEnemyCollision
+
+        LDA enemyNextDirection
+        CMP #$04
+        BEQ moveVertical
+        CMP #$03
+        BEQ moveVertical
+
+    moveHorizontal:
+        CLC
+        LDA enemyXBuffer
+        STA enemyX, X
+        STA enemy_oam + 3, Y ; sprite RAM x
+        JMP dumpEnemyController
+
+           ; LDY tempY
+    moveVertical:
         CLC
         LDA enemyYBuffer
         STA enemyY, X
         STA enemy_oam, Y ; sprite RAM y
 
-        CLC
-        LDA enemyXBuffer
-        STA enemyX, X
-        STA enemy_oam + 3, Y ; sprite RAM x
-
-        INY
-        INY
-        INY
-        INY
-
-        CPX #$00
-        BNE forEachEnemyMovement ; loops for other enemies
 
 
 dumpEnemyController:
-    RTS
+
+        INY
+        INY
+        INY
+        INY
+        CPX #$00
+        BNE forEachEnemyMovement ; loops for other enemies
+
+        RTS
 
 
 ;; working on this
@@ -188,44 +205,44 @@ dumpCollideEnemy:
     LDA #$0e
     RTS
 
-pickDirection:
-    ; TXS ; stack is causing crashes
-    STX tempX
-    LDX enemyQ
-    CPX #$0b
-    BCC pickDirectionContinue
-    LDX #$00
+; pickDirection:
+;     ; TXS ; stack is causing crashes
+;     STX tempX
+;     LDX enemyQ
+;     CPX #$0b
+;     BCC pickDirectionContinue
+;     LDX #$00
     
-pickDirectionContinue:
-    INX
-    STX enemyQ
+; pickDirectionContinue:
+;     INX
+;     STX enemyQ
     
-    STY tempY
+;     STY tempY
 
-    LDY enemy_direction_random, X
-    CPY #$FF
-    BEQ pickDirectionReverse  ; branches if Y is $00
-    CPY #$01
-    BEQ pickDirectionForward  ; branches if Y is $00
+;     LDY enemy_direction_random, X
+;     CPY #$FF
+;     BEQ pickDirectionReverse  ; branches if Y is $00
+;     CPY #$01
+;     BEQ pickDirectionForward  ; branches if Y is $00
 
-    INX
+;     INX
 
-; if Y is $01 we run this
-; the CLC and SEC make this work right
-pickDirectionForward:
-    CLC
-    ADC #$08
-    LDX tempX
-    LDY tempY
-    RTS
+; ; if Y is $01 we run this
+; ; the CLC and SEC make this work right
+; pickDirectionForward:
+;     CLC
+;     ADC #$08
+;     LDX tempX
+;     LDY tempY
+;     RTS
 
-; the branched $00 option 
-pickDirectionReverse:
-    SEC
-    SBC #$08
-    LDX tempX
-    LDY tempY
-    RTS
+; ; the branched $00 option 
+; pickDirectionReverse:
+;     SEC
+;     SBC #$08
+;     LDX tempX
+;     LDY tempY
+;     RTS
 
 
 changeEnemyColor:
@@ -265,7 +282,6 @@ changeEnemyColorPowerUp:
 
 ; build some AI into this?
 pickDirectionNew:
-
     STX tempX
     LDX enemyQ
     CPX #$0a
@@ -275,8 +291,7 @@ pickDirectionNew:
     pickDirectionNewContinue:
         LDA enemy_multi_direction_random, X
         STA enemyNextDirection
-        STA consoleLogEnemyCollision
-
+        ; STA consoleLogEnemyCollision
         INX
         STX enemyQ
         
