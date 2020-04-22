@@ -63,9 +63,9 @@ backgroundPointerLo:    .res 1 ; 001d
 backgroundPointerHi:    .res 1 ; 001e
 
 
-enemyGridX:            .res 1  ; 001f
-enemyPointerLo:        .res 1  ; 0020
-enemyPointerHi:        .res 1  ; 0021
+enemyGridX:            	.res 1  ; 001f
+enemyPointerLo:        	.res 1  ; 0020
+enemyPointerHi:        	.res 1  ; 0021
 backgroundPointerLoEnemy:    .res 1 ; 0022
 backgroundPointerHiEnemy:    .res 1 ; 0023
 collisionPointerLoEnemy:     .res 1 ; 0024

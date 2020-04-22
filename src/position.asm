@@ -1,4 +1,5 @@
 .segment "CODE"
+; this will have to change to read controller
 updatePosition:
 
   LDA playerLocationXBuffer
@@ -34,6 +35,8 @@ dumpControlLeft:
   BEQ dumpUpdatePosition ; dumps if we have no LEFT push
   JSR moveRight
   
+; i can make this separate from the the controller 
+; this will basically become the update position
 dumpUpdatePosition:
 
     LDA playerLocationX
@@ -279,6 +282,8 @@ allowPass:
     RTS
 
 collideDot:
+
+    JSR soundDot
 
     ; add to $2000
     ; finds the address for the name table

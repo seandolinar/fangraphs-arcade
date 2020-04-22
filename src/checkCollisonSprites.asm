@@ -39,7 +39,8 @@ dumpCheckSpriteCollison:
 
 ; this uses X from checkCollisionSprites
 resetOneEnemyPosition:
-    LDA #$20
+    LDA #$80
     STA enemyX, X
+    LDA #$50
     STA enemyY, X
     RTS
