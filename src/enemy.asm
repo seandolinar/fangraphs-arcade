@@ -322,6 +322,7 @@ pickDirectionNew:
 
 ; if we are going up, then we need to check up, left, right
 ; then pick one of those 
+; figure out if I can use the stack here for a loop
 pickDirectionNew2:
     LDA enemy1DirectionCurrent      ; going to have to change this for multiples
     CMP #$01
