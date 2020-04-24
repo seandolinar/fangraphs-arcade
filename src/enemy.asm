@@ -62,9 +62,9 @@ enemyMovement:
 
 
     dumpEnemyMovement:
-        JSR newCheckBackgroundCollisionEnemy
-        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-        BNE dumpEnemyController
+        ; JSR newCheckBackgroundCollisionEnemy
+        ; LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+        ; BNE dumpEnemyController
 
         ; OAM
         ; 00 -- Player, 00:Y, 01:tile, 02:attr, 03:X 
@@ -250,8 +250,12 @@ dumpCollideEnemy:
 
 changeEnemyColor:
 
-    STX tempX
-    STY tempY
+    ; STX tempX
+    TXA
+    PHA
+    TYA
+    PHA
+    ; STY tempY
 
     LDX #$02
     LDY #$00
@@ -273,8 +277,12 @@ changeEnemyColorLoop:
     CPX #$00
     BNE changeEnemyColorLoop
 
-    LDX tempX
-    LDY tempY
+    ; LDX tempX
+    PLA
+    TAY
+    PLA
+    TAX
+    ; LDY tempY
     RTS
 
    
@@ -285,7 +293,8 @@ changeEnemyColorPowerUp:
 
 ; build some AI into this?
 pickDirectionNew:
-    STX tempX
+    TXA
+    PHA
     LDX enemyQ
     CPX #$0a
     BCC pickDirectionNewContinue
@@ -298,8 +307,29 @@ pickDirectionNew:
         INX
         STX enemyQ
         
-    LDX tempX
+    PLA
+    TAX
     RTS
     
 
-    
+; need to check the all four directions
+; run through the three directions and collision check
+; have to omit the backwards direction
+; check direction, dump if we are the opposite
+; have available directions
+; pick one
+; if we only have one, continue
+
+; if we are going up, then we need to check up, left, right
+; then pick one of those 
+pickDirectionNew2:
+    LDA enemy1DirectionCurrent      ; going to have to change this for multiples
+    CMP #$01
+    BEQ dumpAvailableDown
+
+
+    dumpAvailableDown:
+
+
+
+    RTS
