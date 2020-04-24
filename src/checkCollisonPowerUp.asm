@@ -42,7 +42,7 @@ enablePowerUp:
     LDA #$01
     STA gameStateIsPowered
 
-    LDA #$0F
+    LDA #$2D
     STA bufferBackgroundColor ; might have to make this more generic
 
     JSR changeEnemyColor ; make this enemyState?

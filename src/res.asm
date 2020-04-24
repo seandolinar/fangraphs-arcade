@@ -106,6 +106,9 @@ data_y:                 .res 1
 nametable_buffer_lo:	.res 1
 nametable_buffer_hi:	.res 1
 
+; move this
+playerDirectionCurrent:	.res 1
+
 
 ; NES-defined RAM locations
 PPU_CTRL_REG1         = $2000
