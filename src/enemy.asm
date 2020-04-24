@@ -1,7 +1,7 @@
 
 nextEnemyMovement:
 
-    LDX #$02            ; how many enemyies we have
+    LDX #$01            ; how many enemyies we have
     LDY #$00
 forEachEnemyMovement:
     DEX
@@ -13,16 +13,17 @@ enemyMovement:
     LDA enemyY, X
     STA enemyYBuffer
 
-    JSR pickDirectionNew
+    JSR pickDirectionNew ; I can probably change this
     LDA enemyNextDirection
+    STA enemy1DirectionCurrent, X
     CMP #$01 ;;
-    BEQ enemyMoveLeft
+    BEQ enemyMoveUp ;enemyMoveLeft
     CMP #$02
-    BEQ enemyMoveRight
+    BEQ enemyMoveDown ;enemyMoveRight
     CMP #$03
-    BEQ enemyMoveDown
+    BEQ enemyMoveLeft ;enemyMoveDown
     CMP #$04
-    BEQ enemyMoveUp
+    BEQ enemyMoveRight ;enemyMoveUp
 
     enemyMoveUp:
         SEC
@@ -71,12 +72,11 @@ enemyMovement:
         ; 08 -- Enemy2, 08:Y, 09:tile, 09:attr, 0A:X
         ; move this somewhere else
 
-        STX consoleLogEnemyCollision
-
+        ; not really liking this logic structure
         LDA enemyNextDirection
-        CMP #$04
+        CMP #$01
         BEQ moveVertical
-        CMP #$03
+        CMP #$02
         BEQ moveVertical
 
     moveHorizontal:

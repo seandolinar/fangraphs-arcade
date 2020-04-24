@@ -19,14 +19,9 @@
 NMI:
     ; this interrupts the main loop
 
-
-; vertical blanking wait    
-vwait:	
-	lda $2002    ;wait
-	bpl vwait
-
-    ; LDA gameStateIsPowered
-    ; BEQ dumpBackground
+vBlankWait:	
+	lda $2002   
+	bpl vBlankWait
 
     JSR changeBackground
     JSR spriteTransfer
@@ -63,24 +58,24 @@ changeBackground:
 ; I don't have to turn this off
 ; I'm not sure why
     LDA #$00
-	STA $2000 ; disable NMI
-	STA $2001 ; disable rendering
+	STA $2000               ; disable NMI
+	STA $2001               ; disable rendering
 
-    LDA $2002    ; read PPU status to reset the high/low latch to high
+    LDA $2002               ; read PPU status to reset the high/low latch to high
     LDA #$3F
-    STA $2006    ; write the high byte of $3F10 address
+    STA $2006               ; write the high byte of $3F10 address
     LDA #$10
-    STA $2006    ; write the low byte of $3F10 address
+    STA $2006               ; write the low byte of $3F10 address
 
-    LDX #$00     ; start out at 0
+    LDX #$00                ; start out at 0
     LDA bufferBackgroundColor
     STA $2007
 
-    LDA $2002    ; read PPU status to reset the high/low latch to high
+    LDA $2002               ; read PPU status to reset the high/low latch to high
     LDA bufferBackgroundValHi
-    STA $2006    ; write the high byte of $3F10 address
+    STA $2006               ; write the high byte of $3F10 address
     LDA bufferBackgroundValLo
-    STA $2006    ; write the low byte of $3F10 address
+    STA $2006               ; write the low byte of $3F10 address
 
     LDA #$02
     STA $2007
@@ -95,10 +90,10 @@ changeBackground:
 
 
     ; ; STARTS VIDEO DISPLAY
-    LDA #%10000000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+    LDA #%10000000          ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
     STA $2000
 
-    LDA #%00011110   ; enable sprites, enable background, no clipping on left side
+    LDA #%00011110          ; enable sprites, enable background, no clipping on left side
     STA $2001
     RTS
 
@@ -109,9 +104,9 @@ spriteTransfer:
     ; SPRITE TRANSFER
     ; does this every frame
     LDA #$00
-    STA $2003  ; set the low byte (00) of the RAM address
-    LDA #>player_oam ; this works and so does $02
-    STA $4014  ; set the high byte (02) of the RAM address, start the transfer
+    STA $2003               ; set the low byte (00) of the RAM address
+    LDA #>player_oam        ; this works and so does $02
+    STA $4014               ; set the high byte (02) of the RAM address, start the transfer
 
     JSR readController
     JSR incTimerPowerUp
@@ -122,8 +117,8 @@ spriteTransfer:
     BNE dumpSpriteTransfer
     JSR dumpUpdatePosition
     JSR countDots
-    JSR nextEnemyMovement ; move this to main?
-    LDX #$10
+    JSR nextEnemyMovement   ; move this to main?
+    LDX #$08                ; controls the speed of the game
     STX masterTimer
 dumpSpriteTransfer:
     RTS

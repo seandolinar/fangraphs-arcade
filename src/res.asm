@@ -108,6 +108,9 @@ nametable_buffer_hi:	.res 1
 
 ; move this
 playerDirectionCurrent:	.res 1
+enemy1DirectionCurrent:	.res 1
+enemy2DirectionCurrent:	.res 1
+
 
 
 ; NES-defined RAM locations
