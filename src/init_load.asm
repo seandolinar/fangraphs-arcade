@@ -135,7 +135,7 @@ dumpFillBackground:
   STA playerLocationY
   STA playerLocationYBuffer
 
-  LDA #$80
+  LDA #$78
   STA enemyX
   LDA #$50
   STA enemyY
@@ -216,7 +216,9 @@ enemy_direction_random:
 .byte $01, $FF, $00, $01, $00, $FF, $01, $01, $00, $00, $FF, $FF
 
 enemy_multi_direction_random:
-.byte $01, $01, $03, $01, $03, $02, $04, $03, $01, $02, $01, $04
+.byte $04, $04, $03, $02, $01, $01, $04, $03, $03, $03, $01, $04
+; .byte $01, $01, $01, $01, $01, $03, $03, $03, $03, $03, $03, $03
+
 
 
 

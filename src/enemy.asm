@@ -16,28 +16,13 @@ enemyMovement:
     JSR pickDirectionNew
     LDA enemyNextDirection
     CMP #$01 ;;
-    BEQ enemyMoveRight
-    CMP #$02
     BEQ enemyMoveLeft
+    CMP #$02
+    BEQ enemyMoveRight
     CMP #$03
-    BEQ enemyMoveUp
-    CMP #$04
     BEQ enemyMoveDown
-
-
-    enemyMoveRight:
-        CLC
-        LDA enemyX, X
-        ADC #$08
-        STA enemyXBuffer
-        JMP dumpEnemyMovement
-
-    enemyMoveLeft:
-        SEC
-        LDA enemyX, X
-        SBC #$08
-        STA enemyXBuffer
-        JMP dumpEnemyMovement
+    CMP #$04
+    BEQ enemyMoveUp
 
     enemyMoveUp:
         SEC
@@ -52,6 +37,24 @@ enemyMovement:
         ADC #$08
         STA enemyYBuffer
         JMP dumpEnemyMovement
+
+    enemyMoveLeft:
+        SEC
+        LDA enemyX, X
+        SBC #$08
+        STA enemyXBuffer
+        JMP dumpEnemyMovement
+
+    enemyMoveRight:
+        CLC
+        LDA enemyX, X
+        ADC #$08
+        STA enemyXBuffer
+        JMP dumpEnemyMovement
+
+    
+
+
 
     enemyContinue:
         ; don't know this yet
