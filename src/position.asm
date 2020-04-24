@@ -1,5 +1,6 @@
 .segment "CODE"
 ; this will have to change to read controller
+; rename this it's just reading the controller now
 updatePosition:
 
   LDA playerLocationXBuffer
@@ -9,36 +10,65 @@ updatePosition:
   STA collisionTestY
 
   LDA controllerBits
-
   AND #CONTROL_P1_UP ;UP
   BEQ dumpControlUp ; dumps if we have no A push
-  JSR moveUp
-
+  ;JSR moveUp
+  JSR setUp
 dumpControlUp:
   LDA controllerBits
-
   AND #CONTROL_P1_DOWN ;DOWN
   BEQ dumpControlDown ; dumps if we have no UP push
-  JSR moveDown
+  ;JSR moveDown
+  JSR setDown
 dumpControlDown:
-
   LDA controllerBits
-
   AND #CONTROL_P1_LEFT ;LEFT
   BEQ dumpControlLeft ; dumps if we have no DOWN push
-  JSR moveLeft
- 
+  ;JSR moveLeft
+  JSR setLeft
 dumpControlLeft:
   LDA controllerBits
-
   AND #CONTROL_P1_RIGHT ;RIGHT
-  BEQ dumpUpdatePosition ; dumps if we have no LEFT push
-  JSR moveRight
+  BEQ dumpUpdateController ; dumps if we have no LEFT push
+  ;JSR moveRight
+  JSR setRight
+
+dumpUpdateController:
+  RTS
   
 ; i can make this separate from the the controller 
 ; this will basically become the update position
 dumpUpdatePosition:
+    LDA playerDirectionCurrent
+    CMP #$01
+    BNE dumpDirectionUp
+    JSR moveUp
+    JMP updatePositionSprite
 
+dumpDirectionUp:
+    LDA playerDirectionCurrent
+    CMP #$02
+    BNE dumpDirectionDown
+    JSR moveDown
+    JMP updatePositionSprite
+    
+dumpDirectionDown:
+    LDA playerDirectionCurrent
+    CMP #$03
+    BNE dumpDirectionLeft
+    JSR moveLeft
+    JMP updatePositionSprite
+
+dumpDirectionLeft:
+    LDA playerDirectionCurrent
+    CMP #$04
+    BNE dumpDirectionRight
+    JSR moveRight
+    JMP updatePositionSprite
+
+dumpDirectionRight:
+
+updatePositionSprite:
     LDA playerLocationX
     STA $0203 ; place in RAM where the sprite Y is controlled
 
@@ -49,7 +79,25 @@ dumpUpdatePosition:
     STA controllerBits
     RTS
 
+setUp:
+    LDA #$01 ; UP
+    STA playerDirectionCurrent
+    RTS
 
+setDown:
+    LDA #$02 ; DOWN
+    STA playerDirectionCurrent
+    RTS
+
+setLeft:
+    LDA #$03 ; LEFT
+    STA playerDirectionCurrent
+    RTS
+
+setRight:
+    LDA #$04 ; RIGHT
+    STA playerDirectionCurrent
+    RTS
 
 moveRight:
         LDX #$00
@@ -69,12 +117,15 @@ moveRight:
         STA playerLocationX
 
         ; JSR nextEnemyMovement ;; trying something here
-        RTS
+        ; RTS
+        JMP updatePositionSprite
 
 dumpMoveRight:
         LDA playerLocationX
         STA playerLocationXBuffer
-        RTS
+        ; RTS
+        JMP updatePositionSprite
+
 
 moveLeft:
         LDX #$00
@@ -95,12 +146,15 @@ moveLeft:
         STA playerLocationX
 
         ; JSR nextEnemyMovement ;; trying something here
+        ; RTS
+        JMP updatePositionSprite
 
-        RTS
 dumpMoveLeft:
         LDA playerLocationX
         STA playerLocationXBuffer
-        RTS
+        ; RTS
+        JMP updatePositionSprite
+
 
 
 moveUp:
@@ -121,12 +175,14 @@ moveUp:
 
         LDA playerLocationYBuffer
         STA playerLocationY
-        RTS
+        ; RTS
+        JMP updatePositionSprite
+
 dumpMoveUp:
         LDA playerLocationY
         STA playerLocationYBuffer
-        RTS
-
+        ; RTS
+        JMP updatePositionSprite
 
 moveDown:
         LDX #$00
@@ -146,12 +202,14 @@ moveDown:
         
         LDA playerLocationYBuffer
         STA playerLocationY
-        RTS
+        ; RTS
+        JMP updatePositionSprite
+
 dumpMoveDown:
         LDA playerLocationY
         STA playerLocationYBuffer
-        RTS
-
+        ; RTS
+        JMP updatePositionSprite
 
 
 playerOffset = $08

@@ -120,6 +120,7 @@ spriteTransfer:
     DEX
     STX masterTimer
     BNE dumpSpriteTransfer
+    JSR dumpUpdatePosition
     JSR countDots
     JSR nextEnemyMovement ; move this to main?
     LDX #$10
