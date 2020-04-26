@@ -1,6 +1,4 @@
-
 nextEnemyMovement:
-
     LDX #$01            ; how many enemyies we have
     LDY #$00
 forEachEnemyMovement:
@@ -15,89 +13,22 @@ enemyMovement:
     STA enemyYBuffer
     STA enemyYWork
 
-    ; JSR pickDirectionNew ; I can probably change this
     JSR pickDirectionNew2 
-    ; LDA enemyNextDirection
-    ; STA enemy1DirectionCurrent, X
-    ; CMP #$01 ;;
-    ; BEQ enemyMoveUp ;enemyMoveLeft
-    ; CMP #$02
-    ; BEQ enemyMoveDown ;enemyMoveRight
-    ; CMP #$03
-    ; BEQ enemyMoveLeft ;enemyMoveDown
-    ; CMP #$04
-    ; BEQ enemyMoveRight ;enemyMoveUp
-
-    ; enemyMoveUp:
-    ;     SEC
-    ;     LDA enemyY, X
-    ;     SBC #$08
-    ;     STA enemyYBuffer
-    ;     JMP dumpEnemyMovement
-
-    ; enemyMoveDown:
-    ;     CLC
-    ;     LDA enemyY, X
-    ;     ADC #$08
-    ;     STA enemyYBuffer
-    ;     JMP dumpEnemyMovement
-
-    ; enemyMoveLeft:
-    ;     SEC
-    ;     LDA enemyX, X
-    ;     SBC #$08
-    ;     STA enemyXBuffer
-    ;     JMP dumpEnemyMovement
-
-    ; enemyMoveRight:
-    ;     CLC
-    ;     LDA enemyX, X
-    ;     ADC #$08
-    ;     STA enemyXBuffer
-    ;     JMP dumpEnemyMovement
-
-    
-
-
-
-    enemyContinue:
-        ; don't know this yet
-
 
     dumpEnemyMovement:
-        ; JSR newCheckBackgroundCollisionEnemy
-        ; LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-        ; BNE dumpEnemyController
-
-        ; OAM
-        ; 00 -- Player, 00:Y, 01:tile, 02:attr, 03:X 
-        ; 04 -- Enemy1, 04:Y, 05:tile, 06:attr, 07:X
-        ; 08 -- Enemy2, 08:Y, 09:tile, 09:attr, 0A:X
-        ; move this somewhere else
-
-        ; not really liking this logic structure
-        ; LDA enemyNextDirection
-        ; CMP #$01
-        ; BEQ moveVertical
-        ; CMP #$02
-        ; BEQ moveVertical
-
+       
     moveHorizontal:
         CLC
         LDA enemyXBuffer
         STA enemyX, X
         STA enemy_oam + 3, Y ; sprite RAM x
-        ; JMP dumpEnemyController
 
-           ; LDY tempY
     moveVertical:
         CLC
         LDA enemyYBuffer
         
         STA enemyY, X
         STA enemy_oam, Y ; sprite RAM y
-
-
 
 dumpEnemyController:
 
@@ -154,12 +85,6 @@ me1:
     ADC enemyPointerHi
     STA enemyPointerHi
 
-    ; LDA enemyPointerLo
-    ; ASL ; this is where the second x2 is coming in? because I have to carry?
-    ; STA enemyPointerLo
-    ; BCC dumpFirstMultEnemy ; branch on carry clear
-    ; INC enemyPointerHi
-
 me2:
     LDA enemyPointerHi 
     ASL                    ; needed to multiply the high byte
@@ -212,54 +137,12 @@ dumpCollideEnemy:
     LDA #$0e
     RTS
 
-; pickDirection:
-;     ; TXS ; stack is causing crashes
-;     STX tempX
-;     LDX enemyQ
-;     CPX #$0b
-;     BCC pickDirectionContinue
-;     LDX #$00
-    
-; pickDirectionContinue:
-;     INX
-;     STX enemyQ
-    
-;     STY tempY
-
-;     LDY enemy_direction_random, X
-;     CPY #$FF
-;     BEQ pickDirectionReverse  ; branches if Y is $00
-;     CPY #$01
-;     BEQ pickDirectionForward  ; branches if Y is $00
-
-;     INX
-
-; ; if Y is $01 we run this
-; ; the CLC and SEC make this work right
-; pickDirectionForward:
-;     CLC
-;     ADC #$08
-;     LDX tempX
-;     LDY tempY
-;     RTS
-
-; ; the branched $00 option 
-; pickDirectionReverse:
-;     SEC
-;     SBC #$08
-;     LDX tempX
-;     LDY tempY
-;     RTS
-
-
 changeEnemyColor:
 
-    ; STX tempX
     TXA
     PHA
     TYA
     PHA
-    ; STY tempY
 
     LDX #$02
     LDY #$00
@@ -281,12 +164,11 @@ changeEnemyColorLoop:
     CPX #$00
     BNE changeEnemyColorLoop
 
-    ; LDX tempX
     PLA
     TAY
     PLA
     TAX
-    ; LDY tempY
+
     RTS
 
    
@@ -294,26 +176,6 @@ changeEnemyColorPowerUp:
     LDA #%0000011 ; POWER UP STATE ; RED
     JMP changeEnemyColorLoop
 
-
-; build some AI into this?
-; pickDirectionNew:
-;     TXA
-;     PHA
-;     LDX enemyQ
-;     CPX #$0a
-;     BCC pickDirectionNewContinue
-;     LDX #$00
-
-;     pickDirectionNewContinue:
-;         LDA enemy_multi_direction_random, X
-;         STA enemyNextDirection
-;         ; STA consoleLogEnemyCollision
-;         INX
-;         STX enemyQ
-        
-;     PLA
-;     TAX
-;     RTS
 
 ; using this to rotate through the enemy "random" counter
 setEnemyQ:
