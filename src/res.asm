@@ -117,6 +117,15 @@ enemyXWork:				.res 1
 enemyYWork:				.res 1
 
 enemyCMPTemp:			.res 1
+enemyAbsX:				.res 1
+enemyAbsY:				.res 1
+sqX:					.res 2
+sqY:					.res 2
+sumXY:					.res 2
+
+enemyDistance:			.res 6
+
+
 
 
 

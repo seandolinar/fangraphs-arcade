@@ -370,6 +370,12 @@ pickDirectionNew2:
     ; FOR NOW we are going to try a random 1 or 2
     ; use Y
 
+
+
+
+
+
+    ;;; PICK DIRECTION
     CPX enemyCMPTemp                    ; figure out this variable
     BNE @continueLoop                   ; continue if we don't equal
 
@@ -384,7 +390,8 @@ pickDirectionNew2:
 
     CMP #$04
     BEQ @moveRight
-
+    ;;; PICK DIRECTION
+    
     JMP @continueLoop
 
     @moveUp:
@@ -400,9 +407,6 @@ pickDirectionNew2:
     JSR enemyMoveDown
     LDA #$02
     STA enemy1DirectionCurrent
-
-    ; LDA #$09
-    ; STA consoleLogEnemyCollision
 
     JMP @continueLoop
 
@@ -427,7 +431,7 @@ pickDirectionNew2:
     JMP @loop
 
     @dumpLoop:
-    PLA
+    PLA                 ; put X/Y back
     TAX
 
     PLA
@@ -470,3 +474,38 @@ enemyMoveRight:
     ADC #$08
     STA enemyXBuffer
     RTS
+
+
+absX:
+    LDA enemyXBuffer
+    CMP playerLocationX
+    BCS @subtractSwap                    ; if enemyX is greater than playerLocationX
+
+    @subtractNormal:
+    SEC
+    LDA playerLocationX
+    SBC enemyXBuffer
+
+    @subtractSwap:
+    SEC
+    LDA enemyXBuffer
+    SBC playerLocationX
+
+    STA enemyAbsX
+
+absY:
+    LDA enemyYBuffer
+    CMP playerLocationY
+    BCS @subtractSwap                    ; if enemyX is greater than playerLocationX
+
+    @subtractNormal:
+    SEC
+    LDA playerLocationY
+    SBC enemyYBuffer
+
+    @subtractSwap:
+    SEC
+    LDA enemyYBuffer
+    SBC playerLocationY
+
+    STA enemyAbsY
