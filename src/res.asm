@@ -130,6 +130,7 @@ enemyDirectionArray:	.res 3
 sqOut:					.res 2
 
 
+enemyTempForLoop:		.res 1
 
 
 

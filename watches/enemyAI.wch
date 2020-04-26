@@ -1,15 +1,17 @@
 
-13
-00000	0066	b	u	0	enemyAbsX
-00001	0067	b	u	0	enemyAbsY
-00002	0068	w	u	0	sqIn
-00003	0069	b	u	0	sqX
-00004	006B	w	u	0	sqY
-00005	006D	w	u	0	sumXY
-00006	006F	w	u	0	enemyDistance1
-00007	0071	w	u	0	enemyDistance2
-00008	0073	w	u	0	enemyDistance3
-00009	0075	b	u	0	enemyDirectionArray1
-00010	0076	b	u	0	enemyDirectionArray2
-00011	0077	b	u	0	enemyDirectionArray3
-00012	0078	w	u	0	sqOut
+15
+00000	005F	b	u	0	enemy1DirectionCurrent
+00001	0066	b	u	0	enemyAbsX
+00002	0067	b	u	0	enemyAbsY
+00003	0068	w	u	0	sqIn
+00004	0069	b	u	0	sqX
+00005	006B	w	u	0	sqY
+00006	006D	w	u	0	sumXY
+00007	006F	w	u	0	enemyDistance1
+00008	0071	w	u	0	enemyDistance2
+00009	0073	w	u	0	enemyDistance3
+00010	0075	b	u	0	enemyDirectionArray1
+00011	0076	b	u	0	enemyDirectionArray2
+00012	0077	b	u	0	enemyDirectionArray3
+00013	0078	w	u	0	sqOut
+00014	007A	b	u	0	enemyTemp

@@ -211,6 +211,7 @@ pickDirectionNew2:
     TXA
     PHA
     LDX #$00                        ; initialize X for array length
+                                    ; this affects the subs...guh not very well "scoped"
 
     LDA enemy1DirectionCurrent      ; going to have to change this for multiples
     CMP #$01 ; TODO: make these constants
@@ -237,7 +238,7 @@ pickDirectionNew2:
         JSR subAvailableRight
         JMP chooseFromAvailableDirections
 
-    chooseFromAvailableDirections:
+chooseFromAvailableDirections:
 
     ; resetting buffer
     ; DEBUGGING
@@ -249,13 +250,17 @@ pickDirectionNew2:
     LDA enemy_direction_3, Y
     STA enemyCMPTemp
 
+    STX enemyTempForLoop ; move this?
+    LDX #$00
+    
     ; Loops so that we remove the stack pushes we did...variable length array
     ; X is the length of the array
     ; X is from the subAvailable[Direction] subroutine
     @loop:
-    CPX #$00
+    CPX enemyTempForLoop ; this might be one short
     BEQ @dumpLoop
-    PLA
+    LDA enemyDirectionArray, X ; i was inverting this
+
 
     ; CODE that evaluates the direction into the enemyX/Y buffer
     ; CODE that figures out the distance between two points
@@ -267,8 +272,8 @@ pickDirectionNew2:
 
 
     ;;; PICK DIRECTION
-    CPX enemyCMPTemp                    ; figure out this variable
-    BNE @continueLoop                   ; continue if we don't equal
+    ; CPX enemyCMPTemp                    ; figure out this variable
+    ; BNE @continueLoop                   ; continue if we don't equal
 
     CMP #$01
     BEQ @moveUp
@@ -290,8 +295,6 @@ pickDirectionNew2:
     LDA #$01
     STA enemy1DirectionCurrent
 
-    LDA #$07
-    STA consoleLogEnemyCollision
     JMP @continueLoop
 
     @moveDown:
@@ -318,7 +321,8 @@ pickDirectionNew2:
     JMP @continueLoop
 
     @continueLoop:
-    DEX
+    ; DEX
+    INX
     JMP @loop
 
     @dumpLoop:
@@ -338,31 +342,35 @@ subAvailableUp:
     JSR newCheckBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @checkLeft
-    JSR absX                                ; hopefully loop this
-    LDA enemyAbsX
-    STA sqIn                                ; change this? would need to be 16-bit
-    JSR computeSquare
-    LDA sqOut
-    STA enemyDistance
-    LDA sqOut + 1
-    STA enemyDistance + 1
+    
+    ; JSR absX                                ; hopefully loop this
+    ; LDA enemyAbsX
+    ; STA sqIn                                ; change this? would need to be 16-bit
+    ; JSR computeSquare
+    ; LDA sqOut
+    ; STA enemyDistance
+    ; LDA sqOut + 1
+    ; STA enemyDistance + 1
 
-    JSR absY
-    STA sqIn                                ; change this? would need to be 16-bit
-    JSR computeSquare
+    ; JSR absY
+    ; STA sqIn                                ; change this? would need to be 16-bit
+    ; JSR computeSquare
 
-    CLC
-    LDA sqOut
-    ADC enemyDistance
-    STA enemyDistance
+    ; CLC
+    ; LDA sqOut
+    ; ADC enemyDistance
+    ; STA enemyDistance
 
-    CLC
-    LDA sqOut + 1
-    ADC enemyDistance + 1
-    STA enemyDistance + 1
+    ; CLC
+    ; LDA sqOut + 1
+    ; ADC enemyDistance + 1
+    ; STA enemyDistance + 1
+
+    JSR computeDistance1
 
     LDA #$01
-    PHA
+    ; PHA
+    STA enemyDirectionArray, X
     INX
 
     @checkLeft:
@@ -371,7 +379,8 @@ subAvailableUp:
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @checkRight
     LDA #$03
-    PHA
+    ; PHA
+    STA enemyDirectionArray, X
     INX
 
     @checkRight:
@@ -380,7 +389,8 @@ subAvailableUp:
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @dump
     LDA #$04
-    PHA
+    ; PHA
+    STA enemyDirectionArray, X
     INX
 
     @dump:
@@ -392,8 +402,12 @@ subAvailableDown:
     JSR newCheckBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
     BNE @checkLeft
+
+    JSR computeDistance1
+
     LDA #$02
-    PHA
+    ; PHA
+    STA enemyDirectionArray, X
     INX
 
     @checkLeft:
@@ -402,7 +416,8 @@ subAvailableDown:
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @checkRight
     LDA #$03
-    PHA
+    ; PHA
+    STA enemyDirectionArray, X
     INX
 
     @checkRight:
@@ -411,20 +426,25 @@ subAvailableDown:
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @dump
     LDA #$04
-    PHA
+    ; PHA
+    STA enemyDirectionArray, X
     INX
 
     @dump:
     RTS
 
-subAvailableLeft:
+subAvailableLeft: 
     @checkUp:
     JSR enemyMoveUp
     JSR newCheckBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
     BNE @checkDown
+
+    JSR computeDistance1
+
     LDA #$01
-    PHA
+    ; PHA
+    STA enemyDirectionArray, X
     INX
 
     @checkDown:
@@ -433,7 +453,8 @@ subAvailableLeft:
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
     BNE @checkLeft
     LDA #$02
-    PHA
+    ; PHA
+    STA enemyDirectionArray, X
     INX
 
     @checkLeft:
@@ -442,7 +463,8 @@ subAvailableLeft:
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
     BNE @dump
     LDA #$03
-    PHA
+    ; PHA
+    STA enemyDirectionArray, X
     INX
 
     @dump:
@@ -454,8 +476,12 @@ subAvailableRight:
     JSR newCheckBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
     BNE @checkDown
+
+    JSR computeDistance1
+
     LDA #$01
-    PHA
+    ; PHA
+    STA enemyDirectionArray, X
     INX
 
     @checkDown:
@@ -464,7 +490,8 @@ subAvailableRight:
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @checkRight
     LDA #$02
-    PHA
+    ; PHA
+    STA enemyDirectionArray, X
     INX
 
     @checkRight:
@@ -473,7 +500,8 @@ subAvailableRight:
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @dump
     LDA #$04
-    PHA
+    ; PHA
+    STA enemyDirectionArray, X
     INX
 
     @dump:
@@ -581,5 +609,31 @@ computeSquare:
 
     PLA
     TAX
+
+    RTS
+
+computeDistance1:
+    JSR absX                                ; hopefully loop this
+    LDA enemyAbsX
+    STA sqIn                                ; change this? would need to be 16-bit
+    JSR computeSquare
+    LDA sqOut
+    STA enemyDistance
+    LDA sqOut + 1
+    STA enemyDistance + 1
+
+    JSR absY
+    STA sqIn                                ; change this? would need to be 16-bit
+    JSR computeSquare
+
+    CLC
+    LDA sqOut
+    ADC enemyDistance
+    STA enemyDistance
+
+    CLC
+    LDA sqOut + 1
+    ADC enemyDistance + 1
+    STA enemyDistance + 1
 
     RTS

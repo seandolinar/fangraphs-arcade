@@ -140,7 +140,7 @@ dumpFillBackground:
   LDA #$58
   STA enemyY
 
-  LDA #$04
+  LDA #$03
   STA enemy1DirectionCurrent
 
   ; LDA #$A0
