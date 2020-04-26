@@ -565,14 +565,15 @@ absX:
     SEC
     LDA playerGridX
     SBC enemyGridX
+    JMP @dump
 
     @subtractSwap:
     SEC
     LDA enemyGridX
     SBC playerGridX
 
+    @dump:
     STA enemyAbsX
-
     RTS
 
 absY:
@@ -583,22 +584,22 @@ absY:
     STA enemyGridX ; reusing??? see if this works TODO, not neccessarily X
 
     CMP playerGridY
-    BCS @subtractNormal                  ; if enemyX is greater than playerLocationX
+    BCS @subtractSwap                 ; reverse since Y is different?
 
-    
+
+    @subtractNormal:
+    SEC
+    LDA playerGridY
+    SBC enemyGridX
+    JMP @dump
 
     @subtractSwap:
     SEC
     LDA enemyGridX
     SBC playerGridY
 
-    @subtractNormal:
-    SEC
-    LDA playerGridY
-    SBC enemyGridX
-
+    @dump:
     STA enemyAbsY
-
     RTS
 
 computeSquare:
