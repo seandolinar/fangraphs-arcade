@@ -574,6 +574,8 @@ pickDirectionNew2:
     RTS
 
 enemyMoveUp:
+    LDA enemyXWork
+    STA enemyXBuffer
     SEC
     LDA enemyYWork
     SBC #$08
@@ -581,6 +583,8 @@ enemyMoveUp:
     RTS
 
 enemyMoveDown:
+    LDA enemyXWork
+    STA enemyXBuffer
     CLC
     LDA enemyYWork
     ADC #$08
@@ -588,6 +592,8 @@ enemyMoveDown:
     RTS
 
 enemyMoveLeft:
+    LDA enemyYWork
+    STA enemyYBuffer
     SEC
     LDA enemyXWork
     SBC #$08
@@ -595,6 +601,8 @@ enemyMoveLeft:
     RTS
 
 enemyMoveRight:
+    LDA enemyYWork
+    STA enemyYBuffer
     CLC
     LDA enemyXWork
     ADC #$08
