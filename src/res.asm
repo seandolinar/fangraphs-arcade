@@ -119,11 +119,15 @@ enemyYWork:				.res 1
 enemyCMPTemp:			.res 1
 enemyAbsX:				.res 1
 enemyAbsY:				.res 1
+sqIn:					.res 1
 sqX:					.res 2
 sqY:					.res 2
 sumXY:					.res 2
 
 enemyDistance:			.res 6
+enemyDirectionArray:	.res 3
+
+sqOut:					.res 2
 
 
 

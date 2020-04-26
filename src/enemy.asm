@@ -222,127 +222,20 @@ pickDirectionNew2:
     JMP dumpAvailableRight ; not a great work around 
 
     dumpAvailableUp:
-        @checkUp:
-        JSR enemyMoveUp
-        JSR newCheckBackgroundCollisionEnemy
-        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-        BNE @checkLeft
-        LDA #$01
-        PHA
-        INX
-
-        @checkLeft:
-        JSR enemyMoveLeft
-        JSR newCheckBackgroundCollisionEnemy
-        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-        BNE @checkRight
-        LDA #$03
-        PHA
-        INX
-
-        @checkRight:
-        JSR enemyMoveRight
-        JSR newCheckBackgroundCollisionEnemy
-        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-        BNE @dump
-        LDA #$04
-        PHA
-        INX
-
-        @dump:
+        JSR subAvailableUp
         JMP chooseFromAvailableDirections
 
     dumpAvailableDown:
-        @checkDown:
-        JSR enemyMoveDown
-        JSR newCheckBackgroundCollisionEnemy
-        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
-        BNE @checkLeft
-        LDA #$02
-        PHA
-        INX
-
-        @checkLeft:
-        JSR enemyMoveLeft
-        JSR newCheckBackgroundCollisionEnemy
-        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-        BNE @checkRight
-        LDA #$03
-        PHA
-        INX
-
-        @checkRight:
-        JSR enemyMoveRight
-        JSR newCheckBackgroundCollisionEnemy
-        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-        BNE @dump
-        LDA #$04
-        PHA
-        INX
-
-        @dump:
+        JSR subAvailableDown
         JMP chooseFromAvailableDirections
-
+        
     dumpAvailableLeft:
-        @checkUp:
-        JSR enemyMoveUp
-        JSR newCheckBackgroundCollisionEnemy
-        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
-        BNE @checkDown
-        LDA #$01
-        PHA
-        INX
-
-        @checkDown:
-        JSR enemyMoveDown
-        JSR newCheckBackgroundCollisionEnemy
-        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
-        BNE @checkLeft
-        LDA #$02
-        PHA
-        INX
-
-        @checkLeft:
-        JSR enemyMoveLeft
-        JSR newCheckBackgroundCollisionEnemy
-        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
-        BNE @dump
-        LDA #$03
-        PHA
-        INX
-    
-        @dump:
+        JSR subAvailableLeft
         JMP chooseFromAvailableDirections
 
     dumpAvailableRight:
-        @checkUp:
-        JSR enemyMoveUp
-        JSR newCheckBackgroundCollisionEnemy
-        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
-        BNE @checkDown
-        LDA #$01
-        PHA
-        INX
-
-        @checkDown:
-        JSR enemyMoveDown
-        JSR newCheckBackgroundCollisionEnemy
-        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-        BNE @checkRight
-        LDA #$02
-        PHA
-        INX
-
-        @checkRight:
-        JSR enemyMoveRight
-        JSR newCheckBackgroundCollisionEnemy
-        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-        BNE @dump
-        LDA #$04
-        PHA
-        INX
-
-        @dump:
+        JSR subAvailableRight
+        JMP chooseFromAvailableDirections
 
     chooseFromAvailableDirections:
 
@@ -358,6 +251,7 @@ pickDirectionNew2:
 
     ; Loops so that we remove the stack pushes we did...variable length array
     ; X is the length of the array
+    ; X is from the subAvailable[Direction] subroutine
     @loop:
     CPX #$00
     BEQ @dumpLoop
@@ -369,9 +263,6 @@ pickDirectionNew2:
 
     ; FOR NOW we are going to try a random 1 or 2
     ; use Y
-
-
-
 
 
 
@@ -439,6 +330,155 @@ pickDirectionNew2:
 
     RTS
 
+subAvailableUp:
+    ; I'm not resetting X going into here.
+    ; We need X coming out of here
+    @checkUp:
+    JSR enemyMoveUp
+    JSR newCheckBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    BNE @checkLeft
+    JSR absX                                ; hopefully loop this
+    LDA enemyAbsX
+    STA sqIn                                ; change this? would need to be 16-bit
+    JSR computeSquare
+    LDA sqOut
+    STA enemyDistance
+    LDA sqOut + 1
+    STA enemyDistance + 1
+
+    JSR absY
+    STA sqIn                                ; change this? would need to be 16-bit
+    JSR computeSquare
+
+    CLC
+    LDA sqOut
+    ADC enemyDistance
+    STA enemyDistance
+
+    CLC
+    LDA sqOut + 1
+    ADC enemyDistance + 1
+    STA enemyDistance + 1
+
+    LDA #$01
+    PHA
+    INX
+
+    @checkLeft:
+    JSR enemyMoveLeft
+    JSR newCheckBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    BNE @checkRight
+    LDA #$03
+    PHA
+    INX
+
+    @checkRight:
+    JSR enemyMoveRight
+    JSR newCheckBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    BNE @dump
+    LDA #$04
+    PHA
+    INX
+
+    @dump:
+    RTS
+
+subAvailableDown:
+    @checkDown:
+    JSR enemyMoveDown
+    JSR newCheckBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
+    BNE @checkLeft
+    LDA #$02
+    PHA
+    INX
+
+    @checkLeft:
+    JSR enemyMoveLeft
+    JSR newCheckBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    BNE @checkRight
+    LDA #$03
+    PHA
+    INX
+
+    @checkRight:
+    JSR enemyMoveRight
+    JSR newCheckBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    BNE @dump
+    LDA #$04
+    PHA
+    INX
+
+    @dump:
+    RTS
+
+subAvailableLeft:
+    @checkUp:
+    JSR enemyMoveUp
+    JSR newCheckBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
+    BNE @checkDown
+    LDA #$01
+    PHA
+    INX
+
+    @checkDown:
+    JSR enemyMoveDown
+    JSR newCheckBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
+    BNE @checkLeft
+    LDA #$02
+    PHA
+    INX
+
+    @checkLeft:
+    JSR enemyMoveLeft
+    JSR newCheckBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
+    BNE @dump
+    LDA #$03
+    PHA
+    INX
+
+    @dump:
+    RTS
+
+subAvailableRight:
+    @checkUp:
+    JSR enemyMoveUp
+    JSR newCheckBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
+    BNE @checkDown
+    LDA #$01
+    PHA
+    INX
+
+    @checkDown:
+    JSR enemyMoveDown
+    JSR newCheckBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    BNE @checkRight
+    LDA #$02
+    PHA
+    INX
+
+    @checkRight:
+    JSR enemyMoveRight
+    JSR newCheckBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    BNE @dump
+    LDA #$04
+    PHA
+    INX
+
+    @dump:
+    RTS
+
 enemyMoveUp:
     LDA enemyXWork
     STA enemyXBuffer
@@ -493,6 +533,8 @@ absX:
 
     STA enemyAbsX
 
+    RTS
+
 absY:
     LDA enemyYBuffer
     CMP playerLocationY
@@ -509,3 +551,35 @@ absY:
     SBC playerLocationY
 
     STA enemyAbsY
+
+    RTS
+
+computeSquare:
+    TXA
+    PHA
+
+    LDX sqIn
+    LDA sqIn
+
+    STA sqOut
+    LDA #$00
+    STA sqOut + 1
+
+    CLC
+    DEX
+    @additionLoop:
+    LDA sqOut               ; low byte
+    ADC sqIn
+    STA sqOut
+
+    LDA sqOut + 1           ; high byte
+    ADC #$00
+    STA sqOut + 1
+
+    DEX
+    BNE @additionLoop
+
+    PLA
+    TAX
+
+    RTS
