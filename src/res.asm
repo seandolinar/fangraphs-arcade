@@ -110,6 +110,14 @@ nametable_buffer_hi:	.res 1
 playerDirectionCurrent:	.res 1
 enemy1DirectionCurrent:	.res 1
 enemy2DirectionCurrent:	.res 1
+enemy3DirectionCurrent:	.res 1
+enemy4DirectionCurrent:	.res 1
+
+enemyXWork:				.res 1
+enemyYWork:				.res 1
+
+enemyCMPTemp:			.res 1
+
 
 
 

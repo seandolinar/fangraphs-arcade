@@ -9,49 +9,52 @@ forEachEnemyMovement:
 enemyMovement:
     LDA enemyX, X
     STA enemyXBuffer
+    STA enemyXWork
 
     LDA enemyY, X
     STA enemyYBuffer
+    STA enemyYWork
 
-    JSR pickDirectionNew ; I can probably change this
-    LDA enemyNextDirection
-    STA enemy1DirectionCurrent, X
-    CMP #$01 ;;
-    BEQ enemyMoveUp ;enemyMoveLeft
-    CMP #$02
-    BEQ enemyMoveDown ;enemyMoveRight
-    CMP #$03
-    BEQ enemyMoveLeft ;enemyMoveDown
-    CMP #$04
-    BEQ enemyMoveRight ;enemyMoveUp
+    ; JSR pickDirectionNew ; I can probably change this
+    JSR pickDirectionNew2 
+    ; LDA enemyNextDirection
+    ; STA enemy1DirectionCurrent, X
+    ; CMP #$01 ;;
+    ; BEQ enemyMoveUp ;enemyMoveLeft
+    ; CMP #$02
+    ; BEQ enemyMoveDown ;enemyMoveRight
+    ; CMP #$03
+    ; BEQ enemyMoveLeft ;enemyMoveDown
+    ; CMP #$04
+    ; BEQ enemyMoveRight ;enemyMoveUp
 
-    enemyMoveUp:
-        SEC
-        LDA enemyY, X
-        SBC #$08
-        STA enemyYBuffer
-        JMP dumpEnemyMovement
+    ; enemyMoveUp:
+    ;     SEC
+    ;     LDA enemyY, X
+    ;     SBC #$08
+    ;     STA enemyYBuffer
+    ;     JMP dumpEnemyMovement
 
-    enemyMoveDown:
-        CLC
-        LDA enemyY, X
-        ADC #$08
-        STA enemyYBuffer
-        JMP dumpEnemyMovement
+    ; enemyMoveDown:
+    ;     CLC
+    ;     LDA enemyY, X
+    ;     ADC #$08
+    ;     STA enemyYBuffer
+    ;     JMP dumpEnemyMovement
 
-    enemyMoveLeft:
-        SEC
-        LDA enemyX, X
-        SBC #$08
-        STA enemyXBuffer
-        JMP dumpEnemyMovement
+    ; enemyMoveLeft:
+    ;     SEC
+    ;     LDA enemyX, X
+    ;     SBC #$08
+    ;     STA enemyXBuffer
+    ;     JMP dumpEnemyMovement
 
-    enemyMoveRight:
-        CLC
-        LDA enemyX, X
-        ADC #$08
-        STA enemyXBuffer
-        JMP dumpEnemyMovement
+    ; enemyMoveRight:
+    ;     CLC
+    ;     LDA enemyX, X
+    ;     ADC #$08
+    ;     STA enemyXBuffer
+    ;     JMP dumpEnemyMovement
 
     
 
@@ -73,23 +76,24 @@ enemyMovement:
         ; move this somewhere else
 
         ; not really liking this logic structure
-        LDA enemyNextDirection
-        CMP #$01
-        BEQ moveVertical
-        CMP #$02
-        BEQ moveVertical
+        ; LDA enemyNextDirection
+        ; CMP #$01
+        ; BEQ moveVertical
+        ; CMP #$02
+        ; BEQ moveVertical
 
     moveHorizontal:
         CLC
         LDA enemyXBuffer
         STA enemyX, X
         STA enemy_oam + 3, Y ; sprite RAM x
-        JMP dumpEnemyController
+        ; JMP dumpEnemyController
 
            ; LDY tempY
     moveVertical:
         CLC
         LDA enemyYBuffer
+        
         STA enemyY, X
         STA enemy_oam, Y ; sprite RAM y
 
@@ -292,24 +296,36 @@ changeEnemyColorPowerUp:
 
 
 ; build some AI into this?
-pickDirectionNew:
-    TXA
-    PHA
-    LDX enemyQ
-    CPX #$0a
-    BCC pickDirectionNewContinue
-    LDX #$00
+; pickDirectionNew:
+;     TXA
+;     PHA
+;     LDX enemyQ
+;     CPX #$0a
+;     BCC pickDirectionNewContinue
+;     LDX #$00
 
-    pickDirectionNewContinue:
-        LDA enemy_multi_direction_random, X
-        STA enemyNextDirection
-        ; STA consoleLogEnemyCollision
-        INX
-        STX enemyQ
+;     pickDirectionNewContinue:
+;         LDA enemy_multi_direction_random, X
+;         STA enemyNextDirection
+;         ; STA consoleLogEnemyCollision
+;         INX
+;         STX enemyQ
         
-    PLA
-    TAX
+;     PLA
+;     TAX
+;     RTS
+
+; using this to rotate through the enemy "random" counter
+setEnemyQ:
+    INC enemyQ              ; increments are randomizers
+    LDA enemyQ
+    CMP #$0a                ; if we are at value 12 dump out, we're good
+    BNE @dump
+    LDA #$00                ; reset to 0 if we reach 12
+    STA enemyQ
+    @dump:
     RTS
+
     
 
 ; need to check the all four directions
@@ -324,13 +340,263 @@ pickDirectionNew:
 ; then pick one of those 
 ; figure out if I can use the stack here for a loop
 pickDirectionNew2:
-    LDA enemy1DirectionCurrent      ; going to have to change this for multiples
-    CMP #$01
-    BEQ dumpAvailableDown
 
+    TYA                             ; use Y for the randomizer
+    PHA
+    JSR setEnemyQ
+    LDY enemyQ
+    
+    TXA
+    PHA
+    LDX #$00                        ; initialize X for array length
+
+    LDA enemy1DirectionCurrent      ; going to have to change this for multiples
+    CMP #$01 ; TODO: make these constants
+    BEQ dumpAvailableUp
+    CMP #$02
+    BEQ dumpAvailableDown
+    CMP #$03
+    BEQ dumpAvailableLeft
+    JMP dumpAvailableRight ; not a great work around 
+
+    dumpAvailableUp:
+        @checkUp:
+        JSR enemyMoveUp
+        JSR newCheckBackgroundCollisionEnemy
+        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+        BNE @checkLeft
+        LDA #$01
+        PHA
+        INX
+
+        @checkLeft:
+        JSR enemyMoveLeft
+        JSR newCheckBackgroundCollisionEnemy
+        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+        BNE @checkRight
+        LDA #$03
+        PHA
+        INX
+
+        @checkRight:
+        JSR enemyMoveRight
+        JSR newCheckBackgroundCollisionEnemy
+        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+        BNE @dump
+        LDA #$04
+        PHA
+        INX
+
+        @dump:
+        JMP chooseFromAvailableDirections
 
     dumpAvailableDown:
+        @checkDown:
+        JSR enemyMoveDown
+        JSR newCheckBackgroundCollisionEnemy
+        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
+        BNE @checkLeft
+        LDA #$02
+        PHA
+        INX
 
+        @checkLeft:
+        JSR enemyMoveLeft
+        JSR newCheckBackgroundCollisionEnemy
+        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+        BNE @checkRight
+        LDA #$03
+        PHA
+        INX
 
+        @checkRight:
+        JSR enemyMoveRight
+        JSR newCheckBackgroundCollisionEnemy
+        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+        BNE @dump
+        LDA #$04
+        PHA
+        INX
 
+        @dump:
+        JMP chooseFromAvailableDirections
+
+    dumpAvailableLeft:
+        @checkUp:
+        JSR enemyMoveUp
+        JSR newCheckBackgroundCollisionEnemy
+        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
+        BNE @checkDown
+        LDA #$01
+        PHA
+        INX
+
+        @checkDown:
+        JSR enemyMoveDown
+        JSR newCheckBackgroundCollisionEnemy
+        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
+        BNE @checkLeft
+        LDA #$02
+        PHA
+        INX
+
+        @checkLeft:
+        JSR enemyMoveLeft
+        JSR newCheckBackgroundCollisionEnemy
+        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
+        BNE @dump
+        LDA #$03
+        PHA
+        INX
+    
+        @dump:
+        JMP chooseFromAvailableDirections
+
+    dumpAvailableRight:
+        @checkUp:
+        JSR enemyMoveUp
+        JSR newCheckBackgroundCollisionEnemy
+        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
+        BNE @checkDown
+        LDA #$01
+        PHA
+        INX
+
+        @checkDown:
+        JSR enemyMoveDown
+        JSR newCheckBackgroundCollisionEnemy
+        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+        BNE @checkRight
+        LDA #$02
+        PHA
+        INX
+
+        @checkRight:
+        JSR enemyMoveRight
+        JSR newCheckBackgroundCollisionEnemy
+        LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+        BNE @dump
+        LDA #$04
+        PHA
+        INX
+
+        @dump:
+
+    chooseFromAvailableDirections:
+
+    ; resetting buffer
+    ; DEBUGGING
+    LDA enemyXWork
+    STA enemyXBuffer
+    LDA enemyYWork
+    STA enemyYBuffer
+
+    LDA enemy_direction_3, Y
+    STA enemyCMPTemp
+
+    ; Loops so that we remove the stack pushes we did...variable length array
+    ; X is the length of the array
+    @loop:
+    CPX #$00
+    BEQ @dumpLoop
+    PLA
+
+    ; CODE that evaluates the direction into the enemyX/Y buffer
+    ; CODE that figures out the distance between two points
+    ; CODE that compares the two values
+
+    ; FOR NOW we are going to try a random 1 or 2
+    ; use Y
+
+    CPX enemyCMPTemp                    ; figure out this variable
+    BNE @continueLoop                   ; continue if we don't equal
+
+    CMP #$01
+    BEQ @moveUp
+
+    CMP #$02
+    BEQ @moveDown
+
+    CMP #$03
+    BEQ @moveLeft
+
+    CMP #$04
+    BEQ @moveRight
+
+    JMP @continueLoop
+
+    @moveUp:
+    JSR enemyMoveUp
+    LDA #$01
+    STA enemy1DirectionCurrent
+
+    LDA #$07
+    STA consoleLogEnemyCollision
+    JMP @continueLoop
+
+    @moveDown:
+    JSR enemyMoveDown
+    LDA #$02
+    STA enemy1DirectionCurrent
+
+    ; LDA #$09
+    ; STA consoleLogEnemyCollision
+
+    JMP @continueLoop
+
+    @moveLeft:
+    JSR enemyMoveLeft
+    LDA #$03
+    STA enemy1DirectionCurrent
+    LDA #$07
+    STA consoleLogEnemyCollision
+    JMP @continueLoop
+
+    @moveRight:
+    JSR enemyMoveRight
+    LDA #$04
+    STA enemy1DirectionCurrent
+    LDA #$07
+    STA consoleLogEnemyCollision
+    JMP @continueLoop
+
+    @continueLoop:
+    DEX
+    JMP @loop
+
+    @dumpLoop:
+    PLA
+    TAX
+
+    PLA
+    TAY
+
+    RTS
+
+enemyMoveUp:
+    SEC
+    LDA enemyYWork
+    SBC #$08
+    STA enemyYBuffer
+    RTS
+
+enemyMoveDown:
+    CLC
+    LDA enemyYWork
+    ADC #$08
+    STA enemyYBuffer
+    RTS
+
+enemyMoveLeft:
+    SEC
+    LDA enemyXWork
+    SBC #$08
+    STA enemyXBuffer
+    RTS
+
+enemyMoveRight:
+    CLC
+    LDA enemyXWork
+    ADC #$08
+    STA enemyXBuffer
     RTS

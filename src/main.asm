@@ -19,9 +19,11 @@
 NMI:
     ; this interrupts the main loop
 
-vBlankWait:	
+; vBlankWait:	
+@loop:
 	lda $2002   
-	bpl vBlankWait
+	; bpl vBlankWait
+    bpl @loop
 
     JSR changeBackground
     JSR spriteTransfer
@@ -114,11 +116,11 @@ spriteTransfer:
     LDX masterTimer
     DEX
     STX masterTimer
-    BNE dumpSpriteTransfer
+    BNE @dump
     JSR dumpUpdatePosition
     JSR countDots
     JSR nextEnemyMovement   ; move this to main?
     LDX #$08                ; controls the speed of the game
     STX masterTimer
-dumpSpriteTransfer:
+@dump:
     RTS
