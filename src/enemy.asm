@@ -378,6 +378,9 @@ subAvailableUp:
     JSR newCheckBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @checkRight
+
+    JSR computeDistance2
+
     LDA #$03
     ; PHA
     STA enemyDirectionArray, X
@@ -415,6 +418,9 @@ subAvailableDown:
     JSR newCheckBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @checkRight
+
+    JSR computeDistance2
+
     LDA #$03
     ; PHA
     STA enemyDirectionArray, X
@@ -543,21 +549,27 @@ enemyMoveRight:
     STA enemyXBuffer
     RTS
 
-
+; these "work", but it's doing a signed instead of absolute value
 absX:
     LDA enemyXBuffer
-    CMP playerLocationX
+    LSR ; divide / 2 / 2 / 2 ; divide by 8 -- size of the icon
+    LSR
+    LSR
+    STA enemyGridX; reusing??? see if this works TODO, not neccessarily X
+
+    CMP playerGridX
+
     BCS @subtractSwap                    ; if enemyX is greater than playerLocationX
 
     @subtractNormal:
     SEC
-    LDA playerLocationX
-    SBC enemyXBuffer
+    LDA playerGridX
+    SBC enemyGridX
 
     @subtractSwap:
     SEC
-    LDA enemyXBuffer
-    SBC playerLocationX
+    LDA enemyGridX
+    SBC playerGridX
 
     STA enemyAbsX
 
@@ -565,18 +577,25 @@ absX:
 
 absY:
     LDA enemyYBuffer
-    CMP playerLocationY
-    BCS @subtractSwap                    ; if enemyX is greater than playerLocationX
+    LSR ; divide / 2 / 2 / 2 ; divide by 8 -- size of the icon
+    LSR
+    LSR
+    STA enemyGridX ; reusing??? see if this works TODO, not neccessarily X
 
-    @subtractNormal:
-    SEC
-    LDA playerLocationY
-    SBC enemyYBuffer
+    CMP playerGridY
+    BCS @subtractNormal                  ; if enemyX is greater than playerLocationX
+
+    
 
     @subtractSwap:
     SEC
-    LDA enemyYBuffer
-    SBC playerLocationY
+    LDA enemyGridX
+    SBC playerGridY
+
+    @subtractNormal:
+    SEC
+    LDA playerGridY
+    SBC enemyGridX
 
     STA enemyAbsY
 
@@ -635,5 +654,31 @@ computeDistance1:
     LDA sqOut + 1
     ADC enemyDistance + 1
     STA enemyDistance + 1
+
+    RTS
+
+computeDistance2:
+    JSR absX                                ; hopefully loop this
+    LDA enemyAbsX
+    STA sqIn                                ; change this? would need to be 16-bit
+    JSR computeSquare
+    LDA sqOut
+    STA enemyDistance + 2
+    LDA sqOut + 1
+    STA enemyDistance + 3
+
+    JSR absY
+    STA sqIn                                ; change this? would need to be 16-bit
+    JSR computeSquare
+
+    CLC
+    LDA sqOut
+    ADC enemyDistance + 2
+    STA enemyDistance + 2
+
+    CLC
+    LDA sqOut + 1
+    ADC enemyDistance + 3
+    STA enemyDistance + 3
 
     RTS

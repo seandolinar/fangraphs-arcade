@@ -71,9 +71,17 @@ dumpDirectionRight:
 updatePositionSprite:
     LDA playerLocationX
     STA $0203 ; place in RAM where the sprite Y is controlled
+    LSR ; divide / 2 / 2 / 2 ; divide by 8 -- size of the icon
+    LSR
+    LSR
+    STA playerGridX 
 
     LDA playerLocationY
     STA $0200 ; place in RAM where the sprite X is controlled
+    LSR ; divide / 2 / 2 / 2 ; divide by 8 -- size of the icon
+    LSR
+    LSR
+    STA playerGridY
 
     LDA #00
     STA controllerBits
@@ -175,6 +183,7 @@ moveUp:
 
         LDA playerLocationYBuffer
         STA playerLocationY
+        
         ; RTS
         JMP updatePositionSprite
 
