@@ -131,6 +131,7 @@ sqOut:					.res 2
 
 
 enemyTempForLoop:		.res 1
+enemyDirectionIndex:	.res 1
 
 
 

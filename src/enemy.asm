@@ -253,62 +253,65 @@ chooseFromAvailableDirections:
     STX enemyTempForLoop ; move this?
     DEC enemyTempForLoop
     LDX #$00
+    STX enemyDirectionIndex
     LDY #$02
     
     ; Loops so that we remove the stack pushes we did...variable length array
     ; X is the length of the array
     ; X is from the subAvailable[Direction] subroutine
+    ; turning off the loop for now
     @loop:
+    STX consoleLogEnemyCollision
+
     CPX enemyTempForLoop ; this might be one short
-    BEQ commitMove
+    BCS commitMove
 
     ; finish working here
     ; it's sort working but not
-    TXA
-    STA tempX
-    ASL
-    TAX
+    @continue:
     
     ; X doesn't go up by 1
     LDA enemyDistance + 1, X    ; high byte;        ; register
     CMP enemyDistance + 1, Y    ; high byte + 2     ; data 
-    BEQ @checkLowerByte         ; branches if equal
-    BCS @registerIsHigher       ; branches if  data (Y) < register (X)
+    BCC @registerIsLower       ; branches if  data (Y) < register (X)
+    BNE @registerIsHigher       ; branches if equal
 
-    JMP @registerIsLower        ; happens if register (X) < data (Y)
+    ; JMP @registerIsLower        ; happens if register (X) < data (Y)
 
     @checkLowerByte:
     LDA enemyDistance, X        ; low byte
     CMP enemyDistance, Y        ; low byte + 1
-    BCS @registerIsHigher
+    BCC @registerIsLower
+    BNE @registerIsHigher
 
     @registerIsLower:           ; happens if register (X) < data (Y)    
-    LDX tempX
+    JMP commitMove
+    ; CPX enemyTempForLoop        ; this might be one short
+    ; BEQ commitMove
+    ; CPY #$04 ;enemyTempForLoop
+    ; BEQ commitMove
 
-    CPX enemyTempForLoop        ; this might be one short
-    BEQ commitMove
-    CPY enemyTempForLoop
-    BEQ commitMove
-
-    INY
-    INY
+    ; INY
+    ; INY
     
-    JMP @loop
+    ; JMP @loop
 
     @registerIsHigher:          ; if  data (Y) < register (X)
-    LDX tempX
+    ; INX
+    ; INX
+    INC enemyDirectionIndex
 
-    CPX enemyTempForLoop        ; this might be one short
-    BEQ commitMove
-    CPY enemyTempForLoop
-    BEQ commitMove
 
-    INX
+    ; CPX enemyTempForLoop        ; this might be one short
+    ; BEQ commitMove
+    ; CPY #$04 ;enemyTempForLoop ; THIS IS PROBABLY WRONG
+    ; BEQ commitMove
 
-    INY
-    INY
 
-    JMP @loop
+    ; INY
+    ; INY
+
+    ; JMP @loop
     
     ; X is 0 and Y is 1
 
@@ -326,9 +329,13 @@ chooseFromAvailableDirections:
     ; use Y
 
 commitMove:
-    LDX tempX
-   
+    ; LDX tempX
+    ; STX consoleLogEnemyCollision
+
+
+    LDX enemyDirectionIndex
     STX consoleLogEnemyCollision
+
 
     LDA enemyDirectionArray, X 
 
