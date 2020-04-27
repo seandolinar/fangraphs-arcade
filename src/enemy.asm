@@ -205,8 +205,8 @@ pickDirectionNew2:
 
     TYA                             ; use Y for the randomizer
     PHA
-    JSR setEnemyQ
-    LDY enemyQ
+    ; JSR setEnemyQ
+    ; LDY enemyQ
     
     TXA
     PHA
@@ -247,20 +247,76 @@ chooseFromAvailableDirections:
     LDA enemyYWork
     STA enemyYBuffer
 
-    LDA enemy_direction_3, Y
-    STA enemyCMPTemp
+    ; LDA enemy_direction_3, Y
+    ; STA enemyCMPTemp
 
     STX enemyTempForLoop ; move this?
+    DEC enemyTempForLoop
     LDX #$00
+    LDY #$02
     
     ; Loops so that we remove the stack pushes we did...variable length array
     ; X is the length of the array
     ; X is from the subAvailable[Direction] subroutine
     @loop:
     CPX enemyTempForLoop ; this might be one short
-    BEQ @dumpLoop
-    LDA enemyDirectionArray, X ; i was inverting this
+    BEQ commitMove
 
+    ; finish working here
+    ; it's sort working but not
+    TXA
+    STA tempX
+    ASL
+    TAX
+    
+    ; X doesn't go up by 1
+    LDA enemyDistance + 1, X    ; high byte;        ; register
+    CMP enemyDistance + 1, Y    ; high byte + 2     ; data 
+    BEQ @checkLowerByte         ; branches if equal
+    BCS @registerIsHigher       ; branches if  data (Y) < register (X)
+
+    JMP @registerIsLower        ; happens if register (X) < data (Y)
+
+    @checkLowerByte:
+    LDA enemyDistance, X        ; low byte
+    CMP enemyDistance, Y        ; low byte + 1
+    BCS @registerIsHigher
+
+    @registerIsLower:           ; happens if register (X) < data (Y)    
+    LDX tempX
+
+    CPX enemyTempForLoop        ; this might be one short
+    BEQ commitMove
+    CPY enemyTempForLoop
+    BEQ commitMove
+
+    INY
+    INY
+    
+    JMP @loop
+
+    @registerIsHigher:          ; if  data (Y) < register (X)
+    LDX tempX
+
+    CPX enemyTempForLoop        ; this might be one short
+    BEQ commitMove
+    CPY enemyTempForLoop
+    BEQ commitMove
+
+    INX
+
+    INY
+    INY
+
+    JMP @loop
+    
+    ; X is 0 and Y is 1
+
+    ; if enemyTempForLoop is 2
+    ; X is 0 and Y is 2
+    ; X is 1 and Y is 2
+
+    
 
     ; CODE that evaluates the direction into the enemyX/Y buffer
     ; CODE that figures out the distance between two points
@@ -269,11 +325,12 @@ chooseFromAvailableDirections:
     ; FOR NOW we are going to try a random 1 or 2
     ; use Y
 
+commitMove:
+    LDX tempX
+   
+    STX consoleLogEnemyCollision
 
-
-    ;;; PICK DIRECTION
-    ; CPX enemyCMPTemp                    ; figure out this variable
-    ; BNE @continueLoop                   ; continue if we don't equal
+    LDA enemyDirectionArray, X 
 
     CMP #$01
     BEQ @moveUp
@@ -308,22 +365,18 @@ chooseFromAvailableDirections:
     JSR enemyMoveLeft
     LDA #$03
     STA enemy1DirectionCurrent
-    LDA #$07
-    STA consoleLogEnemyCollision
     JMP @continueLoop
 
     @moveRight:
     JSR enemyMoveRight
     LDA #$04
     STA enemy1DirectionCurrent
-    LDA #$07
-    STA consoleLogEnemyCollision
     JMP @continueLoop
 
     @continueLoop:
     ; DEX
     INX
-    JMP @loop
+    ; JMP @loop
 
     @dumpLoop:
     PLA                 ; put X/Y back
@@ -343,29 +396,6 @@ subAvailableUp:
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @checkLeft
     
-    ; JSR absX                                ; hopefully loop this
-    ; LDA enemyAbsX
-    ; STA sqIn                                ; change this? would need to be 16-bit
-    ; JSR computeSquare
-    ; LDA sqOut
-    ; STA enemyDistance
-    ; LDA sqOut + 1
-    ; STA enemyDistance + 1
-
-    ; JSR absY
-    ; STA sqIn                                ; change this? would need to be 16-bit
-    ; JSR computeSquare
-
-    ; CLC
-    ; LDA sqOut
-    ; ADC enemyDistance
-    ; STA enemyDistance
-
-    ; CLC
-    ; LDA sqOut + 1
-    ; ADC enemyDistance + 1
-    ; STA enemyDistance + 1
-
     JSR computeDistance1
 
     LDA #$01
@@ -379,7 +409,7 @@ subAvailableUp:
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @checkRight
 
-    JSR computeDistance2
+    JSR computeDistance1
 
     LDA #$03
     ; PHA
@@ -419,7 +449,7 @@ subAvailableDown:
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @checkRight
 
-    JSR computeDistance2
+    JSR computeDistance1
 
     LDA #$03
     ; PHA
@@ -431,6 +461,9 @@ subAvailableDown:
     JSR newCheckBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @dump
+
+    JSR computeDistance1
+
     LDA #$04
     ; PHA
     STA enemyDirectionArray, X
@@ -458,6 +491,9 @@ subAvailableLeft:
     JSR newCheckBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
     BNE @checkLeft
+
+    JSR computeDistance1 ; not working might have to increment with X
+
     LDA #$02
     ; PHA
     STA enemyDirectionArray, X
@@ -468,6 +504,9 @@ subAvailableLeft:
     JSR newCheckBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
     BNE @dump
+
+    JSR computeDistance1
+
     LDA #$03
     ; PHA
     STA enemyDirectionArray, X
@@ -495,6 +534,9 @@ subAvailableRight:
     JSR newCheckBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @checkRight
+
+    JSR computeDistance1
+
     LDA #$02
     ; PHA
     STA enemyDirectionArray, X
@@ -505,6 +547,9 @@ subAvailableRight:
     JSR newCheckBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @dump
+
+    JSR computeDistance1
+
     LDA #$04
     ; PHA
     STA enemyDirectionArray, X
@@ -558,7 +603,7 @@ absX:
     STA enemyGridX; reusing??? see if this works TODO, not neccessarily X
 
     CMP playerGridX
-
+    BEQ @equal
     BCS @subtractSwap                    ; if enemyX is greater than playerLocationX
 
     @subtractNormal:
@@ -571,6 +616,10 @@ absX:
     SEC
     LDA enemyGridX
     SBC playerGridX
+    JMP @dump
+
+    @equal:
+    LDA #$00
 
     @dump:
     STA enemyAbsX
@@ -584,8 +633,8 @@ absY:
     STA enemyGridX ; reusing??? see if this works TODO, not neccessarily X
 
     CMP playerGridY
+    BEQ @equal
     BCS @subtractSwap                 ; reverse since Y is different?
-
 
     @subtractNormal:
     SEC
@@ -597,6 +646,9 @@ absY:
     SEC
     LDA enemyGridX
     SBC playerGridY
+
+    @equal:
+    LDA #$00
 
     @dump:
     STA enemyAbsY
@@ -613,9 +665,14 @@ computeSquare:
     LDA #$00
     STA sqOut + 1
 
-    CLC
+    CPX #$00
+    BEQ @dump
+    CPX #$01
+    BEQ @dump
+    
     DEX
     @additionLoop:
+    CLC
     LDA sqOut               ; low byte
     ADC sqIn
     STA sqOut
@@ -627,20 +684,44 @@ computeSquare:
     DEX
     BNE @additionLoop
 
+    @dump:
     PLA
     TAX
 
     RTS
 
+;; figure out how to make this work
 computeDistance1:
+
+    TYA
+    PHA
+
+    TXA
+    PHA
+
+    LDY #$00
+    @loopY:
+    CPX #$00
+    BEQ @runComp
+    INY
+    INY
+    DEX
+    JMP @loopY
+    
+    @runComp:
+    PLA
+    TAX
+
     JSR absX                                ; hopefully loop this
     LDA enemyAbsX
     STA sqIn                                ; change this? would need to be 16-bit
     JSR computeSquare
+
+    CLC
     LDA sqOut
-    STA enemyDistance
+    STA enemyDistance, Y
     LDA sqOut + 1
-    STA enemyDistance + 1
+    STA enemyDistance + 1, Y
 
     JSR absY
     STA sqIn                                ; change this? would need to be 16-bit
@@ -648,38 +729,15 @@ computeDistance1:
 
     CLC
     LDA sqOut
-    ADC enemyDistance
-    STA enemyDistance
+    ADC enemyDistance, Y
+    STA enemyDistance, Y
 
     CLC
     LDA sqOut + 1
-    ADC enemyDistance + 1
-    STA enemyDistance + 1
+    ADC enemyDistance + 1, Y
+    STA enemyDistance + 1, Y
 
-    RTS
-
-computeDistance2:
-    JSR absX                                ; hopefully loop this
-    LDA enemyAbsX
-    STA sqIn                                ; change this? would need to be 16-bit
-    JSR computeSquare
-    LDA sqOut
-    STA enemyDistance + 2
-    LDA sqOut + 1
-    STA enemyDistance + 3
-
-    JSR absY
-    STA sqIn                                ; change this? would need to be 16-bit
-    JSR computeSquare
-
-    CLC
-    LDA sqOut
-    ADC enemyDistance + 2
-    STA enemyDistance + 2
-
-    CLC
-    LDA sqOut + 1
-    ADC enemyDistance + 3
-    STA enemyDistance + 3
+    PLA
+    TAY
 
     RTS

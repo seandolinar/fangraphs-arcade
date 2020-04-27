@@ -1,5 +1,5 @@
 
-15
+16
 00000	005F	b	u	0	enemy1DirectionCurrent
 00001	0066	b	u	0	enemyAbsX
 00002	0067	b	u	0	enemyAbsY
@@ -15,3 +15,4 @@
 00012	0077	b	u	0	enemyDirectionArray3
 00013	0078	w	u	0	sqOut
 00014	007A	b	u	0	enemyTemp
+00015	0028	b	u	0	consoleLog
