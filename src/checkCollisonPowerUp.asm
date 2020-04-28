@@ -7,14 +7,14 @@
 checkCollisionPowerUp:
     LDX powerUpAvailable
 
-    DEX
+    DEX ; or this could be the source of the bug
 
     LDA powerUpX, X
     CMP playerLocationX
-    BNE dumpReally 
+    BNE @dump 
     LDA powerUpY, X
     CMP playerLocationY
-    BNE dumpReally 
+    BNE @dump 
 
     ; dumps out
     JSR enablePowerUp
@@ -24,7 +24,7 @@ checkCollisionPowerUp:
     JSR soundCollision ; Bad collision ; change this!
     RTS
 
-dumpReally:
+@dump:
     RTS
 
 enablePowerUp:
@@ -61,31 +61,29 @@ removePowerUp:
 
     ; find how far we have to skip
     LDY #$00
-removePowerUpCountLoop:
+    @loop:
 
-    INY
-    INY
-    INY
-    INY
+    TYA
+    CLC
+    ADC #$10                ; need to jump 16 bytes for next set of power ups
+    TAY
 
-    DEX
-
+    DEX                     ; I think we might be going out of bounds here or something
+                            ; causing some issues
     CPX #$00
-    BNE removePowerUpCountLoop
+    BNE @loop
 
-    ; have to loop this
+    ; have to loop this?
     LDX tempX
     LDA #$00
     STA powerUpX, X
     STA powerUpY, X
+
     LDA #$02
     STA power_up_oam + 1, Y ; + 1 is the tile ; #$02 is the empty tile
     STA power_up_oam + 5, Y
     STA power_up_oam + 9, Y
     STA power_up_oam + 13, Y
-
-
-    ; crap, that need to jump four Xs
 
     LDX tempX
     LDY tempY

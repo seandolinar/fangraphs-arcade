@@ -79,15 +79,15 @@ collisionPointerHiEnemy:     .res 1 ; 0025
 
 masterTimer:			.res 1      ; 0026
 
-consoleLogEnemyCollision:	.res 1  ; 0028
+consoleLogEnemyCollision:	.res 1  ; 002C
 
-gameStateIsPowered: .res 1 ; 0029
+gameStateIsPowered: .res 1 ; 002D
 
 ; Wish I knew why I can't use the stack for this
-tempX:					.res 1 ; 002a
-tempY:					.res 1 ; 002b
+tempX:					.res 1 ; 002E
+tempY:					.res 1 ; 002F
 
-powerUpX:				.res 1 ;; if these don't move we can read them from ROM
+powerUpX:				.res 1 ; 0030 ;; if these don't move we can read them from ROM
 powerUpX2:				.res 1
 powerUpX3:				.res 1
 powerUpX4:				.res 1

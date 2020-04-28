@@ -16,4 +16,4 @@
 00013	0078	w	u	0	sqOut
 00014	007A	b	u	0	enemyTemp
 00015	007B	b	u	0	enemyDirectionIndex
-00016	0028	b	u	0	consoleLog
+00016	002C	b	u	0	consoleLog
