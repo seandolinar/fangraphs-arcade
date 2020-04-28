@@ -12,25 +12,21 @@ updatePosition:
   LDA controllerBits
   AND #CONTROL_P1_UP ;UP
   BEQ dumpControlUp ; dumps if we have no A push
-  ;JSR moveUp
   JSR setUp
 dumpControlUp:
   LDA controllerBits
   AND #CONTROL_P1_DOWN ;DOWN
   BEQ dumpControlDown ; dumps if we have no UP push
-  ;JSR moveDown
   JSR setDown
 dumpControlDown:
   LDA controllerBits
   AND #CONTROL_P1_LEFT ;LEFT
   BEQ dumpControlLeft ; dumps if we have no DOWN push
-  ;JSR moveLeft
   JSR setLeft
 dumpControlLeft:
   LDA controllerBits
   AND #CONTROL_P1_RIGHT ;RIGHT
   BEQ dumpUpdateController ; dumps if we have no LEFT push
-  ;JSR moveRight
   JSR setRight
 
 dumpUpdateController:
@@ -70,14 +66,35 @@ dumpDirectionRight:
 
 updatePositionSprite:
     LDA playerLocationX
-    STA $0203 ; place in RAM where the sprite Y is controlled
+    SEC
+    SBC #$04
+    STA player_oam + 3 ; place in RAM where the sprite Y is controlled
+    STA player_oam + 7 ; place in RAM where the sprite Y is controlled
+
+
+    CLC
+    ADC #$08           ; check on the number
+    STA player_oam + 11 ; place in RAM where the sprite Y is controlled
+    STA player_oam + 15 ; place in RAM where the sprite Y is controlled
+
+    LDA playerLocationX
     LSR ; divide / 2 / 2 / 2 ; divide by 8 -- size of the icon
     LSR
     LSR
     STA playerGridX 
 
     LDA playerLocationY
-    STA $0200 ; place in RAM where the sprite X is controlled
+    SEC
+    SBC #$04
+    STA player_oam ; place in RAM where the sprite X is controlled
+    STA player_oam + 8 ; place in RAM where the sprite X is controlled
+
+    CLC
+    ADC #$08
+    STA player_oam + 4
+    STA player_oam + 12
+
+    LDA playerLocationY
     LSR ; divide / 2 / 2 / 2 ; divide by 8 -- size of the icon
     LSR
     LSR
@@ -115,7 +132,9 @@ moveRight:
         CLC
         ADC #$08
         STA playerLocationXBuffer
-        STA collisionTestX
+        ; CLC
+        ; ADC #$08                ; this is for it's new width
+        STA collisionTestX      ; only need the added value for rigth
 
         JSR checkCollision
         LDA collisionFlag
@@ -124,14 +143,11 @@ moveRight:
         LDA playerLocationXBuffer
         STA playerLocationX
 
-        ; JSR nextEnemyMovement ;; trying something here
-        ; RTS
         JMP updatePositionSprite
 
 dumpMoveRight:
         LDA playerLocationX
         STA playerLocationXBuffer
-        ; RTS
         JMP updatePositionSprite
 
 
@@ -184,13 +200,11 @@ moveUp:
         LDA playerLocationYBuffer
         STA playerLocationY
         
-        ; RTS
         JMP updatePositionSprite
 
 dumpMoveUp:
         LDA playerLocationY
         STA playerLocationYBuffer
-        ; RTS
         JMP updatePositionSprite
 
 moveDown:
@@ -203,6 +217,9 @@ moveDown:
         CLC
         ADC #$08
         STA playerLocationYBuffer
+
+        ; CLC
+        ; ADC #$08                        ; for 16 x 16 sprite
         STA collisionTestY
 
         JSR checkCollision
@@ -211,18 +228,12 @@ moveDown:
         
         LDA playerLocationYBuffer
         STA playerLocationY
-        ; RTS
         JMP updatePositionSprite
 
 dumpMoveDown:
         LDA playerLocationY
         STA playerLocationYBuffer
-        ; RTS
         JMP updatePositionSprite
-
-
-playerOffset = $08
-enemyOffset = $08
 
 checkCollision:
     ; set the collision flag to 0 -- or false
