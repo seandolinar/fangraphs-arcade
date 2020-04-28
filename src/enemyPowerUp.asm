@@ -5,7 +5,7 @@ changeEnemyColor:
     TYA
     PHA
 
-    LDX #$02
+    LDX #$04
     LDY #$00
 
     LDA gameStateIsPowered

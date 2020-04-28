@@ -72,6 +72,7 @@ countDots:
     CMP #$05
     BNE dumpCountDots
 
+    ; WIN color
     LDA #$16
     STA bufferBackgroundColor
 

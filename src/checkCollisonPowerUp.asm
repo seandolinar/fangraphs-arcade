@@ -6,34 +6,23 @@
 .segment "CODE"
 checkCollisionPowerUp:
     LDX powerUpAvailable
-; checkCollisionPowerUpLoop:
-    
-    ; CPX #$00
-    ; BEQ dumpReally 
-    DEX
 
-    ; STX consoleLogEnemyCollision
+    DEX
 
     LDA powerUpX, X
     CMP playerLocationX
-    BNE dumpReally ;dumpCheckCollisionPowerUp
+    BNE dumpReally 
     LDA powerUpY, X
     CMP playerLocationY
-    BNE dumpReally ;dumpCheckCollisionPowerUp
+    BNE dumpReally 
 
     ; dumps out
-    
     JSR enablePowerUp
     JSR removePowerUp
 
 
     JSR soundCollision ; Bad collision ; change this!
     RTS
-
-; dumpCheckCollisionPowerUp:
-;     CPX #$00
-;     BNE checkCollisionPowerUpLoop
-;     RTS
 
 dumpReally:
     RTS
@@ -42,8 +31,8 @@ enablePowerUp:
     LDA #$01
     STA gameStateIsPowered
 
-    LDA #$2D
-    STA bufferBackgroundColor ; might have to make this more generic
+    ; LDA #$0F
+    ; STA bufferBackgroundColor ; might have to make this more generic
 
     JSR changeEnemyColor ; make this enemyState?
     JSR setTimerPowerUp
@@ -56,8 +45,8 @@ disablePowerUp:
     STA gameStateIsPowered
     STA powerUpTimer
 
-    LDA #$2D
-    STA bufferBackgroundColor
+    ; LDA #$0F
+    ; STA bufferBackgroundColor
 
     JSR changeEnemyColor ; make this enemyState?
 
@@ -98,7 +87,7 @@ removePowerUpCountLoop:
 
 ; start the timer
 setTimerPowerUp:
-    LDA #$20 ; 32 cycles of something
+    LDA #$40 ; 32 cycles of something
     STA powerUpTimer
     RTS
 
