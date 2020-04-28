@@ -92,7 +92,6 @@ changeBackground:
     ; STA PPU_CTRL_REG1
 
 
-
     ; ; STARTS VIDEO DISPLAY
     LDA #%10000000          ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
     STA $2000
@@ -100,8 +99,6 @@ changeBackground:
     LDA #%00011110          ; enable sprites, enable background, no clipping on left side
     STA $2001
     RTS
-
-
 
 
 spriteTransfer:       

@@ -20,8 +20,8 @@ CONTROL_P1_RIGHT =  %10000000
 
 .segment "OAM"
 player_oam:              .res 4
-enemy_oam:               .res 8     ; sprite OAM data to be uploaded by DMA
-power_up_oam:			 .res 244   ; .res reserves 256 TOTAL bytes of storage
+enemy_oam:               .res 16     ; sprite OAM data to be uploaded by DMA
+power_up_oam:			 .res 236   ; .res reserves 256 TOTAL bytes of storage
 									; will have to expand if when we expand enemies
 
 .segment "ZEROPAGE"

@@ -8,8 +8,6 @@ pallete:
 
 sprites:
 .byte $b0, $00, %00000000, $80  ;$0200-3 ;; human player
-; .byte $88, $01, %00000001, $80  ;$0204-7 ;; no
-; .byte $40, $01, %00000001, $40  ;$0208-b? ;; no ;; what are these?
 
 background_item:
 .byte $01, $01, $00, $00, $00, $01

@@ -1,5 +1,5 @@
 nextEnemyMovement:
-    LDX #$02            ; how many enemies we have
+    LDX #$04            ; how many enemies we have
     LDY #$00
 forEachEnemyMovement:
     DEX

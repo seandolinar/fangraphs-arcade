@@ -38,7 +38,7 @@ InitialLoad:
     INX
     INX
     
-    CPX #$18 ;#$10          ; Compare X to hex $10, decimal 16
+    CPX #$20 ;#$10          ; Compare X to hex $10, decimal 16
     BNE LoadEnemyLoop   ; Branch to LoadSpritesLoop if compare was Not Equal to zero
 
 
@@ -135,6 +135,8 @@ dumpFillBackground:
   STA playerLocationY
   STA playerLocationYBuffer
 
+
+  ; We can eventually loop this
   LDA #$A0
   STA enemyX
   LDA #$58
@@ -143,13 +145,29 @@ dumpFillBackground:
   LDA #$03
   STA enemy1DirectionCurrent
 
-  LDA #$02
-  STA enemy2DirectionCurrent
-
   LDA #$A0
   STA enemyX2
   LDA #$50
   STA enemyY2
+
+  LDA #$02
+  STA enemy2DirectionCurrent
+
+  LDA #$80
+  STA enemyX3
+  LDA #$50
+  STA enemyY3
+
+  LDA #$01
+  STA enemy3DirectionCurrent
+
+  LDA #$80
+  STA enemyX4
+  LDA #$50
+  STA enemyY4
+
+  LDA #$02
+  STA enemy4DirectionCurrent
 
 
   ; STARTS VIDEO DISPLAY
@@ -198,30 +216,23 @@ STA powerUpAvailable ; first base power up is loaded first
 LDA #$00
 STA dotsLeft
 
-
-
 JMP Main
 
 
 ; this is not RAM, huh?
 enemy_array:
 .byte $58, $01, %00000001, $A8 ;80 ; first enemy (O)
-.byte $50, $00, %00000001, $80 ; second enemy (X)
+.byte $50, $01, %00000001, $80 ; second enemy (X)
+.byte $30, $01, %00000001, $80 ; second enemy (X)
+.byte $40, $01, %00000001, $80 ; second enemy (X)
+
 ; power ups
 .byte $60, $04, %00000010, $E8
 .byte $10, $04, %00000010, $80
 .byte $60, $04, %00000010, $10
 .byte $D0, $04, %00000010, $80
 
-enemy_direction_random:
-.byte $01, $FF, $00, $01, $00, $FF, $01, $01, $00, $00, $FF, $FF
 
-enemy_multi_direction_random:
-.byte $04, $04, $04, $04, $04, $04, $04, $04, $03, $03, $01, $04
-; .byte $01, $01, $01, $01, $01, $03, $03, $03, $03, $03, $03, $03
-
-enemy_direction_3:
-.byte $01, $02, $01, $01, $02, $02, $01, $02, $02, $01, $02, $02
 
 
 
