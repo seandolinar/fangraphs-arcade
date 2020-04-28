@@ -3,6 +3,8 @@
 .include "./controller.asm"
 .include "./position.asm"
 .include "./enemy.asm"
+.include "./enemyAI.asm"
+.include "./enemyCollision.asm"
 .include "./checkCollisonPowerUp.asm"
 .include "./checkCollisonSprites.asm"
 .include "./sound.asm"

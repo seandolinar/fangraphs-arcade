@@ -113,6 +113,7 @@ enemy2DirectionCurrent:	.res 1
 enemy3DirectionCurrent:	.res 1
 enemy4DirectionCurrent:	.res 1
 
+
 enemyXWork:				.res 1
 enemyYWork:				.res 1
 
@@ -132,6 +133,7 @@ sqOut:					.res 2
 
 enemyTempForLoop:		.res 1
 enemyDirectionIndex:	.res 1
+enemyBufferDirectionCurrent:	.res 1
 
 
 
