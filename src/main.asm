@@ -14,6 +14,7 @@
 .include "./reset.asm"
 .include "./pallete.asm"
 .include "./init_load.asm"
+.include "./tiles.asm";
 
 .segment "TILES"
 .incbin "../chr/char02.chr"

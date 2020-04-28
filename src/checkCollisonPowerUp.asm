@@ -73,12 +73,18 @@ removePowerUpCountLoop:
     CPX #$00
     BNE removePowerUpCountLoop
 
+    ; have to loop this
     LDX tempX
     LDA #$00
     STA powerUpX, X
     STA powerUpY, X
     LDA #$02
     STA power_up_oam + 1, Y ; + 1 is the tile ; #$02 is the empty tile
+    STA power_up_oam + 5, Y
+    STA power_up_oam + 9, Y
+    STA power_up_oam + 13, Y
+
+
     ; crap, that need to jump four Xs
 
     LDX tempX
