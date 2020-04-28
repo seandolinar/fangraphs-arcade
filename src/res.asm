@@ -69,19 +69,19 @@ backgroundPointerLo:    .res 1 ; 001d
 backgroundPointerHi:    .res 1 ; 001e
 
 
-enemyGridX:            	.res 1  ; 001f
-enemyPointerLo:        	.res 1  ; 0020
-enemyPointerHi:        	.res 1  ; 0021
-backgroundPointerLoEnemy:    .res 1 ; 0022
-backgroundPointerHiEnemy:    .res 1 ; 0023
-collisionPointerLoEnemy:     .res 1 ; 0024
-collisionPointerHiEnemy:     .res 1 ; 0025
+enemyGridX:            		.res 1  ; 001f
+enemyPointerLo:        		.res 1  ; 0020
+enemyPointerHi:        		.res 1  ; 0021
+backgroundPointerLoEnemy:   .res 1 ; 0022
+backgroundPointerHiEnemy:   .res 1 ; 0023
+collisionPointerLoEnemy:    .res 1 ; 0024
+collisionPointerHiEnemy:    .res 1 ; 0025
 
-masterTimer:			.res 1      ; 0026
+masterTimer:				.res 1      ; 0026
 
 consoleLogEnemyCollision:	.res 1  ; 002C
 
-gameStateIsPowered: .res 1 ; 002D
+gameStateIsPowered: 		.res 1 ; 002D
 
 ; Wish I knew why I can't use the stack for this
 tempX:					.res 1 ; 002E
