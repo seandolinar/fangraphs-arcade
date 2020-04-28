@@ -1,20 +1,33 @@
+
+; need to check the all four directions
+; run through the three directions and collision check
+; have to omit the backwards direction
+; check direction, dump if we are the opposite
+; have available directions
+; pick one
+; if we only have one, continue
+
+; if we are going up, then we need to check up, left, right
+; then pick one of those 
+; figure out if I can use the stack here for a loop
+
 pickDirection:
 
-    TYA                             ; use Y for the randomizer
+    TYA                                 ; use Y for the randomizer
     PHA
     TXA
     PHA
-    LDX #$00                        ; initialize X for array length
-                                    ; this affects the subs...guh not very well "scoped"
+    LDX #$00                            ; initialize X for array length
+                                        ; this affects the subs...guh not very well "scoped"
 
-    LDA enemyBufferDirectionCurrent      ; going to have to change this for multiples
-    CMP #$01 ; TODO: make these constants
+    LDA enemyBufferDirectionCurrent     ; going to have to change this for multiples
+    CMP #$01                            ; TODO: make these constants
     BEQ dumpAvailableUp
     CMP #$02
     BEQ dumpAvailableDown
     CMP #$03
     BEQ dumpAvailableLeft
-    JMP dumpAvailableRight ; not a great work around 
+    JMP dumpAvailableRight               ; not a great work around 
 
     dumpAvailableUp:
         JSR subAvailableUp
@@ -35,7 +48,6 @@ pickDirection:
 chooseFromAvailableDirections:
 
     ; resetting buffer
-    ; DEBUGGING
     LDA enemyXWork
     STA enemyXBuffer
     LDA enemyYWork
@@ -52,7 +64,7 @@ chooseFromAvailableDirections:
     ; X is from the subAvailable[Direction] subroutine
     ; turning off the loop for now
     @loop:
-    CPX enemyTempForLoop ; this might be one short
+    CPX enemyTempForLoop        ; this might be one short
     BCS commitMove
 
     ; finish working here
@@ -62,7 +74,7 @@ chooseFromAvailableDirections:
     ; X doesn't go up by 1
     LDA enemyDistance + 1, X    ; high byte;        ; register
     CMP enemyDistance + 1, Y    ; high byte + 2     ; data 
-    BCC @registerIsLower       ; branches if  data (Y) < register (X)
+    BCC @registerIsLower        ; branches if  data (Y) < register (X)
     BNE @registerIsHigher       ; branches if equal
 
     ; JMP @registerIsLower        ; happens if register (X) < data (Y)
@@ -75,7 +87,7 @@ chooseFromAvailableDirections:
 
     @registerIsLower:           ; happens if register (X) < data (Y)    
     JMP commitMove
-    ; CPX enemyTempForLoop        ; this might be one short
+    ; CPX enemyTempForLoop       ; this might be one short
     ; BEQ commitMove
     ; CPY #$04 ;enemyTempForLoop
     ; BEQ commitMove

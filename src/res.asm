@@ -40,8 +40,14 @@ controllerTimer:        .res 1
 
 enemyX:                 .res 1
 enemyX2:				.res 1 ; 000c
+enemyX3:				.res 1
+enemyX4:				.res 1
+
 enemyY:                 .res 1 
 enemyY2:				.res 1
+enemyY3:				.res 1
+enemyY4:				.res 1
+
 enemyH:                 .res 1
 enemyW:                 .res 1 ; 0010
 enemyQ:					.res 1 

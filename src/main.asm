@@ -1,10 +1,12 @@
 .include "./header.asm"
 .include "./res.asm"
 .include "./controller.asm"
-.include "./position.asm"
+.include "./playerDots.asm"
+.include "./playerPosition.asm"
 .include "./enemy.asm"
 .include "./enemyAI.asm"
 .include "./enemyCollision.asm"
+.include "./enemyPowerUp.asm"
 .include "./checkCollisonPowerUp.asm"
 .include "./checkCollisonSprites.asm"
 .include "./sound.asm"
@@ -30,8 +32,6 @@ NMI:
     JSR changeBackground
     JSR spriteTransfer
     
-
-
 
 dumpNMI:
     RTI
