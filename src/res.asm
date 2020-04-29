@@ -44,38 +44,38 @@ enemyX3:				.res 1
 enemyX4:				.res 1
 
 enemyY:                 .res 1 
-enemyY2:				.res 1
+enemyY2:				.res 1 ; 0010
 enemyY3:				.res 1
 enemyY4:				.res 1
 
 enemyH:                 .res 1
-enemyW:                 .res 1 ; 0010
+enemyW:                 .res 1 ; 0014
 enemyQ:					.res 1 
 enemyXBuffer:			.res 1 
-enemyYBuffer:			.res 1
+enemyYBuffer:			.res 1	; 0017
 
-enemyNextDirection:     .res 1   
-enemyZ1:                .res 1 ; 0014
-enemyH1:                .res 1 
-enemyW1:                .res 1
+enemyNextDirection:     .res 1	; 0018   
+enemyZ1:                .res 1  ; 0019
+enemyH1:                .res 1  ; 001a
+enemyGridY:             .res 1  ; 001b ; move this
 
-collisionFlag:          .res 1 
-collisionFlagEnemy:     .res 1
-collisionTestX:         .res 1 ; 0019
-collisionTestY:         .res 1 ; 001a
-collisionPointerLo:     .res 1 ; 001b
-collisionPointerHi:     .res 1 ; 001c
-backgroundPointerLo:    .res 1 ; 001d
-backgroundPointerHi:    .res 1 ; 001e
+collisionFlag:          .res 1 	; 001c
+collisionFlagEnemy:     .res 1	; 001d
+collisionTestX:         .res 1 	; 001e
+collisionTestY:         .res 1 	; 001f
+collisionPointerLo:     .res 1 	; 0020
+collisionPointerHi:     .res 1 	; 0021
+backgroundPointerLo:    .res 1 	; 0022
+backgroundPointerHi:    .res 1 	; 0023
 
 
-enemyGridX:            		.res 1  ; 001f
-enemyPointerLo:        		.res 1  ; 0020
-enemyPointerHi:        		.res 1  ; 0021
-backgroundPointerLoEnemy:   .res 1 ; 0022
-backgroundPointerHiEnemy:   .res 1 ; 0023
-collisionPointerLoEnemy:    .res 1 ; 0024
-collisionPointerHiEnemy:    .res 1 ; 0025
+enemyGridX:            		.res 1  ; 0024
+enemyPointerLo:        		.res 1  ; 0025
+enemyPointerHi:        		.res 1  ; 0026
+backgroundPointerLoEnemy:   .res 1	; 0027
+backgroundPointerHiEnemy:   .res 1 	; 0028
+collisionPointerLoEnemy:    .res 1 	; 0029
+collisionPointerHiEnemy:    .res 1 	; 002a
 
 masterTimer:				.res 1      ; 0026
 
