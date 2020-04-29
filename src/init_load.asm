@@ -62,19 +62,6 @@ LoadPalettesLoop:
 
 
 
-; FillAttrib0:
-;   LDA $2002             ; read PPU status to reset the high/low latch
-;   LDA #$27
-;   STA $2006             ; write the high byte of $23C0 address (nametable 0 attributes)
-;   LDA #$C0
-;   STA $2006             ; write the low byte of $23C0 address
-;   LDX #$40              ; fill 64 bytes
-;   ; LDA #$00
-;   LDA #%11111111
-; FillAttrib0Loop:
-;   STA $2007
-;   DEX
-;   BNE FillAttrib0Loop
 
 
 ;;; need to build this out for the pointer and stuff
@@ -98,25 +85,44 @@ FillBackground:
   LDA #$00
   STA $2006             ; write the low byte of $2000 address
 
-LDX #$00
-LDY #$00         
-FillBackgroundLoopOutside:   
-  FillBackgroundLoop:
+  LDX #$00
+  LDY #$00         
+  @loop:
     LDA (backgroundPointerLo), Y
     STA $2007
     STA (nametable_buffer_lo), Y ; not working
 
     INY                 ; inside loop counter
     CPY #$00            ; run the inside loop 256 times before continuing down
-    BNE FillBackgroundLoop 
+    BNE @loop 
     INC backgroundPointerHi
     INC nametable_buffer_hi 
     INX
     CPX #$04
-    BNE FillBackgroundLoop 
+    BNE @loop 
 
 
 dumpFillBackground:
+
+
+; putting this after fixes things
+FillAttrib0:
+  LDA $2002             ; read PPU status to reset the high/low latch
+  LDA #$23
+  STA $2006             ; write the high byte of $23C0 address (nametable 0 attributes)
+  LDA #$C0
+  STA $2006             ; write the low byte of $23C0 address
+
+  LDX #$40              ; fill 64 bytes
+  ; LDA #%11111101
+  ; LDA #%11101111
+  LDA #$00
+FillAttrib0Loop:
+  STA $2007
+  DEX
+  CPX #$00
+  BNE FillAttrib0Loop
+
 
 
   ;INITIAL VARS

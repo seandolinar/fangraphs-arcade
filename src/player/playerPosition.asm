@@ -340,6 +340,8 @@ dumpSecondMult:
     ; I do, this is indirect, I think I have to do it this way
     CMP #$03
     BEQ @collideDotBranch
+    CMP #$04
+    BEQ @collideDotBranch
     CMP #$02 ;; whatever are loading it's all 0s
     BNE collide
 
