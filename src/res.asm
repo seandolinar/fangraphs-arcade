@@ -79,7 +79,7 @@ collisionPointerHiEnemy:    .res 1 	; 002a
 
 masterTimer:				.res 1      ; 0026
 
-consoleLogEnemyCollision:	.res 1  ; 002C
+consoleLog:					.res 1  ; 002C
 
 gameStateIsPowered: 		.res 1 ; 002D
 

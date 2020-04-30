@@ -53,8 +53,17 @@ countDots:
     countDotsLoopOuter:   
     countDotsLoopInner:
         LDA (nametable_buffer_lo), Y ; not working
+
         CMP #$03
-        BNE countDotsNoInc
+        BEQ @incDotCount
+        CMP #$04
+        BEQ @incDotCount
+        ; STA consoleLog
+
+        JMP countDotsNoInc
+
+
+        @incDotCount:
         INC dotsLeft
 
         countDotsNoInc:

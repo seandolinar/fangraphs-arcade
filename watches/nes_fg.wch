@@ -26,7 +26,7 @@
 00023	0018	b	s	0	collisionFlag
 00024	0019	b	s	0	collisionFlagEnemy
 00025	0027	b	u	0	masterTimer
-00026	0028	b	u	0	consoleLogEnemyCollision
+00026	002C	b	u	0	consoleLogEnemyCollision
 00027	0029	b	s	0	gameStateIsPowered
 00028	0028	b	u	0	tempX
 00029	0029	b	s	0	tempY
@@ -42,7 +42,7 @@
 00039	0035	b	u	0	powerUpTimer
 00040	0037	b	u	0	bufferBackgroundValLo
 00041	0038	b	u	0	bufferBackgroundValHi
-00042	0039	b	u	0	dotsLeft
+00042	003D	b	u	0	dotsLeft
 00043	0204	b	u	0	enemy1YOAM
 00044	0207	b	u	0	enemy1XOAM
 00045	0208	b	u	0	enemy2YOAM

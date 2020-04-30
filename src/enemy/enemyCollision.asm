@@ -83,6 +83,9 @@ dumpSecondMultEnemy:
     BEQ dumpCollideEnemy ; branch if cmp is not equal to A
     CMP #$03
     BEQ dumpCollideEnemy ; branch if cmp is not equal to A
+    CMP #$04
+    BEQ dumpCollideEnemy ; branch if cmp is not equal to A
+
 
 collideEnemy:
     LDA #$01
