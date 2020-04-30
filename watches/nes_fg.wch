@@ -27,7 +27,7 @@
 00024	0019	b	s	0	collisionFlagEnemy
 00025	0027	b	u	0	masterTimer
 00026	002C	b	u	0	consoleLogEnemyCollision
-00027	0029	b	s	0	gameStateIsPowered
+00027	002D	b	u	0	gameStateIsPowered
 00028	0028	b	u	0	tempX
 00029	0029	b	s	0	tempY
 00030	002C	b	u	0	powerUpX
@@ -38,7 +38,7 @@
 00035	0031	b	u	0	powerUpY2
 00036	0032	b	u	0	powerUpY3
 00037	0033	b	u	0	powerUpY4
-00038	0034	b	u	0	powerUpAvailable
+00038	0038	b	u	0	powerUpAvailable
 00039	0035	b	u	0	powerUpTimer
 00040	0037	b	u	0	bufferBackgroundValLo
 00041	0038	b	u	0	bufferBackgroundValHi

@@ -91,11 +91,11 @@ powerUpX:				.res 1 ; 0030 ;; if these don't move we can read them from ROM
 powerUpX2:				.res 1
 powerUpX3:				.res 1
 powerUpX4:				.res 1
-powerUpY:				.res 1 ;; then loop through the locations, though I'd have to remember which ones are "gone"
+powerUpY:				.res 1	; 0034 ;; then loop through the locations, though I'd have to remember which ones are "gone"
 powerUpY2:				.res 1
 powerUpY3:				.res 1
 powerUpY4:				.res 1
-powerUpAvailable:		.res 1 ; one byte ;; 7654321 - bit one is if the the first one is available
+powerUpAvailable:		.res 1 ; 0038 one byte ;; 7654321 - bit one is if the the first one is available
 ; this might control which powerUp has to be used next
 powerUpTimer:			.res 1
 
