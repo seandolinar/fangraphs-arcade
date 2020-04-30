@@ -3,6 +3,7 @@
 collideDot:
 
     JSR soundDot
+    DEC dotsLeft
 
     ; add to $2000
     ; finds the address for the name table
@@ -48,51 +49,17 @@ collideDot:
     RTS
 
 
-countDots:
-
-    LDA #<nametable_buffer
-    STA nametable_buffer_lo
-    LDA #>nametable_buffer
-    STA nametable_buffer_hi
-
-
-
-    LDX #$00
-    LDY #$00
-    STX dotsLeft      
-    countDotsLoopOuter:   
-    countDotsLoopInner:
-        LDA (nametable_buffer_lo), Y ; not working
-
-        ; CMP #$03
-        ; BEQ @incDotCount
-        CMP #$04
-        BEQ @incDotCount
-
-        JMP countDotsNoInc
-
-
-        @incDotCount:
-        INC dotsLeft
-
-        countDotsNoInc:
-            INY                 ; inside loop counter
-            CPY #$00            ; run the inside loop 256 times before continuing down
-            BNE countDotsLoopInner 
-            INC nametable_buffer_hi 
-            INX
-            CPX #$04
-            BNE countDotsLoopInner 
-
+; not sure why we are putting this here
+checkWin:
     LDA dotsLeft
-    BNE dumpCountDots
+    BNE @exit
     LDA powerUpAvailable
     CMP #$05
-    BNE dumpCountDots
+    BNE @exit
 
     ; WIN color
     LDA #$04
     STA bufferBackgroundColor
 
-dumpCountDots:
+    @exit:
     RTS

@@ -105,6 +105,7 @@ FillBackground:
 dumpFillBackground:
 
 
+
 ; putting this after fixes things
 FillAttrib0:
   LDA $2002             ; read PPU status to reset the high/low latch
@@ -172,16 +173,6 @@ FillAttrib0Loop:
   STA enemy4DirectionCurrent
 
 
-  ; STARTS VIDEO DISPLAY
-  LDA #%10000000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
-  STA $2000
-
-  LDA #%00011110   ; enable sprites, enable background, no clipping on left side
-  STA $2001
-
-  LDA #$00
-  STA $2005
-  STA $2005
 
 ; initial parameters
 LDA #$10
@@ -220,6 +211,68 @@ STA dotsLeft
 
 LDA #$19
 STA bufferBackgroundColor
+
+
+
+countDots:
+
+    LDA #<nametable_buffer
+    STA nametable_buffer_lo
+    LDA #>nametable_buffer
+    STA nametable_buffer_hi
+
+
+
+    LDX #$00
+    LDY #$00
+    STX dotsLeft      
+    countDotsLoopOuter:   
+    countDotsLoopInner:
+        LDA (nametable_buffer_lo), Y ; not working
+
+        CMP #$03
+        BEQ @incDotCount
+        CMP #$04
+        BEQ @incDotCount
+
+        JMP countDotsNoInc
+
+
+        @incDotCount:
+        INC dotsLeft
+
+        countDotsNoInc:
+            INY                 ; inside loop counter
+            CPY #$00            ; run the inside loop 256 times before continuing down
+            BNE countDotsLoopInner 
+            INC nametable_buffer_hi 
+            INX
+            CPX #$04
+            BNE countDotsLoopInner 
+
+    ; LDA dotsLeft
+    ; BNE dumpCountDots
+    ; LDA powerUpAvailable
+    ; CMP #$05
+    ; BNE dumpCountDots
+
+    ; ; WIN color
+    ; LDA #$04
+    ; STA bufferBackgroundColor
+
+
+
+  ; STARTS VIDEO DISPLAY
+  LDA #%10000000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+  STA $2000
+
+  LDA #%00011110   ; enable sprites, enable background, no clipping on left side
+  STA $2001
+
+  LDA #$00
+  STA $2005
+  STA $2005
+
 
 JMP Main
 

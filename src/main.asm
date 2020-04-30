@@ -68,7 +68,7 @@ nmiMovement:
     JSR nextEnemyMovement   ; move this to main?
     JSR checkCollisionSprites ; this isn't working
 
-    JSR countDots           ; maybe this sits well here?
+    JSR checkWin          ; maybe this sits well here?
 
 
     LDX #$08                ; controls the speed of the game
