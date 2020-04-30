@@ -1,4 +1,5 @@
 ; CONTAINS ALL LOGIC FOR eating dots
+
 collideDot:
 
     JSR soundDot
@@ -19,7 +20,18 @@ collideDot:
     STA bufferBackgroundValHi
 
     LDA #$02
+    STA bufferBackgroundTile
 
+    LDA (bufferBackgroundValLo), Y
+    CMP #$04
+    BNE @continueTileNotBrown
+
+    LDA #$34
+    STA bufferBackgroundTile
+
+    @continueTileNotBrown:
+    ; this affects the RAM map of the background
+    LDA #$02
     STA (bufferBackgroundValLo), Y
 
     CLC
@@ -34,8 +46,6 @@ collideDot:
     LDY tempY
 
     RTS
-
-
 
 
 countDots:

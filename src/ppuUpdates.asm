@@ -25,7 +25,7 @@ changeBackground:
     STA $2006               ; write the low byte of $3F10 address
 
     ; this is causing issues with the background though!
-    LDA #$02
+    LDA bufferBackgroundTile
     STA $2007
 
     ; resets scroll

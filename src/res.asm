@@ -141,6 +141,8 @@ enemyTempForLoop:		.res 1
 enemyDirectionIndex:	.res 1
 enemyBufferDirectionCurrent:	.res 1
 
+bufferBackgroundTile:	.res 1
+
 
 
 
