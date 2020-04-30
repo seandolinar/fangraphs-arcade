@@ -64,11 +64,10 @@ countDots:
     countDotsLoopInner:
         LDA (nametable_buffer_lo), Y ; not working
 
-        CMP #$03
-        BEQ @incDotCount
+        ; CMP #$03
+        ; BEQ @incDotCount
         CMP #$04
         BEQ @incDotCount
-        ; STA consoleLog
 
         JMP countDotsNoInc
 
@@ -92,7 +91,7 @@ countDots:
     BNE dumpCountDots
 
     ; WIN color
-    LDA #$16
+    LDA #$04
     STA bufferBackgroundColor
 
 dumpCountDots:

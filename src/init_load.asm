@@ -218,6 +218,9 @@ STA powerUpAvailable ; first base power up is loaded first
 LDA #$00
 STA dotsLeft
 
+LDA #$19
+STA bufferBackgroundColor
+
 JMP Main
 
 

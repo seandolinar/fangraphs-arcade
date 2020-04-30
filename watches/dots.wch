@@ -1,3 +1,4 @@
 
-1
-00000	0300	b	u	0	dotsLeftTemp
+2
+00000	003A	b	u	0	BackgroundColorBuffer
+00001	003D	b	u	0	dotsLeftTemp

@@ -47,7 +47,6 @@ Main:
     LDA controllerBits
     BEQ Main                ; go loop main if we have no controller bits
     JSR updatePosition      ; runs the player updates ;change this to update direction
-    JSR countDots           ; maybe this sits well here?
     JMP Main                ; loops because of end
 
 nmiMovement:
@@ -68,6 +67,8 @@ nmiMovement:
     JSR checkCollisionPowerUp
     JSR nextEnemyMovement   ; move this to main?
     JSR checkCollisionSprites ; this isn't working
+
+    JSR countDots           ; maybe this sits well here?
 
 
     LDX #$08                ; controls the speed of the game

@@ -95,15 +95,15 @@ powerUpY:				.res 1	; 0034 ;; then loop through the locations, though I'd have t
 powerUpY2:				.res 1
 powerUpY3:				.res 1
 powerUpY4:				.res 1
-powerUpAvailable:		.res 1 ; one byte ;; 7654321 - bit one is if the the first one is available
+powerUpAvailable:		.res 1 ; 0038 one byte ;; 7654321 - bit one is if the the first one is available
 ; this might control which powerUp has to be used next
-powerUpTimer:			.res 1
+powerUpTimer:			.res 1 ; 0039
 
-bufferBackgroundColor:	.res 1
+bufferBackgroundColor:	.res 1 ; 003A
 bufferBackgroundValLo:	.res 1
 bufferBackgroundValHi:	.res 1
 
-dotsLeft:				.res 1
+dotsLeft:				.res 1	;003D
 
 background_row:         .res $20
 data_x:                 .res 1
