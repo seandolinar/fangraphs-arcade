@@ -4,7 +4,9 @@ setAnimationPlayerMain:
     LDA playerDirectionCurrent
     BEQ @dump
 
-    LDA playerGridX
+    CLC
+    LDA playerGridY
+    ADC playerGridX
     AND #$01
     BEQ @forward
 
@@ -41,7 +43,7 @@ setAnimationPlayerMain:
     RTS
 
 setAnimationPlayerDirection:
-
+    
     LDA playerDirectionCurrent
     CMP #$03
     BEQ @setLeftward
@@ -55,7 +57,9 @@ setAnimationPlayerDirection:
     STA player_oam + 10
     STA player_oam + 14
 
-    LDA playerGridX
+    CLC
+    LDA playerGridY
+    ADC playerGridX
     AND #$01
     BEQ @stance
 
@@ -97,4 +101,43 @@ setAnimationPlayerDirection:
     STA player_oam + 6
     STA player_oam + 10
     STA player_oam + 14
+
+    CLC
+    LDA playerGridY
+    ADC playerGridX
+    AND #$01
+    BEQ @stanceNormal
+
+    LDA #$32
+    STA player_oam + 1
+
+    LDA #$33
+    STA player_oam + 9
+
+
+    LDA #$42
+    STA player_oam + 5
+
+    LDA #$43
+    STA player_oam + 13
+
+    RTS
+
+
+
+    @stanceNormal:
+    LDA #$12
+    STA player_oam + 1
+
+    LDA #$13
+    STA player_oam + 9
+
+    LDA #$22
+    STA player_oam + 5
+
+    LDA #$23
+    STA player_oam + 13
+
+
+
     RTS
