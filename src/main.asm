@@ -3,6 +3,7 @@
 .include "./controller.asm"
 .include "./player/playerDots.asm"
 .include "./player/playerPosition.asm"
+.include "./player/playerAnimation.asm"
 .include "./enemy/enemy.asm"
 .include "./enemy/enemyAI.asm"
 .include "./enemy/enemyCollision.asm"
@@ -61,6 +62,8 @@ nmiMovement:
     ; this should handle when to move the sprites
     JSR checkCollisionSprites ; this isn't working
     JSR dumpUpdatePosition
+    JSR setAnimationPlayerMain
+    JSR setAnimationPlayerDirection
     JSR checkCollisionSprites ; this isn't working
     JSR checkCollisionPowerUp
     JSR nextEnemyMovement   ; move this to main?

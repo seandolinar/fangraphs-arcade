@@ -77,7 +77,7 @@ backgroundPointerHiEnemy:   .res 1 	; 0028
 collisionPointerLoEnemy:    .res 1 	; 0029
 collisionPointerHiEnemy:    .res 1 	; 002a
 
-masterTimer:				.res 1      ; 0026
+masterTimer:				.res 1      ; 002B
 
 consoleLog:					.res 1  ; 002C
 

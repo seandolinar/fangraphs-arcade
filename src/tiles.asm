@@ -2,10 +2,10 @@
 
 ; player sprite
 sprites:
-.byte $b0, $12, %00000000, $80  ;$0200-3 ;; human player
-.byte $b8, $22, %00000000, $80  ;$0200-3 ;; human player
-.byte $b0, $13, %00000000, $88  ;$0200-3 ;; human player
-.byte $b8, $23, %00000000, $88  ;$0200-3 ;; human player
+.byte $b0, $12, %00000000, $80  ; TOP LEFT 0-4 
+.byte $b8, $22, %00000000, $80  ; BOTTOM LEFT 5-8
+.byte $b0, $13, %00000000, $88  ; TOP RIGHT 9-12
+.byte $b8, $23, %00000000, $88  ; BOTTOM RIGHT 13-6
 
 ; this is not RAM, huh?
 enemy_array:
