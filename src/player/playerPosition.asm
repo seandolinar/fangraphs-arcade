@@ -3,10 +3,10 @@
 ; rename this it's just reading the controller now
 updatePosition:
 
-  LDA playerLocationXBuffer
+  LDA playerLocationX ; i changed these from the buffer, it should be the original, but in case something breaks
   STA collisionTestX
 
-  LDA playerLocationYBuffer
+  LDA playerLocationY
   STA collisionTestY
 
   LDA controllerBits
@@ -34,7 +34,9 @@ dumpUpdateController:
   
 ; i can make this separate from the the controller 
 ; this will basically become the update position
+; rename this
 dumpUpdatePosition:
+
     LDA playerDirectionCurrent
     CMP #$01
     BNE dumpDirectionUp
@@ -105,6 +107,7 @@ updatePositionSprite:
     RTS
 
 setUp:
+    
     LDA #$01 ; UP
     STA playerDirectionCurrent
     RTS
@@ -115,13 +118,54 @@ setDown:
     RTS
 
 setLeft:
+
+    ; LDA playerLocationX
+    ; SEC
+    ; SBC #$08   
+    ; STA collisionTestX  
+
+    ; ; I shouldn't need this, but yet I do
+    ; ; somewhere the collisionTestY gets clobbered after setting it earlier.
+    ; LDA playerLocationY
+    ; STA collisionTestY  
+
+
+    ; JSR checkCollision
+    ; LDA collisionFlag
+    ; ; STA consoleLog ; shouldn't need this
+    ; BEQ @exit ; branch if 0
+
     LDA #$03 ; LEFT
     STA playerDirectionCurrent
+    ; @exit:
+    ;  LDA playerLocationX ;; shouldn't have to have this here
+    ; STA collisionTestX  
     RTS
 
 setRight:
+
+    ; LDA playerLocationX
+    ; CLC
+    ; ADC #$08   
+    ; STA collisionTestX  
+
+    ; ; I shouldn't need this, but yet I do
+    ; ; somewhere the collisionTestY gets clobbered after setting it earlier.
+    ; LDA playerLocationY
+    ; STA collisionTestY  
+
+    ; JSR checkCollision ; i could be clobbering something by repeatly calling this while holding down a button
+    ; LDA collisionFlag
+    ; ; STA consoleLog ; shouldn't need this
+
+    ; BEQ @exit ; branch if 0
+
     LDA #$04 ; RIGHT
     STA playerDirectionCurrent
+
+    ; @exit:
+    ; LDA playerLocationX ;; shouldn't have to have this here
+    ; STA collisionTestX  
     RTS
 
 moveRight:
@@ -132,9 +176,11 @@ moveRight:
         CLC
         ADC #$08
         STA playerLocationXBuffer
-        ; CLC
-        ; ADC #$08                ; this is for it's new width
         STA collisionTestX      ; only need the added value for rigth
+
+        LDA playerLocationY
+        STA collisionTestY     ; ugh, see if we need this
+
 
         JSR checkCollision
         LDA collisionFlag
@@ -148,6 +194,7 @@ moveRight:
 dumpMoveRight:
         LDA playerLocationX
         STA playerLocationXBuffer
+        STA collisionTestX
         JMP updatePositionSprite
 
 
@@ -161,6 +208,9 @@ moveLeft:
         SBC #$08
         STA playerLocationXBuffer
         STA collisionTestX
+
+        LDA playerLocationY
+        STA collisionTestY     ; ugh, see if we need this
 
         JSR checkCollision
         LDA collisionFlag
@@ -176,7 +226,7 @@ moveLeft:
 dumpMoveLeft:
         LDA playerLocationX
         STA playerLocationXBuffer
-        ; RTS
+        STA collisionTestX
         JMP updatePositionSprite
 
 

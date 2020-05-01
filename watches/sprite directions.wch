@@ -1,7 +1,8 @@
 
-5
-00000	0062	b	u	0	playerDirectionCurrent
-00001	0063	b	u	0	enemy1DirectionCurrent
-00002	0064	b	u	0	enemy2DirectionCurrent
-00003	0065	b	u	0	enemy3DirectionCurrent
-00004	0066	b	u	0	enemy4DirectionCurrent
+6
+00000	001C	b	u	0	collisionFlag (Player)
+00001	0062	b	u	0	playerDirectionCurrent
+00002	0063	b	u	0	enemy1DirectionCurrent
+00003	0064	b	u	0	enemy2DirectionCurrent
+00004	0065	b	u	0	enemy3DirectionCurrent
+00005	0066	b	u	0	enemy4DirectionCurrent

@@ -46,6 +46,7 @@ IRQ:
 Main:
     LDA controllerBits
     BEQ Main                ; go loop main if we have no controller bits
+    ; should check to see if controller Bits changed
     JSR updatePosition      ; runs the player updates ;change this to update direction
     JMP Main                ; loops because of end
 
