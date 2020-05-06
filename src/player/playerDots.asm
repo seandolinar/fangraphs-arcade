@@ -1,5 +1,21 @@
 ; CONTAINS ALL LOGIC FOR eating dots
 
+checkCollideDot:
+    LDA collisionBackgroundTile
+    CMP #$03
+    BEQ @collideDotBranch
+    CMP #$04
+    BEQ @collideDotBranch
+ 
+    JMP @exit
+
+    @collideDotBranch:
+    JSR collideDot
+
+    @exit:
+    RTS
+
+
 collideDot:
 
     JSR soundDot

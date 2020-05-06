@@ -62,6 +62,7 @@ nmiMovement:
     ; this should handle when to move the sprites
     JSR checkCollisionSprites ; this isn't working
     JSR dumpUpdatePosition
+    JSR checkCollideDot
     JSR setAnimationPlayerMain
     JSR setAnimationPlayerDirection
     JSR checkCollisionSprites ; this isn't working

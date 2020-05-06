@@ -119,27 +119,27 @@ setDown:
 
 setLeft:
 
-    ; LDA playerLocationX
-    ; SEC
-    ; SBC #$08   
-    ; STA collisionTestX  
+    LDA playerLocationX
+    SEC
+    SBC #$08   
+    STA collisionTestX  
 
-    ; ; I shouldn't need this, but yet I do
-    ; ; somewhere the collisionTestY gets clobbered after setting it earlier.
-    ; LDA playerLocationY
-    ; STA collisionTestY  
+    ; I shouldn't need this, but yet I do
+    ; somewhere the collisionTestY gets clobbered after setting it earlier.
+    LDA playerLocationY
+    STA collisionTestY  
 
 
-    ; JSR checkCollision
-    ; LDA collisionFlag
-    ; ; STA consoleLog ; shouldn't need this
-    ; BEQ @exit ; branch if 0
+    JSR checkCollision
+    LDA collisionFlag
+    ; STA consoleLog ; shouldn't need this
+    BEQ @exit ; branch if 0
 
     LDA #$03 ; LEFT
     STA playerDirectionCurrent
-    ; @exit:
-    ;  LDA playerLocationX ;; shouldn't have to have this here
-    ; STA collisionTestX  
+    @exit:
+    LDA playerLocationX ;; shouldn't have to have this here
+    STA collisionTestX  
     RTS
 
 setRight:
@@ -388,6 +388,9 @@ dumpSecondMult:
     LDY #$00 ; resets Y
     LDA (backgroundPointerLo), Y ; probably don't need to index this, but I do, why?
     ; I do, this is indirect, I think I have to do it this way
+    STA collisionBackgroundTile
+
+    ; this is causing some issues i should spin this out so the subroutine can be used more
     CMP #$03
     BEQ @collideDotBranch
     CMP #$04
@@ -398,7 +401,7 @@ dumpSecondMult:
     JMP @dump
 
     @collideDotBranch:
-    JSR collideDot
+    ; JSR collideDot
 
     @dump:
     RTS
@@ -410,6 +413,7 @@ allowPass:
     INX
     INX
     INX
+    ; why am I incrementing here
 
     ; CPX #$18
     ; BMI checkCollisionLoop

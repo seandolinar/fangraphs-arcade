@@ -120,28 +120,29 @@ enemy3DirectionCurrent:	.res 1
 enemy4DirectionCurrent:	.res 1
 
 
-enemyXWork:				.res 1
-enemyYWork:				.res 1
+enemyXWork:						.res 1
+enemyYWork:						.res 1
 
-enemyCMPTemp:			.res 1
-enemyAbsX:				.res 1
-enemyAbsY:				.res 1
-sqIn:					.res 1
-sqX:					.res 2
-sqY:					.res 2
-sumXY:					.res 2
+enemyCMPTemp:					.res 1
+enemyAbsX:						.res 1
+enemyAbsY:						.res 1
+sqIn:							.res 1
+sqX:							.res 2
+sqY:							.res 2
+sumXY:							.res 2
 
-enemyDistance:			.res 6
-enemyDirectionArray:	.res 3
+enemyDistance:					.res 6
+enemyDirectionArray:			.res 3
 
-sqOut:					.res 2
+sqOut:							.res 2
 
 
-enemyTempForLoop:		.res 1
-enemyDirectionIndex:	.res 1
+enemyTempForLoop:				.res 1
+enemyDirectionIndex:			.res 1
 enemyBufferDirectionCurrent:	.res 1
 
-bufferBackgroundTile:	.res 1
+bufferBackgroundTile:			.res 1
+collisionBackgroundTile:		.res 1
 
 
 
