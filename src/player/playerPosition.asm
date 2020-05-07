@@ -107,14 +107,53 @@ updatePositionSprite:
     RTS
 
 setUp:
+
+    LDA playerLocationY
+    SEC
+    SBC #$08   
+    STA collisionTestY  
+
+    ; I shouldn't need this, but yet I do
+    ; somewhere the collisionTestY gets clobbered after setting it earlier.
+    LDA playerLocationX
+    STA collisionTestX
     
+    JSR checkCollision
+    LDA collisionFlag
+    BEQ @exit ; branch if 0
+
     LDA #$01 ; UP
     STA playerDirectionCurrent
-    RTS
 
+    @exit:
+    LDA playerLocationY ;; shouldn't have to have this here
+    STA collisionTestY 
+    
+    RTS
+   
 setDown:
+
+    LDA playerLocationY
+    CLC
+    ADC #$08   
+    STA collisionTestY  
+
+    ; I shouldn't need this, but yet I do
+    ; somewhere the collisionTestY gets clobbered after setting it earlier.
+    LDA playerLocationX
+    STA collisionTestX
+    
+    JSR checkCollision
+    LDA collisionFlag
+    BEQ @exit ; branch if 0
+
     LDA #$02 ; DOWN
     STA playerDirectionCurrent
+
+    @exit:
+    LDA playerLocationY ;; shouldn't have to have this here
+    STA collisionTestY 
+    
     RTS
 
 setLeft:
@@ -132,7 +171,6 @@ setLeft:
 
     JSR checkCollision
     LDA collisionFlag
-    ; STA consoleLog ; shouldn't need this
     BEQ @exit ; branch if 0
 
     LDA #$03 ; LEFT
@@ -144,28 +182,27 @@ setLeft:
 
 setRight:
 
-    ; LDA playerLocationX
-    ; CLC
-    ; ADC #$08   
-    ; STA collisionTestX  
+    LDA playerLocationX
+    CLC
+    ADC #$08   
+    STA collisionTestX  
 
-    ; ; I shouldn't need this, but yet I do
-    ; ; somewhere the collisionTestY gets clobbered after setting it earlier.
-    ; LDA playerLocationY
-    ; STA collisionTestY  
+    ; I shouldn't need this, but yet I do
+    ; somewhere the collisionTestY gets clobbered after setting it earlier.
+    LDA playerLocationY
+    STA collisionTestY  
 
-    ; JSR checkCollision ; i could be clobbering something by repeatly calling this while holding down a button
-    ; LDA collisionFlag
-    ; ; STA consoleLog ; shouldn't need this
+    JSR checkCollision ; i could be clobbering something by repeatly calling this while holding down a button
+    LDA collisionFlag
 
-    ; BEQ @exit ; branch if 0
+    BEQ @exit ; branch if 0
 
     LDA #$04 ; RIGHT
     STA playerDirectionCurrent
 
-    ; @exit:
-    ; LDA playerLocationX ;; shouldn't have to have this here
-    ; STA collisionTestX  
+    @exit:
+    LDA playerLocationX ;; shouldn't have to have this here
+    STA collisionTestX  
     RTS
 
 moveRight:
@@ -183,6 +220,8 @@ moveRight:
 
 
         JSR checkCollision
+        JSR checkCollideDot     ; calling this here. there might be a better way to do this.
+
         LDA collisionFlag
         BEQ dumpMoveRight ; branch if 0
         
@@ -213,14 +252,14 @@ moveLeft:
         STA collisionTestY     ; ugh, see if we need this
 
         JSR checkCollision
+        JSR checkCollideDot
+
         LDA collisionFlag
         BEQ dumpMoveLeft ; branch if 0
 
         LDA playerLocationXBuffer
         STA playerLocationX
 
-        ; JSR nextEnemyMovement ;; trying something here
-        ; RTS
         JMP updatePositionSprite
 
 dumpMoveLeft:
@@ -244,6 +283,8 @@ moveUp:
         STA collisionTestY
 
         JSR checkCollision
+        JSR checkCollideDot
+
         LDA collisionFlag
         BEQ dumpMoveUp ; branch if 0
 
@@ -268,11 +309,12 @@ moveDown:
         ADC #$08
         STA playerLocationYBuffer
 
-        ; CLC
-        ; ADC #$08                        ; for 16 x 16 sprite
         STA collisionTestY
 
         JSR checkCollision
+        JSR checkCollideDot
+
+
         LDA collisionFlag
         BEQ dumpMoveDown ; branch if 0
         

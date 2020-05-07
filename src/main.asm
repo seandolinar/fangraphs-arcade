@@ -33,10 +33,24 @@ NMI:
 
     JSR changeBackground
     JSR spriteTransfer
-    JSR nmiMovement
 
-dumpNMI:
+    LDX masterTimer
+    DEX
+    STX masterTimer
+    ; CPX #$00
+    ; BEQ @resetTimer
+
+    ; JSR readController
+    ; JSR updatePosition  
+
+
+@dumpNMI:
     RTI
+
+; @resetTimer:
+;     LDX #$08                ; controls the speed of the game
+;     STX masterTimer
+;     RTI
 
 IRQ:
     RTI
@@ -44,25 +58,37 @@ IRQ:
 ; we are updating the position in MAIN
 ; but checking the position in NMI
 Main:
-    LDA controllerBits
-    BEQ Main                ; go loop main if we have no controller bits
+    ; LDA controllerBits
+    ; BEQ @exit               ; go loop main if we have no controller bits
     ; should check to see if controller Bits changed
-    JSR updatePosition      ; runs the player updates ;change this to update direction
+    LDY controlTimer
+
+    JSR readController
+    JSR updatePosition  
+
+
+    @exit:
+    DEY
+
+    LDX masterTimer
+    CPX #$01
+    BEQ @runMovement
     JMP Main                ; loops because of end
+
+    @runMovement:
+    LDX #$08                ; need to reset this
+    STX masterTimer
+    JSR nmiMovement
+    JMP Main
+
 
 nmiMovement:
 
-    JSR readController
-    JSR incTimerPowerUp
-
-    LDX masterTimer
-    DEX
-    STX masterTimer
-    BNE @dump
+      
+    JSR dumpUpdatePosition      ; runs the player updates ;change this to update direction
     ; this should handle when to move the sprites
     JSR checkCollisionSprites ; this isn't working
-    JSR dumpUpdatePosition
-    JSR checkCollideDot
+    ; JSR checkCollideDot
     JSR setAnimationPlayerMain
     JSR setAnimationPlayerDirection
     JSR checkCollisionSprites ; this isn't working
@@ -70,10 +96,9 @@ nmiMovement:
     JSR nextEnemyMovement   ; move this to main?
     JSR checkCollisionSprites ; this isn't working
 
+    JSR incTimerPowerUp
+
     JSR checkWin          ; maybe this sits well here?
 
-
-    LDX #$08                ; controls the speed of the game
-    STX masterTimer
 @dump:
     RTS

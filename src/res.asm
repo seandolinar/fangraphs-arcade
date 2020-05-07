@@ -143,6 +143,7 @@ enemyBufferDirectionCurrent:	.res 1
 
 bufferBackgroundTile:			.res 1
 collisionBackgroundTile:		.res 1
+controlTimer:					.res 1
 
 
 

@@ -25,7 +25,7 @@
 00022	001B	b	u	0	collisionPointerLo
 00023	0018	b	s	0	collisionFlag
 00024	0019	b	s	0	collisionFlagEnemy
-00025	0027	b	u	0	masterTimer
+00025	002B	b	u	0	masterTimer
 00026	002C	b	u	0	consoleLogEnemyCollision
 00027	002D	b	u	0	gameStateIsPowered
 00028	0028	b	u	0	tempX
