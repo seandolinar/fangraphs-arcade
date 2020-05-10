@@ -160,4 +160,4 @@ PPU_DATA              = $2007
 
 
 .segment "RAM"
-nametable_buffer:		.res $3C0
+nametable_buffer:		.res $3C0 	; 960 blocks

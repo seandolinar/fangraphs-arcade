@@ -206,8 +206,8 @@ STA gameStateIsPowered
 LDA #$01
 STA powerUpAvailable ; first base power up is loaded first
 
-LDA #$00
-STA dotsLeft
+; LDA #$00
+; STA dotsLeft
 
 LDA #$19
 STA bufferBackgroundColor
@@ -221,10 +221,7 @@ countDots:
     LDA #>nametable_buffer
     STA nametable_buffer_hi
 
-
-
     LDX #$00
-    LDY #$00
     STX dotsLeft      
     countDotsLoopOuter:   
     countDotsLoopInner:
@@ -234,7 +231,7 @@ countDots:
         BEQ @incDotCount
         CMP #$04
         BEQ @incDotCount
-
+       
         JMP countDotsNoInc
 
 
@@ -249,7 +246,6 @@ countDots:
             INX
             CPX #$04
             BNE countDotsLoopInner 
-
     ; LDA dotsLeft
     ; BNE dumpCountDots
     ; LDA powerUpAvailable
