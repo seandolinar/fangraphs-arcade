@@ -1,7 +1,7 @@
 .segment "CODE"
 ; this will have to change to read controller
 ; rename this it's just reading the controller now
-updatePosition:
+updateDirection:
 
   LDA playerLocationX ; i changed these from the buffer, it should be the original, but in case something breaks
   STA collisionTestX

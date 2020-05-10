@@ -246,18 +246,7 @@ countDots:
             INX
             CPX #$04
             BNE countDotsLoopInner 
-    ; LDA dotsLeft
-    ; BNE dumpCountDots
-    ; LDA powerUpAvailable
-    ; CMP #$05
-    ; BNE dumpCountDots
-
-    ; ; WIN color
-    ; LDA #$04
-    ; STA bufferBackgroundColor
-
-
-
+   
   ; STARTS VIDEO DISPLAY
   LDA #%10000000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
   STA $2000

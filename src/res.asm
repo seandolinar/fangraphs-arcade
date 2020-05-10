@@ -138,12 +138,12 @@ sqOut:							.res 2
 
 
 enemyTempForLoop:				.res 1
-enemyDirectionIndex:			.res 1
-enemyBufferDirectionCurrent:	.res 1
+enemyDirectionIndex:			.res 1 ; 007B
+enemyBufferDirectionCurrent:	.res 1 ; 007C
 
-bufferBackgroundTile:			.res 1
-collisionBackgroundTile:		.res 1
-controlTimer:					.res 1
+bufferBackgroundTile:			.res 1 ; 007D
+collisionBackgroundTile:		.res 1 ; 007E
+controlTimer:					.res 1 ; 007F
 
 
 

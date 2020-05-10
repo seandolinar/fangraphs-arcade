@@ -37,13 +37,7 @@ NMI:
     LDX masterTimer
     DEX
     STX masterTimer
-    ; CPX #$00
-    ; BEQ @resetTimer
-
-    ; JSR readController
-    ; JSR updatePosition  
-
-
+   
 @dumpNMI:
     RTI
 
@@ -62,13 +56,15 @@ Main:
     ; BEQ @exit               ; go loop main if we have no controller bits
     ; should check to see if controller Bits changed
     LDY controlTimer
-
+    CPY #$00
+    BNE @exit
     JSR readController
-    JSR updatePosition  
-
+    JSR updateDirection
+    LDY #$30
 
     @exit:
     DEY
+    STY controlTimer  
 
     LDX masterTimer
     CPX #$01
@@ -76,6 +72,9 @@ Main:
     JMP Main                ; loops because of end
 
     @runMovement:
+
+   
+
     LDX #$08                ; need to reset this
     STX masterTimer
     JSR nmiMovement
@@ -88,7 +87,7 @@ nmiMovement:
     JSR dumpUpdatePosition      ; runs the player updates ;change this to update direction
     ; this should handle when to move the sprites
     JSR checkCollisionSprites ; this isn't working
-    ; JSR checkCollideDot
+
     JSR setAnimationPlayerMain
     JSR setAnimationPlayerDirection
     JSR checkCollisionSprites ; this isn't working
