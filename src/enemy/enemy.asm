@@ -16,7 +16,15 @@ enemyMovement:
     LDA enemy1DirectionCurrent, X
     STA enemyBufferDirectionCurrent
 
-    JSR pickDirection           ; should be the same sub for all enemies
+    ;;;;
+    ;; playerGridXAI 
+    ;; 
+    ; 03
+    ; 02
+    ; 01
+    ; 00
+
+    JSR runEnemyAI           ; should be the same sub for all enemies
 
     LDA enemyBufferDirectionCurrent
     STA enemy1DirectionCurrent, X

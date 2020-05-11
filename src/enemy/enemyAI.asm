@@ -11,7 +11,7 @@
 ; then pick one of those 
 ; figure out if I can use the stack here for a loop
 
-pickDirection:
+runEnemyAI:
 
     TYA                                 ; use Y for the randomizer
     PHA

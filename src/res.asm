@@ -145,6 +145,9 @@ bufferBackgroundTile:			.res 1 ; 007D
 collisionBackgroundTile:		.res 1 ; 007E
 controlTimer:					.res 1 ; 007F
 
+playerGridXAI:					.res 1 ; 0080
+playerGridYAI:					.res 1 ; 0081
+
 
 
 

@@ -1,5 +1,5 @@
 
-18
+20
 00000	005F	b	u	0	enemy1DirectionCurrent
 00001	0066	b	u	0	enemyAbsX
 00002	0067	b	u	0	enemyAbsY
@@ -18,3 +18,5 @@
 00015	007B	b	u	0	enemyDirectionIndex
 00016	002C	b	u	0	consoleLog
 00017	007F	b	u	0	controlTimer
+00018	0080	b	u	0	playerGridXAI
+00019	0081	b	u	0	playerGridYAI
