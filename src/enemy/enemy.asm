@@ -10,20 +10,45 @@ mainAI:
         CLC
         LDA enemyXBuffer
         STA enemyX, X           ; enemy X RAM
+
+        SEC
+        SBC #$04
         STA enemy_oam + 3, Y    ; sprite RAM x
+        STA enemy_oam + 11, Y    ; sprite RAM x
+
+        CLC
+        ADC #$08
+        STA enemy_oam + 7, Y    ; sprite RAM x
+        STA enemy_oam + 15, Y    ; sprite RAM x
+
+
 
     @moveVertical:
         CLC
         LDA enemyYBuffer 
         STA enemyY, X           ; enemy Y RAM
+
+        SEC
+        SBC #$04
         STA enemy_oam, Y        ; sprite RAM y
+        STA enemy_oam + 4, Y    ; sprite RAM y
+
+        ADC #$06
+        STA enemy_oam + 8, Y    ; sprite RAM y
+        STA enemy_oam + 12, Y    ; sprite RAM y
+
 
 dumpEnemyController:
 
-        INY
-        INY
-        INY
-        INY
+        ; INY
+        ; INY
+        ; INY
+        ; INY
+        CLC
+        TYA
+        ADC #$10
+        TAY
+
         CPX #$00
         BNE forEachEnemyMovement ; loops for other enemies
 
@@ -33,6 +58,8 @@ dumpEnemyController:
 ; START
 nextEnemyMovement:
     LDX #$04            ; how many enemies we have
+    ; LDX #$02            ; how many enemies we have ; temp
+
     LDY #$00
 forEachEnemyMovement:
     DEX

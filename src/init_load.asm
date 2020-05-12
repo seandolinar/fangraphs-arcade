@@ -34,7 +34,7 @@ InitialLoad:
     INX
     INX
     
-    CPX #$50
+    CPX #$70
     BNE LoadEnemyLoop   ; Branch to LoadSpritesLoop if compare was Not Equal to zero
 
 

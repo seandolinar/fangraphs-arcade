@@ -9,10 +9,34 @@ sprites:
 
 ; this is not RAM, huh?
 enemy_array:
-.byte $58, $00, %00000010, $A8 ;80 ; first enemy (O)
-.byte $50, $01, %00000010, $80 ; second enemy (X)
-.byte $30, $00, %00000001, $80 ; second enemy (X)
-.byte $40, $01, %00000001, $80 ; second enemy (X)
+.byte $58, $30, %00000010, $A8 ;80 ; first enemy (O)
+.byte $60, $31, %00000010, $A8 ;80 ; first enemy (O)
+.byte $58, $40, %00000010, $A8 ;80 ; first enemy (O)
+.byte $60, $41, %00000010, $B0 ;80 ; first enemy (O)
+
+.byte $58, $30, %00000010, $A8 ;80 ; first enemy (O)
+.byte $60, $31, %00000010, $A8 ;80 ; first enemy (O)
+.byte $58, $40, %00000010, $A8 ;80 ; first enemy (O)
+.byte $60, $41, %00000010, $B0 ;80 ; first enemy (O)
+
+.byte $58, $30, %00000010, $A8 ;80 ; first enemy (O)
+.byte $60, $31, %00000010, $A8 ;80 ; first enemy (O)
+.byte $58, $40, %00000010, $A8 ;80 ; first enemy (O)
+.byte $60, $41, %00000010, $B0 ;80 ; first enemy (O)
+
+.byte $58, $30, %00000010, $A8 ;80 ; first enemy (O)
+.byte $60, $31, %00000010, $A8 ;80 ; first enemy (O)
+.byte $58, $40, %00000010, $A8 ;80 ; first enemy (O)
+.byte $60, $41, %00000010, $B0 ;80 ; first enemy (O)
+
+; .byte $50, $01, %00000010, $80 ; second enemy (X)
+
+
+; .byte $30, $00, %00000001, $80 ; second enemy (X)
+
+
+
+; .byte $40, $01, %00000001, $80 ; second enemy (X)
 
 ; power ups
 ; FIRST BASE
