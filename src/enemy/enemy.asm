@@ -16,14 +16,51 @@ enemyMovement:
     LDA enemy1DirectionCurrent, X
     STA enemyBufferDirectionCurrent
 
-    ;;;;
-    ;; playerGridXAI 
-    ;; 
-    ; 03
-    ; 02
-    ; 01
-    ; 00
+    LDA playerGridX
+    STA playerGridXAI
 
+    LDA playerGridY
+    STA playerGridYAI
+
+    CPX #$03
+    BEQ aiUmp4
+
+    CPX #$02
+    BEQ aiUmp3
+
+    CPY #$01
+    BEQ aiUmp2
+   
+    aiUmp1:
+        ; do nothing
+        JMP mainAI
+
+    aiUmp2:
+        LDA playerGridY
+        ADC #$10
+        STA playerGridYAI
+        JMP mainAI
+
+    aiUmp3:
+        LDA playerGridX
+        ADC #$08
+        STA playerGridXAI
+
+        LDA playerGridY
+        ADC #$10
+        STA playerGridYAI
+        
+        JMP mainAI
+
+
+    aiUmp4:
+        ; make the fourth ump target 2 tiles to the right
+        LDA playerGridX
+        ADC #$10
+        STA playerGridXAI
+        JMP mainAI
+
+    mainAI:
     JSR runEnemyAI           ; should be the same sub for all enemies
 
     LDA enemyBufferDirectionCurrent

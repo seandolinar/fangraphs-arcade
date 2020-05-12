@@ -45,6 +45,7 @@ runEnemyAI:
         JSR subAvailableRight
         JMP chooseFromAvailableDirections
 
+
 chooseFromAvailableDirections:
 
     ; resetting buffer
@@ -77,50 +78,38 @@ chooseFromAvailableDirections:
     BCC @registerIsLower        ; branches if  data (Y) < register (X)
     BNE @registerIsHigher       ; branches if equal
 
-    ; JMP @registerIsLower        ; happens if register (X) < data (Y)
-
+                                ; happens if register (X) < data (Y)
     @checkLowerByte:
     LDA enemyDistance, X        ; low byte
     CMP enemyDistance, Y        ; low byte + 1
     BCC @registerIsLower
     BNE @registerIsHigher
 
-    @registerIsLower:           ; happens if register (X) < data (Y)    
-    JMP commitMove
-    ; CPX enemyTempForLoop       ; this might be one short
-    ; BEQ commitMove
-    ; CPY #$04 ;enemyTempForLoop
-    ; BEQ commitMove
+    @registerIsLower:           ; happens if register (X) < data (Y)  
+    LDA gameStateIsPowered      ; swap if we are powered up
+    CMP #$00
+    BNE @registerIsLowerPowerUp
 
-    ; INY
-    ; INY
-    
-    ; JMP @loop
+    JMP commitMove              ; commits the move on the current index
 
-    @registerIsHigher:          ; if  data (Y) < register (X)
-    ; INX
-    ; INX
+    @registerIsLowerPowerUp:  
     INC enemyDirectionIndex
+    JMP commitMove              ; commits the move on the second index
+
+   
+    @registerIsHigher:          ; if  data (Y) < register (X)
+    LDA gameStateIsPowered      ; swap if we are powered up
+    CMP #$00
+    BNE @registerIsHigherPowerUp
+    INC enemyDirectionIndex      ; commits the move on the second index
+    JMP commitMove              ; commits the move on the second index
+
+    @registerIsHigherPowerUp:
+    JMP commitMove
 
 
-    ; CPX enemyTempForLoop        ; this might be one short
-    ; BEQ commitMove
-    ; CPY #$04 ;enemyTempForLoop ; THIS IS PROBABLY WRONG
-    ; BEQ commitMove
 
-
-    ; INY
-    ; INY
-
-    ; JMP @loop
-    
-    ; X is 0 and Y is 1
-
-    ; if enemyTempForLoop is 2
-    ; X is 0 and Y is 2
-    ; X is 1 and Y is 2
-
-    
+    ; THERE IS NO LOOP because I'm just comparing two items
 
     ; CODE that evaluates the direction into the enemyX/Y buffer
     ; CODE that figures out the distance between two points
@@ -390,20 +379,20 @@ absX:
     LSR
     STA enemyGridX; reusing??? see if this works TODO, not neccessarily X
 
-    CMP playerGridX
+    CMP playerGridXAI
     BEQ @equal
     BCS @subtractSwap                    ; if enemyX is greater than playerLocationX
 
     @subtractNormal:
     SEC
-    LDA playerGridX
+    LDA playerGridXAI
     SBC enemyGridX
     JMP @dump
 
     @subtractSwap:
     SEC
     LDA enemyGridX
-    SBC playerGridX
+    SBC playerGridXAI
     JMP @dump
 
     @equal:
@@ -420,20 +409,20 @@ absY:
     LSR
     STA enemyGridX ; reusing??? see if this works TODO, not neccessarily X
 
-    CMP playerGridY
+    CMP playerGridYAI
     BEQ @equal
     BCS @subtractSwap                 ; reverse since Y is different?
 
     @subtractNormal:
     SEC
-    LDA playerGridY
+    LDA playerGridYAI
     SBC enemyGridX
     JMP @dump
 
     @subtractSwap:
     SEC
     LDA enemyGridX
-    SBC playerGridY
+    SBC playerGridYAI
 
     @equal:
     LDA #$00
