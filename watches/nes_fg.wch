@@ -8,7 +8,7 @@
 00005	0005	b	u	0	playerGridY
 00006	0006	b	u	0	playerPointerLo
 00007	0007	b	u	0	playerPointerHi
-00008	000F	b	u	0	enemyQ
+00008	0015	b	u	0	enemyMode
 00009	000B	b	u	0	enemyX1
 00010	000C	b	u	0	enemyX2
 00011	000D	b	u	0	enemyX3

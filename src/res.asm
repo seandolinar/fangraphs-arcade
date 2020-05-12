@@ -50,7 +50,7 @@ enemyY4:				.res 1
 
 enemyH:                 .res 1
 enemyW:                 .res 1 ; 0014
-enemyQ:					.res 1 
+enemyMode:				.res 1 
 enemyXBuffer:			.res 1 
 enemyYBuffer:			.res 1	; 0017
 

@@ -96,6 +96,7 @@ nmiMovement:
     JSR nextEnemyMovement   ; move this to main?
     JSR checkCollisionSprites ; this isn't working
 
+    INC enemyMode
 
     JSR checkWin          ; maybe this sits well here?
 

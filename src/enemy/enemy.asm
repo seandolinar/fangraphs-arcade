@@ -55,7 +55,11 @@ enemyMovement:
     LDA playerGridY
     STA playerGridYAI
 
-    ; JMP modeAlt
+    LDA enemyMode
+    CMP #$F0
+    BCC modeAttack
+
+    JMP modeAlt
 
     modeAttack:
     CPX #$03
