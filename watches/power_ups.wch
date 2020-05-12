@@ -1,11 +1,13 @@
 
-9
-00000	0030	b	u	0	PowerUpX1
-00001	0031	b	u	0	PowerUpX2
-00002	0032	b	u	0	PowerUpX3
-00003	0033	b	u	0	PowerUpX4
-00004	0034	b	u	0	PowerUpY1
-00005	0035	b	u	0	PowerUpY2
-00006	0036	b	u	0	PowerUpY3
-00007	0037	b	u	0	PowerUpY4
-00008	0038	b	u	0	PowerUpAvailable
+11
+00000	002B	b	u	0	masterTimer
+00001	0030	b	u	0	PowerUpX1
+00002	0031	b	u	0	PowerUpX2
+00003	0032	b	u	0	PowerUpX3
+00004	0033	b	u	0	PowerUpX4
+00005	0034	b	u	0	PowerUpY1
+00006	0035	b	u	0	PowerUpY2
+00007	0036	b	u	0	PowerUpY3
+00008	0037	b	u	0	PowerUpY4
+00009	0038	b	u	0	PowerUpAvailable
+00010	0039	b	u	0	PowerUpTimer

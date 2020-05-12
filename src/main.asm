@@ -82,6 +82,7 @@ Main:
 
 
 nmiMovement:
+    JSR incTimerPowerUp
 
       
     JSR dumpUpdatePosition      ; runs the player updates ;change this to update direction
@@ -95,7 +96,6 @@ nmiMovement:
     JSR nextEnemyMovement   ; move this to main?
     JSR checkCollisionSprites ; this isn't working
 
-    JSR incTimerPowerUp
 
     JSR checkWin          ; maybe this sits well here?
 

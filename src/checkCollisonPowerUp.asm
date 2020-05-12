@@ -101,7 +101,7 @@ incTimerPowerUp:
     BEQ dumpIncTimerPowerUp
 
     LDA masterTimer
-    CMP #$01 ; not sure why 1, we might not be counting down all the way before reseting
+    CMP #$08                    ; sloppy, but the counter is only counting down to 2
     BNE dumpIncTimerPowerUp; 
     
     DEC powerUpTimer
