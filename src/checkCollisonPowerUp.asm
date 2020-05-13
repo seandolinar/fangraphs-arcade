@@ -55,6 +55,7 @@ disablePowerUp:
 
 ; turns off sprite and takes off grid
 ; this might not be pretty but let's try this
+; have to change this
 removePowerUp:
     STX tempX
     STY tempY
