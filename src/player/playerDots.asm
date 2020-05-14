@@ -1,20 +1,19 @@
 ; CONTAINS ALL LOGIC FOR eating dots
 
 checkCollideDot:
+    
+    LDX #$00  
     LDA collisionBackgroundTile
-    CMP #$03
+
+    ; probably should refactor the loop 
+    ; once I have more efficient methods understood better
+    @loopCompareTilesDots:
+    CMP tilesDots, X
     BEQ @collideDotBranch
-    CMP #$04
-    BEQ @collideDotBranch
-    CMP #$28
-    BEQ @collideDotBranch
-    CMP #$48
-    BEQ @collideDotBranch
-    CMP #$3a
-    BEQ @collideDotBranch
-    CMP #$3c
-    BEQ @collideDotBranch
- 
+    INX
+    CPX #$06
+    BNE @loopCompareTilesDots
+
     JMP @exit
 
     @collideDotBranch:

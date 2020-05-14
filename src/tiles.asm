@@ -64,6 +64,9 @@ enemy_array:
 .byte $D4, $24, %01000010, $84
 
 
+tilesDots:
+.byte $03, $04, $28, $48, $3a, $3c
+
 
 
 
