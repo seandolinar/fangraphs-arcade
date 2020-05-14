@@ -228,17 +228,22 @@ countDots:
     STX dotsLeft      
     countDotsLoopOuter:   
     countDotsLoopInner:
-        LDA (nametable_buffer_lo), Y ; not working
+        LDA (nametable_buffer_lo), Y 
+        STX tempX                     ; stash X
 
-        CMP #$03
+        LDX #$00
+        @loopCompareTilesDots:
+        CMP tilesDots, X
         BEQ @incDotCount
-        CMP #$04
-        BEQ @incDotCount
+        INX
+        CPX #$06
+        BNE @loopCompareTilesDots
        
+        LDX tempX                     ; unstash X
         JMP countDotsNoInc
 
-
         @incDotCount:
+        LDX tempX                     ; unstash X
         INC dotsLeft
 
         countDotsNoInc:

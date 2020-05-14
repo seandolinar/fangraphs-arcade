@@ -79,6 +79,8 @@ dumpSecondMultEnemy:
     ; I do, this is indirect, I think I have to do it this way
     LDY tempY 
 
+    ; need collision loop for this
+    ; and probably for players as well
     CMP #$02 ;; whatever are loading it's all 0s
     BEQ dumpCollideEnemy ; branch if cmp is not equal to A
     CMP #$03
