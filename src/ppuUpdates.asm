@@ -28,6 +28,40 @@ changeBackground:
     LDA bufferBackgroundTile
     STA $2007
 
+    ; NEW buffer dump
+
+    LDA #<vram_buffer
+    STA nametable_buffer_lo
+    LDA #>vram_buffer
+    STA nametable_buffer_hi
+
+    LDY #$01
+    @loopVRAMBufferTransfer:
+    LDA $2002               ; read PPU status to reset the high/low latch to high
+    ;; yuck how will this work?
+    ; LDA #$01 ; (nametable_buffer_lo), Y
+    ; CMP #$00
+    ; BEQ @dumpLoopVRAMBufferTransfer
+
+    LDA (nametable_buffer_lo), Y
+    STA $2006  
+
+    INY     
+
+    LDA (nametable_buffer_lo), Y
+    STA $2006          
+
+    
+
+    INY
+    LDA (nametable_buffer_lo), Y
+    ; LDA #$04
+    STA $2007  
+
+    @dumpLoopVRAMBufferTransfer:
+
+
+
     ; resets scroll
     ; not sure why I have to do this, but it works!!
     LDA #$00
@@ -53,4 +87,21 @@ spriteTransfer:
     LDA #>player_oam        ; this works and so does $02
     STA $4014               ; set the high byte (02) of the RAM address, start the transfer
 
+    RTS
+
+
+clearVRAMBuffer:
+    LDA #<vram_buffer
+    STA nametable_buffer_lo
+    LDA #>vram_buffer
+    STA nametable_buffer_hi
+
+    LDY #$20
+
+    LDA #$00
+    @loop:
+    STA (nametable_buffer_lo), Y ; not working
+    DEY
+    CPY #$00
+    BNE @loop
     RTS

@@ -34,7 +34,7 @@ InitialLoad:
     INX
     INX
     
-    CPX #$70
+    CPX #$40
     BNE LoadEnemyLoop   ; Branch to LoadSpritesLoop if compare was Not Equal to zero
 
 
@@ -124,6 +124,9 @@ FillAttrib0Loop:
   CPX #$00
   BNE FillAttrib0Loop
 
+
+  ;CLEAR BUFFER
+  JSR clearVRAMBuffer
 
 
   ;INITIAL VARS

@@ -443,6 +443,12 @@ dumpSecondMult:
     BEQ @dump
     CMP #$48
     BEQ @dump
+    CMP #$3a
+    BEQ @dump
+    CMP #$3b
+    BEQ @dump
+    CMP #$3c
+    BEQ @dump
     CMP #$02 ;; whatever are loading it's all 0s
     BNE collide
 

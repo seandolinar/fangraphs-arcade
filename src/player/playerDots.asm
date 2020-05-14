@@ -6,6 +6,14 @@ checkCollideDot:
     BEQ @collideDotBranch
     CMP #$04
     BEQ @collideDotBranch
+    CMP #$28
+    BEQ @collideDotBranch
+    CMP #$48
+    BEQ @collideDotBranch
+    CMP #$3a
+    BEQ @collideDotBranch
+    CMP #$3c
+    BEQ @collideDotBranch
  
     JMP @exit
 
@@ -36,20 +44,62 @@ collideDot:
     ADC #$03                
     STA bufferBackgroundValHi
 
+    ; default green tile
     LDA #$02
     STA bufferBackgroundTile
 
     LDA (bufferBackgroundValLo), Y
     CMP #$04
-    BNE @continueTileNotBrown
+    BEQ @continueTileBrown
 
+    CMP #$28
+    BEQ @continueTileBaseUp
+
+    CMP #$48
+    BEQ @continueTileBaseDown
+
+    CMP #$3a
+    BEQ @continueTileBaseLeft
+
+    CMP #$3c
+    BEQ @continueTileBaseRight
+
+    JMP @continueTile
+
+    @continueTileBrown:
+    ; brown tile
     LDA #$34
     STA bufferBackgroundTile
+    JMP @continueTile
 
-    @continueTileNotBrown:
+    @continueTileBaseUp:
+    LDA #$27
+    STA bufferBackgroundTile
+    JMP @continueTile
+
+    @continueTileBaseDown:
+    LDA #$47
+    STA bufferBackgroundTile
+    JMP @continueTile
+
+    @continueTileBaseLeft:
+    LDA #$2a
+    STA bufferBackgroundTile
+    JMP @continueTile
+
+    @continueTileBaseRight:
+    LDA #$2c
+    STA bufferBackgroundTile
+    JMP @continueTile
+
+  
+
+    ; green tile
+    @continueTile:
     ; this affects the RAM map of the background
     LDA #$02
     STA (bufferBackgroundValLo), Y
+
 
     CLC
     LDA playerPointerLo

@@ -1,0 +1,11 @@
+
+9
+00000	06C1	b	u	0	vram_buffer
+00001	06C2	b	u	0	vram_buffer
+00002	06C3	b	u	0	vram_buffer
+00003	06C4	b	u	0	vram_buffer
+00004	06C5	b	u	0	vram_buffer
+00005	06C6	b	u	0	vram_buffer
+00006	06C7	b	u	0	vram_buffer
+00007	06C8	b	u	0	vram_buffer
+00008	06C9	b	u	0	vram_buffer

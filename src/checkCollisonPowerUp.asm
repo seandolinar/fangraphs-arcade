@@ -60,34 +60,78 @@ removePowerUp:
     STX tempX
     STY tempY
 
-    ; find how far we have to skip
-    LDY #$00
-    @loop:
+    LDA #<vram_buffer
+    STA nametable_buffer_lo
+    LDA #>vram_buffer
+    STA nametable_buffer_hi
 
-    TYA
+
+    ; NEW CODE
+    LDY #$01
+
     CLC
-    ADC #$10                ; need to jump 16 bytes for next set of power ups
-    TAY
+    LDA playerPointerHi
+    ADC #$20
+    STA (nametable_buffer_lo), Y
 
-    DEX                     ; I think we might be going out of bounds here or something
-                            ; causing some issues
-    CPX #$00
-    BNE @loop
+    INY
 
-    ; have to loop this?
-    LDX tempX
-    LDA #$00
-    STA powerUpX, X
-    STA powerUpY, X
+    CLC
+    LDA playerPointerLo
+    STA (nametable_buffer_lo), Y
 
-    LDA #$02
-    STA power_up_oam + 1, Y ; + 1 is the tile ; #$02 is the empty tile
-    STA power_up_oam + 5, Y
-    STA power_up_oam + 9, Y
-    STA power_up_oam + 13, Y
+    INY
 
-    LDX tempX
-    LDY tempY
+    LDA #$34
+    STA (nametable_buffer_lo), Y
+
+
+    ; LDA #<vram_buffer
+    ; STA nametable_buffer_lo
+    ; LDA #>vram_buffer
+    ; STA nametable_buffer_hi
+
+    ; LDY #$20
+
+    ; LDA #$00
+    ; @loop:
+    ; STA (nametable_buffer_lo), Y ; not working
+    ; DEY
+    ; CPY #$00
+    ; BNE @loop
+    ; RTS
+
+
+
+    ; redo this because we are using the background now
+    ; find how far we have to skip
+    ; LDY #$00
+    ; @loop:
+
+    ; TYA
+    ; CLC
+    ; ADC #$10                ; need to jump 16 bytes for next set of power ups
+    ; TAY
+
+    ; DEX                     ; I think we might be going out of bounds here or something
+    ;                         ; causing some issues
+    ; CPX #$00
+    ; BNE @loop
+
+    ; ; have to loop this?
+    ; LDX tempX
+    ; LDA #$00
+    ; STA powerUpX, X
+    ; STA powerUpY, X
+
+    ; LDA #$02
+    ; STA power_up_oam + 1, Y ; + 1 is the tile ; #$02 is the empty tile
+    ; STA power_up_oam + 5, Y
+    ; STA power_up_oam + 9, Y
+    ; STA power_up_oam + 13, Y
+
+    ; LDX tempX
+    ; LDY tempY
     RTS
 
 ; start the timer

@@ -91,6 +91,12 @@ dumpSecondMultEnemy:
     BEQ dumpCollideEnemy
     CMP #$48
     BEQ dumpCollideEnemy
+    CMP #$3a
+    BEQ dumpCollideEnemy
+    CMP #$3b
+    BEQ dumpCollideEnemy
+    CMP #$3c
+    BEQ dumpCollideEnemy
 
 
 collideEnemy:
