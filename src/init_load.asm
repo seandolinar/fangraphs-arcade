@@ -133,13 +133,16 @@ FillAttrib0Loop:
   LDA #$00
   STA controllerTimer
 
-  LDA #$80
-  STA playerLocationX
-  STA playerLocationXBuffer
+  ; resetPlayerReset subroutine now
+  ; LDA #$80
+  ; STA playerLocationX
+  ; STA playerLocationXBuffer
 
-  LDA #$b0
-  STA playerLocationY
-  STA playerLocationYBuffer
+  ; LDA #$b0
+  ; STA playerLocationY
+  ; STA playerLocationYBuffer
+
+  JSR resetPlayerReset
 
 
   ; We can eventually loop this

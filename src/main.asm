@@ -4,6 +4,7 @@
 .include "./player/playerDots.asm"
 .include "./player/playerPosition.asm"
 .include "./player/playerAnimation.asm"
+.include "./player/playerReset.asm"
 .include "./enemy/enemy.asm"
 .include "./enemy/enemyAI.asm"
 .include "./enemy/enemyCollision.asm"
