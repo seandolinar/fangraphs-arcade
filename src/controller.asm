@@ -21,7 +21,7 @@ readController:
         BEQ ReadADone  
 
         LDA controllerBits
-        ORA #%00000001
+        ADC #%00000001
         STA controllerBits
 
     ReadADone:
@@ -105,25 +105,27 @@ readController:
         
     ReadRightDone:
 
-    LDA controllerBits ; probably don't need this
-    BEQ resetTimer
-    LDA controllerTimer
-    BNE dumpTimerController
-    LDA #$10
-    STA controllerTimer
+    ; this looks like it's metering the controls
+    ; left over from the older mechanic?
+    ; LDA controllerBits ; probably don't need this
+    ; BEQ resetTimer
+    ; LDA controllerTimer
+    ; BNE dumpTimerController
+    ; LDA #$10
+    ; STA controllerTimer
     RTS
 
 
-resetTimer:
-    LDA #$00
-    STA controllerTimer
-    STA controllerBits
-    RTS
+; resetTimer:
+;     LDA #$00
+;     STA controllerTimer
+;     STA controllerBits
+;     RTS
 
-dumpTimerController:
-    LDA #$00 
-    STA controllerBits
+; dumpTimerController:
+;     LDA #$00 
+;     STA controllerBits
 
-    DEC controllerTimer
+;     DEC controllerTimer
 
-    RTS
+;     RTS

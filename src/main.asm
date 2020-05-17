@@ -21,10 +21,27 @@
 .segment "TILES"
 .incbin "../chr/char02.chr"
 
+.segment "MUSIC"
+.incbin "../nsf/export1.nsf", $80 ; offset of $80 so I don't have to trim this 
+
 
 .segment "CODE"
 NMI:
     ; this interrupts the main loop
+   ; CHECK PAUSE
+    ; Pause:
+    ; LDA controllerBits
+    ; AND #CONTROL_P1_START
+    ; BNE @vBlankLoop
+    
+    ; RTI
+    ; LDA gamePaused
+    ; CMP #$01
+    ; BNE @vBlankLoop
+
+    ; RTI
+  
+
 
 ; vBlankWait:	
 @vBlankLoop:
@@ -33,6 +50,12 @@ NMI:
 
     JSR changeBackground
     JSR spriteTransfer
+    ; JSR readController
+
+    ; plays music, but this crashes horribly
+    ; LDA #$00
+    ; LDX #$00
+    ; JSR $8060
 
     LDX masterTimer
     DEX
@@ -52,13 +75,62 @@ IRQ:
 ; we are updating the position in MAIN
 ; but checking the position in NMI
 Main:
-    ; LDA controllerBits
-    ; BEQ @exit               ; go loop main if we have no controller bits
     ; should check to see if controller Bits changed
+    LDA controllerBits
+    STA gamePaused ; temp
+    JSR readController
+    LDA controllerBits
+    EOR gamePaused
+    AND #CONTROL_P1_START
+    BEQ @continue
+    ; LDA #$09
+    ; STA gamePaused
+
+    ; PAUSE ROUTINE
+    ; lda PPUCopy       ;load a ram coopy of $2000
+    ; eor #%10000000    ;toggle nmi bit
+    LDA #$00
+    sta $2000 
+    LDA #$05
+    sta PPUCopy
+    ; sta PPUCopy
+
+    ; valid logic
+    ; having issues if use the same button
+    ; why won't this work?!
+    @pauseLoop:
+    LDA controllerBits
+    STA gamePaused ; temp
+    JSR readController
+    LDA controllerBits
+    EOR gamePaused ; difference in buttons
+    AND controllerBits
+    ; AND #CONTROL_P1_START  ; zeros out non-start bits
+    AND #CONTROL_P1_DOWN ; zeros out non-down bits
+    ; STA PPUCopy
+    ; CMP #CONTROL_P1_START 
+    BEQ @pauseLoop
+
+
+    ; lda PPUCopy       ;load a ram coopy of $2000
+    ; eor #%10000000    ;toggle nmi bit
+    LDA #$00
+    sta controllerBits
+    LDA #%10000000 
+    sta $2000 
+    LDA #$07
+    sta PPUCopy       ;load a ram coopy of $2000
+    JMP Main
+
+   
+
+
+    @continue:
     LDY controlTimer
     CPY #$00
     BNE @exit
     JSR readController
+
     JSR updateDirection
     LDY #$30
 
@@ -84,7 +156,6 @@ Main:
 nmiMovement:
     JSR incTimerPowerUp
 
-      
     JSR dumpUpdatePosition      ; runs the player updates ;change this to update direction
     ; this should handle when to move the sprites
     JSR checkCollisionSprites ; this isn't working
@@ -102,3 +173,4 @@ nmiMovement:
 
 @dump:
     RTS
+

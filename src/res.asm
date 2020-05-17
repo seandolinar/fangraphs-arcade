@@ -138,7 +138,7 @@ sqOut:							.res 2
 
 
 enemyTempForLoop:				.res 1
-enemyDirectionIndex:			.res 1 ; 007B
+enemyDirectionIndex:			.res 1 ; 007B ; these are probably bad
 enemyBufferDirectionCurrent:	.res 1 ; 007C
 
 bufferBackgroundTile:			.res 1 ; 007D
@@ -148,6 +148,8 @@ controlTimer:					.res 1 ; 007F
 playerGridXAI:					.res 1 ; 0080
 playerGridYAI:					.res 1 ; 0081
 
+gamePaused:						.res 1 ; 0086 ; these are right
+PPUCopy:						.res 1 ; 0087
 
 
 

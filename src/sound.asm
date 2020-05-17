@@ -1,6 +1,5 @@
 .segment "CODE"
 soundCollision:
-
     ; need timer so that the sound will continue to play if we are sitting on it
     LDA masterTimer
     ; CMP #$00
@@ -20,7 +19,6 @@ dumpSoundCollision:
 
 
 soundCollisionGood:
-
     ; need timer so that the sound will continue to play if we are sitting on it
     LDA masterTimer
     ; CMP #$00
@@ -39,7 +37,6 @@ dumpSoundCollisionGood:
 
 
 soundDot:
-
     ; need timer so that the sound will continue to play if we are sitting on it
     LDA masterTimer
     ; CMP #$00
