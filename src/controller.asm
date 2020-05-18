@@ -3,7 +3,7 @@ readController:
 
     LatchController:
         LDA controllerBits
-        ; STA controllerBitsPrev
+        STA controllerBitsPrev
         LDA #$00
         STA controllerBits
 

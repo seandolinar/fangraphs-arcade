@@ -30,11 +30,12 @@
 .segment "CODE"
 NMI:
 
-        PHA
-        TXA
-        PHA
-        TYA
-        PHA
+    ; Preserves the registers during the course of the interrupt
+    PHA
+    TXA
+    PHA
+    TYA
+    PHA
 
     ; this interrupts the main loop
    ; CHECK PAUSE
@@ -74,6 +75,9 @@ NMI:
     LDX masterTimer
     DEX
     STX masterTimer
+    BNE @dumpNMI
+    LDA #$08            ; makes sure we don't loop backwards
+    STA masterTimer
    
 @dumpNMI:
     PLA
@@ -111,45 +115,46 @@ IRQ:
 ; but checking the position in NMI
 Main:
 
-    ; ; should check to see if controller Bits changed
+    ; should check to see if controller Bits changed
     ; LDA controllerBits
     ; STA gamePaused ; temp
-    ; JSR readController
-    ; LDA controllerBits
-    ; EOR gamePaused
-    ; AND #CONTROL_P1_START
-    ; BEQ @continue
-    ; ; LDA #$09
-    ; ; STA gamePaused
+    JSR readController
+    LDA controllerBits
+    EOR controllerBitsPrev
+    AND controllerBits
+    AND #CONTROL_P1_START
+    BEQ @continue
+    ; LDA #$09
+    ; STA gamePaused
 
-    ; ; PAUSE ROUTINE
-    ; ; lda PPUCopy       ;load a ram coopy of $2000
-    ; ; eor #%10000000    ;toggle nmi bit
+    ; PAUSE ROUTINE
+    ; lda PPUCopy       ;load a ram coopy of $2000
+    ; eor #%10000000    ;toggle nmi bit
     ; LDA #$00
     ; sta $2000 
-    ; LDA #$05
+    LDA #$05
     ; sta PPUCopy
-    ; ; sta PPUCopy
 
-    ; ; valid logic
-    ; ; having issues if use the same button
-    ; ; why won't this work?!
-    ; @pauseLoop:
+    ; valid logic
+    ; having issues if use the same button
+    ; why won't this work?!
+    @pauseLoop:
     ; LDA controllerBits
     ; STA gamePaused ; temp
-    ; JSR readController
-    ; LDA controllerBits
-    ; EOR gamePaused ; difference in buttons
-    ; AND controllerBits
-    ; ; AND #CONTROL_P1_START  ; zeros out non-start bits
+    JSR readController
+    LDA controllerBits
+    EOR controllerBitsPrev ; difference in buttons
+    AND controllerBits
+    AND #CONTROL_P1_START  ; zeros out non-start bits
     ; AND #CONTROL_P1_DOWN ; zeros out non-down bits
-    ; ; STA PPUCopy
-    ; ; CMP #CONTROL_P1_START 
-    ; BEQ @pauseLoop
+    STA PPUCopy
+    ; CMP #CONTROL_P1_START 
+    BEQ @pauseLoop
+    ; JMP @pauseLoop
 
 
-    ; ; lda PPUCopy       ;load a ram coopy of $2000
-    ; ; eor #%10000000    ;toggle nmi bit
+    ; lda PPUCopy       ;load a ram coopy of $2000
+    ; eor #%10000000    ;toggle nmi bit
     ; LDA #$00
     ; STA controllerBits
     ; LDA #%10000000 
@@ -161,7 +166,8 @@ Main:
    
 
 
-    ; @continue:
+    @continue:
+
     ; LDA controllerBits
     ; AND #CONTROL_P1_B
     ; BEQ @continueAfterReset
@@ -173,7 +179,7 @@ Main:
     ; STA gamePlayerReset
 
 
-    @continueAfterReset:
+    ; @continueAfterReset:
     LDY controlTimer
     CPY #$00
     BNE @exit
