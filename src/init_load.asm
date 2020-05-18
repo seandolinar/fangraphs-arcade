@@ -146,37 +146,8 @@ FillAttrib0Loop:
 
 
   ; We can eventually loop this
-  LDA #$A0
-  STA enemyX
-  LDA #$58
-  STA enemyY
-
-  LDA #$03
-  STA enemy1DirectionCurrent
-
-  LDA #$A0
-  STA enemyX2
-  LDA #$50
-  STA enemyY2
-
-  LDA #$02
-  STA enemy2DirectionCurrent
-
-  LDA #$80
-  STA enemyX3
-  LDA #$50
-  STA enemyY3
-
-  LDA #$01
-  STA enemy3DirectionCurrent
-
-  LDA #$80
-  STA enemyX4
-  LDA #$50
-  STA enemyY4
-
-  LDA #$02
-  STA enemy4DirectionCurrent
+  ; subroutine!
+  JSR enemyReset
 
 ; initial parameters
 LDA #$10
@@ -206,6 +177,7 @@ STA powerUpY4
 
 LDA #$00
 STA gameStateIsPowered
+STA gamePlayerReset
 
 LDA #$01
 STA powerUpAvailable ; first base power up is loaded first

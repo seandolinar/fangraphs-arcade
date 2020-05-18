@@ -150,7 +150,7 @@ playerGridYAI:					.res 1 ; 0081
 
 gamePaused:						.res 1 ; 0086 ; these are right
 PPUCopy:						.res 1 ; 0087
-
+gamePlayerReset:				.res 1 ; 0088
 
 
 ; NES-defined RAM locations

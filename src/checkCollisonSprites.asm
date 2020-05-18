@@ -21,12 +21,37 @@ checkCollisionSprites:
     BEQ @collisionGood
 
     JSR soundCollision ; Bad collision
-    JSR resetPlayerReset
+    ; JSR resetPlayerReset
+    ; JSR enemyReset
+
+
+    ; LDA $2001
+    ; EOR #%0001000
+    ; STA $2001
+
+    ; LDA $2000
+    ; EOR #%1000000
+    ; STA $2000
+
+    ; this loops isn't bailing out
+    ; probably want to put this in the NMI?
+    ; @tempLoop:
+    ; JSR readController
+    ; LDA controllerBits
+    ; AND #CONTROL_P1_RIGHT  ; zeros out non-start bits
+    ; BNE @dumpBad
+
+    ; JMP @tempLoop
+    ; LDA #$01
+    ; STA gamePlayerReset
+
+    @dumpBad:
     RTS
 
     @collisionGood:
     JSR soundCollisionGood
     JSR resetOneEnemyPosition
+
 
     @dump:
     CPX #$00

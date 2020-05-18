@@ -102,8 +102,10 @@ updatePositionSprite:
     LSR
     STA playerGridY
 
-    LDA #00
-    STA controllerBits
+    ; took this out
+    ; not sure if this is neccessary
+    ; LDA #00
+    ; STA controllerBits
     RTS
 
 setUp:

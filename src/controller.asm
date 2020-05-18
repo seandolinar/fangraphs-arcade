@@ -3,15 +3,15 @@ readController:
 
     LatchController:
         LDA controllerBits
-        STA controllerBitsPrev
+        ; STA controllerBitsPrev
         LDA #$00
         STA controllerBits
 
         LDA #$01
         STA $4016
         LDA #$00
+        ; STA controllerBits
         STA $4016       ; tell both the controllers to latch buttons
-        STA controllerBits
    
     ; we'll read 4016 8 times
     ReadA: 
@@ -20,6 +20,7 @@ readController:
         AND #%00000001  ;
         BEQ ReadADone  
 
+        CLC
         LDA controllerBits
         ADC #%00000001
         STA controllerBits
@@ -31,6 +32,7 @@ readController:
         AND #%00000001  
         BEQ ReadBDone  
 
+        CLC
         LDA controllerBits
         ADC #%00000010
         STA controllerBits
@@ -43,6 +45,7 @@ readController:
         AND #%00000001  
         BEQ ReadSelectDone   
 
+        CLC
         LDA controllerBits
         ADC #%00000100
         STA controllerBits
@@ -54,6 +57,7 @@ readController:
         AND #%00000001 
         BEQ ReadStartDone  
         
+        CLC
         LDA controllerBits
         ADC #%00001000
         STA controllerBits
@@ -65,7 +69,7 @@ readController:
         AND #%00000001 
         BEQ ReadUpDone  
      
-
+        CLC
         LDA controllerBits
         ADC #%00010000
         STA controllerBits
@@ -77,6 +81,7 @@ readController:
         AND #%00000001  
         BEQ ReadDownDone   
 
+        CLC
         LDA controllerBits
         ADC #%00100000
         STA controllerBits
@@ -88,6 +93,7 @@ readController:
         AND #%00000001 
         BEQ ReadLeftDone   
 
+        CLC
         LDA controllerBits
         ADC #%01000000
         STA controllerBits
@@ -99,6 +105,7 @@ readController:
         AND #%00000001  
         BEQ ReadRightDone   
 
+        CLC
         LDA controllerBits
         ADC #%10000000
         STA controllerBits

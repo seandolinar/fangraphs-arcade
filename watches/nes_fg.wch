@@ -1,5 +1,5 @@
 
-54
+55
 00000	0000	b	u	0	playerLocationX
 00001	0001	b	u	0	playerLocationY
 00002	0002	b	u	0	playerLocationXBuffer
@@ -52,5 +52,6 @@
 00049	005F	b	u	0	enemy1DirectionCurrent
 00050	0086	b	u	0	gamePause
 00051	0087	b	u	0	PPUCopy
-00052	0009	b	s	0	controllerBitsPrev
-00053	0008	b	u	0	controllerBits
+00052	0088	b	u	0	gamePlayerReset
+00053	0009	b	s	0	controllerBitsPrev
+00054	0008	b	u	0	controllerBits
