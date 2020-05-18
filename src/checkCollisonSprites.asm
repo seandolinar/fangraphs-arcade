@@ -21,8 +21,8 @@ checkCollisionSprites:
     BEQ @collisionGood
 
     JSR soundCollision ; Bad collision
-    ; JSR resetPlayerReset
-    ; JSR enemyReset
+    JSR resetPlayerReset
+    JSR enemyReset
 
 
     ; LDA $2001
@@ -42,8 +42,36 @@ checkCollisionSprites:
     ; BNE @dumpBad
 
     ; JMP @tempLoop
-    ; LDA #$01
-    ; STA gamePlayerReset
+    LDA #$01
+    STA gamePlayerReset
+
+    ; structure or label this or move this
+    LDA #<vram_buffer
+    STA nametable_buffer_lo
+    LDA #>vram_buffer
+    STA nametable_buffer_hi
+    LDY #$01
+    LDA #$20
+    STA (nametable_buffer_lo), Y
+
+    INY
+
+    CLC
+    LDA gameOuts
+    ADC #$F1
+    STA (nametable_buffer_lo), Y
+
+    INY
+    LDA #$01
+    STA (nametable_buffer_lo), Y
+
+    INC gameOuts
+    LDA gameOuts
+    CMP #$03
+    BNE @dumpBad
+
+    LDA #$16
+    STA bufferBackgroundColor
 
     @dumpBad:
     RTS
@@ -52,7 +80,7 @@ checkCollisionSprites:
     JSR soundCollisionGood
     JSR resetOneEnemyPosition
 
-
+   
     @dump:
     CPX #$00
     BNE @loop

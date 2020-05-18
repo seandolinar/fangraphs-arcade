@@ -8,3 +8,8 @@ resetPlayerReset:
   STA playerLocationYBuffer
 
   RTS
+
+
+renderOuts:
+  
+  RTS  

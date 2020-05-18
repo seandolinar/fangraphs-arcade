@@ -20,7 +20,7 @@ checkCollisionPowerUp:
     JSR enablePowerUp
     JSR removePowerUp
     JSR soundCollision ; Bad collision ; change this!
-    
+
     RTS
 
 @dump:
@@ -56,8 +56,11 @@ disablePowerUp:
 ; this might not be pretty but let's try this
 ; have to change this
 removePowerUp:
-    STX tempX
-    STY tempY
+    PHA
+    TXA
+    PHA
+    TYA
+    PHA
 
     LDA #<vram_buffer
     STA nametable_buffer_lo
@@ -83,6 +86,12 @@ removePowerUp:
 
     LDA #$34
     STA (nametable_buffer_lo), Y
+
+    PLA
+    TAY
+    PLA
+    TAX
+    PLA
 
     RTS
 

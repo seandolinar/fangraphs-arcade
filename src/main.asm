@@ -52,8 +52,6 @@ NMI:
     ; RTI
 
   
-    LDA gamePlayerReset ; $01 means we are in the middle of a reset
-    BNE @resetNMI
 
 
 ; vBlankWait:	
@@ -70,6 +68,9 @@ NMI:
     ; LDX #$00
     ; JSR $8060
 
+
+    LDA gamePlayerReset ; $01 means we are in the middle of a reset
+    BNE @resetNMI
 
 
     LDX masterTimer
@@ -95,6 +96,18 @@ NMI:
     ; LDA $2000
     ; EOR #%1000000
     ; STA $2000
+
+    JSR readController
+    LDA controllerBits
+    EOR controllerBitsPrev ; difference in buttons
+    AND controllerBits
+    AND #CONTROL_P1_A  ; zeros out non-start bits
+    BEQ @dumpReset
+    LDA #$00
+    STA gamePlayerReset
+
+
+
     @dumpReset:
     PLA
     TAY
@@ -109,6 +122,9 @@ IRQ:
 ; we are updating the position in MAIN
 ; but checking the position in NMI
 Main:
+    LDA gamePlayerReset
+    BNE Main
+
 
     JSR readController
     LDA controllerBits
