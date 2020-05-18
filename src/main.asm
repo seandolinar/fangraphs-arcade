@@ -103,11 +103,6 @@ NMI:
     PLA
     RTI
 
-; @resetTimer:
-;     LDX #$08                ; controls the speed of the game
-;     STX masterTimer
-;     RTI
-
 IRQ:
     RTI
 
@@ -115,71 +110,24 @@ IRQ:
 ; but checking the position in NMI
 Main:
 
-    ; should check to see if controller Bits changed
-    ; LDA controllerBits
-    ; STA gamePaused ; temp
     JSR readController
     LDA controllerBits
     EOR controllerBitsPrev
     AND controllerBits
     AND #CONTROL_P1_START
     BEQ @continue
-    ; LDA #$09
-    ; STA gamePaused
+    
 
-    ; PAUSE ROUTINE
-    ; lda PPUCopy       ;load a ram coopy of $2000
-    ; eor #%10000000    ;toggle nmi bit
-    ; LDA #$00
-    ; sta $2000 
-    LDA #$05
-    ; sta PPUCopy
-
-    ; valid logic
-    ; having issues if use the same button
-    ; why won't this work?!
+    
     @pauseLoop:
-    ; LDA controllerBits
-    ; STA gamePaused ; temp
     JSR readController
     LDA controllerBits
     EOR controllerBitsPrev ; difference in buttons
     AND controllerBits
     AND #CONTROL_P1_START  ; zeros out non-start bits
-    ; AND #CONTROL_P1_DOWN ; zeros out non-down bits
-    STA PPUCopy
-    ; CMP #CONTROL_P1_START 
     BEQ @pauseLoop
-    ; JMP @pauseLoop
-
-
-    ; lda PPUCopy       ;load a ram coopy of $2000
-    ; eor #%10000000    ;toggle nmi bit
-    ; LDA #$00
-    ; STA controllerBits
-    ; LDA #%10000000 
-    ; STA $2000 
-    ; LDA #$07
-    ; STA PPUCopy       ;load a ram coopy of $2000
-    ; JMP Main
-
-   
-
 
     @continue:
-
-    ; LDA controllerBits
-    ; AND #CONTROL_P1_B
-    ; BEQ @continueAfterReset
-    ; ; JMP @dumpReset
-    ; ; RTI
-
-    ; @endReset:
-    ; LDA #$00
-    ; STA gamePlayerReset
-
-
-    ; @continueAfterReset:
     LDY controlTimer
     CPY #$00
     BNE @exit
@@ -198,9 +146,6 @@ Main:
     JMP Main                ; loops because of end
 
     @runMovement:
-
-   
-
     LDX #$08                ; need to reset this
     STX masterTimer
     JSR nmiMovement
