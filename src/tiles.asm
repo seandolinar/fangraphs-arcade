@@ -27,12 +27,6 @@ enemy_array:
 .byte $58, $40, %00000010, $A8 ;80 ; first enemy (O)
 .byte $60, $41, %00000010, $B0 ;80 ; first enemy (O)
 
-; HOME PLATE
-.byte $CC, $14, %00000010, $7C
-.byte $D4, $24, %00000010, $7C
-.byte $CC, $14, %01000010, $84
-.byte $D4, $24, %01000010, $84
-
 tilesDots:
 .byte $03, $04, $28, $48, $3a, $3c
 
