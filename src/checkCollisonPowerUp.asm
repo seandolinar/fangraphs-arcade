@@ -32,6 +32,7 @@ enablePowerUp:
 
     JSR changeEnemyColor ; make this enemyState?
     JSR setTimerPowerUp
+    
     INC powerUpAvailable
 
     RTS

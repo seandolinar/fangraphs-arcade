@@ -1,4 +1,5 @@
 changeEnemyColor:
+    ; this is called just once, need to write the loop here
 
     TXA
     PHA
@@ -11,16 +12,25 @@ changeEnemyColor:
     LDA gameStateIsPowered
     BNE changeEnemyColorPowerUp ; BNE branches if we LDA a #$00
 
-    LDA #%0000001 ; yellow
+    LDA #%0000010 ; yellow ; return them to normal
 
 changeEnemyColorLoop:
     DEX 
     STA enemy_oam + 2, Y
+    STA enemy_oam + 6, Y
+    STA enemy_oam + 10, Y
+    STA enemy_oam + 14, Y
 
-    INY
-    INY
-    INY
-    INY
+    ; INY
+    ; INY
+    ; INY
+    ; INY
+    PHA
+    CLC
+    TYA
+    ADC #$10
+    TAY
+    PLA
 
     CPX #$00
     BNE changeEnemyColorLoop
@@ -33,7 +43,7 @@ changeEnemyColorLoop:
     RTS
    
 changeEnemyColorPowerUp:
-    LDA #%0000011 ; POWER UP STATE ; RED
+    LDA #%00000011 ; POWER UP STATE ; RED
     JMP changeEnemyColorLoop
 
     

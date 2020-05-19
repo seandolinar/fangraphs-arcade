@@ -40,10 +40,6 @@ mainAI:
 
 dumpEnemyController:
 
-        ; INY
-        ; INY
-        ; INY
-        ; INY
         CLC
         TYA
         ADC #$10
@@ -54,12 +50,9 @@ dumpEnemyController:
 
         RTS
 
-
 ; START
 nextEnemyMovement:
     LDX #$04            ; how many enemies we have
-    ; LDX #$02            ; how many enemies we have ; temp
-
     LDY #$00
 forEachEnemyMovement:
     DEX
