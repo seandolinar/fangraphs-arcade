@@ -58,11 +58,11 @@ checkCollisionSprites:
 
     CLC
     LDA gameOuts
-    ADC #$F1
+    ADC #$F2
     STA (nametable_buffer_lo), Y
 
     INY
-    LDA #$01
+    LDA #$46
     STA (nametable_buffer_lo), Y
 
     INC gameOuts

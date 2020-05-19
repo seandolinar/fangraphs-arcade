@@ -37,21 +37,10 @@ NMI:
     TYA
     PHA
 
-    ; this interrupts the main loop
-   ; CHECK PAUSE
-    ; Pause:
-    ; LDA controllerBits
-    ; AND #CONTROL_P1_START
-    ; BNE @vBlankLoop
-    
-    ; RTI
-    ; LDA gamePaused
-    ; CMP #$01
-    ; BNE @vBlankLoop
+    LDA gameOuts
+    CMP #$03
+    BEQ @endGame
 
-    ; RTI
-
-  
 
 
 ; vBlankWait:	
@@ -61,17 +50,9 @@ NMI:
 
     JSR changeBackground
     JSR spriteTransfer
-    ; JSR readController
-
-    ; plays music, but this crashes horribly
-    ; LDA #$00
-    ; LDX #$00
-    ; JSR $8060
-
 
     LDA gamePlayerReset ; $01 means we are in the middle of a reset
     BNE @resetNMI
-
 
     LDX masterTimer
     DEX
@@ -89,14 +70,6 @@ NMI:
     RTI
 
 @resetNMI:
-    ; LDA $2001
-    ; EOR #%0001000
-    ; STA $2001
-
-    ; LDA $2000
-    ; EOR #%1000000
-    ; STA $2000
-
     JSR readController
     LDA controllerBits
     EOR controllerBitsPrev ; difference in buttons
@@ -106,14 +79,18 @@ NMI:
     LDA #$00
     STA gamePlayerReset
 
-
-
     @dumpReset:
     PLA
     TAY
     PLA
     TAX
     PLA
+    RTI
+
+@endGame:
+    ; kills the game at three outs
+    ; JSR endGame
+    JSR changeBackground
     RTI
 
 IRQ:
@@ -125,15 +102,12 @@ Main:
     LDA gamePlayerReset
     BNE Main
 
-
     JSR readController
     LDA controllerBits
     EOR controllerBitsPrev
     AND controllerBits
     AND #CONTROL_P1_START
     BEQ @continue
-    
-
     
     @pauseLoop:
     JSR readController

@@ -439,18 +439,18 @@ dumpSecondMult:
     BEQ @collideDotBranch
     CMP #$04
     BEQ @collideDotBranch
-    CMP #$28
+    
+
+    LDX #$00
+    @loopBases:
+    CMP tilesBases, X
     BEQ @dump
-    CMP #$38
-    BEQ @dump
-    CMP #$48
-    BEQ @dump
-    CMP #$3a
-    BEQ @dump
-    CMP #$3b
-    BEQ @dump
-    CMP #$3c
-    BEQ @dump
+    CPX #$0a
+    BEQ @continueToBlank
+    INX
+    JMP @loopBases
+
+    @continueToBlank:
     CMP #$02 ;; whatever are loading it's all 0s
     BNE collide
 

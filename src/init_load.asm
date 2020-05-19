@@ -114,14 +114,15 @@ FillAttrib0:
   LDA #$C0
   STA $2006             ; write the low byte of $23C0 address
 
-  LDX #$40              ; fill 64 bytes
+  LDX #$00            
   ; LDA #%11111101
   ; LDA #%11101111
-  LDA #$00
+  ; LDA #$00
 FillAttrib0Loop:
+  LDA attribute_table, X
   STA $2007
-  DEX
-  CPX #$00
+  INX
+  CPX #$40                   ; fill 64 bytes
   BNE FillAttrib0Loop
 
 
@@ -132,15 +133,6 @@ FillAttrib0Loop:
   ;INITIAL VARS
   LDA #$00
   STA controllerTimer
-
-  ; resetPlayerReset subroutine now
-  ; LDA #$80
-  ; STA playerLocationX
-  ; STA playerLocationXBuffer
-
-  ; LDA #$b0
-  ; STA playerLocationY
-  ; STA playerLocationYBuffer
 
   JSR resetPlayerReset
 

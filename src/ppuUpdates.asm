@@ -97,3 +97,10 @@ clearVRAMBuffer:
     CPY #$00
     BNE @loop
     RTS
+
+
+endGame:
+    LDA #$00
+	STA $2000               ; disable NMI
+	STA $2001  
+    RTS

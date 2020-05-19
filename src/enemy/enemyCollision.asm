@@ -13,10 +13,10 @@ newCheckBackgroundCollisionEnemy:
 
     CLC
     LDA enemyXBuffer
-    LSR ; divide / 2 / 2 / 2
+    LSR                         ; divide / 2 / 2 / 2
     LSR
     LSR
-    STA enemyGridX ; finds spot on grid
+    STA enemyGridX              ; finds spot on grid
 
     ; stores 0 into pointer
     LDA #$00
@@ -26,14 +26,14 @@ newCheckBackgroundCollisionEnemy:
 me1:
 
     ; short cutting this because I shouldn't have a carry
-    ;mult x 2 x 2 ;; divide by 8 pixels then multiply by 32 items across 
+    ; mult x 2 x 2 ;; divide by 8 pixels then multiply by 32 items across 
     CLC
     LDA enemyPointerHi 
     ASL                    ; needed to multiply the high byte
     STA enemyPointerHi
 
     CLC
-    LDA enemyYBuffer ; 8 pixels ; player Y in buffer
+    LDA enemyYBuffer       ; 8 pixels ; player Y in buffer
     ASL 
     STA enemyPointerLo 
     LDA #$00
@@ -46,7 +46,7 @@ me2:
     STA enemyPointerHi
 
     LDA enemyPointerLo
-    ASL ; Second x2
+    ASL                    ; Second x2
     STA enemyPointerLo
     LDA #$00
     ADC enemyPointerHi
@@ -73,38 +73,34 @@ dumpSecondMultEnemy:
     ADC collisionPointerHiEnemy ; adds to high
     STA backgroundPointerHi ; saves to high
 
+    ; refactor for stack
     STY tempY
+    STX tempX
+
     LDY #$00 ; resets Y
     LDA (backgroundPointerLo), Y ; i'm getting 1 here
     ; I do, this is indirect, I think I have to do it this way
     LDY tempY 
-
-    ; need collision loop for this
-    ; and probably for players as well
-    CMP #$02 ;; whatever are loading it's all 0s
-    BEQ dumpCollideEnemy ; branch if cmp is not equal to A
-    CMP #$03
-    BEQ dumpCollideEnemy ; branch if cmp is not equal to A
-    CMP #$04
-    BEQ dumpCollideEnemy ; branch if cmp is not equal to A
-    CMP #$28
+  
+    ; I'm looping through some duplicate dots here
+    ; because I'm combining dots + powerups,
+    ; which have power up + dot tiles
+    LDX #$00
+    @loopBases2:
+    CMP tilesDots, X
     BEQ dumpCollideEnemy
-    CMP #$38
-    BEQ dumpCollideEnemy
-    CMP #$48
-    BEQ dumpCollideEnemy
-    CMP #$3a
-    BEQ dumpCollideEnemy
-    CMP #$3b
-    BEQ dumpCollideEnemy
-    CMP #$3c
-    BEQ dumpCollideEnemy
+    CPX #$10
+    BEQ collideEnemy
+    INX
+    JMP @loopBases2
 
 
 collideEnemy:
     LDA #$01
     STA collisionFlagEnemy
+    LDX tempX
     RTS
 dumpCollideEnemy:
     LDA #$0e
+    LDX tempX
     RTS
