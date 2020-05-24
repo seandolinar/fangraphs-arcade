@@ -100,12 +100,15 @@ IRQ:
 ; we are updating the position in MAIN
 ; but checking the position in NMI
 Main:
+    ; have to write this branch
+    ; LDA gameOuts
+    ; CMP #$03
+    ; BEQ resetHard
+
     LDA gamePlayerReset
     BNE Main
 
-    LDA gameOuts
-    CMP #$03
-    BEQ resetHard
+    
 
     JSR readController
     LDA controllerBits
@@ -147,6 +150,9 @@ Main:
     JMP Main
 
 resetHard:
+    ; right idea, but I need to more gracefully restart
+    ; maybe go back to the title screen?
+    ; maybe break up the reset stuff up so i can resue it
     JMP RESET
 
 nmiMovement:
