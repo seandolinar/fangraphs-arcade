@@ -21,10 +21,7 @@ changeEnemyColorLoop:
     STA enemy_oam + 10, Y
     STA enemy_oam + 14, Y
 
-    ; INY
-    ; INY
-    ; INY
-    ; INY
+    ; adds 16 to Y
     PHA
     CLC
     TYA

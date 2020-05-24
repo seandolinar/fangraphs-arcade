@@ -35,11 +35,15 @@ changeBackground:
     LDA #>vram_buffer
     STA nametable_buffer_hi
 
-    LDY #$01
-    @loopVRAMBufferTransfer:
+    LDY #$00
     LDA $2002               ; read PPU status to reset the high/low latch to high
+
+    @loopVRAMBufferTransfer:
+    INY
    
     LDA (nametable_buffer_lo), Y
+    CMP #$00 ; bails out if we find a #FF in our stream
+    BEQ @dumpLoopVRAMBufferTransfer
     STA $2006  
 
     INY     
@@ -49,6 +53,9 @@ changeBackground:
     INY
     LDA (nametable_buffer_lo), Y
     STA $2007  
+
+
+    JMP @loopVRAMBufferTransfer
 
     @dumpLoopVRAMBufferTransfer:
 
