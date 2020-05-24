@@ -151,7 +151,11 @@ playerGridYAI:					.res 1 ; 0081
 gamePaused:						.res 1 ; 0086 ; these are right
 PPUCopy:						.res 1 ; 0087
 gamePlayerReset:				.res 1 ; 0088
-gameOuts:						.res 1
+gameOuts:						.res 1 ; 0089
+
+scoreLo:						.res 1
+vram_lo:						.res 1
+vram_hi:						.res 1
 
 
 ; NES-defined RAM locations
@@ -195,10 +199,10 @@ __Y						= $e8
 __Z						= $e9
 
 ;numeric 
-NUM					  	= $f0
 __0					  	= $f0
 __1					  	= $f1
 
 .segment "RAM"
 nametable_buffer:		.res $3C0 	; 960 blocks
+vram_buffer_offset:		.res $01	; 1 byte offset
 vram_buffer:			.res $40	; 32 bytes
