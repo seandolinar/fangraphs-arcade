@@ -21,7 +21,7 @@ checkCollisionSprites:
     BEQ @collisionGood
 
     JSR soundCollision ; Bad collision
-    JSR resetPlayerReset
+    JSR playerReset
     JSR enemyReset
 
 

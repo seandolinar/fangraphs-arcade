@@ -1,9 +1,9 @@
-resetPlayerReset:
-  LDA #$80
+playerReset:
+  LDA #$90
   STA playerLocationX
   STA playerLocationXBuffer
 
-  LDA #$b0
+  LDA #$d0
   STA playerLocationY
   STA playerLocationYBuffer
 

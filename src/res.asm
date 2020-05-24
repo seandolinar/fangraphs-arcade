@@ -155,15 +155,49 @@ gameOuts:						.res 1
 
 
 ; NES-defined RAM locations
-PPU_CTRL_REG1         = $2000
-PPU_CTRL_REG2         = $2001
-PPU_STATUS            = $2002
-PPU_SPR_ADDR          = $2003
-PPU_SPR_DATA          = $2004
-PPU_SCROLL_REG        = $2005
-PPU_ADDRESS           = $2006
-PPU_DATA              = $2007
+PPU_CTRL_REG1         	= $2000
+PPU_CTRL_REG2         	= $2001
+PPU_STATUS            	= $2002
+PPU_SPR_ADDR          	= $2003
+PPU_SPR_DATA          	= $2004
+PPU_SCROLL_REG       	= $2005
+PPU_ADDRESS           	= $2006
+PPU_DATA         		= $2007
 
+; TEXT constants
+; alphabetical 
+APH					  	= $d0
+__A					  	= $d0
+__B					  	= $d1
+__C					  	= $d2
+__D					  	= $d3
+__E					  	= $d4
+__F					  	= $d5
+__G						= $d6
+__H						= $d7
+__I						= $d8
+__J						= $d9
+__K						= $da
+__L						= $db
+__M						= $dc
+__N						= $dd
+__O 				  	= $de
+__P						= $df
+__Q						= $e0
+__R						= $e1
+__S						= $e2
+__T						= $e3
+__U						= $e4
+__V						= $e5
+__W						= $e6
+__X						= $e7
+__Y						= $e8
+__Z						= $e9
+
+;numeric 
+NUM					  	= $f0
+__0					  	= $f0
+__1					  	= $f1
 
 .segment "RAM"
 nametable_buffer:		.res $3C0 	; 960 blocks

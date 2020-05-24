@@ -101,9 +101,9 @@ IRQ:
 ; but checking the position in NMI
 Main:
     ; have to write this branch
-    ; LDA gameOuts
-    ; CMP #$03
-    ; BEQ resetHard
+    LDA gameOuts
+    CMP #$03
+    BEQ resetHard
 
     LDA gamePlayerReset
     BNE Main
@@ -153,7 +153,11 @@ resetHard:
     ; right idea, but I need to more gracefully restart
     ; maybe go back to the title screen?
     ; maybe break up the reset stuff up so i can resue it
-    JMP RESET
+    LDA #$00  ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+    STA $2000
+    STA $2001
+
+    JMP InitialLoad
 
 nmiMovement:
     JSR incTimerPowerUp
