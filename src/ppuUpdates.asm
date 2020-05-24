@@ -95,7 +95,7 @@ clearVRAMBuffer:
     LDA #>vram_buffer
     STA nametable_buffer_hi
 
-    LDY #$20
+    LDY #$40
 
     LDA #$00
     @loop:

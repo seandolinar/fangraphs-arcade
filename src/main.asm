@@ -103,6 +103,10 @@ Main:
     LDA gamePlayerReset
     BNE Main
 
+    LDA gameOuts
+    CMP #$03
+    BEQ resetHard
+
     JSR readController
     LDA controllerBits
     EOR controllerBitsPrev
@@ -142,6 +146,8 @@ Main:
     JSR nmiMovement
     JMP Main
 
+resetHard:
+    JMP RESET
 
 nmiMovement:
     JSR incTimerPowerUp
@@ -207,6 +213,4 @@ writeGameOver:
     BNE @loop
 
     @dump:
-    LDA #$00
-    STA (nametable_buffer_lo), Y
     RTS
