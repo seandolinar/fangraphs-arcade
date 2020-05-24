@@ -205,4 +205,12 @@ __1					  	= $f1
 .segment "RAM"
 nametable_buffer:		.res $3C0 	; 960 blocks
 vram_buffer_offset:		.res $01	; 1 byte offset
-vram_buffer:			.res $40	; 32 bytes
+vram_buffer:			.res $40	; 32 
+scoreDigit4:			.res 1
+scoreDigit3:			.res 1
+scoreDigit2:			.res 1
+scoreDigit1:			.res 1
+scoreDigit0:			.res 1
+scoreDigitBuffer:		.res 1
+
+

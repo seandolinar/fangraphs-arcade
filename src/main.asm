@@ -148,7 +148,6 @@ Main:
     LDX #$08                ; need to reset this
     STX masterTimer
     JSR nmiMovement
-    JSR updateScore
     JMP Main
 
 resetHard:

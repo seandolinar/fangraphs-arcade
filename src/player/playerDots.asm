@@ -26,6 +26,8 @@ checkCollideDot:
 collideDot:
 
     JSR soundDot
+    JSR updateScore
+
     DEC dotsLeft
 
     ; add to $2000
