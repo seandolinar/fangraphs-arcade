@@ -16,7 +16,7 @@ updateScore:
     STA scoreDigit0
     CMP #$0a
     BCC @continueVram
-    LDA #$00
+    SBC #$0a
     STA scoreDigit0
 
     LDX #$00
@@ -29,7 +29,7 @@ updateScore:
 
     CMP #$0a
     BNE @continueVram
-    LDA #$00
+    SBC #$0a
     STA scoreDigit1, X
 
     CPX #$02

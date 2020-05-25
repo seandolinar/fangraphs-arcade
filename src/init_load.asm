@@ -415,7 +415,7 @@ STA nametable_buffer_hi
   STA scoreDigit0, X
   INX
   CPX #$08
-  BCS @loopScoreInit
+  BCC @loopScoreInit
 
 
   JSR playerReset
