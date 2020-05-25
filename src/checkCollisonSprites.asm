@@ -77,6 +77,9 @@ checkCollisionSprites:
     RTS
 
     @collisionGood:
+    LDA #$0a
+    STA scoreValue
+    JSR updateScore
     JSR soundCollisionGood
     JSR resetOneEnemyPosition
 

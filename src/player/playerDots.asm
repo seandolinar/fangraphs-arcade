@@ -26,6 +26,9 @@ checkCollideDot:
 collideDot:
 
     JSR soundDot
+
+    LDA #$01
+    STA scoreValue
     JSR updateScore
 
     DEC dotsLeft

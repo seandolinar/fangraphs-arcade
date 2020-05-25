@@ -1,5 +1,8 @@
 updateScore:
 
+    TXA
+    PHA
+
     ; how to get digits from a byte?
     ; do I have to do a bunch of cmp and subtractions?
     ; or loop division?
@@ -9,22 +12,35 @@ updateScore:
     ; alterative 0 + 12 becomes $12 divide by 
     CLC
     LDA scoreDigit0
-    ADC #$01
-    CMP #$0a
+    ADC scoreValue                ; this is where we are going to enter in the points we earn
     STA scoreDigit0
-    BNE @continue
+    CMP #$0a
+    BCC @continueVram
     LDA #$00
     STA scoreDigit0
 
+    LDX #$00
+
+    @loopDigit:
     CLC
-    LDA scoreDigit1
+    LDA scoreDigit1, X
     ADC #$01
-    STA scoreDigit1
+    STA scoreDigit1, X
+
+    CMP #$0a
+    BNE @continueVram
+    LDA #$00
+    STA scoreDigit1, X
+
+    CPX #$02
+    BEQ @continueVram
+    INX
+    JMP @loopDigit
 
 
     
 
-    @continue:
+    @continueVram:
     LDA #<vram_buffer
     STA vram_lo
     LDA #>vram_buffer
@@ -44,12 +60,15 @@ updateScore:
     INY
 
     ; might have to do math here
-    CLC
-    TXA
-    ADC #$8D
+    SEC
+    ; TXA
+    ; ADC #$8D
+    STX tempX
+    LDA #$93
+    SBC tempX
     STA (nametable_buffer_lo), Y
 
-    LDA scoreDigit1, X 
+    LDA scoreDigit0, X 
     STA scoreDigitBuffer
 
     TXA
@@ -64,12 +83,14 @@ updateScore:
     PLA
     TAX
     INX
-    CPX #$02
+    CPX #$06
     BEQ @dump
 
     JMP @loop
 
     @dump:
+    PLA
+    TAX
     RTS
 
 

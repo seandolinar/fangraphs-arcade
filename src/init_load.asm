@@ -410,6 +410,13 @@ STA nametable_buffer_hi
   STA controllerTimer
   STA gameOuts
 
+  LDX #$00
+  @loopScoreInit:
+  STA scoreDigit0, X
+  INX
+  CPX #$08
+  BCS @loopScoreInit
+
 
   JSR playerReset
   JSR enemyReset
