@@ -115,8 +115,31 @@ collideDot:
     ADC #$20
     STA bufferBackgroundValHi
 
+    ; LDA #<vram_buffer
+    ; STA vram_lo
+    ; LDA #>vram_buffer
+    ; STA vram_hi
+
+    ; LDY vram_buffer_offset
+
+    ; INY
+    ; LDA bufferBackgroundValHi
+    ; STA (vram_lo), Y
+
+    ; INY
+    ; LDA bufferBackgroundValLo
+    ; STA (vram_lo), Y
+
+    ; INY
+    ; LDA bufferBackgroundTile
+    ; STA (vram_lo), Y
+
+    ; INY
+    ; STY vram_buffer_offset
+
+
     PLA
-    TYA
+    TAY
 
     RTS
 

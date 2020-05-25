@@ -412,6 +412,7 @@ STA nametable_buffer_hi
   STA bufferBackgroundValHi
   STA bufferBackgroundValLo
   STA bufferBackgroundTile
+  STA vram_buffer_offset
 
   LDX #$00
   @loopScoreInit:

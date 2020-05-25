@@ -51,6 +51,7 @@ NMI:
     bpl @vBlankLoop
 
     JSR changeBackground
+        ; JSR clearVRAMBuffer
     JSR spriteTransfer
 
     LDA gamePlayerReset ; $01 means we are in the middle of a reset
@@ -62,7 +63,7 @@ NMI:
     BNE @dumpNMI
     LDA #$08            ; makes sure we don't loop backwards
     STA masterTimer
-   
+
 @dumpNMI:
     PLA
     TAY
