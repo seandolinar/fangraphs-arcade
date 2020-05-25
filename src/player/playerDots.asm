@@ -35,7 +35,8 @@ collideDot:
 
     ; add to $2000
     ; finds the address for the name table
-    STY tempY
+    TYA
+    PHA
     LDY #$00
 
     ; could make this programatic, but it's hardcoded now
@@ -114,7 +115,8 @@ collideDot:
     ADC #$20
     STA bufferBackgroundValHi
 
-    LDY tempY
+    PLA
+    TYA
 
     RTS
 

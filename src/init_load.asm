@@ -409,6 +409,9 @@ STA nametable_buffer_hi
   LDA #$00
   STA controllerTimer
   STA gameOuts
+  STA bufferBackgroundValHi
+  STA bufferBackgroundValLo
+  STA bufferBackgroundTile
 
   LDX #$00
   @loopScoreInit:

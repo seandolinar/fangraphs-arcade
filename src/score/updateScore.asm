@@ -55,7 +55,7 @@ updateScore:
     LDA #$20
     INY
 
-    STA (nametable_buffer_lo), Y
+    STA (vram_lo), Y
 
     INY
 
@@ -66,7 +66,7 @@ updateScore:
     STX tempX
     LDA #$93
     SBC tempX
-    STA (nametable_buffer_lo), Y
+    STA (vram_lo), Y
 
     LDA scoreDigit0, X 
     STA scoreDigitBuffer
@@ -78,7 +78,7 @@ updateScore:
      ; X controls the digit
     LDX scoreDigitBuffer
     LDA NUM, X
-    STA (nametable_buffer_lo), Y
+    STA (vram_lo), Y
 
     PLA
     TAX
@@ -100,9 +100,9 @@ writeGameOver:
     ; do we need to find the last item in the buffer?
     ; or track that in another byte of RAM?
     LDA #<vram_buffer
-    STA nametable_buffer_lo
+    STA vram_lo
     LDA #>vram_buffer
-    STA nametable_buffer_hi
+    STA vram_hi
 
     ; writes game over with letters
     ; i need the array of tiles
@@ -112,7 +112,7 @@ writeGameOver:
 
     @loop:
     LDA #$20
-    STA (nametable_buffer_lo), Y
+    STA (vram_lo), Y
 
     INY
 
@@ -120,12 +120,12 @@ writeGameOver:
     CLC
     TXA
     ADC #$EC
-    STA (nametable_buffer_lo), Y
+    STA (vram_lo), Y
 
     INY
 
     LDA textGameOver, X
-    STA (nametable_buffer_lo), Y
+    STA (vram_lo), Y
 
     INX
     INY

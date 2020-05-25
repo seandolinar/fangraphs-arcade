@@ -1,6 +1,7 @@
 .include "./header.asm"
 .include "./res.asm"
 .include "./controller.asm"
+.include "./player/playerCollision.asm"
 .include "./player/playerDots.asm"
 .include "./player/playerPosition.asm"
 .include "./player/playerAnimation.asm"

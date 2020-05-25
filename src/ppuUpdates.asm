@@ -18,22 +18,22 @@ changeBackground:
 
     ; this is for eating the dot
     ; should rewrite this
-    LDA $2002               ; read PPU status to reset the high/low latch to high
-    LDA bufferBackgroundValHi
-    STA $2006               ; write the high byte of $3F10 address
-    LDA bufferBackgroundValLo
-    STA $2006               ; write the low byte of $3F10 address
+    ; LDA $2002               ; read PPU status to reset the high/low latch to high
+    ; LDA bufferBackgroundValHi
+    ; STA $2006               ; write the high byte of $3F10 address
+    ; LDA bufferBackgroundValLo
+    ; STA $2006               ; write the low byte of $3F10 address
 
-    ; this is causing issues with the background though!
-    LDA bufferBackgroundTile
-    STA $2007
+    ; ; this is causing issues with the background though!
+    ; LDA bufferBackgroundTile
+    ; STA $2007
 
     ; NEW buffer dump
 
     LDA #<vram_buffer
-    STA nametable_buffer_lo
+    STA vram_lo
     LDA #>vram_buffer
-    STA nametable_buffer_hi
+    STA vram_hi
 
     LDY #$00
     LDA $2002               ; read PPU status to reset the high/low latch to high
@@ -41,17 +41,17 @@ changeBackground:
     @loopVRAMBufferTransfer:
     INY
    
-    LDA (nametable_buffer_lo), Y
+    LDA (vram_lo), Y
     CMP #$00 ; bails out if we find a #FF in our stream
     BEQ @dumpLoopVRAMBufferTransfer
     STA $2006  
 
     INY     
-    LDA (nametable_buffer_lo), Y
+    LDA (vram_lo), Y
     STA $2006          
 
     INY
-    LDA (nametable_buffer_lo), Y
+    LDA (vram_lo), Y
     STA $2007  
 
 
@@ -66,7 +66,6 @@ changeBackground:
     LDA #$00
     STA PPU_SCROLL_REG 
     STA PPU_SCROLL_REG
-    ; STA PPU_CTRL_REG1
 
 
     ; ; STARTS VIDEO DISPLAY
@@ -91,15 +90,15 @@ spriteTransfer:
 
 clearVRAMBuffer:
     LDA #<vram_buffer
-    STA nametable_buffer_lo
+    STA vram_lo
     LDA #>vram_buffer
-    STA nametable_buffer_hi
+    STA vram_hi
 
     LDY #$40
 
     LDA #$00
     @loop:
-    STA (nametable_buffer_lo), Y ; not working
+    STA (vram_lo), Y ; not working
     DEY
     CPY #$00
     BNE @loop
