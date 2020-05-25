@@ -270,8 +270,6 @@ dumpMoveLeft:
         STA collisionTestX
         JMP updatePositionSprite
 
-
-
 moveUp:
         LDX #$00
         LDA #$00                ;; CHECK COLLISION
