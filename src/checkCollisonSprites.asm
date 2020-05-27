@@ -47,23 +47,24 @@ checkCollisionSprites:
 
     ; structure or label this or move this
     LDA #<vram_buffer
-    STA nametable_buffer_lo
+    STA vram_lo
     LDA #>vram_buffer
-    STA nametable_buffer_hi
+    STA vram_hi
+    
     LDY #$01
     LDA #$20
-    STA (nametable_buffer_lo), Y
+    STA (vram_lo), Y
 
     INY
 
     CLC
     LDA gameOuts
     ADC #$F2
-    STA (nametable_buffer_lo), Y
+    STA (vram_lo), Y
 
     INY
     LDA #$46
-    STA (nametable_buffer_lo), Y
+    STA (vram_lo), Y
 
     INC gameOuts
     LDA gameOuts
@@ -74,6 +75,7 @@ checkCollisionSprites:
     STA bufferBackgroundColor
 
     @dumpBad:
+    STY vram_buffer_offset
     RTS
 
     @collisionGood:
@@ -85,6 +87,7 @@ checkCollisionSprites:
 
    
     @dump:
+    STY vram_buffer_offset
     CPX #$00
     BNE @loop
     RTS

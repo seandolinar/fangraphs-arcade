@@ -96,8 +96,9 @@ clearVRAMBuffer:
 
     LDY #$40
 
-    LDA #$00
+    LDA #$01
     STA vram_buffer_offset
+    LDA #$00
     @loop:
     STA (vram_lo), Y ; not working
     DEY

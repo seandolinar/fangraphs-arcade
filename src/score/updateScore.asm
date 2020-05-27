@@ -46,14 +46,13 @@ updateScore:
     LDA #>vram_buffer
     STA vram_hi
 
-    LDY #$00
+    LDY vram_buffer_offset
     LDX #$00
 
     @loop:
    
 
     LDA #$20
-    INY
 
     STA (vram_lo), Y
 
@@ -85,7 +84,7 @@ updateScore:
     INX
     CPX #$06
     BEQ @dump
-
+    INY
     JMP @loop
 
     @dump:
@@ -134,4 +133,5 @@ writeGameOver:
     BNE @loop
 
     @dump:
+    STY vram_buffer_offset
     RTS

@@ -51,7 +51,6 @@ NMI:
     bpl @vBlankLoop
 
     JSR changeBackground
-        ; JSR clearVRAMBuffer
     JSR spriteTransfer
 
     LDA gamePlayerReset ; $01 means we are in the middle of a reset
@@ -65,6 +64,8 @@ NMI:
     STA masterTimer
 
 @dumpNMI:
+    JSR clearVRAMBuffer
+
     PLA
     TAY
     PLA
@@ -164,6 +165,7 @@ resetHard:
 
 nmiMovement:
     JSR incTimerPowerUp
+
 
     JSR dumpUpdatePosition      ; runs the player updates ;change this to update direction
     ; this should handle when to move the sprites

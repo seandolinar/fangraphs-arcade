@@ -1,5 +1,5 @@
 
-18
+21
 00000	06C1	b	u	0	vram_buffer_offset
 00001	06C2	b	u	0	vram_buffer
 00002	06C3	b	u	0	vram_buffer
@@ -18,3 +18,6 @@
 00015	06D0	b	u	0	vram_buffer
 00016	06D1	b	u	0	vram_buffer
 00017	06D2	b	u	0	vram_buffer
+00018	0702	b	u	0	scoreDigit0
+00019	0703	b	u	0	scoreDigit1
+00020	0704	b	u	0	scoreDigit2

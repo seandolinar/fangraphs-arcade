@@ -153,9 +153,20 @@ PPUCopy:						.res 1 ; 0087
 gamePlayerReset:				.res 1 ; 0088
 gameOuts:						.res 1 ; 0089
 
-scoreLo:						.res 1
-vram_lo:						.res 1
-vram_hi:						.res 1
+scoreLo:						.res 1 ; 008a
+vram_lo:						.res 1 ; 008b
+vram_hi:						.res 1 ; 008c
+
+scoreDigit0:			.res 1 ; 008d
+scoreDigit1:			.res 1 ; 008e
+scoreDigit2:			.res 1 ; 008f
+scoreDigit3:			.res 1 ; 0090
+scoreDigit5:			.res 1
+scoreDigit6:			.res 1
+scoreDigit7:			.res 1
+scoreDigit8:			.res 1
+scoreDigitBuffer:		.res 1
+scoreValue:				.res 1
 
 
 ; NES-defined RAM locations
@@ -204,17 +215,8 @@ __1					  	= $f1
 
 .segment "RAM"
 nametable_buffer:		.res $3C0 	; 960 blocks
-vram_buffer_offset:		.res $01	; 1 byte offset
-vram_buffer:			.res $40	; 32 
-scoreDigit0:			.res 1
-scoreDigit1:			.res 1
-scoreDigit2:			.res 1
-scoreDigit3:			.res 1
-scoreDigit5:			.res 1
-scoreDigit6:			.res 1
-scoreDigit7:			.res 1
-scoreDigit8:			.res 1
-scoreDigitBuffer:		.res 1
-scoreValue:				.res 1
+vram_buffer_offset:		.res $01	; 1 byte offset $06C2
+vram_buffer:			.res $40	; 32 		   +$0040 = $0702
+
 
 
