@@ -6,9 +6,9 @@ newCheckBackgroundCollisionEnemy:
     LDA #$00
     STA collisionFlagEnemy
 
-    LDA #<meta_tile0
+    LDA #<game_board0
     STA collisionPointerLoEnemy
-    LDA #>meta_tile0
+    LDA #>game_board0
     STA collisionPointerHiEnemy
 
     CLC

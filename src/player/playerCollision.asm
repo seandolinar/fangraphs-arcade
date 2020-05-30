@@ -15,7 +15,7 @@ checkBackgroundCollisionLoop:
     ; how does this scale to a 16x16 pixel meta tile?
 
 
-    ;LDA meta_tile0, X
+    ;LDA game_board0, X
     ;CMP #$02
     ;BEQ dumpCheckBackgroundCollisions
 
