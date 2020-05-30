@@ -16,10 +16,11 @@
 .include "./checkCollisonSprites.asm"
 .include "./sound.asm"
 .include "./ppuUpdates.asm"
+.include "./load/loadSplashScreen.asm"
 
 .include "./reset.asm"
 .include "./pallete.asm"
-.include "./init_load.asm"
+.include "./load/loadGameBoard.asm"
 .include "./tiles.asm";
 
 .segment "TILES"
