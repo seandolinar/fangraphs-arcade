@@ -69,7 +69,8 @@ changeBackground:
 
 
     ; ; STARTS VIDEO DISPLAY
-    LDA #%10000000          ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+    LDA #%10010000 ;background bank 1 instead of 0
+    ; LDA #%10000000          ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 0
     STA $2000
 
     LDA #%00011110          ; enable sprites, enable background, no clipping on left side
