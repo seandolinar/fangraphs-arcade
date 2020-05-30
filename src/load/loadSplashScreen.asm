@@ -50,7 +50,8 @@ splashScreen:
   ; LDA #%11101111
   ; LDA #$00
 @FillAttrib0Loop:
-  LDA attribute_table, X
+  ; LDA attribute_table, X
+  LDA #$00
   STA $2007
   INX
   CPX #$40                   ; fill 64 bytes
