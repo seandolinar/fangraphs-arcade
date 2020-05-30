@@ -37,9 +37,6 @@ updateScore:
     INX
     JMP @loopDigit
 
-
-    
-
     @continueVram:
     LDA #<vram_buffer
     STA vram_lo
@@ -51,22 +48,18 @@ updateScore:
 
     @loop:
    
-
     LDA #$20
-
     STA (vram_lo), Y
-
     INY
 
     ; might have to do math here
     SEC
-    ; TXA
-    ; ADC #$8D
     STX tempX
     LDA #$93
     SBC tempX
     STA (vram_lo), Y
 
+    LDX tempX
     LDA scoreDigit0, X 
     STA scoreDigitBuffer
 
@@ -85,6 +78,7 @@ updateScore:
     CPX #$06
     BEQ @dump
     INY
+
     JMP @loop
 
     @dump:

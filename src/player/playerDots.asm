@@ -27,9 +27,7 @@ collideDot:
 
     JSR soundDot
 
-    LDA #$01
-    STA scoreValue
-    JSR updateScore
+  
 
     DEC dotsLeft
 
@@ -115,31 +113,35 @@ collideDot:
     ADC #$20
     STA bufferBackgroundValHi
 
-    ; LDA #<vram_buffer
-    ; STA vram_lo
-    ; LDA #>vram_buffer
-    ; STA vram_hi
+    LDA #<vram_buffer
+    STA vram_lo
+    LDA #>vram_buffer
+    STA vram_hi
 
-    ; LDY vram_buffer_offset
-
-    ; INY
-    ; LDA bufferBackgroundValHi
-    ; STA (vram_lo), Y
+    LDY vram_buffer_offset
 
     ; INY
-    ; LDA bufferBackgroundValLo
-    ; STA (vram_lo), Y
+    LDA bufferBackgroundValHi
+    STA (vram_lo), Y
 
-    ; INY
-    ; LDA bufferBackgroundTile
-    ; STA (vram_lo), Y
+    INY
+    LDA bufferBackgroundValLo
+    STA (vram_lo), Y
 
-    ; INY
-    ; STY vram_buffer_offset
+    INY
+    LDA bufferBackgroundTile
+    STA (vram_lo), Y
+
+    INY
+    STY vram_buffer_offset
 
 
     PLA
     TAY
+
+    LDA #$01
+    STA scoreValue
+    JSR updateScore
 
     RTS
 
