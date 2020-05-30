@@ -40,4 +40,4 @@ ClearMemory:
   STA controllerBits
 
   JMP splashScreen
-;   JMP InitialLoad
+; JMP InitialLoad

@@ -39,6 +39,24 @@ InitialLoad:
 
 
 
+  ;;; need to build this out for the pointer and stuff
+  ;;; probably should just build out the compression here
+  ;;; NAMETABLES
+  ; LDA #<game_board0
+
+  LDA #<game_board0
+  STA backgroundPointerLo
+  LDA #>game_board0
+  STA backgroundPointerHi
+
+  LDA #<nametable_buffer
+  STA nametable_buffer_lo
+  LDA #>nametable_buffer
+  STA nametable_buffer_hi
+
+  JSR FillBackground
+
+
 ;; HAVE TO Reunderstand this
 ;; LOADING PALETTE
 LDA $2002    ; read PPU status to reset the high/low latch to high
@@ -82,22 +100,6 @@ FillAttrib0Loop:
   BNE FillAttrib0Loop
 
 
-  ;;; need to build this out for the pointer and stuff
-  ;;; probably should just build out the compression here
-  ;;; NAMETABLES
-  ; LDA #<game_board0
-
-  LDA #<game_board0
-  STA backgroundPointerLo
-  LDA #>game_board0
-  STA backgroundPointerHi
-
-  LDA #<nametable_buffer
-  STA nametable_buffer_lo
-  LDA #>nametable_buffer
-  STA nametable_buffer_hi
-
-  JSR FillBackground
 
 
   ;CLEAR BUFFER
@@ -264,6 +266,7 @@ splashScreen:
   BNE @LoadPalettesLoop 
 
 
+
   LDA #<intro_screen
   STA backgroundPointerLo
   LDA #>intro_screen
@@ -275,6 +278,7 @@ splashScreen:
   STA nametable_buffer_hi
 
   JSR FillBackground
+
 
   @FillAttrib0:
   LDA $2002             ; read PPU status to reset the high/low latch
@@ -296,6 +300,8 @@ splashScreen:
 
 
 
+
+
   LDA #%10000000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
   STA $2000
 
@@ -308,17 +314,12 @@ splashScreen:
 
   @loop:
 
-  ; controller read here
-  ; controller isn't working here or else where
   JSR readController
   LDA controllerBits
-  ; EOR controllerBitsPrev
-  ; AND controllerBits
   AND #CONTROL_P1_A
 
   BEQ @loop
 
-  ; JMP @loop
 
   @break:
 
