@@ -61,48 +61,6 @@ LoadPalettesLoop:
   CPX #$20               ; Compare X to hex $20, decimal 32
   BNE LoadPalettesLoop 
 
-;;; need to build this out for the pointer and stuff
-;;; probably should just build out the compression here
-;;; NAMETABLES
-; LDA #<game_board0
-
-LDA #<intro_screen
-STA backgroundPointerLo
-LDA #>intro_screen
-STA backgroundPointerHi
-
-LDA #<nametable_buffer
-STA nametable_buffer_lo
-LDA #>nametable_buffer
-STA nametable_buffer_hi
-
-
-FillBackground:
-  LDA $2002             ; read PPU status to reset the high/low latch
-  LDA #$20
-  STA $2006             ; write the high byte of $2000 address (nametable 0)
-  LDA #$00
-  STA $2006             ; write the low byte of $2000 address
-
-  LDX #$00
-  LDY #$00         
-  @loop:
-    LDA (backgroundPointerLo), Y
-    STA $2007
-    STA (nametable_buffer_lo), Y ; not working
-
-    INY                 ; inside loop counter
-    CPY #$00            ; run the inside loop 256 times before continuing down
-    BNE @loop 
-    INC backgroundPointerHi
-    INC nametable_buffer_hi 
-    INX
-    CPX #$04
-    BNE @loop 
-
-dumpFillBackground:
-
-
 
 ; putting this after fixes things
 FillAttrib0:
@@ -122,6 +80,24 @@ FillAttrib0Loop:
   INX
   CPX #$40                   ; fill 64 bytes
   BNE FillAttrib0Loop
+
+
+  ;;; need to build this out for the pointer and stuff
+  ;;; probably should just build out the compression here
+  ;;; NAMETABLES
+  ; LDA #<game_board0
+
+  LDA #<game_board0
+  STA backgroundPointerLo
+  LDA #>game_board0
+  STA backgroundPointerHi
+
+  LDA #<nametable_buffer
+  STA nametable_buffer_lo
+  LDA #>nametable_buffer
+  STA nametable_buffer_hi
+
+  JSR FillBackground
 
 
   ;CLEAR BUFFER
@@ -217,6 +193,7 @@ countDots:
   STA $2000
   STA PPUCopy
 
+
   LDA #%00011110   ; enable sprites, enable background, no clipping on left side
   STA $2001
 
@@ -262,3 +239,117 @@ JMP Main
 ; 	jsr $8000
 
 ;   RTS
+
+splashScreen:
+
+
+  LDA $2002    ; read PPU status to reset the high/low latch to high
+
+  LDA #$3F
+  STA $2006    ; write the high byte of $3F10 address
+  LDA #$10
+  STA $2006    ; write the low byte of $3F10 address
+
+
+  LDX #$00                ; start out at 0
+  @LoadPalettesLoop:
+  LDA pallete, X      ; load data from address (PaletteData + the value in x)
+                          ; 1st time through loop it will load PaletteData+0
+                          ; 2nd time through loop it will load PaletteData+1
+                          ; 3rd time through loop it will load PaletteData+2
+                          ; etc
+  STA $2007               ; write to PPU
+  INX                     ; X = X + 1
+  CPX #$20               ; Compare X to hex $20, decimal 32
+  BNE @LoadPalettesLoop 
+
+
+  LDA #<intro_screen
+  STA backgroundPointerLo
+  LDA #>intro_screen
+  STA backgroundPointerHi
+
+  LDA #<nametable_buffer
+  STA nametable_buffer_lo
+  LDA #>nametable_buffer
+  STA nametable_buffer_hi
+
+  JSR FillBackground
+
+  @FillAttrib0:
+  LDA $2002             ; read PPU status to reset the high/low latch
+  LDA #$23
+  STA $2006             ; write the high byte of $23C0 address (nametable 0 attributes)
+  LDA #$C0
+  STA $2006             ; write the low byte of $23C0 address
+
+  LDX #$00            
+  ; LDA #%11111101
+  ; LDA #%11101111
+  ; LDA #$00
+@FillAttrib0Loop:
+  LDA attribute_table, X
+  STA $2007
+  INX
+  CPX #$40                   ; fill 64 bytes
+  BNE @FillAttrib0Loop
+
+
+
+  LDA #%10000000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+  STA $2000
+
+  LDA #%00011110   ; enable sprites, enable background, no clipping on left side
+  STA $2001
+
+  LDA #$00
+  STA $2005
+  STA $2005
+
+  @loop:
+
+  ; controller read here
+  ; controller isn't working here or else where
+  JSR readController
+  LDA controllerBits
+  ; EOR controllerBitsPrev
+  ; AND controllerBits
+  AND #CONTROL_P1_A
+
+  BEQ @loop
+
+  ; JMP @loop
+
+  @break:
+
+  LDA #$00   
+  STA $2000
+  STA $2001
+
+  JMP InitialLoad
+
+
+FillBackground:
+  LDA $2002             ; read PPU status to reset the high/low latch
+  LDA #$20
+  STA $2006             ; write the high byte of $2000 address (nametable 0)
+  LDA #$00
+  STA $2006             ; write the low byte of $2000 address
+
+  LDX #$00
+  LDY #$00         
+  @loop:
+    LDA (backgroundPointerLo), Y
+    STA $2007
+    STA (nametable_buffer_lo), Y ; not working
+
+    INY                 ; inside loop counter
+    CPY #$00            ; run the inside loop 256 times before continuing down
+    BNE @loop 
+    INC backgroundPointerHi
+    INC nametable_buffer_hi 
+    INX
+    CPX #$04
+    BNE @loop 
+
+  RTS

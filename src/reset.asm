@@ -39,5 +39,5 @@ ClearMemory:
   LDA #$00
   STA controllerBits
 
-
-  JMP InitialLoad
+  JMP splashScreen
+;   JMP InitialLoad
