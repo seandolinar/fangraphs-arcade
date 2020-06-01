@@ -70,6 +70,7 @@ changeBackground:
 
     ; ; STARTS VIDEO DISPLAY
     LDA #%10010000 ;background bank 1 instead of 0
+    LDA PPUState
     ; LDA #%10000000          ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 0
     STA $2000
 

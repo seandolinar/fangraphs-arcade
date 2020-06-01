@@ -60,6 +60,8 @@ splashScreen:
 
   LDA #%10011000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
   STA $2000
+  STA PPUState
+
 
   LDA #%00011110   ; enable sprites, enable background, no clipping on left side
   STA $2001

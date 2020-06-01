@@ -87,6 +87,7 @@ gameStateIsPowered: 		.res 1 ; 002D
 tempX:					.res 1 ; 002E
 tempY:					.res 1 ; 002F
 
+; if these don't move, why do I need these in RAM?
 powerUpX:				.res 1 ; 0030 ;; if these don't move we can read them from ROM
 powerUpX2:				.res 1
 powerUpX3:				.res 1
@@ -149,7 +150,7 @@ playerGridXAI:					.res 1 ; 0080
 playerGridYAI:					.res 1 ; 0081
 
 gamePaused:						.res 1 ; 0086 ; these are right
-PPUCopy:						.res 1 ; 0087
+PPUState:						.res 1 ; 0087
 gamePlayerReset:				.res 1 ; 0088
 gameOuts:						.res 1 ; 0089
 

@@ -113,8 +113,6 @@ Main:
     LDA gamePlayerReset
     BNE Main
 
-    
-
     JSR readController
     LDA controllerBits
     EOR controllerBitsPrev

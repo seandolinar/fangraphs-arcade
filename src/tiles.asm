@@ -94,8 +94,8 @@ splash_screen:
 .byte $ff, $30, $31, $32, $33, $34, $35, $36,   $37, $38, $39, $3a, $3b, $3c, $3d, $3e,    $70, $71, $72, $73, $74, $75, $76, $77,    $78, $79, $7a, $7b, $7c, $7d, $7e, $ff   
 .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
 .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
-.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
-.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $80, $81, $82, $83, $84, $85,    $86, $87, $88, $89, $8a, $8b, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $90, $91, $92, $93, $94, $95,    $96, $97, $98, $99, $9a, $9b, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
 .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
 .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
 .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   

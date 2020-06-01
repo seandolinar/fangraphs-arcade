@@ -193,7 +193,7 @@ countDots:
   ; STARTS VIDEO DISPLAY
   LDA #%10000000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
   STA $2000
-  STA PPUCopy
+  STA PPUState
 
 
   LDA #%00011110   ; enable sprites, enable background, no clipping on left side
