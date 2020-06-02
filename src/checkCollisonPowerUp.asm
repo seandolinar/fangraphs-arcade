@@ -58,29 +58,34 @@ removePowerUp:
     PHA
 
     LDA #<vram_buffer
-    STA nametable_buffer_lo
+    STA vram_lo
     LDA #>vram_buffer
-    STA nametable_buffer_hi
+    STA vram_hi
 
 
     ; NEW CODE
-    LDY #$01
+    LDY vram_buffer_offset
+    INY
 
     CLC
     LDA playerPointerHi
     ADC #$20
-    STA (nametable_buffer_lo), Y
+    STA (vram_lo), Y
 
     INY
 
     CLC
     LDA playerPointerLo
-    STA (nametable_buffer_lo), Y
+    STA (vram_lo), Y
 
     INY
 
     LDA #$34
-    STA (nametable_buffer_lo), Y
+    STA (vram_lo), Y
+
+    ; INY
+
+    STY vram_buffer_offset
 
     PLA
     TAY

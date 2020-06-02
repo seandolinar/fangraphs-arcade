@@ -57,6 +57,7 @@ NMI:
     LDA gamePlayerReset ; $01 means we are in the middle of a reset
     BNE @resetNMI
 
+
     LDX masterTimer
     DEX
     STX masterTimer
@@ -149,7 +150,9 @@ Main:
     @runMovement:
     LDX #$08                ; need to reset this
     STX masterTimer
-    JSR nmiMovement
+    
+    JSR clearVRAMBuffer
+    JSR gameMovement
     JMP Main
 
 resetHard:
@@ -162,20 +165,20 @@ resetHard:
 
     JMP InitialLoad
 
-nmiMovement:
+gameMovement:
     JSR incTimerPowerUp
 
 
-    JSR dumpUpdatePosition      ; runs the player updates ;change this to update direction
-    ; this should handle when to move the sprites
-    JSR checkCollisionSprites ; this isn't working
+    JSR UpdatePositionPlayer      ; runs the player updates ;change this to update direction
 
+    ; this should handle when to move the sprites
+    JSR checkCollisionSprites ; I don't think I need this here
     JSR setAnimationPlayerMain
     JSR setAnimationPlayerDirection
-    JSR checkCollisionSprites ; this isn't working
+    ; JSR checkCollisionSprites ; this isn't working
     JSR checkCollisionPowerUp
     JSR nextEnemyMovement   ; move this to main?
-    JSR checkCollisionSprites ; this isn't working
+    JSR checkCollisionSprites
 
     INC enemyMode
 

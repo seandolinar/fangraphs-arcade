@@ -1,6 +1,9 @@
 ; CONTAINS ALL LOGIC FOR eating dots
 
 checkCollideDot:
+
+    TXA
+    PHA
     
     LDX #$00  
     LDA collisionBackgroundTile
@@ -20,15 +23,14 @@ checkCollideDot:
     JSR collideDot
 
     @exit:
+    PLA
+    TAX
     RTS
 
 
 collideDot:
 
     JSR soundDot
-
-  
-
     DEC dotsLeft
 
     ; add to $2000
@@ -120,7 +122,7 @@ collideDot:
 
     LDY vram_buffer_offset
 
-    ; INY
+    INY
     LDA bufferBackgroundValHi
     STA (vram_lo), Y
 
@@ -132,9 +134,8 @@ collideDot:
     LDA bufferBackgroundTile
     STA (vram_lo), Y
 
-    INY
+    ; INY
     STY vram_buffer_offset
-
 
     PLA
     TAY

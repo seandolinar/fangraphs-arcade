@@ -44,6 +44,7 @@ updateScore:
     STA vram_hi
 
     LDY vram_buffer_offset
+    INY
     LDX #$00
 
     @loop:
@@ -82,6 +83,8 @@ updateScore:
     JMP @loop
 
     @dump:
+    STY vram_buffer_offset
+
     PLA
     TAX
     RTS
@@ -100,11 +103,12 @@ writeGameOver:
     ; writes game over with letters
     ; i need the array of tiles
     ; i need the starting address (but that's low and high bytes)
-    LDY #$01
+    LDY vram_buffer_offset
     LDX #$00
 
     @loop:
     LDA #$20
+    INY
     STA (vram_lo), Y
 
     INY

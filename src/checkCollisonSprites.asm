@@ -20,28 +20,11 @@ checkCollisionSprites:
     CMP #$01
     BEQ @collisionGood
 
-    JSR soundCollision ; Bad collision
+    ; ; Bad collision path
+    JSR soundCollision 
     JSR playerReset
     JSR enemyReset
 
-
-    ; LDA $2001
-    ; EOR #%0001000
-    ; STA $2001
-
-    ; LDA $2000
-    ; EOR #%1000000
-    ; STA $2000
-
-    ; this loops isn't bailing out
-    ; probably want to put this in the NMI?
-    ; @tempLoop:
-    ; JSR readController
-    ; LDA controllerBits
-    ; AND #CONTROL_P1_RIGHT  ; zeros out non-start bits
-    ; BNE @dumpBad
-
-    ; JMP @tempLoop
     LDA #$01
     STA gamePlayerReset
 
@@ -50,8 +33,12 @@ checkCollisionSprites:
     STA vram_lo
     LDA #>vram_buffer
     STA vram_hi
-    
-    LDY #$01
+
+    LDY vram_buffer_offset
+
+    INY
+
+    CLC
     LDA #$20
     STA (vram_lo), Y
 
@@ -62,9 +49,16 @@ checkCollisionSprites:
     ADC #$F2
     STA (vram_lo), Y
 
+
     INY
     LDA #$46
     STA (vram_lo), Y
+
+    ; INY
+
+    STY vram_buffer_offset
+    STY $7003
+
 
     INC gameOuts
     LDA gameOuts
@@ -75,7 +69,6 @@ checkCollisionSprites:
     STA bufferBackgroundColor
 
     @dumpBad:
-    STY vram_buffer_offset
     RTS
 
     @collisionGood:
@@ -87,7 +80,6 @@ checkCollisionSprites:
 
    
     @dump:
-    STY vram_buffer_offset
     CPX #$00
     BNE @loop
     RTS

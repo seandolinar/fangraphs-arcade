@@ -1,6 +1,6 @@
 
 21
-00000	06C1	b	u	0	vram_buffer_offset
+00000	06C0	b	u	0	vram_buffer_offset
 00001	06C2	b	u	0	vram_buffer
 00002	06C3	b	u	0	vram_buffer
 00003	06C4	b	u	0	vram_buffer

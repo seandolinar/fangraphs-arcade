@@ -35,7 +35,7 @@ dumpUpdateController:
 ; i can make this separate from the the controller 
 ; this will basically become the update position
 ; rename this
-dumpUpdatePosition:
+UpdatePositionPlayer:
 
     LDA playerDirectionCurrent
     CMP #$01
@@ -223,6 +223,7 @@ moveRight:
 
         JSR checkCollision
         JSR checkCollideDot     ; calling this here. there might be a better way to do this.
+
 
         LDA collisionFlag
         BEQ dumpMoveRight ; branch if 0
