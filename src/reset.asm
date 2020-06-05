@@ -1,22 +1,24 @@
 .segment "CODE"
 RESET:
-    SEI
-    LDA #$00
+  SEI
+  LDA #%00010000
+  STA PPUState
 	STA $2000 ; disable NMI
+  LDA #$00
 	STA $2001 ; disable rendering
 	STA $4015 ; disable APU sound
 	STA $4010 ; disable DMC IRQ
-    STA $4017 ; disable APU IRQ
+  STA $4017 ; disable APU IRQ
 	CLD       ; disable decimal mode
 	LDX #$FF
 	TXS       ; initialize stack
 
-; ENABLE SOUND
-lda #%00000001
-sta $4015 ;enable square 1
+  ; ENABLE SOUND
+  LDA #%00000001
+  LDA $4015 ;enable square 1
 
-; CLEAR MEMORY
-LDX $00
+  ; CLEAR MEMORY
+  LDX $00
 ClearMemory:
   LDA #$00
   STA $0000, X
@@ -34,6 +36,11 @@ ClearMemory:
     WarmUp:
         BIT $2002
 		BPL WarmUp
+
+     ; STARTS VIDEO DISPLAY
+  ; LDA #%10000000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+  ; STA $2000 ;;;;; THIS WORKS!!! UGH
+  ; STA PPUState ; need this state for the update to work on Nestopia
 
 
   LDA #$00

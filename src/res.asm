@@ -151,17 +151,18 @@ playerGridYAI:					.res 1 ; 0081
 
 gamePaused:						.res 1 ; 0086 ; these are right
 PPUState:						.res 1 ; 0087
-gamePlayerReset:				.res 1 ; 0088
-gameOuts:						.res 1 ; 0089
+PPUState2:						.res 1 ; 0088
+gamePlayerReset:				.res 1 ; 0089
+gameOuts:						.res 1 ; 008a
 
-scoreLo:						.res 1 ; 008a
-vram_lo:						.res 1 ; 008b
-vram_hi:						.res 1 ; 008c
+scoreLo:						.res 1 ; 008b
+vram_lo:						.res 1 ; 008c
+vram_hi:						.res 1 ; 008d
 
-scoreDigit0:			.res 1 ; 008d
-scoreDigit1:			.res 1 ; 008e
-scoreDigit2:			.res 1 ; 008f
-scoreDigit3:			.res 1 ; 0090
+scoreDigit0:			.res 1 ; 008e
+scoreDigit1:			.res 1 ; 008f
+scoreDigit2:			.res 1 ; 0090
+scoreDigit3:			.res 1 ; 0091
 scoreDigit5:			.res 1
 scoreDigit6:			.res 1
 scoreDigit7:			.res 1

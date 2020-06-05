@@ -2,9 +2,9 @@ changeBackground:
 ; background
 ; I don't have to turn this off
 ; I'm not sure why
-    LDA #$00
-	STA $2000               ; disable NMI
-	STA $2001               ; disable rendering
+    ; LDA #$00
+	; STA $2000               ; disable NMI
+	; STA $2001               ; disable rendering
 
     LDA $2002               ; read PPU status to reset the high/low latch to high
     LDA #$3F
@@ -63,19 +63,19 @@ changeBackground:
 
     ; resets scroll
     ; not sure why I have to do this, but it works!!
-    LDA #$00
-    STA PPU_SCROLL_REG 
-    STA PPU_SCROLL_REG
+    ; LDA #$00
+    ; STA PPU_SCROLL_REG 
+    ; STA PPU_SCROLL_REG
 
 
     ; ; STARTS VIDEO DISPLAY
-    LDA #%10010000 ;background bank 1 instead of 0
-    LDA PPUState
+    ; LDA #%10010000 ;background bank 1 instead of 0
+    ; LDA PPUState
     ; LDA #%10000000          ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 0
-    STA $2000
+    ; STA $2000
 
-    LDA #%00011110          ; enable sprites, enable background, no clipping on left side
-    STA $2001
+    ; LDA #%00011110          ; enable sprites, enable background, no clipping on left side
+    ; STA $2001
     RTS
 
 

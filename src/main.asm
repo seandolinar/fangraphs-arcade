@@ -33,6 +33,8 @@
 .segment "CODE"
 NMI:
 
+; JSR soundCollision
+
     ; Preserves the registers during the course of the interrupt
     PHA
     TXA
@@ -45,14 +47,33 @@ NMI:
     BEQ @endGame
 
 
-
 ; vBlankWait:	
 @vBlankLoop:
-	lda $2002   
-    bpl @vBlankLoop
+	LDA $2002   
+    BPL @vBlankLoop
+
+    LDA #$00
+	STA $2000               ; disable NMI
+	STA $2001               ; disable rendering
 
     JSR changeBackground
     JSR spriteTransfer
+
+    ; ; STARTS VIDEO DISPLAY
+    ; LDA #%10010000 ;background bank 1 instead of 0
+    LDA PPUState            ; using state from the code
+    STA $2000
+
+    LDA #%00011110          ; enable sprites, enable background, no clipping on left side
+    STA $2001
+
+      ; resets scroll
+    ; not sure why I have to do this, but it works!!
+    LDA #$00
+    STA PPU_SCROLL_REG 
+    STA PPU_SCROLL_REG
+
+        ; JSR soundCollision 
 
     LDA gamePlayerReset ; $01 means we are in the middle of a reset
     BNE @resetNMI
