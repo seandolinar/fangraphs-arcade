@@ -115,14 +115,9 @@ collideDot:
     ADC #$20
     STA bufferBackgroundValHi
 
-    LDA #<vram_buffer
-    STA vram_lo
-    LDA #>vram_buffer
-    STA vram_hi
-
-    LDY vram_buffer_offset
-
+    JSR startVramBuffer
     INY
+    
     LDA bufferBackgroundValHi
     STA (vram_lo), Y
 

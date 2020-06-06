@@ -57,14 +57,8 @@ removePowerUp:
     TYA
     PHA
 
-    LDA #<vram_buffer
-    STA vram_lo
-    LDA #>vram_buffer
-    STA vram_hi
-
-
-    ; NEW CODE
-    LDY vram_buffer_offset
+    JSR startVramBuffer
+    
     INY
 
     CLC

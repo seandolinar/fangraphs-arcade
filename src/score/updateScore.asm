@@ -38,13 +38,10 @@ updateScore:
     JMP @loopDigit
 
     @continueVram:
-    LDA #<vram_buffer
-    STA vram_lo
-    LDA #>vram_buffer
-    STA vram_hi
 
-    LDY vram_buffer_offset              ; loads up the vram offset
+    JSR startVramBuffer
     INY                                 ; increments it
+
     LDX #$00
     STX tempX1
 
@@ -101,13 +98,9 @@ updateScore:
 
     ; move this
 writeGameOver:
-    ; abstract this
-    ; do we need to find the last item in the buffer?
-    ; or track that in another byte of RAM?
-    LDA #<vram_buffer
-    STA vram_lo
-    LDA #>vram_buffer
-    STA vram_hi
+   
+  
+    JSR startVramBuffer
 
     ; writes game over with letters
     ; i need the array of tiles

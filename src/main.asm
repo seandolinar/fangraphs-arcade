@@ -15,7 +15,8 @@
 .include "./checkCollisonPowerUp.asm"
 .include "./checkCollisonSprites.asm"
 .include "./sound.asm"
-.include "./ppuUpdates.asm"
+.include "./ppu/ppuUpdates.asm"
+.include "./ppu/vram.asm"
 .include "./load/loadSplashScreen.asm"
 
 .include "./reset.asm"
@@ -24,7 +25,7 @@
 .include "./tiles.asm";
 
 .segment "TILES"
-.incbin "../chr/char02.chr"
+.incbin "../chr/nes-fg.chr"
 
 .segment "MUSIC"
 .incbin "../nsf/export1.nsf", $80 ; offset of $80 so I don't have to trim this 

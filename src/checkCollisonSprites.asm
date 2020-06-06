@@ -28,14 +28,7 @@ checkCollisionSprites:
     LDA #$01
     STA gamePlayerReset
 
-    ; structure or label this or move this
-    LDA #<vram_buffer
-    STA vram_lo
-    LDA #>vram_buffer
-    STA vram_hi
-
-    LDY vram_buffer_offset
-
+    JSR startVramBuffer
     INY
 
     CLC
