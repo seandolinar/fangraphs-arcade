@@ -43,42 +43,51 @@ updateScore:
     LDA #>vram_buffer
     STA vram_hi
 
-    LDY vram_buffer_offset
-    INY
+    LDY vram_buffer_offset              ; loads up the vram offset
+    INY                                 ; increments it
     LDX #$00
+    STX tempX1
 
-    @loop:
-   
+    @loop:                              ; loop through the addresses
+    ; hi                                ; hi, lo, value
+    LDX tempX1
     LDA #$20
-    STA (vram_lo), Y
+    STA (vram_lo), Y                    ; value should have the tile for the digit
     INY
 
-    ; might have to do math here
+    ; lo
+    STX tempX1
     SEC
-    STX tempX
     LDA #$93
-    SBC tempX
+    SBC tempX1
     STA (vram_lo), Y
 
-    LDX tempX
-    LDA scoreDigit0, X 
+    ; value
+    ; reads the digit
+    LDX tempX1
+    LDA scoreDigit0, X                  ; digits are indexed on 0
     STA scoreDigitBuffer
 
-    TXA
-    PHA
+    ; TXA
+    ; PHA
     INY
 
      ; X controls the digit
     LDX scoreDigitBuffer
-    LDA NUM, X
+    LDA NUM, X                          ; digit buffer is transformed into tile
     STA (vram_lo), Y
 
-    PLA
-    TAX
+    ; PLA
+    ; TAX
+
+    LDX tempX1
+
     INX
     CPX #$06
     BEQ @dump
     INY
+
+    STX tempX1
 
     JMP @loop
 

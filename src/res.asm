@@ -170,6 +170,7 @@ scoreDigit8:			.res 1
 scoreDigitBuffer:		.res 1
 scoreValue:				.res 1
 
+tempX1:					.res 1
 
 ; NES-defined RAM locations
 PPU_CTRL_REG1         	= $2000

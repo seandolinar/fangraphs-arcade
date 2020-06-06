@@ -1,9 +1,8 @@
 
-7
-00000	008D	b	u	0	scoreDigit0
-00001	008E	b	u	0	scoreDigit1
-00002	008F	b	u	0	scoreDigit2
-00003	0090	b	u	0	scoreDigit3
-00004	0091	b	u	0	scoreDigit4
-00005	0092	b	u	0	scoreDigit5
-00006	0093	b	u	0	scoreDigit6
+6
+00000	008E	b	u	0	scoreDigit1
+00001	008F	b	u	0	scoreDigit2
+00002	0090	b	u	0	scoreDigit3
+00003	0091	b	u	0	scoreDigit4
+00004	0092	b	u	0	scoreDigit5
+00005	0093	b	u	0	scoreDigit6

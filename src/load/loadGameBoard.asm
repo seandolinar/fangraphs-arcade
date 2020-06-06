@@ -102,6 +102,15 @@ FillAttrib0Loop:
 
 
 
+  LDX $0a
+  @loopClearScore:
+  LDA #$00
+  STA scoreDigit0, X
+  DEX
+  CPX #$00
+  BNE @loopClearScore
+
+
   ;CLEAR BUFFER
   JSR clearVRAMBuffer
 
@@ -113,6 +122,8 @@ FillAttrib0Loop:
 
   JSR playerReset
   JSR enemyReset
+
+
 
 ; initial parameters
 ; can make this into a looping array?
