@@ -131,27 +131,27 @@ FillAttrib0Loop:
 LDA #$10
 STA masterTimer
 
-LDA #$E8
-STA powerUpX
-LDA #$60
-STA powerUpY
+; LDA #$E8
+; STA powerUpX ;
+; LDA #$60
+; STA powerUpY
 
-LDA #$80
-STA powerUpX2
-LDA #$10
-STA powerUpY2
-
-
-LDA #$10
-STA powerUpX3
-LDA #$60
-STA powerUpY3
+; LDA #$80
+; STA powerUpX2 ;
+; LDA #$10
+; STA powerUpY2
 
 
-LDA #$80
-STA powerUpX4
-LDA #$D0
-STA powerUpY4
+; LDA #$10
+; STA powerUpX3 ;
+; LDA #$60
+; STA powerUpY3
+
+
+; LDA #$80
+; STA powerUpX4
+; LDA #$D0
+; STA powerUpY4
 
 LDA #$00
 STA gameStateIsPowered

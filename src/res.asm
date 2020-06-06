@@ -88,14 +88,14 @@ tempX:					.res 1 ; 002E
 tempY:					.res 1 ; 002F
 
 ; if these don't move, why do I need these in RAM?
-powerUpX:				.res 1 ; 0030 ;; if these don't move we can read them from ROM
-powerUpX2:				.res 1
-powerUpX3:				.res 1
-powerUpX4:				.res 1
-powerUpY:				.res 1	; 0034 ;; then loop through the locations, though I'd have to remember which ones are "gone"
-powerUpY2:				.res 1
-powerUpY3:				.res 1
-powerUpY4:				.res 1
+; powerUpX:				.res 1 ; 0030 ;; if these don't move we can read them from ROM
+; powerUpX2:				.res 1
+; powerUpX3:				.res 1
+; powerUpX4:				.res 1
+; powerUpY:				.res 1	; 0034 ;; then loop through the locations, though I'd have to remember which ones are "gone"
+; powerUpY2:				.res 1
+; powerUpY3:				.res 1
+; powerUpY4:				.res 1
 powerUpAvailable:		.res 1 ; 0038 one byte ;; 7654321 - bit one is if the the first one is available
 ; this might control which powerUp has to be used next
 powerUpTimer:			.res 1 ; 0039
@@ -222,4 +222,10 @@ vram_buffer_offset:		.res $01	; 1 byte offset $06C2
 vram_buffer:			.res $40	; 32 		   +$0040 = $0702
 
 
+
+.segment "CODE"
+powerUpX:
+.byte $E8, $80, $10, $80
+powerUpY:
+.byte $60, $10, $60, $D0
 

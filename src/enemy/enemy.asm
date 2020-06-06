@@ -139,28 +139,28 @@ enemyMovement:
         JMP mainAI
 
     aiUmp2Alt:
-        LDA powerUpX2       
+        LDA powerUpX + 1      
         STA playerGridXAI
 
-        LDA powerUpY2       
+        LDA powerUpY + 1  
         STA playerGridYAI
 
         JMP mainAI
 
     aiUmp3Alt:
-        LDA powerUpX3       
+        LDA powerUpX + 2       
         STA playerGridXAI
 
-        LDA powerUpY3       
+        LDA powerUpY + 2     
         STA playerGridYAI
 
         JMP mainAI
 
     aiUmp4Alt:
-        LDA powerUpX3       
+        LDA powerUpX + 3  
         STA playerGridXAI
 
-        LDA powerUpY3       
+        LDA powerUpY + 3
         STA playerGridYAI
         JMP mainAI
 
