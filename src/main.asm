@@ -200,7 +200,7 @@ gameMovement:
     JSR checkCollisionSprites ; I don't think I need this here
     JSR setAnimationPlayerMain
     JSR setAnimationPlayerDirection
-    ; JSR checkCollisionSprites ; this isn't working
+
     JSR checkCollisionPowerUp
     JSR nextEnemyMovement   ; move this to main?
     JSR checkCollisionSprites

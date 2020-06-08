@@ -1,5 +1,5 @@
 ; This controls when and how we load player sprite animations
-
+; loop this
 setAnimationPlayerMain:
     LDA playerDirectionCurrent
     BEQ @dump
@@ -7,7 +7,7 @@ setAnimationPlayerMain:
     CLC
     LDA playerGridY
     ADC playerGridX
-    AND #$01
+    AND #$01 ; this is controlling the animation by being even / odd
     BEQ @forward
 
     LDA #$12
@@ -31,7 +31,6 @@ setAnimationPlayerMain:
 
     LDA #$33
     STA player_oam + 9
-
 
     LDA #$42
     STA player_oam + 5
