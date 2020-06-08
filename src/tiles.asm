@@ -94,11 +94,52 @@ splash_screen:
 .byte $ff, $1f, $30, $31, $32, $33, $34, $35,   $36, $37, $38, $39, $3a, $3b, $3c, $3d,    $3e, $70, $71, $72, $73, $74, $75, $76,    $77, $78, $79, $7a, $7b, $7c, $7d, $ff   
 .byte $ff, $1f, $1f, $1f, $1f, $1f, $1f, $1f,   $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f,    $1f, $1f, $1f, $1f, $1f, $1f, $1f, $1f,    $1f, $1f, $1f, $1f, $1f, $1f, $1f, $ff   
 .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
-.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $80, $81, $82, $83, $84, $85,    $86, $87, $88, $89, $8a, $8b, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
-.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $90, $91, $92, $93, $94, $95,    $96, $97, $98, $99, $9a, $9b, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $80, $81, $82, $83, $84, $85,    $80, $81, $86, $87, $88, $89, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $90, $91, $92, $93, $94, $95,    $90, $91, $96, $97, $98, $99, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
 .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
 .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
-.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $a0, $a1, $a2, $a3,    $a3, $ff, $a4, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $c0, $c1, $c2, $c3,    $c3, $ff, $c4, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+
+
+
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; hacky fix for accidentally overfilling the buff
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; I need to think about how to do that without 
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; taking up more space
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
+
+
+
+game_over_screen:
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $8a,   $8b, $80, $81, $8c, $8d, $88, $89, $ff,    $84, $8e, $a0, $a1, $88, $89, $82, $83,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $9a,   $9b, $90, $91, $9c, $9d, $98, $99, $ff,    $94, $9e, $b0, $b1, $98, $99, $92, $93,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $c0, $c1, $c2, $c3,    $c3, $ff, $c4, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
 .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
 .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
 .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   

@@ -18,6 +18,8 @@
 .include "./ppu/ppuUpdates.asm"
 .include "./ppu/vram.asm"
 .include "./load/loadSplashScreen.asm"
+.include "./load/loadGameOver.asm"
+
 
 .include "./reset.asm"
 .include "./pallete.asm"
@@ -118,8 +120,8 @@ NMI:
 @endGame:
     ; kills the game at three outs
     ; JSR endGame
-    JSR changeBackground
-    JSR writeGameOver
+    ; JSR changeBackground
+    ; JSR writeGameOver
     RTI
 
 IRQ:
@@ -185,7 +187,8 @@ resetHard:
     STA $2000
     STA $2001
 
-    JMP InitialLoad
+    ; JMP InitialLoad
+    JMP loadGameOver
 
 gameMovement:
     JSR incTimerPowerUp

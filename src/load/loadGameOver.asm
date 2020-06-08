@@ -1,11 +1,15 @@
-splashScreen:
+loadGameOver:
+
+
+  LDA #%00010000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+  STA PPUState
 
   ;;; need to build this out for the pointer and stuff
   ;;; probably should just build out the compression here
   ;;; NAMETABLES
-  LDA #<splash_screen
+  LDA #<game_over_screen
   STA backgroundPointerLo
-  LDA #>splash_screen
+  LDA #>game_over_screen
   STA backgroundPointerHi
 
   ; need this for the FillBackground subroutine
@@ -17,14 +21,14 @@ splashScreen:
   JSR FillBackground
 
 
-;; HAVE TO Reunderstand this
-;; LOADING PALETTE
-LDA $2002    ; read PPU status to reset the high/low latch to high
+  ;; HAVE TO Reunderstand this
+  ;; LOADING PALETTE
+  LDA $2002    ; read PPU status to reset the high/low latch to high
 
-LDA #$3F
-STA $2006    ; write the high byte of $3F10 address
-LDA #$10
-STA $2006    ; write the low byte of $3F10 address
+  LDA #$3F
+  STA $2006    ; write the high byte of $3F10 address
+  LDA #$10
+  STA $2006    ; write the low byte of $3F10 address
 
 
 LDX #$00                ; start out at 0
@@ -60,7 +64,10 @@ LDX #$00                ; start out at 0
   LDA #$1D
   STA bufferBackgroundColor
 
-  LDA #%00011110   ; enable sprites, enable background, no clipping on left side
+  LDA PPUState
+  STA $2000
+
+  LDA #%00001110   ; enable sprites, enable background, no clipping on left side
   STA $2001
 
   LDA #$00
