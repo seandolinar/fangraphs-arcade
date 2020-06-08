@@ -7,7 +7,7 @@
 checkCollisionPowerUp:
     LDX powerUpAvailable
 
-    DEX ; or this could be the source of the bug
+    DEX
 
     LDA powerUpX, X
     CMP playerLocationX
