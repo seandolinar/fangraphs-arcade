@@ -13,19 +13,17 @@ setAnimationPlayerDirection:
     STA player_oam + 10
     STA player_oam + 14
 
-    ; CLC
-    ; LDA playerGridY
-    ; ADC playerGridX
-    ; AND #$01
-    ; BEQ @stance
-
     LDA animationTimer
     CMP #$01
-    BEQ @stance
-    CMP #$02
     BEQ @animationPt3
+    CMP #$02
+    BEQ @stance
+    CMP #$03
+    BEQ @stance
+    CMP #$04
+    BEQ @stance
 
-    ; ANIMATION
+    ; ANIMATION -- MIDDLE
     ; FACING LEFT
     LDA #$33
     STA player_oam + 1
@@ -53,6 +51,7 @@ setAnimationPlayerDirection:
     JMP @exit
 
     @animationPt3:
+    ; ANIMATION -- FULL SWING
     LDA #$53
     STA player_oam + 1
     LDA #$52
@@ -62,14 +61,7 @@ setAnimationPlayerDirection:
     LDA #$62
     STA player_oam + 13
 
-    ; LDA #%01000000
-    ; STA player_oam + 2
-    ; STA player_oam + 6
-    ; STA player_oam + 10
-    ; STA player_oam + 14
-
     JMP @exit
-
 
     @setNormal:
     LDA #%00000000
@@ -78,19 +70,17 @@ setAnimationPlayerDirection:
     STA player_oam + 10
     STA player_oam + 14
 
-    ; CLC
-    ; LDA playerGridY
-    ; ADC playerGridX
-    ; AND #$01
-    ; BEQ @stanceNormal
-
     LDA animationTimer
     CMP #$01
-    BEQ @stanceNormal
+    BEQ @animationPt3Normal
     CMP #$02
     BEQ @animationPt3Normal
+    CMP #$03
+    BEQ @stanceNormal
+    CMP #$04
+    BEQ @stanceNormal
 
-    ; ANIMATION
+    ; ANIMATION -- MID
     ; FACING RIGHT
     LDA #$32
     STA player_oam + 1
@@ -119,6 +109,7 @@ setAnimationPlayerDirection:
     JMP @exit
 
     @animationPt3Normal:
+    ; ANIMATION -- FULL SWING
     LDA #$52
     STA player_oam + 1
     LDA #$53
@@ -138,7 +129,7 @@ setAnimationPlayerDirection:
 incrementAnimationTimer:
     INC animationTimer
     LDA animationTimer
-    CMP #$03
+    CMP #$06
     BEQ @resetTimer
     RTS
 
