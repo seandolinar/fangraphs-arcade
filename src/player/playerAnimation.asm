@@ -1,61 +1,5 @@
-; This controls when and how we load player sprite animations
-; loop this
-; setAnimationPlayerMain:
-;     LDA playerDirectionCurrent
-;     BEQ @dump
-
-;     ; LDA animationTimer
-;     ; CMP #$01
-;     ; BEQ @forward
-
-;     ; AND #$01 ; this is controlling the animation by being even / odd
-;     ; BEQ @forward
-
-;     CLC
-;     LDA playerGridY
-;     ADC playerGridX
-;     AND #$01
-;     BEQ @forward
-
-;     ; NORMAL LOGO
-;     ; FACING RIGHT
-;     LDA #$12
-;     STA player_oam + 1
-
-;     LDA #$13
-;     STA player_oam + 9
-;     RTS
-
-;     LDA #$22
-;     STA player_oam + 5
-
-;     LDA #$23
-;     STA player_oam + 13
-;     RTS
-
-;     ; SWING ANIMATION
-;     ; FACING RIGHT
-;     @forward:
-;     LDA #$32
-;     STA player_oam + 1
-
-;     LDA #$33
-;     STA player_oam + 9
-
-;     LDA #$42
-;     STA player_oam + 5
-
-;     LDA #$43
-;     STA player_oam + 13
-    
-;     @dump:
-;     RTS
-
 setAnimationPlayerDirection:
 
-
-
-    
     LDA playerDirectionCurrent
     CMP #$03
     BEQ @setLeftward
@@ -69,11 +13,17 @@ setAnimationPlayerDirection:
     STA player_oam + 10
     STA player_oam + 14
 
-    CLC
-    LDA playerGridY
-    ADC playerGridX
-    AND #$01
+    ; CLC
+    ; LDA playerGridY
+    ; ADC playerGridX
+    ; AND #$01
+    ; BEQ @stance
+
+    LDA animationTimer
+    CMP #$01
     BEQ @stance
+    CMP #$02
+    BEQ @animationPt3
 
     ; ANIMATION
     ; FACING LEFT
@@ -86,7 +36,7 @@ setAnimationPlayerDirection:
     LDA #$42
     STA player_oam + 13
 
-    JMP @incrementTimer
+    JMP @exit
 
     @stance:
     ; NORMAL LOGO
@@ -100,13 +50,25 @@ setAnimationPlayerDirection:
     LDA #$22
     STA player_oam + 13
 
-    LDA #%01000000
-    STA player_oam + 2
-    STA player_oam + 6
-    STA player_oam + 10
-    STA player_oam + 14
+    JMP @exit
 
-    JMP @incrementTimer
+    @animationPt3:
+    LDA #$53
+    STA player_oam + 1
+    LDA #$52
+    STA player_oam + 9
+    LDA #$63
+    STA player_oam + 5
+    LDA #$62
+    STA player_oam + 13
+
+    ; LDA #%01000000
+    ; STA player_oam + 2
+    ; STA player_oam + 6
+    ; STA player_oam + 10
+    ; STA player_oam + 14
+
+    JMP @exit
 
 
     @setNormal:
@@ -125,23 +87,21 @@ setAnimationPlayerDirection:
     LDA animationTimer
     CMP #$01
     BEQ @stanceNormal
-
+    CMP #$02
+    BEQ @animationPt3Normal
 
     ; ANIMATION
     ; FACING RIGHT
     LDA #$32
     STA player_oam + 1
-
     LDA #$33
     STA player_oam + 9
-
     LDA #$42
     STA player_oam + 5
-
     LDA #$43
     STA player_oam + 13
 
-    JMP @incrementTimer
+    JMP @exit
 
 
     ; NORMAL LOGO
@@ -149,29 +109,30 @@ setAnimationPlayerDirection:
     @stanceNormal:
     LDA #$12
     STA player_oam + 1
-
     LDA #$13
     STA player_oam + 9
-
     LDA #$22
     STA player_oam + 5
-
     LDA #$23
     STA player_oam + 13
 
-    JMP @incrementTimer
+    JMP @exit
 
-    @incrementTimer:
-    ; INC animationTimer
-    ; LDA animationTimer
-    ; CMP #$03
-    ; BEQ @resetTimer
+    @animationPt3Normal:
+    LDA #$52
+    STA player_oam + 1
+    LDA #$53
+    STA player_oam + 9
+    LDA #$62
+    STA player_oam + 5
+    LDA #$63
+    STA player_oam + 13
+    JMP @exit
+
+    @exit:
+   
     RTS
 
-    @resetTimer:
-    LDA #$00
-    STA animationTimer
-    RTS
 
 
 incrementAnimationTimer:
