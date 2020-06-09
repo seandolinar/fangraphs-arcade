@@ -198,7 +198,6 @@ gameMovement:
 
     ; this should handle when to move the sprites
     JSR checkCollisionSprites ; I don't think I need this here
-    JSR setAnimationPlayerMain
     JSR setAnimationPlayerDirection
 
     JSR checkCollisionPowerUp

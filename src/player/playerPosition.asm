@@ -231,6 +231,8 @@ moveRight:
         LDA playerLocationXBuffer
         STA playerLocationX
 
+        JSR incrementAnimationTimer
+
         JMP updatePositionSprite
 
 dumpMoveRight:
@@ -263,6 +265,8 @@ moveLeft:
         LDA playerLocationXBuffer
         STA playerLocationX
 
+        JSR incrementAnimationTimer
+
         JMP updatePositionSprite
 
 dumpMoveLeft:
@@ -292,6 +296,8 @@ moveUp:
         LDA playerLocationYBuffer
         STA playerLocationY
         
+        JSR incrementAnimationTimer
+
         JMP updatePositionSprite
 
 dumpMoveUp:
@@ -321,6 +327,9 @@ moveDown:
         
         LDA playerLocationYBuffer
         STA playerLocationY
+
+        JSR incrementAnimationTimer
+
         JMP updatePositionSprite
 
 dumpMoveDown:

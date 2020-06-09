@@ -134,6 +134,7 @@ STA masterTimer
 LDA #$00
 STA gameStateIsPowered
 STA gamePlayerReset
+STA animationTimer
 
 LDA #$01
 STA powerUpAvailable ; first base power up is loaded first
