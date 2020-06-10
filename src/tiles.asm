@@ -7,25 +7,25 @@ sprites:
 
 ; this is not RAM, huh?
 enemy_array:
-.byte $58, $50, %00000010, $A8 ;80 ; first enemy (O)
-.byte $60, $51, %00000010, $A8 ;80 ; first enemy (O)
-.byte $58, $60, %00000010, $A8 ;80 ; first enemy (O)
-.byte $60, $61, %00000010, $B0 ;80 ; first enemy (O)
+.byte $58, $50, %00000000, $A8 ;80 ; first enemy (O)
+.byte $60, $51, %00000000, $A8 ;80 ; first enemy (O)
+.byte $58, $60, %00000000, $A8 ;80 ; first enemy (O)
+.byte $60, $61, %00000000, $B0 ;80 ; first enemy (O)
+
+.byte $58, $50, %00000001, $A8 ;80 ; first enemy (O)
+.byte $60, $51, %00000001, $A8 ;80 ; first enemy (O)
+.byte $58, $60, %00000001, $A8 ;80 ; first enemy (O)
+.byte $60, $61, %00000001, $B0 ;80 ; first enemy (O)
 
 .byte $58, $50, %00000010, $A8 ;80 ; first enemy (O)
 .byte $60, $51, %00000010, $A8 ;80 ; first enemy (O)
 .byte $58, $60, %00000010, $A8 ;80 ; first enemy (O)
 .byte $60, $61, %00000010, $B0 ;80 ; first enemy (O)
 
-.byte $58, $50, %00000010, $A8 ;80 ; first enemy (O)
-.byte $60, $51, %00000010, $A8 ;80 ; first enemy (O)
-.byte $58, $60, %00000010, $A8 ;80 ; first enemy (O)
-.byte $60, $61, %00000010, $B0 ;80 ; first enemy (O)
-
-.byte $58, $50, %00000010, $A8 ;80 ; first enemy (O)
-.byte $60, $51, %00000010, $A8 ;80 ; first enemy (O)
-.byte $58, $60, %00000010, $A8 ;80 ; first enemy (O)
-.byte $60, $61, %00000010, $B0 ;80 ; first enemy (O)
+.byte $58, $50, %00000011, $A8 ;80 ; first enemy (O)
+.byte $60, $51, %00000011, $A8 ;80 ; first enemy (O)
+.byte $58, $60, %00000011, $A8 ;80 ; first enemy (O)
+.byte $60, $61, %00000011, $B0 ;80 ; first enemy (O)
 
 tilesDots:
 .byte $03, $04, $28, $48, $3a, $3c

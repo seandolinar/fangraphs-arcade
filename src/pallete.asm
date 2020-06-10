@@ -2,6 +2,11 @@
 
 pallete:
 ; sprite - 2 - this is the ump after being eaten
+.byte $0F,$0F,$20,$21,  $16,$0F,$0F,$26,  $35,$1D,$21,$2C,  $35,$0F,$30,$25  ; bank 0 ;; SPRITE BANK
+.byte $19,$0F,$17,$20,  $0F,$0F,$28,$03,  $0F,$0F,$17,$28,  $0F,$0F,$17,$17   ; bank 1 ;; BACKGROUND BANK
+
+pallete_power_up:
+; sprite - 2 - this is the ump after being eaten
 .byte $0F,$0F,$20,$20,  $16,$22,$0F,$0F,  $35,$1D,$21,$37,  $35,$16,$30,$38  ; bank 0 ;; SPRITE BANK
 .byte $19,$0F,$17,$20,  $0F,$0F,$28,$03,  $0F,$0F,$17,$28,  $0F,$0F,$17,$17   ; bank 1 ;; BACKGROUND BANK
 
