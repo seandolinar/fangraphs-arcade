@@ -59,8 +59,29 @@ NMI:
 	STA $2000               ; disable NMI
 	STA $2001               ; disable rendering
 
+
+
+    ; LDA #$3F
+    ; STA $2006    ; write the high byte of $3F10 address
+    ; LDA #$10
+    ; STA $2006    ; write the low byte of $3F10 address
+
+
+    ; LDX #$00                ; start out at 0
+    ; @LoadPalettesLoop:
+    ; LDA pallete_power_up, X      ; load data from address (PaletteData + the value in x)
+    ;                         ; 1st time through loop it will load PaletteData+0
+    ;                         ; 2nd time through loop it will load PaletteData+1
+    ;                         ; 3rd time through loop it will load PaletteData+2
+    ;                         ; etc
+    ; STA $2007               ; write to PPU
+    ; INX                     ; X = X + 1
+    ; CPX #$20               ; Compare X to hex $20, decimal 32
+    ; BNE @LoadPalettesLoop 
+
     JSR changeBackground
     JSR spriteTransfer
+
 
     ; ; STARTS VIDEO DISPLAY
     ; LDA #%10010000 ;background bank 1 instead of 0

@@ -47,23 +47,6 @@ changeBackground:
 
     @dumpLoopVRAMBufferTransfer:
 
-
-
-    ; resets scroll
-    ; not sure why I have to do this, but it works!!
-    ; LDA #$00
-    ; STA PPU_SCROLL_REG 
-    ; STA PPU_SCROLL_REG
-
-
-    ; ; STARTS VIDEO DISPLAY
-    ; LDA #%10010000 ;background bank 1 instead of 0
-    ; LDA PPUState
-    ; LDA #%10000000          ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 0
-    ; STA $2000
-
-    ; LDA #%00011110          ; enable sprites, enable background, no clipping on left side
-    ; STA $2001
     RTS
 
 

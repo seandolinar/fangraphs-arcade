@@ -1,5 +1,4 @@
 changeEnemyColor:
-    ; this is called just once, need to write the loop here
 
     TXA
     PHA
@@ -12,7 +11,8 @@ changeEnemyColor:
     LDA gameStateIsPowered
     BNE changeEnemyColorPowerUp ; BNE branches if we LDA a #$00
 
-    LDA #%0000010 ; yellow ; return them to normal
+    ; pallete attribute for the power up
+    LDA #%0000000 ; yellow ; return them to normal
 
 changeEnemyColorLoop:
     DEX 
@@ -32,6 +32,79 @@ changeEnemyColorLoop:
     CPX #$00
     BNE changeEnemyColorLoop
 
+    LDA gameStateIsPowered
+    BNE @palleteChangeOff ; BNE branches if we LDA a #$00
+
+    JSR startVramBuffer
+    INY
+
+    LDA #$3F
+    STA (vram_lo), Y
+
+    INY
+
+    LDA #$1d
+    STA (vram_lo), Y
+
+    INY
+    LDA #$0F
+    STA (vram_lo), Y
+
+
+    INY
+
+    LDA #$3F
+    STA (vram_lo), Y
+
+    INY
+
+    LDA #$1f
+    STA (vram_lo), Y
+
+    INY
+    LDA #$25
+    STA (vram_lo), Y
+
+    STY vram_buffer_offset
+
+    JMP @exit
+
+
+    @palleteChangeOff:
+    ; changes pallette
+    JSR startVramBuffer
+    INY
+
+    LDA #$3F
+    STA (vram_lo), Y
+
+    INY
+
+    LDA #$1d
+    STA (vram_lo), Y
+
+    INY
+    LDA #$16
+    STA (vram_lo), Y
+
+    ;;;;
+    INY
+    LDA #$3F
+    STA (vram_lo), Y
+
+    INY
+    LDA #$1f
+    STA (vram_lo), Y
+
+    INY
+    LDA #$20
+    STA (vram_lo), Y
+
+    STY vram_buffer_offset
+
+
+    @exit:
+
     PLA
     TAY
     PLA
@@ -41,6 +114,13 @@ changeEnemyColorLoop:
    
 changeEnemyColorPowerUp:
     LDA #%00000011 ; POWER UP STATE ; RED
+
+   
+
+
+
+
+
     JMP changeEnemyColorLoop
 
     
