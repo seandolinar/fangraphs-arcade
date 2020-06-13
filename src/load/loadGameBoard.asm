@@ -234,7 +234,7 @@ JMP Main
 
 
 FillBackground:
-  LDA $2002             ; read PPU status to reset the high/low latch
+  ; LDA $2002             ; read PPU status to reset the high/low latch
   LDA #$20
   STA $2006             ; write the high byte of $2000 address (nametable 0)
   LDA #$00
