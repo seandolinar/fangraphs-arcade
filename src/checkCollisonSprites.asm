@@ -21,7 +21,8 @@ checkCollisionSprites:
     BEQ @collisionGood
 
     ; ; Bad collision path
-    JSR soundCollision 
+    JSR soundCollision
+    JSR animatePlayerEnd
     JSR playerReset
     JSR enemyReset
 
@@ -46,8 +47,6 @@ checkCollisionSprites:
     INY
     LDA #$46
     STA (vram_lo), Y
-
-    ; INY
 
     STY vram_buffer_offset
     STY $7003

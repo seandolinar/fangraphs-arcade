@@ -59,49 +59,27 @@ NMI:
 	STA $2000               ; disable NMI
 	STA $2001               ; disable rendering
 
-
-
-    ; LDA #$3F
-    ; STA $2006    ; write the high byte of $3F10 address
-    ; LDA #$10
-    ; STA $2006    ; write the low byte of $3F10 address
-
-
-    ; LDX #$00                ; start out at 0
-    ; @LoadPalettesLoop:
-    ; LDA pallete_power_up, X      ; load data from address (PaletteData + the value in x)
-    ;                         ; 1st time through loop it will load PaletteData+0
-    ;                         ; 2nd time through loop it will load PaletteData+1
-    ;                         ; 3rd time through loop it will load PaletteData+2
-    ;                         ; etc
-    ; STA $2007               ; write to PPU
-    ; INX                     ; X = X + 1
-    ; CPX #$20               ; Compare X to hex $20, decimal 32
-    ; BNE @LoadPalettesLoop 
+    INC frameTimer
 
     JSR changeBackground
     JSR spriteTransfer
 
 
-    ; ; STARTS VIDEO DISPLAY
-    ; LDA #%10010000 ;background bank 1 instead of 0
+    ; STARTS VIDEO DISPLAY
     LDA PPUState            ; using state from the code
     STA $2000
 
     LDA #%00011110          ; enable sprites, enable background, no clipping on left side
     STA $2001
 
-      ; resets scroll
+    ; resets scroll
     ; not sure why I have to do this, but it works!!
     LDA #$00
     STA PPU_SCROLL_REG 
     STA PPU_SCROLL_REG
 
-        ; JSR soundCollision 
-
     LDA gamePlayerReset ; $01 means we are in the middle of a reset
     BNE @resetNMI
-
 
     LDX masterTimer
     DEX
@@ -140,9 +118,6 @@ NMI:
 
 @endGame:
     ; kills the game at three outs
-    ; JSR endGame
-    ; JSR changeBackground
-    ; JSR writeGameOver
     RTI
 
 IRQ:
@@ -204,11 +179,10 @@ resetHard:
     ; right idea, but I need to more gracefully restart
     ; maybe go back to the title screen?
     ; maybe break up the reset stuff up so i can resue it
-    LDA #$00  ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+    LDA #$00  ; disable NMI, sprites from Pattern Table 0, background from Pattern Table 1
     STA $2000
     STA $2001
 
-    ; JMP InitialLoad
     JMP loadGameOver
 
 gameMovement:

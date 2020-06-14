@@ -137,3 +137,60 @@ incrementAnimationTimer:
     LDA #$00
     STA animationTimer
     RTS
+
+
+
+animatePlayerEnd:
+    LDA #$00
+    STA frameTimer
+
+    LDA playerDirectionCurrent
+    CMP #$03
+    BEQ @setLeftward
+
+    LDA #$72
+    STA player_oam + 1
+    LDA #$73
+    STA player_oam + 9
+    LDA #$82
+    STA player_oam + 5
+    LDA #$83
+    STA player_oam + 13
+
+    JMP @loopDelay
+
+
+    @setLeftward:
+
+    LDA #$73
+    STA player_oam + 1
+    LDA #$72
+    STA player_oam + 9
+    LDA #$83
+    STA player_oam + 5
+    LDA #$82
+    STA player_oam + 13
+
+    
+
+    @loopDelay:
+    LDA frameTimer
+    CMP #$20
+    BNE @loopDelay
+
+    LDA #%00000000
+    STA player_oam + 2
+    STA player_oam + 6
+    STA player_oam + 10
+    STA player_oam + 14
+
+    LDA #$92
+    STA player_oam + 1
+    LDA #$93
+    STA player_oam + 9
+    LDA #$a2
+    STA player_oam + 5
+    LDA #$a3
+    STA player_oam + 13
+
+    RTS

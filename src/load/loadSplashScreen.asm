@@ -58,7 +58,7 @@ LDX #$00                ; start out at 0
   LDA #$1D
   STA bufferBackgroundColor
 
-  LDA #%00001110   ; enable sprites, enable background, no clipping on left side
+  LDA #%00001110   ; disable sprites, enable background, no clipping on left side
   STA $2001
 
   LDA #$00

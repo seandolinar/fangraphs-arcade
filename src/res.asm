@@ -78,14 +78,16 @@ collisionPointerHiEnemy:    .res 1 	; 002a
 
 masterTimer:				.res 1      ; 002B
 animationTimer:				.res 1		; 002C
+frameTimer:					.res 1      ; 002D
 
-consoleLog:					.res 1  ; 002D
 
-gameStateIsPowered: 		.res 1 ; 002E
+consoleLog:					.res 1  ; 002E
+
+gameStateIsPowered: 		.res 1 ; 002F
 
 ; Wish I knew why I can't use the stack for this
-tempX:					.res 1 ; 002E
-tempY:					.res 1 ; 002F
+tempX:					.res 1 ; 0030
+tempY:					.res 1 ; 0031
 
 ; if these don't move, why do I need these in RAM?
 ; powerUpX:				.res 1 ; 0030 ;; if these don't move we can read them from ROM
