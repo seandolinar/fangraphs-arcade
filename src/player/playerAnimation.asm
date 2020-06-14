@@ -139,6 +139,12 @@ incrementAnimationTimer:
     RTS
 
 
+animationNormal:
+    .byte $54, $55, $64, $65
+    .byte $74, $75, $84, $85
+    .byte $94, $95, $a4, $a5
+    .byte $56, $57, $66, $67
+    .byte $72, $73, $82, $83
 
 animatePlayerEnd:
     LDA #$00
@@ -146,33 +152,143 @@ animatePlayerEnd:
 
     LDA playerDirectionCurrent
     CMP #$03
-    BEQ @setLeftward
+    ; BEQ @setLeftward
 
-    LDA #$72
+    ; don't blow away x/y?
+    LDY #$00
+    LDX #$00
+    @loopAnimation:
+    LDA #$00
+    STA frameTimer
+    @loopAnimationDelay:
+    LDA frameTimer
+    CMP #$20
+    BNE @loopAnimationDelay
+
+    TXA
+    PHA
+
+    ASL
+    ASL
+
+    TAX
+
+    LDA animationNormal, X
     STA player_oam + 1
-    LDA #$73
+    ; INX
+    LDA animationNormal + 1, X
     STA player_oam + 9
-    LDA #$82
+
+    ; INX
+    LDA animationNormal + 2, X
     STA player_oam + 5
-    LDA #$83
+    ; INX
+    LDA animationNormal + 3, X
     STA player_oam + 13
+
+    ; TYA
+    ; CLC
+    ; ADC $10
+    ; TAY
+
+    PLA
+    TAX
+
+    INX
+
+    CPX #$06
+    BNE @loopAnimation
+
+    ; LDA #$00
+    ; STA frameTimer
+    ; @loop2:
+    ; LDA frameTimer
+    ; CMP #$20
+    ; BNE @loop2
+
+    ; LDA #$74
+    ; STA player_oam + 1
+    ; LDA #$75
+    ; STA player_oam + 9
+    ; LDA #$84
+    ; STA player_oam + 5
+    ; LDA #$85
+    ; STA player_oam + 13
+
+    ; LDA #$00
+    ; STA frameTimer
+    ; @loop3:
+    ; LDA frameTimer
+    ; CMP #$20
+    ; BNE @loop3
+
+    ; LDA #$94
+    ; STA player_oam + 1
+    ; LDA #$95
+    ; STA player_oam + 9
+    ; LDA #$a4
+    ; STA player_oam + 5
+    ; LDA #$a5
+    ; STA player_oam + 13
+
+    ; LDA #$00
+    ; STA frameTimer
+    ; @loop4:
+    ; LDA frameTimer
+    ; CMP #$20
+    ; BNE @loop4
+
+    ; LDA #$56
+    ; STA player_oam + 1
+    ; LDA #$57
+    ; STA player_oam + 9
+    ; LDA #$66
+    ; STA player_oam + 5
+    ; LDA #$67
+    ; STA player_oam + 13
+
+    ; LDA #$00
+    ; STA frameTimer
+    ; @loop5:
+    ; LDA frameTimer
+    ; CMP #$20
+    ; BNE @loop5
+
+    ; LDA #$72
+    ; STA player_oam + 1
+    ; LDA #$73
+    ; STA player_oam + 9
+    ; LDA #$82
+    ; STA player_oam + 5
+    ; LDA #$83
+    ; STA player_oam + 13
+
+    ; LDA #$00
+    ; STA frameTimer
+    ; @loop6:
+    ; LDA frameTimer
+    ; CMP #$20
+    ; BNE @loop6
+
+
 
     JMP @loopDelay
 
 
     @setLeftward:
 
-    LDA #$73
-    STA player_oam + 1
-    LDA #$72
-    STA player_oam + 9
-    LDA #$83
-    STA player_oam + 5
-    LDA #$82
-    STA player_oam + 13
+    ; LDA #$73
+    ; STA player_oam + 1
+    ; LDA #$72
+    ; STA player_oam + 9
+    ; LDA #$83
+    ; STA player_oam + 5
+    ; LDA #$82
+    ; STA player_oam + 13
 
     
-
+    LDA #$00
+    STA frameTimer
     @loopDelay:
     LDA frameTimer
     CMP #$20
