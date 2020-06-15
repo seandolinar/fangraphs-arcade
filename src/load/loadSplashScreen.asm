@@ -65,6 +65,7 @@ LDX #$00                ; start out at 0
   STA $2005
   STA $2005
 
+
   @loop:
 
   JSR readController

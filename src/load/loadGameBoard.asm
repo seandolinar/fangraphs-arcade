@@ -199,7 +199,6 @@ JMP Main
 
 
 
-
 ; might have to figure out what i'm doing here
 ; took this from a sample program
 ; this part is messing up sprites

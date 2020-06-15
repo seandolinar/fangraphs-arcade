@@ -1,5 +1,5 @@
-.include "./header.asm"
 .include "./res.asm"
+.include "./header.asm"
 .include "./controller.asm"
 .include "./player/playerCollision.asm"
 .include "./player/playerDots.asm"
@@ -19,6 +19,8 @@
 .include "./ppu/vram.asm"
 .include "./load/loadSplashScreen.asm"
 .include "./load/loadGameOver.asm"
+.include "../lib/famitone2.s"
+.include "./music/Untitled.s"
 
 
 .include "./reset.asm"
@@ -37,6 +39,7 @@
 NMI:
 
 ; JSR soundCollision
+
 
     ; Preserves the registers during the course of the interrupt
     PHA
@@ -65,6 +68,7 @@ NMI:
     JSR spriteTransfer
 
 
+
     ; STARTS VIDEO DISPLAY
     LDA PPUState            ; using state from the code
     STA $2000
@@ -89,6 +93,9 @@ NMI:
     STA masterTimer
 
 @dumpNMI:
+
+    jsr FamiToneUpdate		;update sound
+
     JSR clearVRAMBuffer
 
     PLA
@@ -99,6 +106,9 @@ NMI:
     RTI
 
 @resetNMI:
+
+    jsr FamiToneUpdate		;update sound
+
     JSR readController
     LDA controllerBits
     EOR controllerBitsPrev ; difference in buttons

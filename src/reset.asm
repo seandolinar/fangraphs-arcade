@@ -6,16 +6,16 @@ RESET:
 	STA $2000 ; disable NMI
   LDA #$00
 	STA $2001 ; disable rendering
-	STA $4015 ; disable APU sound
+	; STA $4015 ; disable APU sound
 	STA $4010 ; disable DMC IRQ
-  STA $4017 ; disable APU IRQ
+  ; STA $4017 ; disable APU IRQ
 	CLD       ; disable decimal mode
 	LDX #$FF
 	TXS       ; initialize stack
 
   ; ENABLE SOUND
-  LDA #%00000001
-  LDA $4015 ;enable square 1
+  ; LDA #%00000001
+  ; LDA $4015 ;enable square 1
 
   ; CLEAR MEMORY
   LDX $00
@@ -45,6 +45,20 @@ ClearMemory:
 
   LDA #$00
   STA controllerBits
+
+
+
+
+  ldx #<untitled_music_data	;initialize using the first song data, as it contains the DPCM sound effect
+	ldy #>untitled_music_data
+	lda #$0F ;NTSC_MODE
+	jsr FamiToneInit		;init FamiTone
+  lda #$00
+	jsr FamiToneMusicPlay
+
+  LDA #%10010000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+  STA $2000
+  STA PPUState
 
   JMP splashScreen
 ; JMP InitialLoad
