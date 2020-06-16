@@ -53,8 +53,12 @@ ClearMemory:
 	ldy #>untitled_music_data
 	lda #$0F ;NTSC_MODE
 	jsr FamiToneInit		;init FamiTone
-  lda #$00
+  lda #$01
 	jsr FamiToneMusicPlay
+
+  ldx #<sounds			;set sound effects data location
+	ldy #>sounds
+	jsr FamiToneSfxInit
 
   LDA #%10010000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
   STA $2000
