@@ -20,7 +20,7 @@
 .include "./load/loadSplashScreen.asm"
 .include "./load/loadGameOver.asm"
 .include "../lib/famitone2.s"
-.include "./music/Untitled.s"
+.include "./sound/Untitled.s"
 
 
 .include "./reset.asm"
