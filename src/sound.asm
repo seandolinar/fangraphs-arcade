@@ -27,10 +27,13 @@ soundCollisionGood:
     ; because 5th bit (from right) disables the length counter
     ; LDA #%10111111;
     ; STA $4000
-    LDA #$ff    ;0C9 is a C# in NTSC mode
-    STA $4002
-    LDA %11111111;
-    STA $4003
+    ; LDA #$ff    ;0C9 is a C# in NTSC mode
+    ; STA $4002
+    ; LDA %11111111;
+    ; STA $4003
+
+    ; ldx #FT_SFX_CH0
+	; jsr FamiToneSfxPlay
 
 dumpSoundCollisionGood:
     RTS
