@@ -89,7 +89,7 @@ soundDot:
 
     TXA
     PHA
-    LDA #$02
+    LDA #$01
 
     LDX #FT_SFX_CH0
 	JSR FamiToneSfxPlay
