@@ -195,8 +195,8 @@ countDots:
 
   ; JSR InitMusic
 
-  LDA #$01
-  JSR FamiToneMusicPlay		;stop music
+  ; LDA #$01
+  ; JSR FamiToneMusicPlay		;stop music
 
 
 JMP Main
