@@ -74,6 +74,8 @@ LDX #$00                ; start out at 0
 
   BEQ @loop
 
+  jsr FamiToneMusicStop		;stop music
+
   LDA #$00
 	STA $2000               ; disable NMI
 	STA $2001               ; disable rendering

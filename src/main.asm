@@ -20,7 +20,7 @@
 .include "./load/loadSplashScreen.asm"
 .include "./load/loadGameOver.asm"
 .include "../lib/famitone2.s"
-.include "./sound/Untitled.s"
+.include "./sound/music.s"
 .include "./sound/SoundFxOwn4.s"
 
 
@@ -33,7 +33,7 @@
 .incbin "../chr/nes-fg.chr"
 
 .segment "MUSIC"
-.incbin "../nsf/export1.nsf", $80 ; offset of $80 so I don't have to trim this 
+; .incbin "../nsf/export1.nsf", $80 ; offset of $80 so I don't have to trim this 
 
 
 .segment "CODE"

@@ -53,7 +53,7 @@ ClearMemory:
 	ldy #>untitled_music_data
 	lda #$0F ;NTSC_MODE
 	jsr FamiToneInit		;init FamiTone
-  lda #$01
+  lda #$00
 	jsr FamiToneMusicPlay
 
   ldx #<sounds			;set sound effects data location
