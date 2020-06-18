@@ -3,7 +3,7 @@ soundCollision:
 
     TXA
     PHA
-    LDA #$02
+    LDA #$01
 
     ldx #FT_SFX_CH0
 	jsr FamiToneSfxPlay
@@ -19,7 +19,7 @@ dumpSoundCollision:
 soundCollisionGood:
     TXA
     PHA
-    LDA #$02
+    LDA #$01
 
     ldx #FT_SFX_CH0
 	jsr FamiToneSfxPlay
@@ -34,7 +34,7 @@ dumpSoundCollisionGood:
 soundDot:
     TXA
     PHA
-    LDA #$01
+    LDA #$00
 
     LDX #FT_SFX_CH0
 	JSR FamiToneSfxPlay
