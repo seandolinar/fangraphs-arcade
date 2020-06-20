@@ -49,8 +49,8 @@ ClearMemory:
 
 
 
-  ldx #<untitled_music_data	;initialize using the first song data, as it contains the DPCM sound effect
-	ldy #>untitled_music_data
+  ldx #<fg_arcade_music_music_data	;initialize using the first song data, as it contains the DPCM sound effect
+	ldy #>fg_arcade_music_music_data
 	lda #$0F ;NTSC_MODE
 	jsr FamiToneInit		;init FamiTone
   lda #$00
