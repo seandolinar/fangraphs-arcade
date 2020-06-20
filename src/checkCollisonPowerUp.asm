@@ -19,7 +19,10 @@ checkCollisionPowerUp:
     ; dumps out
     JSR enablePowerUp
     JSR removePowerUp
-    JSR soundCollision ; Bad collision ; change this!
+    ; JSR soundCollision ; Bad collision ; change this!
+
+    LDA #$01
+	JSR FamiToneMusicPlay
 
     RTS
 
@@ -29,6 +32,7 @@ checkCollisionPowerUp:
 enablePowerUp:
     LDA #$01
     STA gameStateIsPowered
+
 
     JSR changeEnemyColor ; make this enemyState?
     JSR setTimerPowerUp

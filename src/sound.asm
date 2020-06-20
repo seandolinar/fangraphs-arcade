@@ -5,8 +5,10 @@ soundCollision:
     PHA
     LDA #$00
 
-    ldx #FT_SFX_CH0
-	jsr FamiToneSfxPlay
+    ; ldx #FT_SFX_CH0
+	; jsr FamiToneSfxPlay
+    LDA #$02
+	JSR FamiToneMusicPlay
 
     PLA
     TAX
