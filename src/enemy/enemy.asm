@@ -1,18 +1,18 @@
 
 battedBall:
-    LDA enemy1DirectionCurrent
-    CMP #$01
-    BEQ @ballUp
-    CMP #$02
-    BEQ @ballDown
-    CMP #$03
-    BEQ @ballLeft
+    LDA enemy1DirectionCurrent, X
+    CMP #$01 ; UP
+    BEQ @moveBallDown
+    CMP #$02 ; DOWN
+    BEQ @moveBallUp
+    CMP #$03 ; LEFT
+    BEQ @moveBallRight
 
-    JMP @ballRight
+    JMP @moveBallLeft ; RIGHT
 
     ; horizontal
 
-    @ballUp:
+    @moveBallDown:
     LDA enemy_oam + 3, Y    
 
     SEC
@@ -29,6 +29,7 @@ battedBall:
     ; ADC #$10
     ; BCS @stop
 
+    CLC
     LDA enemy_oam + 7, Y
 
     SEC
@@ -38,10 +39,10 @@ battedBall:
 
     JMP @break
 
-    @ballDown:
+    @moveBallUp:
     LDA enemy_oam + 3, Y    
 
-    SEC
+    CLC
     ADC #$08
 
     ; @horizontal:
@@ -57,7 +58,7 @@ battedBall:
 
     LDA enemy_oam + 7, Y
 
-    SEC
+    CLC
     ADC #$08
     STA enemy_oam + 7, Y
     STA enemy_oam + 15, Y
@@ -65,10 +66,10 @@ battedBall:
     JMP @break
     ; veritical
 
-    @ballLeft:
+    @moveBallRight:
     LDA enemy_oam, Y
 
-    SEC
+    CLC
     ADC #$04
     STA enemy_oam, Y
     STA enemy_oam + 4, Y
@@ -81,12 +82,12 @@ battedBall:
     
     LDA enemy_oam + 8, Y
 
-    SEC
+    CLC
     ADC #$04
     STA enemy_oam + 8, Y
     STA enemy_oam + 12, Y
 
-    @ballRight:
+    @moveBallLeft:
     LDA enemy_oam, Y
 
     SEC
