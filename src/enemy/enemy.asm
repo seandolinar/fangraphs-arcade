@@ -1,3 +1,65 @@
+
+battedBall:
+;enemy1DirectionCurrent
+
+    TYA
+    PHA
+
+    ; LDA enemyX, X
+    ; LDA #$00
+
+    TXA
+    TAY
+
+    LDA #$04
+    CPY #$04
+    BEQ @dump
+    @loopGetOAMY:
+    ADC #$10
+    DEY
+    BNE @loopGetOAMY
+
+    @dump:
+    TAY
+    LDY #$00
+
+    LDA enemy_oam + 3, Y
+
+    SEC
+    SBC #$08
+    STA enemy_oam + 3, Y
+    STA enemy_oam + 11, Y
+
+
+    LDA enemy_oam + 7, Y
+
+    SEC
+    SBC #$08
+    STA enemy_oam + 7, Y
+    STA enemy_oam + 15, Y
+
+    ; CLC
+    ; ADC #$08
+    ; STA enemy_oam + 7
+    ; STA enemy_oam + 15
+
+    ; LDA enemyY, X
+
+    ; SEC
+    ; SBC #$04
+    ; STA enemy_oam
+    ; STA enemy_oam + 4
+
+    ; ADC #$06
+    ; ; LDA #$14
+    ; STA enemy_oam + 8
+    ; STA enemy_oam + 12
+
+    PLA
+    TAY
+    RTS
+
+
 ; Does this work? YES
 ; moved this up here because of 128 line branching limit
 mainAI:
@@ -68,9 +130,16 @@ forEachEnemyMovement:
 
     ; this sorta works...we probably loop back around and that's an issue.
     ; need to kill the loop after the last X
-    LDA enemyState, X
-    CMP #$01
-    BNE forEachEnemyMovement
+    LDA enemyState, X ; we could use the state to store information
+    CMP #$00
+    BEQ @enemyMovement
+    ; call something else here then JMP forEachEnemyMovement
+    ; i might need a lot of RAM
+
+    JSR battedBall
+
+    JMP forEachEnemyMovement
+
     
 
     @enemyMovement:

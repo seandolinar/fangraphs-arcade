@@ -83,40 +83,24 @@ checkCollisionSprites:
 
 ; this uses X from checkCollisionSprites
 resetOneEnemyPosition:
-    LDA #$00
+
+
+
+    ; so we'll need to increment by a lot here
+    ; probably have to save Y
+    ; this works
+
+    ; how do we get this to animate?
+    ; do we pause?
+    ; do we call a different routine
+    
+
+    LDA #$01
     STA enemyState, X
     ; LDA #$80
     LDA #$00
     STA enemyX, X
     ; LDA #$50
     STA enemyY, X
-
-
-    ; so we'll need to increment by a lot here
-    ; probably have to save Y
-    ; this works
-    LDA #$10
-
-    SEC
-    SBC #$04
-    STA enemy_oam + 3
-    STA enemy_oam + 11
-
-    CLC
-    ADC #$08
-    STA enemy_oam + 7
-    STA enemy_oam + 15
-
-    LDA #$10
-
-    SEC
-    SBC #$04
-    STA enemy_oam
-    STA enemy_oam + 4
-
-    ADC #$06
-    LDA #$14
-    STA enemy_oam + 8
-    STA enemy_oam + 12
 
     RTS
