@@ -94,13 +94,15 @@ resetOneEnemyPosition:
     ; do we pause?
     ; do we call a different routine
     
-
+    ; turn off the enemy active state
     LDA #$01
     STA enemyState, X
-    ; LDA #$80
+    
     LDA #$00
+    ; LDA #$80
     STA enemyX, X
     ; LDA #$50
     STA enemyY, X
+
 
     RTS

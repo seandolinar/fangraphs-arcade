@@ -1,35 +1,33 @@
 
 battedBall:
-;enemy1DirectionCurrent
+    LDA enemy1DirectionCurrent
+    CMP #$01
+    BEQ @ballUp
+    CMP #$02
+    BEQ @ballDown
+    CMP #$03
+    BEQ @ballLeft
 
-    ; TYA
-    ; PHA
+    JMP @ballRight
 
-    ; ; LDA enemyX, X
-    ; ; LDA #$00
+    ; horizontal
 
-    ; TXA
-    ; TAY
-
-    ; LDA #$00
-    ; CPY #$04
-    ; BEQ @dump
-    ; @loopGetOAMY:
-    ; ADC #$10
-    ; DEY
-    ; BNE @loopGetOAMY
-
-    ; @dump:
-    ; TAY
-    ; LDY #$00
-
-    LDA enemy_oam + 3, Y
+    @ballUp:
+    LDA enemy_oam + 3, Y    
 
     SEC
     SBC #$08
+
+    ; @horizontal:
+    
     STA enemy_oam + 3, Y
     STA enemy_oam + 11, Y
 
+    ; this sort of works
+    ; SBC #$08
+    ; BMI @stop
+    ; ADC #$10
+    ; BCS @stop
 
     LDA enemy_oam + 7, Y
 
@@ -38,35 +36,94 @@ battedBall:
     STA enemy_oam + 7, Y
     STA enemy_oam + 15, Y
 
-    ; CLC
-    ; ADC #$08
-    ; STA enemy_oam + 7
-    ; STA enemy_oam + 15
+    JMP @break
 
-    ; LDA enemyY, X
+    @ballDown:
+    LDA enemy_oam + 3, Y    
 
-    LDA enemy_oam
+    SEC
+    ADC #$08
+
+    ; @horizontal:
+    
+    STA enemy_oam + 3, Y
+    STA enemy_oam + 11, Y
+
+    ; this sort of works
+    ; SBC #$08
+    ; BMI @stop
+    ; ADC #$10
+    ; BCS @stop
+
+    LDA enemy_oam + 7, Y
+
+    SEC
+    ADC #$08
+    STA enemy_oam + 7, Y
+    STA enemy_oam + 15, Y
+
+    JMP @break
+    ; veritical
+
+    @ballLeft:
+    LDA enemy_oam, Y
 
     SEC
     SBC #$04
-    STA enemy_oam
-    STA enemy_oam + 4
+    STA enemy_oam, Y
+    STA enemy_oam + 4, Y
+
+    SBC #$08
+    BMI @stop
+    ; ADC #$10
+    ; BCS @stop
 
     
-    LDA enemy_oam + 8
+    LDA enemy_oam + 8, Y
 
     SEC
     SBC #$04
-    STA enemy_oam + 8
-    STA enemy_oam + 12
+    STA enemy_oam + 8, Y
+    STA enemy_oam + 12, Y
 
-    ; PLA
-    ; TAY
+    @ballRight:
+    LDA enemy_oam, Y
+
+    SEC
+    SBC #$04
+    STA enemy_oam, Y
+    STA enemy_oam + 4, Y
+
+    SBC #$08
+    BMI @stop
+    ; ADC #$10
+    ; BCS @stop
+
+    
+    LDA enemy_oam + 8, Y
+
+    SEC
+    SBC #$04
+    STA enemy_oam + 8, Y
+    STA enemy_oam + 12, Y
 
     CLC
     TYA
     ADC #$10
     TAY
+
+    @break:
+    RTS
+
+    @stop:
+
+    LDA #$80
+    STA enemyX, X
+    LDA #$50
+    STA enemyY, X
+
+    LDA #$00
+    STA enemyState, X
 
     RTS
 
