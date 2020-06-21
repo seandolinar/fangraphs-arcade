@@ -10,19 +10,15 @@ battedBall:
 
     JMP @moveBallLeft ; RIGHT
 
-    ; horizontal
     @moveBallLeft:
     LDA enemy_oam + 3, Y    
 
     SEC
     SBC #$0c
-
-    ; @horizontal:
     
     STA enemy_oam + 3, Y
     STA enemy_oam + 11, Y
 
-    ; this sort of works
     SBC #$04
     BMI @stop
 
@@ -41,8 +37,6 @@ battedBall:
 
     CLC
     ADC #$0c
-
-    ; @horizontal:
     
     STA enemy_oam + 3, Y
     STA enemy_oam + 11, Y
@@ -55,11 +49,8 @@ battedBall:
     STA enemy_oam + 15, Y
 
     BCS @stop
-    ; ADC #$04
-    ; BCS @stop
-
+   
     JMP @break
-    ; veritical
 
     @moveBallDown:
     LDA enemy_oam, Y
