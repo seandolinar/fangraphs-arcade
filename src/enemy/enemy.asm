@@ -1,6 +1,7 @@
 ; Does this work? YES
 ; moved this up here because of 128 line branching limit
 mainAI:
+
     JSR runEnemyAI           ; should be the same sub for all enemies
 
     LDA enemyBufferDirectionCurrent
@@ -55,9 +56,24 @@ nextEnemyMovement:
     LDX #$04            ; how many enemies we have
     LDY #$00
 forEachEnemyMovement:
+
+    ; this bails out if we ever hit zero
+    ; might be a more elegant way to do this, but let's wait and see
+    CPX #$00
+    BNE @continue ; loops for other enemies
+    RTS
+
+    @continue:
     DEX
 
-enemyMovement:
+    ; this sorta works...we probably loop back around and that's an issue.
+    ; need to kill the loop after the last X
+    LDA enemyState, X
+    CMP #$01
+    BNE forEachEnemyMovement
+    
+
+    @enemyMovement:
     LDA enemyX, X
     STA enemyXBuffer            ; buffer is always temp within subroutines
     STA enemyXWork              ; work will not change, essentially a paramter of pickDirection

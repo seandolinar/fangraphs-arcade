@@ -83,8 +83,40 @@ checkCollisionSprites:
 
 ; this uses X from checkCollisionSprites
 resetOneEnemyPosition:
-    LDA #$80
+    LDA #$00
+    STA enemyState, X
+    ; LDA #$80
+    LDA #$00
     STA enemyX, X
-    LDA #$50
+    ; LDA #$50
     STA enemyY, X
+
+
+    ; so we'll need to increment by a lot here
+    ; probably have to save Y
+    ; this works
+    LDA #$10
+
+    SEC
+    SBC #$04
+    STA enemy_oam + 3
+    STA enemy_oam + 11
+
+    CLC
+    ADC #$08
+    STA enemy_oam + 7
+    STA enemy_oam + 15
+
+    LDA #$10
+
+    SEC
+    SBC #$04
+    STA enemy_oam
+    STA enemy_oam + 4
+
+    ADC #$06
+    LDA #$14
+    STA enemy_oam + 8
+    STA enemy_oam + 12
+
     RTS

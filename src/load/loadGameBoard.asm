@@ -138,6 +138,10 @@ STA animationTimer
 
 LDA #$01
 STA powerUpAvailable ; first base power up is loaded first
+STA enemyState
+STA enemyState + 1
+STA enemyState + 2
+STA enemyState + 3
 
 LDA #$19
 STA bufferBackgroundColor
@@ -193,47 +197,13 @@ countDots:
   STA $2005
   STA $2005
 
-  ; JSR InitMusic
-
+  ; if I ever implement music here
   ; LDA #$01
-  ; JSR FamiToneMusicPlay		;stop music
+  ; JSR FamiToneMusicPlay		
 
 
 JMP Main
 
-
-
-; might have to figure out what i'm doing here
-; took this from a sample program
-; this part is messing up sprites
-; InitMusic:
-
-; 	lda #$00
-; 	ldx #$00
-; Clear_Sound:
-; 	sta $4000,x
-; 	inx
-; 	cpx #$0F
-; 	bne Clear_Sound
-
-; 	lda #$10
-; 	sta $4010
-; 	lda #$00
-; 	sta $4011
-; 	sta $4012
-; 	STA $4013
-
-; 	lda #%00001111
-; 	STA $4015
-
-; 	lda #$C0
-; 	STA $4017
-
-; 	LDA #$00		; song number
-; 	ldx #$00		; 00 for NTSC or $01 for PAL
-; 	jsr $8000
-
-;   RTS
 
 
 FillBackground:

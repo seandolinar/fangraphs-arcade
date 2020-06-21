@@ -134,6 +134,8 @@ enemy2DirectionCurrent:	.res 1
 enemy3DirectionCurrent:	.res 1
 enemy4DirectionCurrent:	.res 1
 
+enemyState:				.res 4
+
 enemyXWork:						.res 1
 enemyYWork:						.res 1
 
@@ -184,6 +186,7 @@ scoreDigitBuffer:		.res 1
 scoreValue:				.res 1
 
 tempX1:					.res 1
+
 
 ; NES-defined RAM locations
 PPU_CTRL_REG1         	= $2000
