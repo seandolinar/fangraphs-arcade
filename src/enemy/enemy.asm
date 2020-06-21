@@ -2,26 +2,26 @@
 battedBall:
 ;enemy1DirectionCurrent
 
-    TYA
-    PHA
+    ; TYA
+    ; PHA
 
-    ; LDA enemyX, X
+    ; ; LDA enemyX, X
+    ; ; LDA #$00
+
+    ; TXA
+    ; TAY
+
     ; LDA #$00
+    ; CPY #$04
+    ; BEQ @dump
+    ; @loopGetOAMY:
+    ; ADC #$10
+    ; DEY
+    ; BNE @loopGetOAMY
 
-    TXA
-    TAY
-
-    LDA #$04
-    CPY #$04
-    BEQ @dump
-    @loopGetOAMY:
-    ADC #$10
-    DEY
-    BNE @loopGetOAMY
-
-    @dump:
-    TAY
-    LDY #$00
+    ; @dump:
+    ; TAY
+    ; LDY #$00
 
     LDA enemy_oam + 3, Y
 
@@ -45,18 +45,29 @@ battedBall:
 
     ; LDA enemyY, X
 
-    ; SEC
-    ; SBC #$04
-    ; STA enemy_oam
-    ; STA enemy_oam + 4
+    LDA enemy_oam
 
-    ; ADC #$06
-    ; ; LDA #$14
-    ; STA enemy_oam + 8
-    ; STA enemy_oam + 12
+    SEC
+    SBC #$04
+    STA enemy_oam
+    STA enemy_oam + 4
 
-    PLA
+    
+    LDA enemy_oam + 8
+
+    SEC
+    SBC #$04
+    STA enemy_oam + 8
+    STA enemy_oam + 12
+
+    ; PLA
+    ; TAY
+
+    CLC
+    TYA
+    ADC #$10
     TAY
+
     RTS
 
 
@@ -137,7 +148,6 @@ forEachEnemyMovement:
     ; i might need a lot of RAM
 
     JSR battedBall
-
     JMP forEachEnemyMovement
 
     
