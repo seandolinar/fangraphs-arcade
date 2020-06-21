@@ -11,12 +11,11 @@ battedBall:
     JMP @moveBallLeft ; RIGHT
 
     ; horizontal
-
-    @moveBallDown:
+    @moveBallLeft:
     LDA enemy_oam + 3, Y    
 
     SEC
-    SBC #$08
+    SBC #$0c
 
     ; @horizontal:
     
@@ -24,96 +23,90 @@ battedBall:
     STA enemy_oam + 11, Y
 
     ; this sort of works
-    ; SBC #$08
-    ; BMI @stop
-    ; ADC #$10
-    ; BCS @stop
+    SBC #$04
+    BMI @stop
 
     CLC
     LDA enemy_oam + 7, Y
 
     SEC
-    SBC #$08
+    SBC #$0c
     STA enemy_oam + 7, Y
     STA enemy_oam + 15, Y
 
     JMP @break
 
-    @moveBallUp:
+    @moveBallRight:
     LDA enemy_oam + 3, Y    
 
     CLC
-    ADC #$08
+    ADC #$0c
 
     ; @horizontal:
     
     STA enemy_oam + 3, Y
     STA enemy_oam + 11, Y
 
-    ; this sort of works
-    ; SBC #$08
-    ; BMI @stop
-    ; ADC #$10
-    ; BCS @stop
-
     LDA enemy_oam + 7, Y
 
     CLC
-    ADC #$08
+    ADC #$0c
     STA enemy_oam + 7, Y
     STA enemy_oam + 15, Y
+
+    BCS @stop
+    ; ADC #$04
+    ; BCS @stop
 
     JMP @break
     ; veritical
 
-    @moveBallRight:
+    @moveBallDown:
     LDA enemy_oam, Y
 
     CLC
-    ADC #$04
+    ADC #$0c
     STA enemy_oam, Y
     STA enemy_oam + 4, Y
 
-    ; AD #$08
-    ; BMI @stop
-    ; ADC #$10
-    ; BCS @stop
-
-    
     LDA enemy_oam + 8, Y
 
     CLC
-    ADC #$04
+    ADC #$0c
     STA enemy_oam + 8, Y
     STA enemy_oam + 12, Y
 
-    @moveBallLeft:
+    BCS @stop
+    ADC #$04
+    BCS @stop
+
+    JMP @break
+
+    @moveBallUp:
     LDA enemy_oam, Y
 
     SEC
-    SBC #$04
+    SBC #$0c
     STA enemy_oam, Y
     STA enemy_oam + 4, Y
 
-    ; SBC #$08
-    ; BMI @stop
-    ; ADC #$10
-    ; BCS @stop
-
-    
+    SBC #$04
+    BMI @stop
+   
     LDA enemy_oam + 8, Y
 
     SEC
-    SBC #$04
+    SBC #$0c
     STA enemy_oam + 8, Y
     STA enemy_oam + 12, Y
+   
 
+    @break:
     CLC
     TYA
     ADC #$10
     TAY
 
-    @break:
     RTS
 
     @stop:
