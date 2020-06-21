@@ -69,12 +69,12 @@ battedBall:
     LDA enemy_oam, Y
 
     SEC
-    SBC #$04
+    ADC #$04
     STA enemy_oam, Y
     STA enemy_oam + 4, Y
 
-    SBC #$08
-    BMI @stop
+    ; AD #$08
+    ; BMI @stop
     ; ADC #$10
     ; BCS @stop
 
@@ -82,7 +82,7 @@ battedBall:
     LDA enemy_oam + 8, Y
 
     SEC
-    SBC #$04
+    ADC #$04
     STA enemy_oam + 8, Y
     STA enemy_oam + 12, Y
 
@@ -94,8 +94,8 @@ battedBall:
     STA enemy_oam, Y
     STA enemy_oam + 4, Y
 
-    SBC #$08
-    BMI @stop
+    ; SBC #$08
+    ; BMI @stop
     ; ADC #$10
     ; BCS @stop
 
