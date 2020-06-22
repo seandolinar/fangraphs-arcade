@@ -95,7 +95,7 @@ removePowerUp:
 
 ; start the timer
 setTimerPowerUp:
-    LDA #$a0 ;#$40 ; 32 cycles of something
+    LDA #$60 ;#$40 ; 32 cycles of something
     STA powerUpTimer
     RTS
 
