@@ -12,6 +12,18 @@ loadGameOver:
   LDA #>game_over_screen
   STA backgroundPointerHi
 
+  JMP loadFullScreen
+
+loadWinScreen:
+  LDA #%00010000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+  STA PPUState
+
+  LDA #<round_win_screen
+  STA backgroundPointerLo
+  LDA #>round_win_screen
+  STA backgroundPointerHi
+
+loadFullScreen:
   ; need this for the FillBackground subroutine
   LDA #<nametable_buffer
   STA nametable_buffer_lo

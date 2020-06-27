@@ -42,7 +42,6 @@ InitialLoad:
   ;;; need to build this out for the pointer and stuff
   ;;; probably should just build out the compression here
   ;;; NAMETABLES
-  ; LDA #<game_board0
 
   LDA #<game_board0
   STA backgroundPointerLo
@@ -89,9 +88,6 @@ FillAttrib0:
   STA $2006             ; write the low byte of $23C0 address
 
   LDX #$00            
-  ; LDA #%11111101
-  ; LDA #%11101111
-  ; LDA #$00
 FillAttrib0Loop:
   LDA attribute_table, X
   STA $2007
@@ -142,7 +138,6 @@ STA enemyState + 3
 
 LDA #$01
 STA powerUpAvailable ; first base power up is loaded first
-
 
 LDA #$19
 STA bufferBackgroundColor
@@ -198,12 +193,7 @@ countDots:
   STA $2005
   STA $2005
 
-  ; if I ever implement music here
-  ; LDA #$01
-  ; JSR FamiToneMusicPlay		
-
-
-JMP Main
+  JMP Main
 
 
 

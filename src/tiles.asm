@@ -67,7 +67,7 @@ game_board0:
 .byte $01, $07, $04, $08, $02, $02, $07, $03,   $1f, $06, $06, $06, $0f, $03, $08, $07,    $03, $08, $07, $03, $03, $03, $03, $03,    $03, $03, $03, $08, $07, $04, $08, $01
 .byte $01, $07, $04, $08, $02, $02, $07, $03,   $08, $02, $02, $02, $07, $03, $08, $07,    $03, $08, $0b, $06, $06, $0f, $03, $1f,    $06, $06, $06, $0e, $07, $04, $08, $01
 .byte $01, $07, $04, $0a, $05, $05, $09, $03,   $0a, $05, $05, $05, $09, $03, $0a, $09,    $2e, $0a, $05, $05, $05, $09, $03, $0a,    $05, $05, $05, $05, $09, $04, $08, $01
-.byte $01, $07, $04, $04, $04, $04, $04, $04,   $04, $04, $04, $04, $04, $04, $04, $2d,    $3e, $2f, $04, $04, $04, $04, $04, $04,    $04, $04, $04, $04, $04, $04, $08, $01
+.byte $01, $07, $04, $04, $04, $04, $04, $04,   $04, $04, $04, $04, $04, $04, $04, $2d,    $3e, $2f, $34, $04, $04, $04, $04, $04,    $04, $04, $04, $04, $04, $04, $08, $01
 .byte $01, $0b, $06, $06, $06, $06, $06, $06,   $06, $06, $06, $06, $06, $06, $06, $06,    $4e, $06, $06, $06, $06, $06, $06, $06,    $06, $06, $06, $06, $06, $06, $0e, $01
 .byte $01, $01, $01, $01, $01, $01, $01, $01,   $01, $01, $01, $01, $01, $01, $01, $01,    $01, $01, $01, $01, $01, $01, $01, $01,    $01, $01, $01, $01, $01, $01, $01, $01   
 
@@ -154,8 +154,41 @@ game_over_screen:
 
 
 
-.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; hacky fix for accidentally overfilling the buff
-.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; I need to think about how to do that without 
-.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; taking up more space
-.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
+round_win_screen:
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $a2, $a3, $88,   $89, $a4, $a5, $a6, $a7, $ff, $a8, $a9,    $a2, $a3, $a2, $a3, $a8, $a9, $a2, $a3,    $8a, $8b, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $b2, $b3, $98,   $99, $b4, $b5, $b6, $b7, $ff, $b8, $b9,    $b2, $b3, $b2, $b3, $b8, $b9, $b2, $b3,    $9a, $9b, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $c0, $c1, $c2, $c3,    $c3, $ff, $c4, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+.byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,   $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff,    $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff   
+
+
+
+; .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; hacky fix for accidentally overfilling the buff
+; .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; I need to think about how to do that without 
+; .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff ; taking up more space
+; .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
+; .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff

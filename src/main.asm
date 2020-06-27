@@ -142,6 +142,8 @@ Main:
     CMP #$03
     BEQ resetHard
 
+    ; WIN
+
     LDA gamePlayerReset
     BNE Main
 

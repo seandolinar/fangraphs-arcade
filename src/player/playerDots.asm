@@ -151,8 +151,14 @@ checkWin:
     BNE @exit
 
     ; WIN color
-    LDA #$04
-    STA bufferBackgroundColor
+    ; LDA #$04
+    ; STA bufferBackgroundColor
+
+    LDA #$00  ; disable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+    STA $2000
+    STA $2001
+
+    JMP loadWinScreen
 
     @exit:
     RTS

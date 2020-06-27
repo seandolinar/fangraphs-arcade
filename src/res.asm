@@ -119,6 +119,7 @@ bufferBackgroundValLo:	.res 1
 bufferBackgroundValHi:	.res 1
 
 dotsLeft:				.res 1	;003D
+inning:					.res 1
 
 background_row:         .res $20
 data_x:                 .res 1
