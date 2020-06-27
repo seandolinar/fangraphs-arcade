@@ -82,26 +82,13 @@ checkCollisionSprites:
 
 
 ; this uses X from checkCollisionSprites
-resetOneEnemyPosition:
-
-
-
-    ; so we'll need to increment by a lot here
-    ; probably have to save Y
-    ; this works
-
-    ; how do we get this to animate?
-    ; do we pause?
-    ; do we call a different routine
-    
+resetOneEnemyPosition:    
     ; turn off the enemy active state
     LDA #$01
     STA enemyState, X
     
     LDA #$00
-    ; LDA #$80
     STA enemyX, X
-    ; LDA #$50
     STA enemyY, X
 
 

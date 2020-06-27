@@ -45,7 +45,12 @@ ClearMemory:
 
   LDA #$00
   STA controllerBits
+  STA inningDigit0
+  STA inningDigit1
 
+  LDA #$01
+  STA inning
+  STA inningDigit2
 
 
 
@@ -65,4 +70,3 @@ ClearMemory:
   STA PPUState
 
   JMP splashScreen
-; JMP InitialLoad

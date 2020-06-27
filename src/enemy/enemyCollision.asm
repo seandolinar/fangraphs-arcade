@@ -93,6 +93,7 @@ dumpSecondMultEnemy:
     BEQ collideEnemy
     INX
     JMP @loopBases2
+    ; might have to do something to increase to compare tilesDots
 
 
 collideEnemy:

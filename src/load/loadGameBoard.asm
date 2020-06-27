@@ -96,8 +96,6 @@ FillAttrib0Loop:
   BNE FillAttrib0Loop
 
 
-
-
   LDX $0a
   @loopClearScore:
   LDA #$00
@@ -118,6 +116,22 @@ FillAttrib0Loop:
 
   JSR playerReset
   JSR enemyReset
+
+
+  JSR startVramBuffer
+  INY                                 ; increments it
+
+  LDX tempX1
+  LDA #$20
+  STA (vram_lo), Y                    ; value should have the tile for the digit
+  INY
+
+  ; lo
+  STX tempX1
+  SEC
+  LDA #$93
+  SBC tempX1
+  STA (vram_lo), Y
 
 
 
@@ -161,7 +175,7 @@ countDots:
         CMP tilesDots, X
         BEQ @incDotCount
         INX
-        CPX #$06
+        CPX #$07
         BNE @loopCompareTilesDots
        
         LDX tempX                     ; unstash X

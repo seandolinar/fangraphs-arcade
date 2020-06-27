@@ -14,11 +14,6 @@ checkBackgroundCollisionLoop:
     ; fetch the metatitle index and do a compare?
     ; how does this scale to a 16x16 pixel meta tile?
 
-
-    ;LDA game_board0, X
-    ;CMP #$02
-    ;BEQ dumpCheckBackgroundCollisions
-
     ; put lower byte into RAM
     ; then store the high byte into X
 
@@ -60,10 +55,7 @@ m1:
     LDA #$00
     ADC playerPointerHi
     STA playerPointerHi
-    
-    ; BCC m2 ; branch on carry clear
-    ; INC playerPointerHi
-
+ 
 m2:
     LDA playerPointerHi 
     ASL                    ; needed to multiply the high byte
@@ -75,9 +67,7 @@ m2:
     LDA #$00
     ADC playerPointerHi
     STA playerPointerHi
-    ; BCC dumpFirstMult ; branch on carry clear
-    ; INC playerPointerHi
-
+ 
 ; what does this mean?
 dumpFirstMult:
     
@@ -104,9 +94,13 @@ dumpSecondMult:
     STA collisionBackgroundTile
 
     ; this is causing some issues i should spin this out so the subroutine can be used more
+    ; this checks for the dots, but the dots never change
+    ; this could cause other issues, plus I have to add in the extra blank tile
     CMP #$03
     BEQ @collideDotBranch
     CMP #$04
+    BEQ @collideDotBranch
+    CMP #$34
     BEQ @collideDotBranch
     
 
@@ -139,9 +133,6 @@ allowPass:
     INX
     INX
     ; why am I incrementing here
-
-    ; CPX #$18
-    ; BMI checkCollisionLoop
 
     LDA #$01
     STA collisionFlag
