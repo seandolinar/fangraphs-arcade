@@ -43,11 +43,50 @@ InitialLoad:
   ;;; probably should just build out the compression here
   ;;; NAMETABLES
 
+  ; maybe unify our loads
+
+  LDA inningDigit0
+  AND #$03
+
+  CMP #$01
+  BEQ @board1
+  CMP #$02
+  BEQ @board2
+  CMP #$03
+  BEQ @board3
+
   LDA #<game_board0
   STA backgroundPointerLo
   LDA #>game_board0
   STA backgroundPointerHi
 
+  JMP @continueBuffer
+
+  @board1:
+  LDA #<game_board1
+  STA backgroundPointerLo
+  LDA #>game_board1
+  STA backgroundPointerHi
+
+  JMP @continueBuffer
+
+  @board2:
+  LDA #<game_board2
+  STA backgroundPointerLo
+  LDA #>game_board2
+  STA backgroundPointerHi
+
+  JMP @continueBuffer
+
+  @board3:
+  LDA #<game_board3
+  STA backgroundPointerLo
+  LDA #>game_board3
+  STA backgroundPointerHi
+
+  JMP @continueBuffer
+
+  @continueBuffer:
   LDA #<nametable_buffer
   STA nametable_buffer_lo
   LDA #>nametable_buffer
@@ -116,6 +155,8 @@ FillAttrib0Loop:
 
   JSR playerReset
   JSR enemyReset
+
+  JSR updateScore
 
 
   JSR startVramBuffer
@@ -206,6 +247,8 @@ countDots:
             INX
             CPX #$04
             BNE countDotsLoopInner 
+
+
    
   ; STARTS VIDEO DISPLAY
   LDA #%10000000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1

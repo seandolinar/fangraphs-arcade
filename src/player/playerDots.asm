@@ -144,16 +144,21 @@ collideDot:
 
 ; not sure why we are putting this here
 checkWin:
+
+    ; !!DEBUG
+    LDA controllerBits
+    AND #CONTROL_P1_B
+    BNE @win
+    ; DEBUG!!
+
     LDA dotsLeft
     BNE @exit
     LDA powerUpAvailable
     CMP #$05
     BNE @exit
 
-    ; WIN color
-    ; LDA #$04
-    ; STA bufferBackgroundColor
 
+    @win:
     LDA #$00  ; disable NMI, sprites from Pattern Table 0, background from Pattern Table 1
     STA $2000
     STA $2001

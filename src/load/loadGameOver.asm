@@ -14,8 +14,31 @@ loadGameOver:
 
   JSR loadFullScreen
 
+  ; RESETS
   LDA #$19
   STA bufferBackgroundColor
+
+  LDA #$00
+  STA inningDigit1
+  STA inningDigit2
+  STA scoreDigit0
+  STA scoreDigit1
+  STA scoreDigit2
+  STA scoreDigit3
+  ; STA scoreDigit4 ; why don't I have 4?
+  STA scoreDigit5
+  STA scoreDigit6
+  STA scoreDigit7
+  STA scoreDigit8
+
+
+
+
+
+  LDA #$01
+  STA inningDigit0
+
+  
 
   JMP InitialLoad
 
@@ -37,11 +60,47 @@ loadWinScreen:
   LDA #>round_win_screen
   STA backgroundPointerHi
 
+
+
   JSR loadFullScreen
 
-  LDA #$04
+  ; how to get every 4? just divide by 4?
+  ; how does 0 - 3 work 
+  LDA inningDigit0
+  AND #$03
+
+  CMP #$01
+  BEQ @board1
+  CMP #$02
+  BEQ @board2
+  CMP #$03
+  BEQ @board3
+
+  STA $98
+
+  ; GAME BOARD 0
+  @board0:
+  LDA #$00
+  STA bufferBackgroundColor
+  JMP @break
+
+  @board1:
+  LDA #$19
+  STA bufferBackgroundColor
+  JMP @break
+
+  @board2:
+  LDA #$14
+  STA bufferBackgroundColor
+  JMP @break
+
+  @board3:
+  LDA #$12
   STA bufferBackgroundColor
 
+
+
+  @break:
   JMP InitialLoad
 
 loadFullScreen:

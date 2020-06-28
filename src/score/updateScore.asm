@@ -65,17 +65,12 @@ updateScore:
     LDA scoreDigit0, X                  ; digits are indexed on 0
     STA scoreDigitBuffer
 
-    ; TXA
-    ; PHA
     INY
 
      ; X controls the digit
     LDX scoreDigitBuffer
     LDA NUM, X                          ; digit buffer is transformed into tile
     STA (vram_lo), Y
-
-    ; PLA
-    ; TAX
 
     LDX tempX1
 

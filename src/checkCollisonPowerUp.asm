@@ -81,8 +81,6 @@ removePowerUp:
     LDA #$34
     STA (vram_lo), Y
 
-    ; INY
-
     STY vram_buffer_offset
 
     PLA
