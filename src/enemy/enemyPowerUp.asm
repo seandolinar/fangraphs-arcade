@@ -98,7 +98,7 @@ changeEnemyColorPowerUp:
 
     RTS
 
-    
+; maybe make a reset color one instead of 1    
 resetEnemyColorLoop:
     LDX #$00
     @loop:

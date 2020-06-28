@@ -1,5 +1,19 @@
 
 battedBall:
+
+    ; this does every other frame
+    ; need to put in other values into the pallette
+    ; at least the one color...
+    ; or we load in different colors into one pallette and switch between that somewhere else
+    LDA frameTimer
+    AND #$01
+
+    STA enemy_oam + 2, Y
+    STA enemy_oam + 6, Y
+    STA enemy_oam + 10, Y
+    STA enemy_oam + 14, Y
+
+
     LDA enemy1DirectionCurrent, X
     CMP #$01 ; UP
     BEQ @moveBallDown
