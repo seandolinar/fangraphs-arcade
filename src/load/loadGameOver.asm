@@ -12,9 +12,23 @@ loadGameOver:
   LDA #>game_over_screen
   STA backgroundPointerHi
 
-  JMP loadFullScreen
+  JSR loadFullScreen
+
+  LDA #$19
+  STA bufferBackgroundColor
+
+  JMP InitialLoad
+
+
 
 loadWinScreen:
+  CLC
+  LDA inningDigit0
+  ADC #$01
+  STA inningDigit0
+
+  
+
   LDA #%00010000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
   STA PPUState
 
@@ -22,6 +36,13 @@ loadWinScreen:
   STA backgroundPointerLo
   LDA #>round_win_screen
   STA backgroundPointerHi
+
+  JSR loadFullScreen
+
+  LDA #$04
+  STA bufferBackgroundColor
+
+  JMP InitialLoad
 
 loadFullScreen:
   ; need this for the FillBackground subroutine
@@ -99,4 +120,4 @@ LDX #$00                ; start out at 0
 	STA $2001               ; disable rendering
 
 
-  JMP InitialLoad
+  RTS

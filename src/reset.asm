@@ -45,12 +45,16 @@ ClearMemory:
 
   LDA #$00
   STA controllerBits
-  STA inningDigit0
   STA inningDigit1
+  STA inningDigit2
 
   LDA #$01
   STA inning
-  STA inningDigit2
+  STA inningDigit0
+
+
+  LDA #$19
+  STA bufferBackgroundColor
 
 
 

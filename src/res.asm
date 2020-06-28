@@ -186,7 +186,7 @@ scoreDigit8:			.res 1
 scoreDigitBuffer:		.res 1
 scoreValue:				.res 1
 
-inningDigit0:			.res 1
+inningDigit0:			.res 1 ; 0096?
 inningDigit1:			.res 1
 inningDigit2:			.res 1
 

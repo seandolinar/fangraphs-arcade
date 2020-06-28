@@ -96,7 +96,7 @@ FillAttrib0Loop:
   BNE FillAttrib0Loop
 
 
-  LDX $0a
+  LDX $08
   @loopClearScore:
   LDA #$00
   STA scoreDigit0, X
@@ -121,7 +121,10 @@ FillAttrib0Loop:
   JSR startVramBuffer
   INY                                 ; increments it
 
-  LDX tempX1
+  ; LDA #$05
+  ; STA inningDigit0
+
+  ; LDX tempX1
   LDA #$20
   STA (vram_lo), Y                    ; value should have the tile for the digit
   INY
@@ -129,8 +132,21 @@ FillAttrib0Loop:
   ; lo
   STX tempX1
   SEC
-  LDA #$93
-  SBC tempX1
+  LDA #$d3
+  ; SBC tempX1
+  STA (vram_lo), Y
+
+  ; LDX inningDigit0
+  ; LDX #$04
+  LDX #$00 ; 0 because I'm only do 1 digit right now
+  LDA inningDigit0 , X                  ; digits are indexed on 0
+  STA tempX
+
+  INY
+
+     ; X controls the digit
+  LDX tempX
+  LDA NUM, X                          ; digit buffer is transformed into tile
   STA (vram_lo), Y
 
 
@@ -153,9 +169,6 @@ STA enemyState + 3
 LDA #$01
 STA powerUpAvailable ; first base power up is loaded first
 
-LDA #$19
-STA bufferBackgroundColor
-
 countDots:
 
     LDA #<nametable_buffer
@@ -175,7 +188,7 @@ countDots:
         CMP tilesDots, X
         BEQ @incDotCount
         INX
-        CPX #$07
+        CPX #$06
         BNE @loopCompareTilesDots
        
         LDX tempX                     ; unstash X

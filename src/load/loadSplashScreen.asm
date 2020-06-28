@@ -74,6 +74,9 @@ LDX #$00                ; start out at 0
 
   BEQ @loop
 
+  LDA #$19
+  STA bufferBackgroundColor
+
   jsr FamiToneMusicStop		;stop music
 
   LDA #$00
