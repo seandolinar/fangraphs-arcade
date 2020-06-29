@@ -41,6 +41,7 @@ changeEnemyColor:
     LDA #$1f
     STA (vram_lo), Y
 
+    ; pallete changes for flashing ball 
     INY
     LDA #$25
     STA (vram_lo), Y
@@ -88,6 +89,31 @@ changeEnemyColorPowerUp:
     INY
     LDA #$20
     STA (vram_lo), Y
+
+    INY
+    LDA #$3F
+    STA (vram_lo), Y
+
+    INY
+    LDA #$13
+    STA (vram_lo), Y
+
+    INY
+    LDA #$20
+    STA (vram_lo), Y
+
+    INY
+    LDA #$3F
+    STA (vram_lo), Y
+
+    INY
+    LDA #$17
+    STA (vram_lo), Y
+
+    INY
+    LDA #$21
+    STA (vram_lo), Y
+
 
     STY vram_buffer_offset
 
