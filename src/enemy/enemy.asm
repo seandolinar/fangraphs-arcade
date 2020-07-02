@@ -2,12 +2,18 @@
 battedBall:
 
     ; this does every other frame
-    ; need to put in other values into the pallette
+    ; need to put in other values into the palette
     ; at least the one color...
-    ; or we load in different colors into one pallette and switch between that somewhere else
+    ; or we load in different colors into one palette and switch between that somewhere else
     LDA frameTimer
-    AND #$01
+    STA consoleLog
 
+    AND #$01
+    ; LDA enemy_oam + 2, Y
+    ; AND #$01
+
+    ; palette
+    ; it is either 0 or 1
     STA enemy_oam + 2, Y
     STA enemy_oam + 6, Y
     STA enemy_oam + 10, Y
@@ -120,6 +126,13 @@ battedBall:
     STA enemyX, X
     LDA #$50
     STA enemyY, X
+
+    LDA #$03
+
+    STA enemy_oam + 2, Y
+    STA enemy_oam + 6, Y
+    STA enemy_oam + 10, Y
+    STA enemy_oam + 14, Y
 
     LDA #$00
     STA enemyState, X

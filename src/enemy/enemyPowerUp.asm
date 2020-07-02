@@ -46,6 +46,31 @@ changeEnemyColor:
     LDA #$25
     STA (vram_lo), Y
 
+    ;;;
+    INY
+    LDA #$3F
+    STA (vram_lo), Y
+
+    INY
+    LDA #$13
+    STA (vram_lo), Y
+
+    INY
+    LDA #$21
+    STA (vram_lo), Y
+
+    INY
+    LDA #$3F
+    STA (vram_lo), Y
+
+    INY
+    LDA #$13
+    STA (vram_lo), Y
+
+    INY
+    LDA #$21
+    STA (vram_lo), Y
+
     STY vram_buffer_offset
 
     @exit:
@@ -65,6 +90,7 @@ changeEnemyColorPowerUp:
     JSR startVramBuffer
     INY
 
+    ;;
     LDA #$3F
     STA (vram_lo), Y
 
@@ -86,10 +112,12 @@ changeEnemyColorPowerUp:
     LDA #$1f
     STA (vram_lo), Y
 
+    
     INY
     LDA #$20
     STA (vram_lo), Y
-
+    
+    ;;;
     INY
     LDA #$3F
     STA (vram_lo), Y
@@ -98,10 +126,12 @@ changeEnemyColorPowerUp:
     LDA #$13
     STA (vram_lo), Y
 
+    
     INY
     LDA #$20
     STA (vram_lo), Y
 
+    ;;;
     INY
     LDA #$3F
     STA (vram_lo), Y
@@ -111,7 +141,7 @@ changeEnemyColorPowerUp:
     STA (vram_lo), Y
 
     INY
-    LDA #$21
+    LDA #$26
     STA (vram_lo), Y
 
 
