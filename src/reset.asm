@@ -6,16 +6,10 @@ RESET:
 	STA $2000 ; disable NMI
   LDA #$00
 	STA $2001 ; disable rendering
-	; STA $4015 ; disable APU sound
 	STA $4010 ; disable DMC IRQ
-  ; STA $4017 ; disable APU IRQ
 	CLD       ; disable decimal mode
 	LDX #$FF
 	TXS       ; initialize stack
-
-  ; ENABLE SOUND
-  ; LDA #%00000001
-  ; LDA $4015 ;enable square 1
 
   ; CLEAR MEMORY
   LDX $00
@@ -37,12 +31,6 @@ ClearMemory:
         BIT $2002
 		BPL WarmUp
 
-     ; STARTS VIDEO DISPLAY
-  ; LDA #%10000000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
-  ; STA $2000 ;;;;; THIS WORKS!!! UGH
-  ; STA PPUState ; need this state for the update to work on Nestopia
-
-
   LDA #$01
   STA inning
   STA inningDigit0
@@ -63,16 +51,8 @@ ClearMemory:
   STA scoreDigit8
   STA scoreValue
 
-
-
-
-
-
-
   LDA #$19
   STA bufferBackgroundColor
-
-
 
   ldx #<fg_arcade_music_music_data	;initialize using the first song data, as it contains the DPCM sound effect
 	ldy #>fg_arcade_music_music_data
