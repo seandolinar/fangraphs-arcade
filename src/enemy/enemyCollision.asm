@@ -6,11 +6,50 @@ newCheckBackgroundCollisionEnemy:
     LDA #$00
     STA collisionFlagEnemy
 
+    ; can I blow away X?
+    LDA inningDigit0
+    AND #$03
+
+    CMP #$01
+    BEQ @board1
+    CMP #$02
+    BEQ @board2
+    CMP #$03
+    BEQ @board3
+
     LDA #<game_board0
     STA collisionPointerLoEnemy
     LDA #>game_board0
     STA collisionPointerHiEnemy
 
+    JMP @continue
+
+    @board1:
+
+    LDA #<game_board1
+    STA collisionPointerLoEnemy
+    LDA #>game_board1
+    STA collisionPointerHiEnemy
+
+    JMP @continue
+
+    @board2:
+
+    LDA #<game_board2
+    STA collisionPointerLoEnemy
+    LDA #>game_board2
+    STA collisionPointerHiEnemy
+
+    JMP @continue
+
+    @board3:
+
+    LDA #<game_board3
+    STA collisionPointerLoEnemy
+    LDA #>game_board3
+    STA collisionPointerHiEnemy
+
+    @continue:
     CLC
     LDA enemyXBuffer
     LSR                         ; divide / 2 / 2 / 2
