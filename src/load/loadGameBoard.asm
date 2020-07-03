@@ -147,7 +147,6 @@ FillAttrib0Loop:
   ;CLEAR BUFFER
   JSR clearVRAMBuffer
 
-
   ;INITIAL VARS
   LDA #$00
   STA controllerTimer
@@ -158,14 +157,9 @@ FillAttrib0Loop:
 
   JSR updateScore
 
-
   JSR startVramBuffer
   INY                                 ; increments it
 
-  ; LDA #$05
-  ; STA inningDigit0
-
-  ; LDX tempX1
   LDA #$20
   STA (vram_lo), Y                    ; value should have the tile for the digit
   INY
@@ -189,8 +183,6 @@ FillAttrib0Loop:
   LDX tempX
   LDA NUM, X                          ; digit buffer is transformed into tile
   STA (vram_lo), Y
-
-
 
 ; initial parameters
 ; can make this into a looping array?

@@ -43,14 +43,30 @@ ClearMemory:
   ; STA PPUState ; need this state for the update to work on Nestopia
 
 
+  LDA #$01
+  STA inning
+  STA inningDigit0
+
+
   LDA #$00
   STA controllerBits
   STA inningDigit1
   STA inningDigit2
+  STA scoreDigit0
+  STA scoreDigit1
+  STA scoreDigit2
+  STA scoreDigit3
+  ; STA scoreDigit4
+  STA scoreDigit5
+  STA scoreDigit6
+  STA scoreDigit7
+  STA scoreDigit8
+  STA scoreValue
 
-  LDA #$01
-  STA inning
-  STA inningDigit0
+
+
+
+
 
 
   LDA #$19

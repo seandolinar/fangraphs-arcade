@@ -65,13 +65,12 @@ LDX #$00                ; start out at 0
   STA $2005
   STA $2005
 
-
   @loop:
-
   JSR readController
   LDA controllerBits
+  EOR controllerBitsPrev ; difference in buttons
+  AND controllerBits
   AND #CONTROL_P1_A
-
   BEQ @loop
 
   LDA #$19
@@ -82,6 +81,5 @@ LDX #$00                ; start out at 0
   LDA #$00
 	STA $2000               ; disable NMI
 	STA $2001               ; disable rendering
-
 
   JMP InitialLoad

@@ -19,8 +19,8 @@ loadGameOver:
   STA bufferBackgroundColor
 
   LDA #$00
-  STA inningDigit1
-  STA inningDigit2
+  ; STA inningDigit1
+  ; STA inningDigit2
   STA scoreDigit0
   STA scoreDigit1
   STA scoreDigit2
@@ -32,21 +32,16 @@ loadGameOver:
   STA scoreDigit8
 
 
-
-
-
   LDA #$01
   STA inningDigit0
-
-  
 
   JMP InitialLoad
 
 
 
 loadWinScreen:
-  CLC
   LDA inningDigit0
+  CLC
   ADC #$01
   STA inningDigit0
 
