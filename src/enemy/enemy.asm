@@ -124,7 +124,7 @@ battedBall:
 
     LDA #$80
     STA enemyX, X
-    LDA #$50
+    LDA #$40
     STA enemyY, X
 
     LDA #$03
@@ -213,10 +213,14 @@ forEachEnemyMovement:
     LDA enemyState, X ; we could use the state to store information
     CMP #$00
     BEQ @enemyMovement
+    CMP #$ff
+    BEQ @halt
     ; call something else here then JMP forEachEnemyMovement
     ; i might need a lot of RAM
 
     JSR battedBall
+
+    @halt:
     JMP forEachEnemyMovement
 
     

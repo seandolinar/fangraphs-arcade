@@ -2,6 +2,20 @@ openEnemyDoor:
     JSR startVramBuffer
     INY
     
+
+    ; LDA #$21
+    ; STA (vram_lo), Y
+
+    ; INY
+    ; LDA #$0f
+    ; STA (vram_lo), Y
+
+    ; INY
+    ; LDA #$02
+    ; STA (vram_lo), Y
+
+    ;;;
+    INY
     LDA #$21
     STA (vram_lo), Y
 
@@ -12,6 +26,19 @@ openEnemyDoor:
     INY
     LDA #$02
     STA (vram_lo), Y
+
+    ;;;
+    ; INY
+    ; LDA #$21
+    ; STA (vram_lo), Y
+
+    ; INY
+    ; LDA #$11
+    ; STA (vram_lo), Y
+
+    ; INY
+    ; LDA #$02
+    ; STA (vram_lo), Y
 
     STY vram_buffer_offset
 

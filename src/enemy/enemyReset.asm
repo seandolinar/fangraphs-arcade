@@ -1,7 +1,7 @@
 enemyReset:
   LDA #$80
   STA enemyX
-  LDA #$38
+  LDA #$40
   STA enemyY
 
   LDA #$03
