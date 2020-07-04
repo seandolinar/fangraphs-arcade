@@ -171,10 +171,14 @@ scoreDigit0:			.res 1 ; 008e
 scoreDigit1:			.res 1 ; 008f
 scoreDigit2:			.res 1 ; 0090
 scoreDigit3:			.res 1 ; 0091
+scoreDigit4:			.res 1
 scoreDigit5:			.res 1
 scoreDigit6:			.res 1
 scoreDigit7:			.res 1
 scoreDigit8:			.res 1
+scoreDigit9:			.res 1
+scoreDigit10:			.res 1
+scoreDigit11:			.res 1
 scoreDigitBuffer:		.res 1
 scoreValue:				.res 1
 

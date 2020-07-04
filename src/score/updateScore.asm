@@ -3,12 +3,6 @@ updateScore:
     TXA
     PHA
 
-    ; how to get digits from a byte?
-    ; do I have to do a bunch of cmp and subtractions?
-    ; or loop division?
-    ; use a lsr and divide by 5?
-    ;128
-
     ; alterative 0 + 12 becomes $12 divide by 
     CLC
     LDA scoreDigit0
@@ -75,7 +69,7 @@ updateScore:
     LDX tempX1
 
     INX
-    CPX #$06
+    CPX #$08
     BEQ @dump
     INY
 

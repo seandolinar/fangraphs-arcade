@@ -33,8 +33,6 @@ collideDot:
     JSR soundDot
     DEC dotsLeft
 
-    ; add to $2000
-    ; finds the address for the name table
     TYA
     PHA
     LDY #$00
@@ -97,14 +95,11 @@ collideDot:
     STA bufferBackgroundTile
     JMP @continueTile
 
-  
-
     ; green tile
     @continueTile:
     ; this affects the RAM map of the background
     LDA #$02
     STA (bufferBackgroundValLo), Y
-
 
     CLC
     LDA playerPointerLo
@@ -129,13 +124,12 @@ collideDot:
     LDA bufferBackgroundTile
     STA (vram_lo), Y
 
-    ; INY
     STY vram_buffer_offset
 
     PLA
     TAY
 
-    LDA #$01
+    LDA #$05
     STA scoreValue
     JSR updateScore
 
