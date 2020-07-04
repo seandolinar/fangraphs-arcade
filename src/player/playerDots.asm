@@ -159,6 +159,8 @@ checkWin:
 
 
     @win:
+    JSR FamiToneMusicStop		; stop music
+
     LDA #$00  ; disable NMI, sprites from Pattern Table 0, background from Pattern Table 1
     STA $2000
     STA $2001

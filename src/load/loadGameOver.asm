@@ -40,6 +40,13 @@ loadGameOver:
 
 
 loadWinScreen:
+
+  ; LDA #$00
+
+  ; ldx #FT_SFX_CH0
+	; jsr FamiToneSfxPlay
+
+
   LDA inningDigit0
   CLC
   ADC #$01
