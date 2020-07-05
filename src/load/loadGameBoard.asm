@@ -95,27 +95,27 @@ InitialLoad:
   JSR FillBackground
 
 
-;; HAVE TO Reunderstand this
-;; LOADING PALETTE
-LDA $2002    ; read PPU status to reset the high/low latch to high
+  ;; HAVE TO Reunderstand this
+  ;; LOADING PALETTE
+  LDA $2002    ; read PPU status to reset the high/low latch to high
 
-LDA #$3F
-STA $2006    ; write the high byte of $3F10 address
-LDA #$10
-STA $2006    ; write the low byte of $3F10 address
+  LDA #$3F
+  STA $2006    ; write the high byte of $3F10 address
+  LDA #$10
+  STA $2006    ; write the low byte of $3F10 address
 
 
-LDX #$00                ; start out at 0
-LoadPalettesLoop:
-  LDA pallete, X      ; load data from address (PaletteData + the value in x)
-                          ; 1st time through loop it will load PaletteData+0
-                          ; 2nd time through loop it will load PaletteData+1
-                          ; 3rd time through loop it will load PaletteData+2
-                          ; etc
-  STA $2007               ; write to PPU
-  INX                     ; X = X + 1
-  CPX #$20               ; Compare X to hex $20, decimal 32
-  BNE LoadPalettesLoop 
+  LDX #$00                ; start out at 0
+  LoadPalettesLoop:
+    LDA pallete, X      ; load data from address (PaletteData + the value in x)
+                            ; 1st time through loop it will load PaletteData+0
+                            ; 2nd time through loop it will load PaletteData+1
+                            ; 3rd time through loop it will load PaletteData+2
+                            ; etc
+    STA $2007               ; write to PPU
+    INX                     ; X = X + 1
+    CPX #$20               ; Compare X to hex $20, decimal 32
+    BNE LoadPalettesLoop 
 
 
 ; putting this after fixes things
@@ -168,11 +168,8 @@ FillAttrib0Loop:
   STX tempX1
   SEC
   LDA #$d3
-  ; SBC tempX1
   STA (vram_lo), Y
 
-  ; LDX inningDigit0
-  ; LDX #$04
   LDX #$00 ; 0 because I'm only do 1 digit right now
   LDA inningDigit0 , X                  ; digits are indexed on 0
   STA tempX

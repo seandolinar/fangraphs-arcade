@@ -52,10 +52,12 @@ loadWinScreen:
   ADC #$01
   STA inningDigit0
 
-  
+  LDA #$00
+  STA $2001
 
-  LDA #%00010000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+  LDA #%00010000   ; disables the NMI and puts the background into bank 1
   STA PPUState
+  STA $2000
 
   LDA #<round_win_screen
   STA backgroundPointerLo
@@ -99,7 +101,6 @@ loadWinScreen:
   @board3:
   LDA #$12
   STA bufferBackgroundColor
-
 
 
   @break:
@@ -158,15 +159,17 @@ LDX #$00                ; start out at 0
   LDA #$1D
   STA bufferBackgroundColor
 
+  LDA #$00
+  STA $2005
+  STA $2005
+
   LDA PPUState
   STA $2000
 
   LDA #%00001110   ; enable sprites, enable background, no clipping on left side
   STA $2001
 
-  LDA #$00
-  STA $2005
-  STA $2005
+  
 
   @loop:
 
