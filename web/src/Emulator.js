@@ -6,8 +6,12 @@ import { NES } from "jsnes";
 import FrameTimer from "./FrameTimer";
 import GamepadController from "./GamepadController";
 import KeyboardController from "./KeyboardController";
+import VirtualGamePadController from './VirtualGamePadController';
 import Screen from "./Screen";
 import Speakers from "./Speakers";
+
+import { Controller } from "jsnes";
+
 
 /*
  * Runs the emulator.
@@ -17,7 +21,24 @@ import Speakers from "./Speakers";
  */
 class Emulator extends Component {
   render() {
+    // console.log(this.nes)
+    // let Vgpd =  null;
+    
+    // if (!!this.nes) {
+    //   console.log('yes')
+      
+    // }
+
+    const Vgpd = <VirtualGamePadController 
+      onButtonDown={(a, b) => {
+        console.log(this.nes)
+        this.nes.buttonDown(1, Controller.BUTTON_A) }}
+      onButtonUp={(a, b) => this.nes.buttonUp(1, Controller.BUTTON_A) }
+    />
+    
+
     return (
+      <>
       <Screen
         ref={screen => {
           this.screen = screen;
@@ -33,6 +54,12 @@ class Emulator extends Component {
           this.nes.zapperFireUp();
         }}
       />
+      {Vgpd}
+      <div
+        onMouseDown={() => this.nes.buttonDown(1, Controller.BUTTON_A)}
+        onMouseUp={() => this.nes.buttonUp(1, Controller.BUTTON_A)}
+      >Another Button</div>
+      </>
     );
   }
 
@@ -100,6 +127,15 @@ class Emulator extends Component {
         this.nes.buttonUp
       )
     });
+
+    // this.virtualGamePadController = VirtualGamePadController({
+    //   onButtonDown: this.gamepadController.disableIfGamepadEnabled(
+    //     this.nes.buttonDown
+    //   ),
+    //   onButtonUp: this.gamepadController.disableIfGamepadEnabled(
+    //     this.nes.buttonUp
+    //   )
+    // });
 
     // Load keys from localStorage (if they exist)
     this.keyboardController.loadKeys();

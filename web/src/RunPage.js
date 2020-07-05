@@ -8,6 +8,8 @@ import Emulator from "./Emulator";
 import RomLibrary from "./RomLibrary";
 import { loadBinary } from "./utils";
 
+import VirtualGamePadButton from './VirtualGamePadButton';
+
 import "./RunPage.css";
 
 /*
@@ -75,11 +77,9 @@ class RunPage extends Component {
           this.state.error
         ) : (
           <div style={{width: '100%', height: 'auto', maxWidth: 800, border: '5px solid brown'}}>
-            <div onClick={() => {
-              document.dispatchEvent(new KeyboardEvent('keydown',{'keyCode': 88}))
+                       <div onClick={() => {
               document.dispatchEvent(new KeyboardEvent('keydown',{'keyCode': 88}))
             }}>BUTTON</div>
-          <input id="test" type="text"></input>
           <div
             className="screen-container"
             ref={el => {
@@ -108,7 +108,7 @@ class RunPage extends Component {
             ) : null}
 
             {/* TODO: lift keyboard and gamepad state up */}
-            {this.state.controlsModalOpen && (
+            {/* {this.state.controlsModalOpen && (
               <ControlsModal
                 isOpen={this.state.controlsModalOpen}
                 toggle={this.toggleControlsModal}
@@ -120,10 +120,11 @@ class RunPage extends Component {
                   this.emulator.gamepadController.setGamepadConfig
                 }
               />
-            )}
+            )} */}
           </div>
           </div>
         )}
+        <VirtualGamePadButton />
       </div>
     );
   }
