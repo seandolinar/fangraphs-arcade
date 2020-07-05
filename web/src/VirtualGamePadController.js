@@ -1,5 +1,8 @@
 import React from 'react';
 import { Controller } from "jsnes";
+import VirtualGamePadButton from './VirtualGamePadButton';
+
+import './VirtualGamePadController.css';
 
 // Mapping keyboard code to [controller, button]
 // const KEYS = {
@@ -29,15 +32,64 @@ export default class VirtualGamePadController extends React.Component {
         this.onButtonUp = options.onButtonUp;
     }
 
-    // this.onButtonUp(key[0], key[1]);
     render () {
-        return <div 
-            onMouseDown={() => {
-                this.onButtonDown(1, Controller.BUTTON_A);
-            }}
-            onMouseUp={() => {
-                this.onButtonUp(1, Controller.BUTTON_A);
-            }}
-        >BUTTON_A</div>;
+
+        return <div className="virtual-game-pad-controller">
+            <div className="virtual-game-pad-controller__group-dpad">
+                <VirtualGamePadButton 
+                    button={Controller.BUTTON_UP}
+                    className="button-action"
+                    onButtonDown={this.onButtonDown}
+                    onButtonUp={this.onButtonUp}
+                />
+                <VirtualGamePadButton 
+                    button={Controller.BUTTON_RIGHT}
+                    className="button-action"
+                    onButtonDown={this.onButtonDown}
+                    onButtonUp={this.onButtonUp}
+                />
+                <VirtualGamePadButton 
+                    button={Controller.BUTTON_DOWN}
+                    className="button-action"
+                    onButtonDown={this.onButtonDown}
+                    onButtonUp={this.onButtonUp}
+                />
+                <VirtualGamePadButton 
+                    button={Controller.BUTTON_LEFT}
+                    className="button-action"
+                    onButtonDown={this.onButtonDown}
+                    onButtonUp={this.onButtonUp}
+                />
+            </div>
+            <div className="virtual-game-pad-controller__group-start-select">
+                <VirtualGamePadButton 
+                    button={Controller.BUTTON_SELECT}
+                    className="button-action"
+                    onButtonDown={this.onButtonDown}
+                    onButtonUp={this.onButtonUp}
+                />
+                <VirtualGamePadButton 
+                    button={Controller.BUTTON_START}
+                    className="button-action"
+                    onButtonDown={this.onButtonDown}
+                    onButtonUp={this.onButtonUp}
+                />
+            </div>
+            <div className="virtual-game-pad-controller__group-action">
+                <VirtualGamePadButton 
+                    button={Controller.BUTTON_B}
+                    className="button-action"
+                    onButtonDown={this.onButtonDown}
+                    onButtonUp={this.onButtonUp}
+                />
+                <VirtualGamePadButton 
+                    button={Controller.BUTTON_A}
+                    className="button-action"
+                    onButtonDown={this.onButtonDown}
+                    onButtonUp={this.onButtonUp}
+                />
+            </div>
+            
+        </div>;
     } 
 }

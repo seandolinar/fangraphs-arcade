@@ -3,22 +3,19 @@ import React from "react";
 import "./VirtualGamePadButton.css";
 
 const VirtualGamePadButton = ({
-    buttonType,
-    keyCode,
+    button,
+    className='',
+    controller=1,
+    onButtonDown,
+    onButtonUp
 }) => {
 
-    const onClick = () => {
-        console.log('click')
-        document.dispatchEvent(new KeyboardEvent('keydown',{ 'keyCode': 88 }));
-        document.dispatchEvent(new KeyboardEvent('keydown',{ 'keyCode': 88 }));
-    };
-
-    
-
-    return <div className="virtual-game-pad__button"
-        onClick={onClick}
-    >
-        hi
+    return <div className={`virtual-game-pad__button__wrapper ${className}`}>
+        <div className="virtual-game-pad__button"
+            onMouseDown={() => onButtonDown(controller, button)}
+            onMouseUp={() => onButtonUp(controller, button)}
+        >
+        </div>
     </div>;
 };
 

@@ -1,0 +1,21 @@
+.virtual-game-pad-controller {
+    display: flex;
+    background-color: #888;
+    max-width: 500px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.virtual-game-pad-controller__group-dpad {
+    flex: 0 0 33.3333%;
+}
+
+.virtual-game-pad-controller__group-start-select {
+    flex: 0 0 33.3333%;
+}
+
+.virtual-game-pad-controller__group-action {
+    display: flex;
+    flex: 0 0 33.3333%;
+    justify-content: center;
+}
