@@ -13,6 +13,13 @@ import VirtualGamePadButton from './VirtualGamePadButton';
 
 import "./RunPage.css";
 
+const clipPath = <svg width="0" height="0">
+    <defs>
+        <clipPath id="svgPath" clipPathUnits="objectBoundingBox">
+        <path d="M0.022,0.033c0.147,-0.018 0.306,-0.028 0.472,-0.028c0.169,0 0.331,0.01 0.482,0.029c0.014,0.149 0.022,0.307 0.022,0.471c0,0.161 -0.008,0.317 -0.021,0.464c-0.151,0.019 -0.314,0.03 -0.483,0.03c-0.166,0 -0.325,-0.01 -0.473,-0.029c-0.014,-0.147 -0.021,-0.303 -0.021,-0.465c0,-0.164 0.008,-0.323 0.022,-0.472Z"/>        </clipPath>
+    </defs>
+</svg>
+
 /*
  * The UI for the emulator. Also responsible for loading ROM from URL or file.
  */
@@ -34,55 +41,19 @@ class RunPage extends Component {
   render() {
     return (
       <div className="RunPage">
-        {/* <nav
-          className="navbar navbar-expand"
-          ref={el => {
-            this.navbar = el;
-          }}
-        >
-          <ul className="navbar-nav" style={{ width: "200px" }}>
-            <li className="navitem">
-              <Link to="/" className="nav-link">
-                &lsaquo; Back
-              </Link>
-            </li>
-          </ul>
-          <ul className="navbar-nav ml-auto mr-auto">
-            <li className="navitem">
-              <span className="navbar-text mr-3">{this.state.romName}</span>
-            </li>
-          </ul>
-          <ul className="navbar-nav" style={{ width: "200px" }}>
-            <li className="navitem">
-              <Button
-                outline
-                color="primary"
-                onClick={this.toggleControlsModal}
-                className="mr-3"
-              >
-                Controls
-              </Button>
-              <Button
-                outline
-                color="primary"
-                onClick={this.handlePauseResume}
-                disabled={!this.state.running}
-              >
-                {this.state.paused ? "Resume" : "Pause"}
-              </Button>
-            </li>
-          </ul>
-        </nav> */}
-
         {this.state.error ? (
           this.state.error
         ) : (
+          <div className="tv">
           <div
             className="screen-container"
             ref={el => {
               this.screenContainer = el;
             }}
           >
+            {clipPath}
+            {/* <div className="screen-tv">
+              <div className="screen-tv-inside"> */}
             {this.state.loading ? (
               <Progress
                 value={this.state.loadedPercent}
@@ -119,6 +90,12 @@ class RunPage extends Component {
               />
             )} */}
           </div>
+          <div className="tv__side-panel">
+            <div className="tv__control"></div>
+            <div className="tv__speaker"></div>
+          </div>
+          </div>
+          // </div>
         )}
         <VirtualGamePadController 
           onButtonDown={(a, b) => this.emulator.nes.buttonDown(a, b)}
@@ -205,7 +182,6 @@ class RunPage extends Component {
     this.screenContainer.style.height = `${window.innerHeight -
       navbarHeight}px`;
 
-    console.log(this.screenContainer.getBoundingClientRect().width)
     this.screenContainer.style.height = `${this.screenContainer.getBoundingClientRect().width * .75}px`;
 
     if (this.emulator) {

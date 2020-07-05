@@ -3,8 +3,42 @@
 }
 
 .RunPage .screen-container {
+  flex: 1 0 auto;
   text-align: center;
+  margin: 20px;
+  /* padding: 5px 0; */
+  /* background: rgb(91,90,90); */
+  /* background: radial-gradient(circle, rgba(91,90,90,1) 0%, rgba(158,158,158,1) 100%); */
 
-  max-width: 700px;
-  border: 5px solid yellow;
+
+}
+
+.Screen {
+  clip-path: url(#svgPath);
+
+}
+
+
+.tv {
+  display: flex;
+  max-width: 900px;
+  background: radial-gradient(circle, rgba(91,90,90,1) 0%, rgba(158,158,158,1) 100%);
+}
+
+.tv__side-panel {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+}
+
+.tv__control {
+  flex: 1 0 auto;
+  background: rgb(91,90,90);
+}
+
+.tv__speaker {
+  flex: 1 0 25%;
+  width: 100%;
+  /* height: 20%; */
+  background: repeating-linear-gradient(0deg, rgb(175, 175, 175) 0%, rgb(0, 0, 0) 3%);
 }
