@@ -1,33 +1,14 @@
-import "./styles.scss";
-console.log("hello mars!");
+import Raven from "raven-js";
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import config from "./config";
+import "./index.scss";
 
-const url = './nes_fg.nes';
+if (config.SENTRY_URI) {
+  Raven.config(config.SENTRY_URI).install();
+}
 
-const load_binary_resource = (url) => {
-    var req = new XMLHttpRequest();
-    req.open('GET', url, false);
-    //XHR binary charset opt by Marcus Granado 2006 [http://mgran.blogspot.com]
-    req.overrideMimeType('text\/plain; charset=x-user-defined');
-    req.send(null);
-
-    console.log(req)
-
-    if (req.status != 200) return '';
-    return req.responseText;
-  }
-
-
-  
-console.log(load_binary_resource(url));
-
-
-const emuNES = new jsnes.NES({
-    onFrame: function(frameBuffer) {
-      // ... write frameBuffer to screen
-    },
-    onAudioSample: function(left, right) {
-      // ... play audio sample
-    }
-  });
-
-  emuNES.
+Raven.context(function() {
+  ReactDOM.render(<App />, document.getElementById("root"));
+});
