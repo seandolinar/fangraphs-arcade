@@ -31,7 +31,7 @@ class RunPage extends Component {
   render() {
     return (
       <div className="RunPage">
-        <nav
+        {/* <nav
           className="navbar navbar-expand"
           ref={el => {
             this.navbar = el;
@@ -69,11 +69,17 @@ class RunPage extends Component {
               </Button>
             </li>
           </ul>
-        </nav>
+        </nav> */}
 
         {this.state.error ? (
           this.state.error
         ) : (
+          <div style={{width: '100%', height: 'auto', maxWidth: 800, border: '5px solid brown'}}>
+            <div onClick={() => {
+              document.dispatchEvent(new KeyboardEvent('keydown',{'keyCode': 88}))
+              document.dispatchEvent(new KeyboardEvent('keydown',{'keyCode': 88}))
+            }}>BUTTON</div>
+          <input id="test" type="text"></input>
           <div
             className="screen-container"
             ref={el => {
@@ -91,6 +97,7 @@ class RunPage extends Component {
                 }}
               />
             ) : this.state.romData ? (
+              // container div determines the screen size
               <Emulator
                 romData={this.state.romData}
                 paused={this.state.paused}
@@ -114,6 +121,7 @@ class RunPage extends Component {
                 }
               />
             )}
+          </div>
           </div>
         )}
       </div>
@@ -192,7 +200,7 @@ class RunPage extends Component {
   };
 
   layout = () => {
-    let navbarHeight = parseFloat(window.getComputedStyle(this.navbar).height);
+    let navbarHeight = 0 // parseFloat(window.getComputedStyle(this.navbar).height);
     this.screenContainer.style.height = `${window.innerHeight -
       navbarHeight}px`;
     if (this.emulator) {

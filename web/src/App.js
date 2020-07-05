@@ -51,4 +51,8 @@ class App extends Component {
   };
 }
 
+document.addEventListener('keydown', (e) => {
+  console.log(e.keyCode)
+})
+
 export default App;
