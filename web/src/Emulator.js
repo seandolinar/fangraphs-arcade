@@ -10,8 +10,6 @@ import VirtualGamePadController from './VirtualGamePadController';
 import Screen from "./Screen";
 import Speakers from "./Speakers";
 
-import { Controller } from "jsnes";
-
 
 /*
  * Runs the emulator.
@@ -21,24 +19,7 @@ import { Controller } from "jsnes";
  */
 class Emulator extends Component {
   render() {
-    // console.log(this.nes)
-    // let Vgpd =  null;
-    
-    // if (!!this.nes) {
-    //   console.log('yes')
-      
-    // }
-
-    const Vgpd = <VirtualGamePadController 
-      onButtonDown={(a, b) => {
-        console.log(this.nes)
-        this.nes.buttonDown(1, Controller.BUTTON_A) }}
-      onButtonUp={(a, b) => this.nes.buttonUp(1, Controller.BUTTON_A) }
-    />
-    
-
     return (
-      <>
       <Screen
         ref={screen => {
           this.screen = screen;
@@ -54,12 +35,6 @@ class Emulator extends Component {
           this.nes.zapperFireUp();
         }}
       />
-      {Vgpd}
-      <div
-        onMouseDown={() => this.nes.buttonDown(1, Controller.BUTTON_A)}
-        onMouseUp={() => this.nes.buttonUp(1, Controller.BUTTON_A)}
-      >Another Button</div>
-      </>
     );
   }
 
@@ -80,16 +55,16 @@ class Emulator extends Component {
         //   done by audio instead of requestAnimationFrame.
         // - System can't run emulator at full speed. In this case it'll stop
         //    firing requestAnimationFrame.
-        console.log(
-          "Buffer underrun, running another frame to try and catch up"
-        );
+        // console.log(
+        //   "Buffer underrun, running another frame to try and catch up"
+        // );
 
         this.frameTimer.generateFrame();
         // desiredSize will be 2048, and the NES produces 1468 samples on each
         // frame so we might need a second frame to be run. Give up after that
         // though -- the system is not catching up
         if (this.speakers.buffer.size() < desiredSize) {
-          console.log("Still buffer underrun, running a second frame");
+          // console.log("Still buffer underrun, running a second frame");
           this.frameTimer.generateFrame();
         }
       }
@@ -97,7 +72,7 @@ class Emulator extends Component {
 
     this.nes = new NES({
       onFrame: this.screen.setBuffer,
-      onStatusUpdate: console.log,
+      // onStatusUpdate: console.log,
       onAudioSample: this.speakers.writeSample,
       sampleRate: this.speakers.getSampleRate()
     });
@@ -127,15 +102,6 @@ class Emulator extends Component {
         this.nes.buttonUp
       )
     });
-
-    // this.virtualGamePadController = VirtualGamePadController({
-    //   onButtonDown: this.gamepadController.disableIfGamepadEnabled(
-    //     this.nes.buttonDown
-    //   ),
-    //   onButtonUp: this.gamepadController.disableIfGamepadEnabled(
-    //     this.nes.buttonUp
-    //   )
-    // });
 
     // Load keys from localStorage (if they exist)
     this.keyboardController.loadKeys();
@@ -187,7 +153,7 @@ class Emulator extends Component {
     this.frameTimer.start();
     this.speakers.start();
     this.fpsInterval = setInterval(() => {
-      console.log(`FPS: ${this.nes.getFPS()}`);
+      // console.log(`FPS: ${this.nes.getFPS()}`);
     }, 1000);
   };
 

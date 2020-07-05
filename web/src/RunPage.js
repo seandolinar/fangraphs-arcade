@@ -8,6 +8,7 @@ import Emulator from "./Emulator";
 import RomLibrary from "./RomLibrary";
 import { loadBinary } from "./utils";
 
+import VirtualGamePadController from './VirtualGamePadController';
 import VirtualGamePadButton from './VirtualGamePadButton';
 
 import "./RunPage.css";
@@ -76,10 +77,6 @@ class RunPage extends Component {
         {this.state.error ? (
           this.state.error
         ) : (
-          <div style={{width: '100%', height: 'auto', maxWidth: 800, border: '5px solid brown'}}>
-                       <div onClick={() => {
-              document.dispatchEvent(new KeyboardEvent('keydown',{'keyCode': 88}))
-            }}>BUTTON</div>
           <div
             className="screen-container"
             ref={el => {
@@ -122,9 +119,11 @@ class RunPage extends Component {
               />
             )} */}
           </div>
-          </div>
         )}
-        <VirtualGamePadButton />
+        <VirtualGamePadController 
+          onButtonDown={(a, b) => this.emulator.nes.buttonDown(a, b)}
+          onButtonUp={(a, b) => this.emulator.nes.buttonUp(a, b) }
+        />
       </div>
     );
   }
