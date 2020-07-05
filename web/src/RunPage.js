@@ -201,8 +201,13 @@ class RunPage extends Component {
 
   layout = () => {
     let navbarHeight = 0 // parseFloat(window.getComputedStyle(this.navbar).height);
+
     this.screenContainer.style.height = `${window.innerHeight -
       navbarHeight}px`;
+
+    console.log(this.screenContainer.getBoundingClientRect().width)
+    this.screenContainer.style.height = `${this.screenContainer.getBoundingClientRect().width * .75}px`;
+
     if (this.emulator) {
       this.emulator.fitInParent();
     }
