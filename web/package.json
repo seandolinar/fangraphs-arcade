@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "license": "Apache-2.0",
   "private": true,
+  "homepage": "https://www.fangraphs.com/nes",
   "dependencies": {
     "bootstrap": "4.2.1",
     "jsnes": "^1.1.0",

@@ -39,7 +39,7 @@ class ListPage extends Component {
                   .map(key => (
                     <Link
                       key={key}
-                      to={"/run/" + encodeURIComponent(key)}
+                      to={`${process.env.PUBLIC_URL}/run/${encodeURIComponent(key)}`}
                       className="list-group-item"
                     >
                       {config.ROMS[key]["name"]}

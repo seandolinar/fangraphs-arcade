@@ -30,11 +30,12 @@ class App extends Component {
     }
     return (
       <BrowserRouter>
-        <div className="App">
-          <Route exact path="/" component={ListPage} />
-          <Route exact path="/run" component={RunPage} />
-          <Route exact path="/run/:slug" component={RunPage} />
-          <Route path="/" render={this.recordPageview} />
+        <div className="App" basename={process.env.PUBLIC_URL}>
+          {/* */}
+          <Route exact path={`${process.env.PUBLIC_URL}/`} component={ListPage} />
+          <Route exact path={`${process.env.PUBLIC_URL}/run`} component={RunPage} />
+          <Route exact path={`${process.env.PUBLIC_URL}/run/:slug`} component={RunPage} />
+          {/* <Route path="/" render={this.recordPageview} /> */}
         </div>
       </BrowserRouter>
     );
