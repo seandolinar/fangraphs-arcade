@@ -2,20 +2,28 @@
     display: flex;
     background-color: #888;
     max-width: 500px;
+    height: 300px;
     margin: auto;
     margin-top: 50px;
 }
 
 .virtual-game-pad-controller__group-dpad {
+    display: grid;
     flex: 0 0 33.3333%;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
 }
 
 .virtual-game-pad-controller__group-start-select {
+    display: flex;
     flex: 0 0 33.3333%;
+    justify-content: center;
+    align-items: center;
 }
 
 .virtual-game-pad-controller__group-action {
     display: flex;
     flex: 0 0 33.3333%;
     justify-content: center;
+    align-items: center;
 }

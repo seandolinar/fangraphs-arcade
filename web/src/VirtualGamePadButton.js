@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./VirtualGamePadButton.css";
+import "./VirtualGamePadButton.scss";
 
 const VirtualGamePadButton = ({
     button,
@@ -13,6 +13,7 @@ const VirtualGamePadButton = ({
     return <div className={`virtual-game-pad__button__wrapper ${className}`}>
         <div className="virtual-game-pad__button"
             onMouseDown={() => onButtonDown(controller, button)}
+            // onMouseDown={() => alert(button) }
             onMouseUp={() => onButtonUp(controller, button)}
         >
         </div>

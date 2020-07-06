@@ -2,7 +2,7 @@ import React from 'react';
 import { Controller } from "jsnes";
 import VirtualGamePadButton from './VirtualGamePadButton';
 
-import './VirtualGamePadController.css';
+import './VirtualGamePadController.scss';
 
 // Mapping keyboard code to [controller, button]
 // const KEYS = {
@@ -38,25 +38,25 @@ export default class VirtualGamePadController extends React.Component {
             <div className="virtual-game-pad-controller__group-dpad">
                 <VirtualGamePadButton 
                     button={Controller.BUTTON_UP}
-                    className="button-action"
-                    onButtonDown={this.onButtonDown}
-                    onButtonUp={this.onButtonUp}
-                />
-                <VirtualGamePadButton 
-                    button={Controller.BUTTON_RIGHT}
-                    className="button-action"
-                    onButtonDown={this.onButtonDown}
-                    onButtonUp={this.onButtonUp}
-                />
-                <VirtualGamePadButton 
-                    button={Controller.BUTTON_DOWN}
-                    className="button-action"
+                    className="button-dpad__up"
                     onButtonDown={this.onButtonDown}
                     onButtonUp={this.onButtonUp}
                 />
                 <VirtualGamePadButton 
                     button={Controller.BUTTON_LEFT}
-                    className="button-action"
+                    className="button-dpad__left"
+                    onButtonDown={this.onButtonDown}
+                    onButtonUp={this.onButtonUp}
+                />
+                <VirtualGamePadButton 
+                    button={Controller.BUTTON_RIGHT}
+                    className="button-dpad__right"
+                    onButtonDown={this.onButtonDown}
+                    onButtonUp={this.onButtonUp}
+                />
+                <VirtualGamePadButton 
+                    button={Controller.BUTTON_DOWN}
+                    className="button-dpad__down"
                     onButtonDown={this.onButtonDown}
                     onButtonUp={this.onButtonUp}
                 />
@@ -64,13 +64,13 @@ export default class VirtualGamePadController extends React.Component {
             <div className="virtual-game-pad-controller__group-start-select">
                 <VirtualGamePadButton 
                     button={Controller.BUTTON_SELECT}
-                    className="button-action"
+                    className="button-select"
                     onButtonDown={this.onButtonDown}
                     onButtonUp={this.onButtonUp}
                 />
                 <VirtualGamePadButton 
                     button={Controller.BUTTON_START}
-                    className="button-action"
+                    className="button-start"
                     onButtonDown={this.onButtonDown}
                     onButtonUp={this.onButtonUp}
                 />
