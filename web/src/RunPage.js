@@ -5,14 +5,16 @@ import { Link } from "react-router-dom";
 import config from "./config";
 import ControlsModal from "./ControlsModal";
 import Emulator from "./Emulator";
+import Screen from "./Screen";
+
 import RomLibrary from "./RomLibrary";
 import { loadBinary } from "./utils";
 
 import VirtualGamePadController from './VirtualGamePadController';
-import VirtualGamePadButton from './VirtualGamePadButton';
 
 import "./RunPage.css";
 
+// clip path for TV screen shape
 const clipPath = <svg width="0" height="0">
     <defs>
         <clipPath id="svgPath" clipPathUnits="objectBoundingBox">
@@ -34,7 +36,8 @@ class RunPage extends Component {
       controlsModalOpen: false,
       loading: true,
       loadedPercent: 3,
-      error: null
+      error: null,
+      isPowered: false
     };
   }
 
@@ -52,8 +55,6 @@ class RunPage extends Component {
             }}
           >
             {clipPath}
-            {/* <div className="screen-tv">
-              <div className="screen-tv-inside"> */}
             {this.state.loading ? (
               <Progress
                 value={this.state.loadedPercent}
@@ -64,16 +65,16 @@ class RunPage extends Component {
                   top: "48%"
                 }}
               />
-            ) : this.state.romData ? (
+            ) : this.state.romData && this.state.isPowered  ? 
               // container div determines the screen size
-              <Emulator
+              (<Emulator
                 romData={this.state.romData}
                 paused={this.state.paused}
                 ref={emulator => {
                   this.emulator = emulator;
                 }}
               />
-            ) : null}
+            ) : <Screen className="power-off" /> }
 
             {/* TODO: lift keyboard and gamepad state up */}
             {/* {this.state.controlsModalOpen && (
@@ -91,11 +92,12 @@ class RunPage extends Component {
             )} */}
           </div>
           <div className="tv__side-panel">
-            <div className="tv__control"></div>
+            <div className="tv__control">
+              <div onClick={() => this.setState({isPowered: !this.state.isPowered})}>Power</div>
+            </div>
             <div className="tv__speaker"></div>
           </div>
           </div>
-          // </div>
         )}
         <VirtualGamePadController 
           onButtonDown={(a, b) => this.emulator.nes.buttonDown(a, b)}
@@ -186,6 +188,11 @@ class RunPage extends Component {
 
     if (this.emulator) {
       this.emulator.fitInParent();
+    }
+
+    if (this.screen) {
+      console.log(this.screen)
+      this.screen.fitInParent();
     }
   };
 

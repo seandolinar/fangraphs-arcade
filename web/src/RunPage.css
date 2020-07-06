@@ -13,11 +13,20 @@
 
 }
 
-.Screen {
-  clip-path: url(#svgPath);
-
+.Screen.power-off {
+  height: 100%;
 }
 
+.Screen {
+  clip-path: url(#svgPath);
+}
+
+/* super hacky to get this to work on safari */
+@media not all and (min-resolution:.001dpcm) { 
+  @media {
+    .Screen {clip-path: initial; }
+  }
+}
 
 .tv {
   display: flex;
