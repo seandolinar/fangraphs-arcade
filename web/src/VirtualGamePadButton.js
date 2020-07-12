@@ -1,4 +1,6 @@
 import React from "react";
+import { includes } from 'lodash';
+import { Controller } from "jsnes";
 
 import "./VirtualGamePadButton.scss";
 
@@ -16,6 +18,12 @@ const VirtualGamePadButton = ({
             // onMouseDown={() => alert(button) }
             onMouseUp={() => onButtonUp(controller, button)}
         >
+            { includes([
+                Controller.BUTTON_LEFT, 
+                Controller.BUTTON_RIGHT,
+                Controller.BUTTON_UP,
+                Controller.BUTTON_DOWN
+            ], button) && <div className="button-dpad__arrow"></div>}
         </div>
     </div>;
 };

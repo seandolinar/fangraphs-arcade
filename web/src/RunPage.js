@@ -100,8 +100,8 @@ class RunPage extends Component {
           </div>
         )}
         <VirtualGamePadController 
-          onButtonDown={(a, b) => this.emulator.nes.buttonDown(a, b)}
-          onButtonUp={(a, b) => this.emulator.nes.buttonUp(a, b) }
+          onButtonDown={(a, b) => !!this.emulator && this.emulator.nes.buttonDown(a, b)}
+          onButtonUp={(a, b) => !!this.emulator && this.emulator.nes.buttonUp(a, b) }
         />
       </div>
     );

@@ -35,61 +35,67 @@ export default class VirtualGamePadController extends React.Component {
     render () {
 
         return <div className="virtual-game-pad-controller">
-            <div className="virtual-game-pad-controller__group-dpad">
-                <VirtualGamePadButton 
-                    button={Controller.BUTTON_UP}
-                    className="button-dpad__up"
-                    onButtonDown={this.onButtonDown}
-                    onButtonUp={this.onButtonUp}
-                />
-                <VirtualGamePadButton 
-                    button={Controller.BUTTON_LEFT}
-                    className="button-dpad__left"
-                    onButtonDown={this.onButtonDown}
-                    onButtonUp={this.onButtonUp}
-                />
-                <VirtualGamePadButton 
-                    button={Controller.BUTTON_RIGHT}
-                    className="button-dpad__right"
-                    onButtonDown={this.onButtonDown}
-                    onButtonUp={this.onButtonUp}
-                />
-                <VirtualGamePadButton 
-                    button={Controller.BUTTON_DOWN}
-                    className="button-dpad__down"
-                    onButtonDown={this.onButtonDown}
-                    onButtonUp={this.onButtonUp}
-                />
+            <div className="virtual-game-pad-controller__matte">
+                <div className="virtual-game-pad-controller__group-dpad">
+                    <VirtualGamePadButton 
+                        button={Controller.BUTTON_UP}
+                        className="button-dpad__up"
+                        onButtonDown={this.onButtonDown}
+                        onButtonUp={this.onButtonUp}
+                    />
+                    <VirtualGamePadButton 
+                        button={Controller.BUTTON_LEFT}
+                        className="button-dpad__left"
+                        onButtonDown={this.onButtonDown}
+                        onButtonUp={this.onButtonUp}
+                    />
+                    <div className="button-dpad__middle"></div>
+                    <VirtualGamePadButton 
+                        button={Controller.BUTTON_RIGHT}
+                        className="button-dpad__right"
+                        onButtonDown={this.onButtonDown}
+                        onButtonUp={this.onButtonUp}
+                    />
+                    <VirtualGamePadButton 
+                        button={Controller.BUTTON_DOWN}
+                        className="button-dpad__down"
+                        onButtonDown={this.onButtonDown}
+                        onButtonUp={this.onButtonUp}
+                    />
+                </div>
+                <div className="virtual-game-pad-controller__group-start-select">
+                    <VirtualGamePadButton 
+                        button={Controller.BUTTON_SELECT}
+                        className="button-select"
+                        onButtonDown={this.onButtonDown}
+                        onButtonUp={this.onButtonUp}
+                    />
+                    <VirtualGamePadButton 
+                        button={Controller.BUTTON_START}
+                        className="button-start"
+                        onButtonDown={this.onButtonDown}
+                        onButtonUp={this.onButtonUp}
+                    />
+                </div>
+                <div className="virtual-game-pad-controller__group-action">
+                    <div className="virtual-game-pad-controller__group-action__edge">
+                        <VirtualGamePadButton 
+                            button={Controller.BUTTON_B}
+                            className="button-action"
+                            onButtonDown={this.onButtonDown}
+                            onButtonUp={this.onButtonUp}
+                        />
+                    </div>
+                    <div className="virtual-game-pad-controller__group-action__edge">
+                        <VirtualGamePadButton 
+                            button={Controller.BUTTON_A}
+                            className="button-action"
+                            onButtonDown={this.onButtonDown}
+                            onButtonUp={this.onButtonUp}
+                        />
+                    </div>
+                </div>
             </div>
-            <div className="virtual-game-pad-controller__group-start-select">
-                <VirtualGamePadButton 
-                    button={Controller.BUTTON_SELECT}
-                    className="button-select"
-                    onButtonDown={this.onButtonDown}
-                    onButtonUp={this.onButtonUp}
-                />
-                <VirtualGamePadButton 
-                    button={Controller.BUTTON_START}
-                    className="button-start"
-                    onButtonDown={this.onButtonDown}
-                    onButtonUp={this.onButtonUp}
-                />
-            </div>
-            <div className="virtual-game-pad-controller__group-action">
-                <VirtualGamePadButton 
-                    button={Controller.BUTTON_B}
-                    className="button-action"
-                    onButtonDown={this.onButtonDown}
-                    onButtonUp={this.onButtonUp}
-                />
-                <VirtualGamePadButton 
-                    button={Controller.BUTTON_A}
-                    className="button-action"
-                    onButtonDown={this.onButtonDown}
-                    onButtonUp={this.onButtonUp}
-                />
-            </div>
-            
         </div>;
     } 
 }
