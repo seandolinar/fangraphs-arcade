@@ -77,9 +77,9 @@
 .button-dpad__arrow {
     width: 0;
     height: 0;
-    border-top: 12px solid transparent;
-    border-left: 24px solid #333;
-    border-bottom: 12px solid transparent;
+    border-top: 18px solid transparent;
+    border-left: 26px solid #333;
+    border-bottom: 18px solid transparent;
     box-shadow: inset 0px 0px 10px 20px #333;
     position: relative;
     left: 0;
@@ -88,11 +88,11 @@
     &:before {
         content: "";
         position: absolute;
-        width: 12px;
-        height: 12px;
+        width: 18px;
+        height: 18px;
         left: -36px;
         /* top: 6px; */
-        top: -6px;
+        top: -8px;
         box-shadow: inset 0px 0px 10px 20px #333;
     }
 
@@ -102,6 +102,7 @@
 
     .button-dpad__down & {
         transform: rotate(90deg);
+        margin-bottom: 40px;
     }
 
     .button-dpad__left & {

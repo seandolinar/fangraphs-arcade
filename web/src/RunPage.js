@@ -77,24 +77,21 @@ class RunPage extends Component {
             ) : <Screen className="power-off" /> }
 
             {/* TODO: lift keyboard and gamepad state up */}
-            {/* {this.state.controlsModalOpen && (
-              <ControlsModal
-                isOpen={this.state.controlsModalOpen}
-                toggle={this.toggleControlsModal}
-                keys={this.emulator.keyboardController.keys}
-                setKeys={this.emulator.keyboardController.setKeys}
-                promptButton={this.emulator.gamepadController.promptButton}
-                gamepadConfig={this.emulator.gamepadController.gamepadConfig}
-                setGamepadConfig={
-                  this.emulator.gamepadController.setGamepadConfig
-                }
-              />
-            )} */}
           </div>
-          <div className="tv__side-panel">
+          <div className={`tv__side-panel ${!!this.state.isPowered ? 'power-on' : 'power-off'}`}>
             <div className="tv__control">
-              <div onClick={() => this.setState({isPowered: !this.state.isPowered})}>Power</div>
+              <div 
+                className="tv__control__power"
+                onClick={() => this.setState({isPowered: !this.state.isPowered})
+                }>
+                  Power
+                  <div className="tv__control__power-indicator"></div>
+                </div>
+                <div className="tv__control__channel">
+                  03
+                </div>
             </div>
+
             <div className="tv__speaker"></div>
           </div>
           </div>
