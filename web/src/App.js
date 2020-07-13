@@ -5,7 +5,7 @@ import ListPage from "./ListPage";
 import RunPage from "./RunPage";
 import config from "./config";
 import { handleError } from "./utils";
-import "./App.css";
+import "./App.scss";
 
 class App extends Component {
   constructor(props) {
