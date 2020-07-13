@@ -63,19 +63,28 @@ export default class VirtualGamePadController extends React.Component {
                         onButtonUp={this.onButtonUp}
                     />
                 </div>
-                <div className="virtual-game-pad-controller__group-start-select">
-                    <VirtualGamePadButton 
-                        button={Controller.BUTTON_SELECT}
-                        className="button-select"
-                        onButtonDown={this.onButtonDown}
-                        onButtonUp={this.onButtonUp}
-                    />
-                    <VirtualGamePadButton 
-                        button={Controller.BUTTON_START}
-                        className="button-start"
-                        onButtonDown={this.onButtonDown}
-                        onButtonUp={this.onButtonUp}
-                    />
+                <div className="virtual-game-pad-controller__center">
+                    {/* <div className="virtual-game-pad-controller__group-start-select"></div> */}
+                    <div className="virtual-game-pad-controller__group-start-select__label-wrapper">
+                        <div className="virtual-game-pad-controller__group-start-select__label">SELECT</div>
+                        <div className="virtual-game-pad-controller__group-start-select__label">START</div>
+                    </div>
+                    <div className="virtual-game-pad-controller__group-start-select">
+                        <VirtualGamePadButton 
+                            button={Controller.BUTTON_SELECT}
+                            className="button-select"
+                            onButtonDown={this.onButtonDown}
+                            onButtonUp={this.onButtonUp}
+                        />
+                        <VirtualGamePadButton 
+                            button={Controller.BUTTON_START}
+                            className="button-start"
+                            onButtonDown={this.onButtonDown}
+                            onButtonUp={this.onButtonUp}
+                        />
+                    </div>
+                    {/* <div className="virtual-game-pad-controller__group-start-select"></div> */}
+                    {/* <div className="virtual-game-pad-controller__group-start-select"></div> */}
                 </div>
                 <div className="virtual-game-pad-controller__group-action">
                     <div className="virtual-game-pad-controller__group-action__edge">
@@ -85,6 +94,9 @@ export default class VirtualGamePadController extends React.Component {
                             onButtonDown={this.onButtonDown}
                             onButtonUp={this.onButtonUp}
                         />
+                        <div className="virtual-game-pad-controller__group-action__label">
+                            B
+                        </div>
                     </div>
                     <div className="virtual-game-pad-controller__group-action__edge">
                         <VirtualGamePadButton 
@@ -93,6 +105,9 @@ export default class VirtualGamePadController extends React.Component {
                             onButtonDown={this.onButtonDown}
                             onButtonUp={this.onButtonUp}
                         />
+                        <div className="virtual-game-pad-controller__group-action__label">
+                            A
+                        </div>
                     </div>
                 </div>
             </div>

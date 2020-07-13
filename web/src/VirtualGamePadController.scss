@@ -20,19 +20,34 @@
 .virtual-game-pad-controller__group-dpad {
     display: grid;
     flex: 0 0 33.3333%;
-    height: 100%;
+    // height: 100%;
+    height: 190px;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+    grid-template-rows: 33.33333% 33.333333% 33.33333%;
     padding: 15px;
 }
 
-.virtual-game-pad-controller__group-start-select {
+.virtual-game-pad-controller__group-start-select,
+.virtual-game-pad-controller__group-start-select__label-wrapper  {
     display: flex;
     flex: 0 0 33.3333%;
     justify-content: center;
     align-items: center;
     background-color: #aaa;
     padding: 15px;
+    margin: 15px 10px;
+}
+
+.virtual-game-pad-controller__group-start-select__label-wrapper {
+    padding: 0;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.virtual-game-pad-controller__group-start-select__label {
+    font-size: 12px;
+    color: red;
+    font-weight: 600;
 }
 
 .virtual-game-pad-controller__group-action {
@@ -42,6 +57,16 @@
     align-items: center;
 }
 
+.virtual-game-pad-controller__group-action__label {
+    position: absolute;
+    right: 0;
+    padding: 5px;
+    color: red;
+    font-weight: 600;
+}
+
 .virtual-game-pad-controller__group-action__edge {
+    position: relative;
     background: #aaa;
+    margin: 0 5px;
 }
