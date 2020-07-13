@@ -78,8 +78,10 @@ updateScore:
     JMP @loop
 
     @dump:
+    ; INY
     STY vram_buffer_offset
 
     PLA
     TAX
+
     RTS

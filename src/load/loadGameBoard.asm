@@ -165,21 +165,28 @@ FillAttrib0Loop:
   INY
 
   ; lo
-  STX tempX1
+  ; STX tempX
+
+  ; TXA
+  ; PHA
+
   SEC
   LDA #$d3
   STA (vram_lo), Y
 
   LDX #$00 ; 0 because I'm only do 1 digit right now
   LDA inningDigit0 , X                  ; digits are indexed on 0
-  STA tempX
+  STA tempCatchAll
 
   INY
 
      ; X controls the digit
-  LDX tempX
+  LDX tempCatchAll
   LDA NUM, X                          ; digit buffer is transformed into tile
   STA (vram_lo), Y
+
+  INY
+  STY vram_buffer_offset
 
 ; initial parameters
 ; can make this into a looping array?
