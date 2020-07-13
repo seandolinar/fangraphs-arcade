@@ -1,6 +1,18 @@
 .RunPage {
   overflow: hidden;
+  color: #000;
 }
+
+.instruction-box {
+  max-width: 900px;
+  margin: auto;
+  background-color: lightblue;
+
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding: 10px;
+}
+
 
 .RunPage .screen-container {
   flex: 1 0 auto;
