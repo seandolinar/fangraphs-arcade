@@ -128,7 +128,7 @@ battedBall:
     STA enemy_oam + 10, Y
     STA enemy_oam + 14, Y
 
-    LDA #$01
+    LDA #$02
     STA enemyState, X
 
     ; does this make it better?
@@ -147,6 +147,8 @@ mainAI:
 
     JSR runEnemyAI           ; should be the same sub for all enemies
 
+noAI:
+    ; this is the engine, we can use this for our new state
     LDA enemyBufferDirectionCurrent
     STA enemy1DirectionCurrent, X
        
@@ -217,7 +219,7 @@ forEachEnemyMovement:
     LDA enemyState, X ; we could use the state to store information
     CMP #$00
     BEQ @enemyMovement ; branch to normal movement
-    CMP #$01
+    CMP #$02
     BEQ @hold
     CMP #$ff
     BEQ @halt
@@ -232,11 +234,22 @@ forEachEnemyMovement:
     ADC #$10
     TAY
 
+    @hold:
+    ; so this is how we can execute "entering enemies"
+    ; might need to write something that open and shuts the door that cycles show the 4 bytes of ram for enemy states
+    ; make a loop that short circuits if we have more than one state = 2 
+    LDA #$80
+    STA enemyXBuffer
+
+    LDA #$48
+    ADC frameTimer ; so I can just add something here
+    STA enemyYBuffer
+
+    JMP noAI
+
     @halt:
     JMP forEachEnemyMovement
 
-    @hold:
-    RTS
 
     
 
