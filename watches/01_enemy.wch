@@ -1,0 +1,13 @@
+
+11
+00000	000B	b	u	0	enemyX1
+00001	000C	b	u	0	enemyX2
+00002	000D	b	u	0	enemyX3
+00003	000E	b	u	0	enemyX4
+00004	000F	b	u	0	enemyY1
+00005	0010	b	u	0	enemyY2
+00006	0011	b	u	0	enemyY3
+00007	0012	b	u	0	enemyY4
+00008	0013	b	u	0	enemyMode
+00009	0014	b	u	0	enemyXBuffer
+00010	0015	b	u	0	enemyYBuffer

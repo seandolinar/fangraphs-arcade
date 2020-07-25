@@ -1,0 +1,13 @@
+
+11
+00000	0000	b	u	0	playerLocationX
+00001	0001	b	u	0	playerLocationY
+00002	0002	b	u	0	playerLocationXBuffer
+00003	0003	b	u	0	playerLocationYBuffer
+00004	0004	b	u	0	playerGridX
+00005	0005	b	u	0	playerGridY
+00006	0006	b	u	0	playerPointerLo
+00007	0007	b	u	0	playerPointerHi
+00008	0008	b	u	0	controllerBits
+00009	0009	b	u	0	controllerBitsPrev
+00010	000A	b	u	0	controllerTimer

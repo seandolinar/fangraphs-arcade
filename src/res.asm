@@ -51,18 +51,11 @@ controllerBitsPrev:     .res 1
 controllerTimer:        .res 1
 
 enemyX:                 .res 4 ; 000b - 000e
-enemyY:                 .res 4 ; 000f - 0002
+enemyY:                 .res 4 ; 000f - 0012
 
-enemyH:                 .res 1
-enemyW:                 .res 1 ; 0014
-enemyMode:				.res 1 
-enemyXBuffer:			.res 1 
-enemyYBuffer:			.res 1	; 0017
-
-enemyNextDirection:     .res 1	; 0018   
-enemyZ1:                .res 1  ; 0019
-enemyH1:                .res 1  ; 001a
-enemyGridY:             .res 1  ; 001b ; move this
+enemyMode:				.res 1 ; 0013
+enemyXBuffer:			.res 1 ; 0014
+enemyYBuffer:			.res 1 ; 0015
 
 collisionFlag:          .res 1 	; 001c
 collisionFlagEnemy:     .res 1	; 001d

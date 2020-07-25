@@ -118,7 +118,7 @@ battedBall:
     ; this is the hard reset at the end of hitting the screen
     LDA #$80
     STA enemyX, X
-    LDA #$40
+    LDA #$48
     STA enemyY, X
 
     LDA #$03
@@ -128,7 +128,7 @@ battedBall:
     STA enemy_oam + 10, Y
     STA enemy_oam + 14, Y
 
-    LDA #$00
+    LDA #$01
     STA enemyState, X
 
     ; does this make it better?
@@ -217,6 +217,8 @@ forEachEnemyMovement:
     LDA enemyState, X ; we could use the state to store information
     CMP #$00
     BEQ @enemyMovement ; branch to normal movement
+    CMP #$01
+    BEQ @hold
     CMP #$ff
     BEQ @halt
 
@@ -232,6 +234,9 @@ forEachEnemyMovement:
 
     @halt:
     JMP forEachEnemyMovement
+
+    @hold:
+    RTS
 
     
 
