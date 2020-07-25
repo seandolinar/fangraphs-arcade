@@ -21,15 +21,16 @@ dumpSoundCollision:
 soundCollisionGood:
     TXA
     PHA
+    STX tempX
+
     LDA #$02
 
-    ldx #FT_SFX_CH0
-	jsr FamiToneSfxPlay
+    LDX #FT_SFX_CH0
+	JSR FamiToneSfxPlay
 
     PLA
     TAX
-
-dumpSoundCollisionGood:
+    LDX tempX
     RTS
 
 

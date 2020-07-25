@@ -188,6 +188,7 @@ inningDigit2:			.res 1
 
 tempX1:					.res 1
 tempCatchAll:			.res 1
+enemyCycleX:			.res 1
 
 
 ; NES-defined RAM locations

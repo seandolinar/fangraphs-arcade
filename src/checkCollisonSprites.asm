@@ -6,9 +6,14 @@
 .segment "CODE"
 checkCollisionSprites:
     LDX #$04
+    STX enemyCycleX
+
     
     @loop:
+    LDX enemyCycleX ; didn't fix anything
     DEX
+    STX enemyCycleX
+
     LDA enemyX, X
     CMP playerLocationX
     BNE @dump
@@ -67,10 +72,9 @@ checkCollisionSprites:
     LDA #$0a
     STA scoreValue
     JSR updateScore
-    JSR soundCollisionGood
+    JSR soundCollisionGood ; this is causing the issue
     JSR resetOneEnemyPosition
 
-   
     @dump:
     CPX #$00
     BNE @loop
@@ -84,12 +88,12 @@ checkCollisionSprites:
 ; this uses X from checkCollisionSprites
 resetOneEnemyPosition:    
     ; turn off the enemy active state
+    LDX enemyCycleX
     LDA #$01
     STA enemyState, X
     
     LDA #$00
     STA enemyX, X
     STA enemyY, X
-
 
     RTS

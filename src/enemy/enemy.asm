@@ -9,8 +9,6 @@ battedBall:
     STA consoleLog
 
     AND #$01
-    ; LDA enemy_oam + 2, Y
-    ; AND #$01
 
     ; palette
     ; it is either 0 or 1
@@ -87,7 +85,7 @@ battedBall:
     STA enemy_oam + 8, Y
     STA enemy_oam + 12, Y
 
-    BCS @stop
+    BCS @stop ; this might not work
     ADC #$04
     BCS @stop
 
@@ -113,15 +111,11 @@ battedBall:
    
 
     @break:
-    CLC
-    TYA
-    ADC #$10
-    TAY
-
     RTS
 
     @stop:
 
+    ; this is the hard reset at the end of hitting the screen
     LDA #$80
     STA enemyX, X
     LDA #$40
@@ -136,6 +130,13 @@ battedBall:
 
     LDA #$00
     STA enemyState, X
+
+    ; does this make it better?
+    ; no
+    ; CLC
+    ; TYA
+    ; ADC #$10
+    ; TAY
 
     RTS
 
@@ -197,6 +198,7 @@ dumpEnemyController:
 nextEnemyMovement:
     LDX #$04            ; how many enemies we have
     LDY #$00
+    STX enemyCycleX
 forEachEnemyMovement:
 
     ; this bails out if we ever hit zero
@@ -206,19 +208,27 @@ forEachEnemyMovement:
     RTS
 
     @continue:
+    LDX enemyCycleX
     DEX
+    STX enemyCycleX
 
     ; this sorta works...we probably loop back around and that's an issue.
     ; need to kill the loop after the last X
     LDA enemyState, X ; we could use the state to store information
     CMP #$00
-    BEQ @enemyMovement
+    BEQ @enemyMovement ; branch to normal movement
     CMP #$ff
     BEQ @halt
+
     ; call something else here then JMP forEachEnemyMovement
     ; i might need a lot of RAM
-
+    LDX enemyCycleX
     JSR battedBall
+
+    CLC
+    TYA
+    ADC #$10
+    TAY
 
     @halt:
     JMP forEachEnemyMovement
@@ -294,7 +304,8 @@ forEachEnemyMovement:
     CPX #$02
     BEQ aiUmp3Alt
 
-    CPY #$01
+    ; this was CPY, why would I do that?
+    CPX #$01
     BEQ aiUmp2Alt
    
     ; refactor this because it could loop

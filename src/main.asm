@@ -39,10 +39,6 @@
 
 .segment "CODE"
 NMI:
-
-; JSR soundCollision
-
-
     ; Preserves the registers during the course of the interrupt
     PHA
     TXA
@@ -96,7 +92,7 @@ NMI:
 
 @dumpNMI:
 
-    jsr FamiToneUpdate		;update sound
+    JSR FamiToneUpdate		;update sound
 
     JSR clearVRAMBuffer
 
@@ -202,14 +198,13 @@ resetHard:
 gameMovement:
     JSR incTimerPowerUp
 
-
     JSR UpdatePositionPlayer      ; runs the player updates ;change this to update direction
 
     ; this should handle when to move the sprites
     JSR checkCollisionSprites ; I don't think I need this here
     JSR setAnimationPlayerDirection
-
     JSR checkCollisionPowerUp
+
     JSR nextEnemyMovement   ; move this to main?
     JSR checkCollisionSprites
 

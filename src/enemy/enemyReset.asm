@@ -15,7 +15,7 @@ enemyReset:
   LDA #$02
   STA enemy2DirectionCurrent
 
-  LDA #$80
+  LDA #$88
   STA enemyX + 2
   LDA #$48
   STA enemyY + 2
@@ -23,9 +23,9 @@ enemyReset:
   LDA #$01
   STA enemy3DirectionCurrent
 
-  LDA #$80
+  LDA #$88
   STA enemyX + 3
-  LDA #$48
+  LDA #$40
   STA enemyY + 3
 
   LDA #$02
