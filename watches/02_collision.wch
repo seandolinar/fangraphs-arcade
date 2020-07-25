@@ -1,0 +1,17 @@
+
+15
+00000	0016	b	u	0	collisionFlag
+00001	0017	b	u	0	collisionFlagEnemy
+00002	0018	b	u	0	collisionTestX
+00003	0019	b	u	0	collisionTestY
+00004	001A	b	u	0	collisionPointerLo
+00005	001B	b	u	0	collisionPointerHi
+00006	001C	b	u	0	backgroundPointerLo
+00007	001D	b	u	0	backgroundPointerHi
+00008	001E	b	u	0	enemyGridX
+00009	001F	b	u	0	enemyPointerLo
+00010	0020	b	u	0	enemyPointerHi
+00011	0021	b	u	0	backgroundPointerLoEnemy
+00012	0022	b	u	0	backgroundPointerHiEnemy
+00013	0023	b	u	0	collisionPointerLoEnemy
+00014	0024	b	u	0	collisionPointerHiEnemy

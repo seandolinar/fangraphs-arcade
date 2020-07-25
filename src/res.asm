@@ -37,6 +37,7 @@ power_up_oam:			 .res 160   ; .res reserves 256 TOTAL bytes of storage
 									; will have to expand if when we expand enemies
 
 .segment "ZEROPAGE"
+; 00_player
 playerLocationX:        .res 1 ; 0000
 playerLocationY:        .res 1
 playerLocationXBuffer:  .res 1
@@ -50,6 +51,7 @@ controllerBits:         .res 1 ; 0008
 controllerBitsPrev:     .res 1
 controllerTimer:        .res 1
 
+; 01_enemy
 enemyX:                 .res 4 ; 000b - 000e
 enemyY:                 .res 4 ; 000f - 0012
 
@@ -57,23 +59,25 @@ enemyMode:				.res 1 ; 0013
 enemyXBuffer:			.res 1 ; 0014
 enemyYBuffer:			.res 1 ; 0015
 
-collisionFlag:          .res 1 	; 001c
-collisionFlagEnemy:     .res 1	; 001d
-collisionTestX:         .res 1 	; 001e
-collisionTestY:         .res 1 	; 001f
-collisionPointerLo:     .res 1 	; 0020
-collisionPointerHi:     .res 1 	; 0021
-backgroundPointerLo:    .res 1 	; 0022
-backgroundPointerHi:    .res 1 	; 0023
+; 02_collision
+collisionFlag:          .res 1 	; 0016
+collisionFlagEnemy:     .res 1	; 0017
+collisionTestX:         .res 1 	; 0018
+collisionTestY:         .res 1 	; 0019
+collisionPointerLo:     .res 1 	; 001a
+collisionPointerHi:     .res 1 	; 001b
+backgroundPointerLo:    .res 1 	; 001c
+backgroundPointerHi:    .res 1 	; 001d
 
-enemyGridX:            		.res 1  ; 0024
-enemyPointerLo:        		.res 1  ; 0025
-enemyPointerHi:        		.res 1  ; 0026
-backgroundPointerLoEnemy:   .res 1	; 0027
-backgroundPointerHiEnemy:   .res 1 	; 0028
-collisionPointerLoEnemy:    .res 1 	; 0029
-collisionPointerHiEnemy:    .res 1 	; 002a
+enemyGridX:            		.res 1  ; 001e
+enemyPointerLo:        		.res 1  ; 001f
+enemyPointerHi:        		.res 1  ; 0020
+backgroundPointerLoEnemy:   .res 1	; 0021
+backgroundPointerHiEnemy:   .res 1 	; 0022
+collisionPointerLoEnemy:    .res 1 	; 0023
+collisionPointerHiEnemy:    .res 1 	; 0024
 
+; 03_timing_util
 masterTimer:				.res 1      ; 002B
 animationTimer:				.res 1		; 002C
 frameTimer:					.res 1      ; 002D
@@ -82,21 +86,11 @@ consoleLog:					.res 1  ; 002E
 
 gameStateIsPowered: 		.res 1 ; 002F
 
-; Wish I knew why I can't use the stack for this
+; Sometimes this works better than stack
 tempX:					.res 1 ; 0030
 tempY:					.res 1 ; 0031
 
-; if these don't move, why do I need these in RAM?
-; powerUpX:				.res 1 ; 0030 ;; if these don't move we can read them from ROM
-; powerUpX2:				.res 1
-; powerUpX3:				.res 1
-; powerUpX4:				.res 1
-; powerUpY:				.res 1	; 0034 ;; then loop through the locations, though I'd have to remember which ones are "gone"
-; powerUpY2:				.res 1
-; powerUpY3:				.res 1
-; powerUpY4:				.res 1
 powerUpAvailable:		.res 1 ; 0038 one byte ;; 7654321 - bit one is if the the first one is available
-; this might control which powerUp has to be used next
 powerUpTimer:			.res 1 ; 0039
 
 bufferBackgroundColor:	.res 1 ; 003A
@@ -160,6 +154,7 @@ scoreLo:						.res 1 ; 008b
 vram_lo:						.res 1 ; 008c
 vram_hi:						.res 1 ; 008d
 
+; score
 scoreDigit0:			.res 1 ; 008e
 scoreDigit1:			.res 1 ; 008f
 scoreDigit2:			.res 1 ; 0090
