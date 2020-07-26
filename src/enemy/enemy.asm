@@ -114,11 +114,13 @@ battedBall:
     RTS
 
     @stop:
+    LDA #$21
+    STA consoleLog
 
     ; this is the hard reset at the end of hitting the screen
     LDA #$80
     STA enemyX, X
-    LDA #$48
+    LDA #$38
     STA enemyY, X
 
     LDA #$03
@@ -238,11 +240,11 @@ forEachEnemyMovement:
     ; so this is how we can execute "entering enemies"
     ; might need to write something that open and shuts the door that cycles show the 4 bytes of ram for enemy states
     ; make a loop that short circuits if we have more than one state = 2 
-    LDA #$80
+    LDA enemyX, X
     STA enemyXBuffer
-
-    LDA #$48
-    ADC frameTimer ; so I can just add something here
+    LDA enemyY, X
+    ADC #$04
+    STA enemyY, X
     STA enemyYBuffer
 
     JMP noAI

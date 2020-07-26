@@ -78,11 +78,11 @@ collisionPointerLoEnemy:    .res 1 	; 0023
 collisionPointerHiEnemy:    .res 1 	; 0024
 
 ; 03_timing_util
-masterTimer:				.res 1      ; 002B
-animationTimer:				.res 1		; 002C
-frameTimer:					.res 1      ; 002D
+masterTimer:				.res 1  ; 0025
+animationTimer:				.res 1  ; 0026
+frameTimer:					.res 1  ; 0027
 
-consoleLog:					.res 1  ; 002E
+consoleLog:					.res 1  ; 0028
 
 gameStateIsPowered: 		.res 1 ; 002F
 
