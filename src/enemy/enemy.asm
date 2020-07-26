@@ -114,13 +114,12 @@ battedBall:
     RTS
 
     @stop:
-    LDA #$21
-    STA consoleLog
-
     ; this is the hard reset at the end of hitting the screen
+    ; this location is within the scoreboard
     LDA #$80
     STA enemyX, X
     LDA #$38
+    ; LDA #$48
     STA enemyY, X
 
     LDA #$03
@@ -131,6 +130,7 @@ battedBall:
     STA enemy_oam + 14, Y
 
     LDA #$02
+    ; LDA #$00
     STA enemyState, X
 
     ; does this make it better?
@@ -168,8 +168,6 @@ noAI:
         ADC #$08
         STA enemy_oam + 7, Y    ; sprite RAM x
         STA enemy_oam + 15, Y    ; sprite RAM x
-
-
 
     @moveVertical:
         CLC
@@ -236,6 +234,8 @@ forEachEnemyMovement:
     ADC #$10
     TAY
 
+    JMP @halt
+
     @hold:
     ; so this is how we can execute "entering enemies"
     ; might need to write something that open and shuts the door that cycles show the 4 bytes of ram for enemy states
@@ -243,11 +243,23 @@ forEachEnemyMovement:
     LDA enemyX, X
     STA enemyXBuffer
     LDA enemyY, X
-    ADC #$04
+    ADC #$02
     STA enemyY, X
     STA enemyYBuffer
 
+    CMP #$48
+    BCS @setNormal
+
     JMP noAI
+
+    @setNormal:
+    LDA #$00
+    STA enemyState, X
+
+    ; 
+    LDA #$48
+    STA enemyY, X
+
 
     @halt:
     JMP forEachEnemyMovement

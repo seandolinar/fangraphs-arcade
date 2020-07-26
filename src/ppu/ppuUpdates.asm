@@ -85,3 +85,71 @@ endGame:
 	STA $2000               ; disable NMI
 	STA $2001  
     RTS
+
+
+checkDoor:
+
+    TXA
+    PHA
+
+    LDX #$03
+
+    @loop:
+    LDA enemyState, X
+    CMP #$02
+    BEQ @openDoor
+    JMP @continue
+
+    @openDoor:
+    JSR startVramBuffer
+    
+    INY
+    LDA #$21
+    STA (vram_lo), Y
+
+    INY
+    LDA #$0f
+    STA (vram_lo), Y
+
+    INY
+    LDA #$02
+    STA (vram_lo), Y
+
+    ;;;
+    INY
+    LDA #$21
+    STA (vram_lo), Y
+
+    INY
+    LDA #$10
+    STA (vram_lo), Y
+
+    INY
+    LDA #$02
+    STA (vram_lo), Y
+
+    ;;
+    INY
+    LDA #$21
+    STA (vram_lo), Y
+
+    INY
+    LDA #$11
+    STA (vram_lo), Y
+
+    INY
+    LDA #$02
+    STA (vram_lo), Y
+
+    STY vram_buffer_offset
+
+    @continue:
+    DEX
+    CPX #$00
+    BNE @loop
+
+
+    @exit:
+    PLA
+    TAX
+    RTS

@@ -62,6 +62,7 @@ NMI:
 
     INC frameTimer
 
+    JSR checkDoor
     JSR changeBackground
     JSR spriteTransfer
 
