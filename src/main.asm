@@ -62,10 +62,8 @@ NMI:
 
     INC frameTimer
 
-    JSR checkDoor
     JSR changeBackground
     JSR spriteTransfer
-
 
 
     ; STARTS VIDEO DISPLAY
@@ -208,6 +206,8 @@ gameMovement:
 
     JSR nextEnemyMovement   ; move this to main?
     JSR checkCollisionSprites
+    JSR checkDoor
+
 
     INC enemyMode
 

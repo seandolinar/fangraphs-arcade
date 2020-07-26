@@ -130,7 +130,6 @@ battedBall:
     STA enemy_oam + 14, Y
 
     LDA #$02
-    ; LDA #$00
     STA enemyState, X
 
     ; does this make it better?
