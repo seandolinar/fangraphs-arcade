@@ -256,19 +256,19 @@ forEachEnemyMovement:
     JMP noAI
 
     @setNormal:
+    LDA #$48
+    STA enemyY, X
+    STA enemyYBuffer
     LDA #$00
     STA enemyState, X
     LDA #$ff
     STA isEnemyLeaving
 
-    LDA #$48
-    STA enemyY, X
+    ; need this to prevent the "skipping"
+    JMP noAI
 
     @halt:
     JMP forEachEnemyMovement
-
-
-    
 
     @enemyMovement:
     LDA enemyX, X
