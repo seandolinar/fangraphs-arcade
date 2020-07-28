@@ -277,6 +277,7 @@ forEachEnemyMovement:
 
     LDA enemyY, X
     STA enemyYBuffer
+    STA consoleLog
     STA enemyYWork
 
     LDA enemy1DirectionCurrent, X

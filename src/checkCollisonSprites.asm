@@ -29,6 +29,19 @@ checkCollisionSprites:
     JSR soundCollision
     JSR animatePlayerEnd
     JSR playerReset
+    
+    ; might be able to put this into the playerReset SUB
+    LDA #$02
+    STA enemyState
+    STA enemyState + 1
+    STA enemyState + 2
+    STA enemyState + 3
+
+
+    ;;;;
+    JSR clearOutSprites
+    ;;;;
+
     JSR enemyReset
 
     LDA #$01
@@ -96,4 +109,31 @@ resetOneEnemyPosition:
     STA enemyX, X
     STA enemyY, X
 
+    RTS
+
+
+clearOutSprites:
+    @LoadEnemy:
+    LDX #$00
+    @LoadEnemyLoop:
+    LDA enemy_array, X       ; load data from address (sprites +  x) ; Y    
+    STA enemy_oam , X          ; store into RAM address ($0200 + x)
+
+    LDA enemy_array + 1, X        ; load data from address (sprites +  x) ; TILE
+    STA enemy_oam + 1 , X         ; store into RAM address ($0200 + x)
+
+    LDA enemy_array + 2, X        ; load data from address (sprites +  x) ; ATTR
+    STA enemy_oam + 2, X         ; store into RAM address ($0200 + x)
+
+    LDA enemy_array+3, X
+    STA enemy_oam+3, X              ; X = X + 1 ; X
+
+    INX
+    INX
+    INX
+    INX
+    
+    CPX #$40
+    BNE @LoadEnemyLoop   ; Branch to LoadSpritesLoop if compare was Not Equal to zero
+    
     RTS
