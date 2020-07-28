@@ -24,8 +24,6 @@ checkCollisionPowerUp:
     LDA #$01
 	JSR FamiToneMusicPlay
 
-    JSR openEnemyDoor
-
     RTS
 
 @dump:

@@ -11,7 +11,7 @@
 .include "./enemy/enemyCollision.asm"
 .include "./enemy/enemyPowerUp.asm"
 .include "./enemy/enemyReset.asm"
-.include "./enemy/enemyEntrance.asm"
+.include "./enemy/enemyEntranceDoor.asm"
 .include "./score/updateScore.asm"
 .include "./checkCollisonPowerUp.asm"
 .include "./checkCollisonSprites.asm"
