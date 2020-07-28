@@ -33,6 +33,14 @@ updateScore:
 
     @continueVram:
 
+    PLA
+    TAX
+
+    RTS
+
+
+writeOutScoreVram:
+
     JSR startVramBuffer
     INY                                 ; increments it
 
@@ -79,8 +87,5 @@ updateScore:
 
     @dump:
     STY vram_buffer_offset
-
-    PLA
-    TAX
 
     RTS

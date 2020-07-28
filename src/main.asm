@@ -182,6 +182,7 @@ Main:
     
     JSR clearVRAMBuffer
     JSR gameMovement
+    JSR writeOutScoreVram
     JMP Main
 
 resetHard:

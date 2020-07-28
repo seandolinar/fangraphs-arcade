@@ -1,9 +1,9 @@
 ; player sprite
 sprites:
-.byte $c0, $12, %00000000, $80  ; TOP LEFT 0-4 
-.byte $c8, $22, %00000000, $80  ; BOTTOM LEFT 5-8
-.byte $c0, $13, %00000000, $88  ; TOP RIGHT 9-12
-.byte $c8, $23, %00000000, $88  ; BOTTOM RIGHT 13-6
+.byte $00, $12, %00000000, $00  ; TOP LEFT 0-4 
+.byte $00, $22, %00000000, $00  ; BOTTOM LEFT 5-8
+.byte $00, $13, %00000000, $00  ; TOP RIGHT 9-12
+.byte $00, $23, %00000000, $00  ; BOTTOM RIGHT 13-6
 
 ; this is not RAM, huh?
 enemy_array:
