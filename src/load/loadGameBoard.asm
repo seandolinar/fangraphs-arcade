@@ -198,6 +198,8 @@ LDA #$00
 STA gameStateIsPowered
 STA gamePlayerReset
 STA animationTimer
+
+LDA #$02
 STA enemyState
 STA enemyState + 1
 STA enemyState + 2
@@ -205,6 +207,9 @@ STA enemyState + 3
 
 LDA #$01
 STA powerUpAvailable ; first base power up is loaded first
+
+LDA #$ff
+STA isEnemyLeaving
 
 countDots:
 

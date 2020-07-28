@@ -17,7 +17,6 @@ battedBall:
     STA enemy_oam + 10, Y
     STA enemy_oam + 14, Y
 
-
     LDA enemy1DirectionCurrent, X
     CMP #$01 ; UP
     BEQ @moveBallDown
@@ -119,7 +118,6 @@ battedBall:
     LDA #$80
     STA enemyX, X
     LDA #$38
-    ; LDA #$48
     STA enemyY, X
 
     LDA #$03
@@ -131,13 +129,6 @@ battedBall:
 
     LDA #$02
     STA enemyState, X
-
-    ; does this make it better?
-    ; no
-    ; CLC
-    ; TYA
-    ; ADC #$10
-    ; TAY
 
     RTS
 
@@ -239,6 +230,15 @@ forEachEnemyMovement:
     ; so this is how we can execute "entering enemies"
     ; might need to write something that open and shuts the door that cycles show the 4 bytes of ram for enemy states
     ; make a loop that short circuits if we have more than one state = 2 
+    LDA isEnemyLeaving
+    CMP #$ff
+    BEQ @start
+    CPX isEnemyLeaving
+    BEQ @start
+
+    JMP @halt
+
+    @start:
     LDA enemyX, X
     STA enemyXBuffer
     LDA enemyY, X
@@ -246,19 +246,23 @@ forEachEnemyMovement:
     STA enemyY, X
     STA enemyYBuffer
 
+    STX isEnemyLeaving
+
     CMP #$48
     BCS @setNormal
 
+    
+    @skip:
     JMP noAI
 
     @setNormal:
     LDA #$00
     STA enemyState, X
+    LDA #$ff
+    STA isEnemyLeaving
 
-    ; 
     LDA #$48
     STA enemyY, X
-
 
     @halt:
     JMP forEachEnemyMovement

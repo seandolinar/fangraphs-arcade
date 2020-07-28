@@ -26,8 +26,11 @@ checkDoor:
     LDA enemyState, X
     CMP #$02
     BEQ @openDoor
-    JMP @continue
+    DEX
+    CPX #$00
+    BNE @loop
 
+    JMP @checkIfDoorClose
    
     @openDoor:
     TXA 
@@ -49,7 +52,7 @@ checkDoor:
     TAX
 
     STY vram_buffer_offset 
-    JMP @continue
+    JMP @exit
 
     @closeDoor:
     TXA 
@@ -73,11 +76,9 @@ checkDoor:
     STY vram_buffer_offset
     JMP @exit
 
-    @continue:
-    DEX
-    CPX #$00
-    BNE @loop
+    
 
+    @checkIfDoorClose:
     ; we need to loop through and if we find no 2s then close
     LDX #$03
     @loopStateNormal:
