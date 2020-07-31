@@ -84,20 +84,20 @@ frameTimer:					.res 1  ; 0027
 
 consoleLog:					.res 1  ; 0028
 
-gameStateIsPowered: 		.res 1 ; 002F
+gameStateIsPowered: 		.res 1 ; 0029
 
 ; Sometimes this works better than stack
-tempX:					.res 1 ; 0030
-tempY:					.res 1 ; 0031
+tempX:					.res 1 ; 002a
+tempY:					.res 1 ; 002b
 
-powerUpAvailable:		.res 1 ; 0038 one byte ;; 7654321 - bit one is if the the first one is available
-powerUpTimer:			.res 1 ; 0039
+powerUpAvailable:		.res 1 ; 002c one byte ;; 7654321 - bit one is if the the first one is available
+powerUpTimer:			.res 1 ; 002d
 
-bufferBackgroundColor:	.res 1 ; 003A
+bufferBackgroundColor:	.res 1 ; 002e
 bufferBackgroundValLo:	.res 1
 bufferBackgroundValHi:	.res 1
 
-dotsLeft:				.res 1	;003D
+dotsLeft:				.res 1	;0031 ; this might need to be 2 bytes
 inning:					.res 1
 
 background_row:         .res $20
@@ -178,6 +178,7 @@ tempX1:					.res 1
 tempCatchAll:			.res 1
 enemyCycleX:			.res 1
 isEnemyLeaving:			.res 1
+frameDelay:				.res 1
 
 
 ; NES-defined RAM locations

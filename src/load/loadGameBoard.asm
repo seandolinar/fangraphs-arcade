@@ -212,7 +212,7 @@ countDots:
         CMP tilesDots, X
         BEQ @incDotCount
         INX
-        CPX #$06
+        CPX #$05
         BNE @loopCompareTilesDots
        
         LDX tempX                     ; unstash X

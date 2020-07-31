@@ -151,8 +151,18 @@ checkWin:
     CMP #$05
     BNE @exit
 
+    LDA frameTimer
+    ADC #$20
+    STA frameDelay
+
 
     @win:
+    CLC
+    LDA frameTimer
+    CMP frameDelay
+    BNE @win
+
+
     JSR FamiToneMusicStop		; stop music
 
     LDA #$00  ; disable NMI, sprites from Pattern Table 0, background from Pattern Table 1
