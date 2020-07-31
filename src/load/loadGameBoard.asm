@@ -171,6 +171,11 @@ FillAttrib0Loop:
 LDA #$10
 STA masterTimer
 
+; debug == UNCOMMENT
+; LDA #$01
+; STA gameStateIsPowered
+
+
 LDA #$00
 STA gameStateIsPowered
 STA gamePlayerReset

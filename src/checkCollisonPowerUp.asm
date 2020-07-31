@@ -43,7 +43,7 @@ enablePowerUp:
 
 disablePowerUp:
     LDA #$00
-    STA gameStateIsPowered
+    STA gameStateIsPowered ; debug == COMMENT OUT
     STA powerUpTimer
 
     JSR changeEnemyColor ; make this enemyState?

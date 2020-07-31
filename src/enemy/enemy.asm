@@ -28,41 +28,43 @@ battedBall:
     JMP @moveBallLeft ; RIGHT
 
     @moveBallLeft:
+    ; leading left edge
     LDA enemy_oam + 3, Y    
-
-    SEC
-    SBC #$0c
-    
+    SBC #$10
+    BMI @stopBridge
     STA enemy_oam + 3, Y
     STA enemy_oam + 11, Y
 
-    SBC #$04
-    BMI @stop
-
     SEC
     LDA enemy_oam + 7, Y
-    SBC #$0c
+    SBC #$10
     STA enemy_oam + 7, Y
     STA enemy_oam + 15, Y
 
     JMP @break
 
+    @stopBridge:
+    JMP @stop
+
     @moveBallRight:
     CLC
     LDA enemy_oam + 3, Y    
-    ADC #$0c
-    
+    ADC #$10
+    ; BCS @stop
+    ; SBC #$04
     STA enemy_oam + 3, Y
     STA enemy_oam + 11, Y
 
-
+    ; leading right edge
     CLC
     LDA enemy_oam + 7, Y
-    ADC #$0c
+    ADC #$10
+    BCS @stop
+    ; SBC #$04
     STA enemy_oam + 7, Y
     STA enemy_oam + 15, Y
 
-    BCS @stop
+    ; BCS @stop
    
     JMP @break
 
@@ -124,12 +126,20 @@ battedBall:
     LDA #$38
     STA enemyY, X
 
+    ; this should reset the palette
     LDA #$03
 
     STA enemy_oam + 2, Y
     STA enemy_oam + 6, Y
     STA enemy_oam + 10, Y
     STA enemy_oam + 14, Y
+
+    LDA #$f0
+    STA enemy_oam, Y
+    STA enemy_oam + 4, Y
+    STA enemy_oam + 8, Y
+    STA enemy_oam + 12, Y
+
 
     LDA #$02
     STA enemyState, X
