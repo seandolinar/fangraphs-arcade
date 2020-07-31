@@ -39,10 +39,8 @@ battedBall:
     SBC #$04
     BMI @stop
 
-    CLC
-    LDA enemy_oam + 7, Y
-
     SEC
+    LDA enemy_oam + 7, Y
     SBC #$0c
     STA enemy_oam + 7, Y
     STA enemy_oam + 15, Y
@@ -50,17 +48,16 @@ battedBall:
     JMP @break
 
     @moveBallRight:
-    LDA enemy_oam + 3, Y    
-
     CLC
+    LDA enemy_oam + 3, Y    
     ADC #$0c
     
     STA enemy_oam + 3, Y
     STA enemy_oam + 11, Y
 
-    LDA enemy_oam + 7, Y
 
     CLC
+    LDA enemy_oam + 7, Y
     ADC #$0c
     STA enemy_oam + 7, Y
     STA enemy_oam + 15, Y
@@ -74,6 +71,10 @@ battedBall:
 
     CLC
     ADC #$0c
+    BCS @stop ; this might not work
+    ADC #$04
+    BCS @stop
+
     STA enemy_oam, Y
     STA enemy_oam + 4, Y
 
@@ -81,6 +82,9 @@ battedBall:
 
     CLC
     ADC #$0c
+    BCS @stop ; this might not work
+    ADC #$04
+    BCS @stop
     STA enemy_oam + 8, Y
     STA enemy_oam + 12, Y
 
