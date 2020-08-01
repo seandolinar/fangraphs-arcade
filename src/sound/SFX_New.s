@@ -6,6 +6,7 @@ sounds:
 @ntsc:
 	.word @sfx_ntsc_base
 	.word @sfx_ntsc_eatdot
+	.word @sfx_ntsc_nextinning
 	.word @sfx_ntsc_smash
 
 @sfx_ntsc_base:
@@ -16,6 +17,13 @@ sounds:
 @sfx_ntsc_eatdot:
 	.byte $82,$00,$81,$fd,$80,$ff,$86,$80,$89,$f0,$81,$9f,$01,$81,$b3,$01
 	.byte $00
+@sfx_ntsc_nextinning:
+	.byte $82,$00,$81,$e1,$80,$b5,$86,$80,$89,$f0,$80,$bd,$01,$80,$ff,$02
+	.byte $81,$df,$01,$81,$bd,$80,$b5,$01,$80,$bd,$01,$80,$ff,$02,$81,$bb
+	.byte $01,$81,$96,$80,$b5,$01,$80,$bd,$01,$80,$ff,$02,$81,$94,$03,$81
+	.byte $96,$03,$81,$a9,$80,$b5,$01,$80,$bd,$01,$80,$ff,$02,$81,$a7,$01
+	.byte $81,$7e,$80,$b5,$01,$80,$bd,$01,$80,$ff,$02,$81,$7c,$03,$81,$7e
+	.byte $03,$81,$7c,$03,$81,$7e,$02,$00
 @sfx_ntsc_smash:
 	.byte $86,$80,$89,$f0,$85,$03,$84,$56,$83,$b4,$8a,$0b,$89,$fe,$01,$89
 	.byte $fc,$01,$89,$fd,$01,$89,$fb,$01,$89,$fa,$01,$89,$f9,$03,$89,$f7

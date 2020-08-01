@@ -44,6 +44,12 @@ loadWinScreen:
   ; ldx #FT_SFX_CH0
 	; jsr FamiToneSfxPlay
 
+      
+
+  ; LDA #$03
+	; JSR FamiToneMusicPlay
+
+  ; Inning Digit Carrying Logic
   INC inning
 
   INC inningDigit0
@@ -184,8 +190,6 @@ LDX #$00                ; start out at 0
 
   LDA #%00001110   ; enable sprites, enable background, no clipping on left side
   STA $2001
-
-  
 
   @loop:
 

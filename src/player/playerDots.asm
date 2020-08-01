@@ -152,9 +152,14 @@ checkWin:
     BNE @exit
 
     LDA frameTimer
-    ADC #$20
+    ADC #$30
     STA frameDelay
 
+    ; only works here if we have a good frame delay
+    LDA #$02
+
+    LDX #FT_SFX_CH0
+    JSR FamiToneSfxPlay
 
     @win:
     CLC
