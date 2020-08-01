@@ -202,6 +202,11 @@ gameMovement:
 
     ; this should handle when to move the sprites
     JSR checkCollisionSprites ; I don't think I need this here
+
+    ; skips over this section if we are resetting because of an out
+    LDA gamePlayerReset
+    BNE @dump
+
     JSR setAnimationPlayerDirection
     JSR checkCollisionPowerUp
 

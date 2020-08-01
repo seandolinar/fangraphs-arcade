@@ -27,7 +27,7 @@ checkCollisionSprites:
 
     ; ; Bad collision path
     JSR soundCollision
-    JSR animatePlayerEnd
+    JSR animatePlayerOut
     JSR playerReset
     
     ; might be able to put this into the playerReset SUB

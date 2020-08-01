@@ -153,14 +153,18 @@ animationReverse:
     .byte $57, $56, $67, $66
     .byte $73, $72, $83, $82
 
-animatePlayerEnd:
+animatePlayerOut:
+    ; this is getting run
+
+
     LDA #$00
     STA frameTimer
+
 
     LDA playerDirectionCurrent
     CMP #$03
     BEQ @setReverse
-
+    
     ; don't blow away x?
     LDX #$00
     @loopAnimation:
@@ -220,6 +224,7 @@ animatePlayerEnd:
     ASL
 
     TAX
+
 
     LDA animationReverse, X
     STA player_oam + 1
