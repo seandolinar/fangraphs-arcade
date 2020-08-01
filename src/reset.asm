@@ -36,6 +36,7 @@ ClearMemory:
   STA inningDigit0
 
 
+
   LDA #$00
   STA controllerBits
   STA inningDigit1

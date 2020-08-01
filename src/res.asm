@@ -155,20 +155,20 @@ vram_lo:						.res 1 ; 008c
 vram_hi:						.res 1 ; 008d
 
 ; score
-scoreDigit0:			.res 1 ; 008e
-scoreDigit1:			.res 1 ; 008f
-scoreDigit2:			.res 1 ; 0090
-scoreDigit3:			.res 1 ; 0091
+scoreDigit0:			.res 1 ; 0087
+scoreDigit1:			.res 1 ; 
+scoreDigit2:			.res 1 ; 
+scoreDigit3:			.res 1 ; 
 scoreDigit4:			.res 1
 scoreDigit5:			.res 1
 scoreDigit6:			.res 1
 scoreDigit7:			.res 1
 scoreDigit8:			.res 1
 scoreDigit9:			.res 1
-scoreDigit10:			.res 1
-scoreDigit11:			.res 1
+scoreDigit10:			.res 1	; 0090
+scoreDigit11:			.res 1 	; 0091 
 scoreDigitBuffer:		.res 1
-scoreValue:				.res 1
+scoreValue:				.res 1	; 0093
 
 inningDigit0:			.res 1 ; 0096?
 inningDigit1:			.res 1

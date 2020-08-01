@@ -142,7 +142,7 @@ checkWin:
     ; !!DEBUG
     LDA controllerBits
     AND #CONTROL_P1_B
-    BNE @win
+    BNE @continueWin
     ; DEBUG!!
 
     LDA dotsLeft
@@ -162,7 +162,7 @@ checkWin:
     CMP frameDelay
     BNE @win
 
-
+    @continueWin:
     JSR FamiToneMusicStop		; stop music
 
     LDA #$00  ; disable NMI, sprites from Pattern Table 0, background from Pattern Table 1

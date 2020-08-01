@@ -1,8 +1,19 @@
 
-6
-00000	008E	b	u	0	scoreDigit1
-00001	008F	b	u	0	scoreDigit2
-00002	0090	b	u	0	scoreDigit3
-00003	0091	b	u	0	scoreDigit4
-00004	0092	b	u	0	scoreDigit5
-00005	0093	b	u	0	scoreDigit6
+17
+00000	0087	b	u	0	scoreDigit0
+00001	0088	b	u	0	scoreDigit1
+00002	0089	b	u	0	scoreDigit2
+00003	008A	b	u	0	scoreDigit3
+00004	008B	b	u	0	scoreDigit4
+00005	008C	b	u	0	scoreDigit5
+00006	008D	b	u	0	scoreDigit6
+00007	008E	b	u	0	scoreDigit7
+00008	008F	b	u	0	scoreDigit8
+00009	0090	b	u	0	scoreDigit9
+00010	0091	b	u	0	scoreDigit10
+00011	0092	b	u	0	scoreDigit11
+00012	0093	b	u	0	scoreDigitValue
+00013	0094	b	u	0	scoreValue
+00014	0095	b	u	0	inningDigit0
+00015	0096	b	u	0	inningDigit1
+00016	0097	b	u	0	inningDigit2

@@ -41,17 +41,22 @@ loadGameOver:
 
 loadWinScreen:
 
-  ; LDA #$00
-
   ; ldx #FT_SFX_CH0
 	; jsr FamiToneSfxPlay
 
+  INC inning
 
-  LDA inningDigit0
   CLC
-  ADC #$01
-  STA inningDigit0
+  INC inningDigit0
+  CMP #$0a
+  BCC @continueGameOver
 
+  LDA #$00
+  STA inningDigit0
+  INC inningDigit1
+
+
+  @continueGameOver:
   LDA #$00
   STA $2001
 
@@ -70,7 +75,7 @@ loadWinScreen:
 
   ; how to get every 4? just divide by 4?
   ; how does 0 - 3 work 
-  LDA inningDigit0
+  LDA inning
   AND #$03
 
   CMP #$01

@@ -7,7 +7,7 @@ newCheckBackgroundCollisionEnemy:
     STA collisionFlagEnemy
 
     ; can I blow away X?
-    LDA inningDigit0
+    LDA inning
     AND #$03
 
     CMP #$01
