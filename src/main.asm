@@ -33,8 +33,7 @@
 .segment "TILES"
 .incbin "../chr/nes-fg.chr"
 
-.segment "MUSIC"
-; .incbin "../nsf/export1.nsf", $80 ; offset of $80 so I don't have to trim this 
+.segment "MUSIC" ; TODO eliminate
 
 
 .segment "CODE"
@@ -150,13 +149,42 @@ Main:
     AND #CONTROL_P1_START
     BEQ @continue
     
+    LDA #$00
+    STA gamePaused
+    
     @pauseLoop:
+
+    
+
+    LDA gamePaused
+    CMP #$00
+    BNE @continuePauseLoop
+
+    @musicPauseLoop:
+   
+    LDA #$04
+	JSR FamiToneMusicPlay
+
+    ; LDX #$02
+    ; STX gamePaused
+
+    INC gamePaused
+
+    @continuePauseLoop:
+    LDA gamePaused
+    ORA #$01
+    STA gamePaused
+
     JSR readController
     LDA controllerBits
     EOR controllerBitsPrev ; difference in buttons
     AND controllerBits
     AND #CONTROL_P1_START  ; zeros out non-start bits
     BEQ @pauseLoop
+
+    LDX #$00 ; i'm not blowing away anything?
+    STX gamePaused
+    JSR FamiToneMusicStop
 
     @continue:
     LDY controlTimer

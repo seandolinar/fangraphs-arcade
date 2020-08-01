@@ -23,7 +23,7 @@ soundCollisionGood:
     PHA
     STX tempX
 
-    LDA #$02
+    LDA #$03
 
     LDX #FT_SFX_CH0
 	JSR FamiToneSfxPlay
@@ -43,6 +43,14 @@ soundDot:
 	JSR FamiToneSfxPlay
     PLA
     TAX
+    RTS
 
-dumpSoundDot:
+soundNextInning:
+    TXA
+    PHA
+    LDA #$02
+    LDX #FT_SFX_CH0
+    JSR FamiToneSfxPlay
+    PLA
+    TAX
     RTS

@@ -37,18 +37,7 @@ loadGameOver:
 
   JMP InitialLoad
 
-
-
 loadWinScreen:
-
-  ; ldx #FT_SFX_CH0
-	; jsr FamiToneSfxPlay
-
-      
-
-  ; LDA #$03
-	; JSR FamiToneMusicPlay
-
   ; Inning Digit Carrying Logic
   INC inning
 

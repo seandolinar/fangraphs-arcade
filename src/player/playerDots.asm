@@ -156,10 +156,7 @@ checkWin:
     STA frameDelay
 
     ; only works here if we have a good frame delay
-    LDA #$02
-
-    LDX #FT_SFX_CH0
-    JSR FamiToneSfxPlay
+    JSR soundNextInning
 
     @win:
     CLC
