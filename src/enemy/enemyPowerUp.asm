@@ -5,7 +5,6 @@ changeEnemyColor:
     TYA
     PHA
 
-    ; LDX #$04
     LDY #$00
 
     LDA gameStateIsPowered
@@ -183,6 +182,8 @@ resetEnemyColorLoop:
 
 
 changeEnemyColorLoop:
+    ; A register needs to be "passed" in
+    ; I only call this once
     LDX #$04
     @loop:
     DEX 

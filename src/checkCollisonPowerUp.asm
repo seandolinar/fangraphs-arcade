@@ -41,6 +41,14 @@ enablePowerUp:
 
     RTS
 
+warnPowerUp:
+    LDA powerUpTimer
+    AND #%00000001
+    JSR changeEnemyColorLoop
+    DEC powerUpTimer
+    RTS
+
+
 disablePowerUp:
     LDA #$00
     STA gameStateIsPowered ; debug == COMMENT OUT
@@ -97,15 +105,24 @@ setTimerPowerUp:
     STA powerUpTimer
     RTS
 
+; decrement?
 incTimerPowerUp:
-    LDA powerUpTimer ; should just bail out if nothing
+    ; should just bail out if nothing is going on
+    LDA powerUpTimer 
     CMP #$00
     BEQ dumpIncTimerPowerUp
+    CMP #$01
+    BEQ @reset
+    CMP #$11
+    BCC warnPowerUp
 
+    @reset:
     LDA masterTimer
     CMP #$08                    ; sloppy, but the counter is only counting down to 2
     BNE dumpIncTimerPowerUp; 
     
+    ; this fires if we DEC to get to 0
+    ; kind of confusing
     DEC powerUpTimer
     LDA powerUpTimer
     CMP #$00
@@ -113,5 +130,5 @@ incTimerPowerUp:
 
     JSR disablePowerUp
     RTS
-dumpIncTimerPowerUp:
+    dumpIncTimerPowerUp:
     RTS
