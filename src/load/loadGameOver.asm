@@ -46,14 +46,25 @@ loadWinScreen:
 
   INC inning
 
-  CLC
   INC inningDigit0
+
+  LDA inningDigit0
   CMP #$0a
-  BCC @continueGameOver
+  BNE @continueGameOver
 
   LDA #$00
   STA inningDigit0
+
   INC inningDigit1
+
+  LDA inningDigit1
+  CMP #$0a
+  BNE @continueGameOver
+
+  LDA #$00
+  STA inningDigit1
+
+  INC inningDigit2
 
 
   @continueGameOver:
