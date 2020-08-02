@@ -15,8 +15,9 @@ const VirtualGamePadButton = ({
     return <div className={`virtual-game-pad__button__wrapper ${className}`}>
         <div className="virtual-game-pad__button"
             onMouseDown={() => onButtonDown(controller, button)}
-            // onMouseDown={() => alert(button) }
             onMouseUp={() => onButtonUp(controller, button)}
+            onTouchStart={() => onButtonDown(controller, button)}
+            onTouchEnd={() => onButtonUp(controller, button)}
         >
             { includes([
                 Controller.BUTTON_LEFT, 
