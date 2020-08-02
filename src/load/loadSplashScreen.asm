@@ -59,7 +59,7 @@ splashScreen:
   STA bufferBackgroundColor
 
   LDA #%00001110   ; disable sprites, enable background, no clipping on left side
-  STA $2001
+  STA PPU_CTRL_REG2
 
   LDA #$00
   STA $2005
@@ -79,7 +79,7 @@ splashScreen:
   jsr FamiToneMusicStop		;stop music
 
   LDA #$00
-	STA $2000               ; disable NMI
-	STA $2001               ; disable rendering
+	STA PPU_CTRL_REG1               ; disable NMI
+	STA PPU_CTRL_REG2               ; disable rendering
 
   JMP InitialLoad

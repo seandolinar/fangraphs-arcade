@@ -278,12 +278,12 @@ countDots:
    
   ; STARTS VIDEO DISPLAY
   LDA #%10000000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
-  STA $2000
+  STA PPU_CTRL_REG1
   STA PPUState
 
 
   LDA #%00011110   ; enable sprites, enable background, no clipping on left side
-  STA $2001
+  STA PPU_CTRL_REG2
 
   LDA #$00
   STA $2005
@@ -294,7 +294,7 @@ countDots:
 
 
 FillBackground:
-  ; LDA $2002             ; read PPU status to reset the high/low latch
+  ; LDA $2002           ; read PPU status to reset the high/low latch
   LDA #$20
   STA $2006             ; write the high byte of $2000 address (nametable 0)
   LDA #$00

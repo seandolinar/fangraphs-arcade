@@ -64,11 +64,11 @@ loadWinScreen:
 
   @continueGameOver:
   LDA #$00
-  STA $2001
+  STA PPU_CTRL_REG2
 
   LDA #%00010000   ; disables the NMI and puts the background into bank 1
   STA PPUState
-  STA $2000
+  STA PPU_CTRL_REG1
 
   LDA #<round_win_screen
   STA backgroundPointerLo
@@ -175,10 +175,10 @@ LDX #$00                ; start out at 0
   STA $2005
 
   LDA PPUState
-  STA $2000
+  STA PPU_CTRL_REG1
 
   LDA #%00001110   ; enable sprites, enable background, no clipping on left side
-  STA $2001
+  STA PPU_CTRL_REG2
 
   @loop:
 
@@ -189,8 +189,8 @@ LDX #$00                ; start out at 0
   BEQ @loop
 
   LDA #$00
-	STA $2000               ; disable NMI
-	STA $2001               ; disable rendering
+	STA PPU_CTRL_REG1               ; disable NMI
+	STA PPU_CTRL_REG2               ; disable rendering
 
 
   RTS

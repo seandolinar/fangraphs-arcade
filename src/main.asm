@@ -56,8 +56,8 @@ NMI:
     BPL @vBlankLoop
 
     LDA #$00
-	STA $2000               ; disable NMI
-	STA $2001               ; disable rendering
+	STA PPU_CTRL_REG1               ; disable NMI
+	STA PPU_CTRL_REG2               ; disable rendering
 
     INC frameTimer
 
@@ -67,10 +67,10 @@ NMI:
 
     ; STARTS VIDEO DISPLAY
     LDA PPUState            ; using state from the code
-    STA $2000
+    STA PPU_CTRL_REG1
 
     LDA #%00011110          ; enable sprites, enable background, no clipping on left side
-    STA $2001
+    STA PPU_CTRL_REG2
 
     ; resets scroll
     ; not sure why I have to do this, but it works!!
@@ -218,8 +218,8 @@ resetHard:
     ; maybe go back to the title screen?
     ; maybe break up the reset stuff up so i can resue it
     LDA #$00  ; disable NMI, sprites from Pattern Table 0, background from Pattern Table 1
-    STA $2000
-    STA $2001
+    STA PPU_CTRL_REG1
+    STA PPU_CTRL_REG2
 
     JMP loadGameOver
 

@@ -1,11 +1,4 @@
 changeBackground:
-; background
-; I don't have to turn this off
-; I'm not sure why
-    ; LDA #$00
-	; STA $2000               ; disable NMI
-	; STA $2001               ; disable rendering
-
     LDA $2002               ; read PPU status to reset the high/low latch to high
     LDA #$3F
     STA $2006               ; write the high byte of $3F10 address
@@ -82,8 +75,8 @@ clearVRAMBuffer:
 
 endGame:
     LDA #$00
-	STA $2000               ; disable NMI
-	STA $2001  
+	STA PPU_CTRL_REG1               ; disable NMI
+	STA PPU_CTRL_REG2  
     RTS
 
 ; move

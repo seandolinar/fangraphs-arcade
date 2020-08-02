@@ -3,7 +3,7 @@ RESET:
   SEI
   LDA #%00010000
   STA PPUState
-	STA $2000 ; disable NMI
+	STA PPU_CTRL_REG1 ; disable NMI
   LDA #$00
 	STA $2001 ; disable rendering
 	STA $4010 ; disable DMC IRQ
@@ -71,7 +71,7 @@ ClearMemory:
 	jsr FamiToneSfxInit
 
   LDA #%10010000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
-  STA $2000
+  STA PPU_CTRL_REG1
   STA PPUState
 
   JMP splashScreen
