@@ -28,7 +28,7 @@ ClearMemory:
   BNE ClearMemory
 
     WarmUp:
-        BIT $2002
+        BIT PPU_STATUS
 		BPL WarmUp
 
   LDA #$01

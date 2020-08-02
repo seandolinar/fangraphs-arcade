@@ -52,7 +52,7 @@ NMI:
 
 ; vBlankWait:	
 @vBlankLoop:
-	LDA $2002   
+	LDA PPU_STATUS   
     BPL @vBlankLoop
 
     LDA #$00

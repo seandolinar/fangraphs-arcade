@@ -129,12 +129,12 @@ loadFullScreen:
 
   ;; HAVE TO Reunderstand this
   ;; LOADING PALETTE
-  LDA $2002    ; read PPU status to reset the high/low latch to high
+  LDA PPU_STATUS    ; read PPU status to reset the high/low latch to high
 
   LDA #$3F
-  STA $2006    ; write the high byte of $3F10 address
+  STA PPU_ADDRESS    ; write the high byte of $3F10 address
   LDA #$10
-  STA $2006    ; write the low byte of $3F10 address
+  STA PPU_ADDRESS    ; write the low byte of $3F10 address
 
 
 LDX #$00                ; start out at 0
@@ -144,7 +144,7 @@ LDX #$00                ; start out at 0
                           ; 2nd time through loop it will load PaletteData+1
                           ; 3rd time through loop it will load PaletteData+2
                           ; etc
-  STA $2007               ; write to PPU
+  STA PPU_DATA               ; write to PPU
   INX                     ; X = X + 1
   CPX #$20               ; Compare X to hex $20, decimal 32
   BNE @LoadPalettesLoop 
@@ -152,17 +152,17 @@ LDX #$00                ; start out at 0
 
 ; putting this after fixes things
 @FillAttrib0:
-  LDA $2002             ; read PPU status to reset the high/low latch
+  LDA PPU_STATUS             ; read PPU status to reset the high/low latch
   LDA #$23
-  STA $2006             ; write the high byte of $23C0 address (nametable 0 attributes)
+  STA PPU_ADDRESS             ; write the high byte of $23C0 address (nametable 0 attributes)
   LDA #$C0
-  STA $2006             ; write the low byte of $23C0 address
+  STA PPU_ADDRESS             ; write the low byte of $23C0 address
 
   LDX #$00
 @FillAttrib0Loop:
   ; LDA attribute_table, X
   LDA #$00
-  STA $2007
+  STA PPU_DATA
   INX
   CPX #$40                   ; fill 64 bytes
   BNE @FillAttrib0Loop
@@ -171,8 +171,8 @@ LDX #$00                ; start out at 0
   STA bufferBackgroundColor
 
   LDA #$00
-  STA $2005
-  STA $2005
+  STA PPU_SCROLL_REG
+  STA PPU_SCROLL_REG
 
   LDA PPUState
   STA PPU_CTRL_REG1
