@@ -15,6 +15,7 @@
 
 
 .RunPage .screen-container {
+  // display: flex;
   flex: 1 0 auto;
   text-align: center;
   margin: 20px;
@@ -22,6 +23,9 @@
   /* background: rgb(91,90,90); */
   /* background: radial-gradient(circle, rgba(91,90,90,1) 0%, rgba(158,158,158,1) 100%); */
 
+  @media (max-width: 375px) {
+    display: flex;
+  }
 
 }
 
@@ -33,30 +37,38 @@
   clip-path: url(#svgPath);
 }
 
-/* super hacky to get this to work on safari */
-@media not all and (min-resolution:.001dpcm) { 
-  @media {
-    .Screen {clip-path: initial; }
-  }
-}
 
 .tv {
   display: flex;
   max-width: 900px;
   margin: auto;
   background: radial-gradient(circle, rgba(91,90,90,1) 0%, rgba(158,158,158,1) 100%);
+
+  @media (max-width: 375px) {
+    flex-direction: column;
+  }
 }
 
 .tv__side-panel {
   display: flex;
   flex-direction: column;
   width: 20%;
+
+  @media (max-width: 375px) {
+    width: 100%;
+    flex-direction: row;
+  }
 }
 
 .tv__control {
   flex: 1 0 auto;
   background: rgb(91,90,90);
   padding: 10px;
+
+  @media (max-width: 375px) {
+    // width: 100%;
+    flex: 1 0 auto;
+  }
 }
 
 .tv__control__power {
@@ -71,6 +83,7 @@
   background-color: darkred;
   border: 5px solid #888;
   padding: 5px;
+  margin-left: 10px;
   flex: 0 0 50px;
 }
 
@@ -85,6 +98,10 @@
   font-size: 24px;
   padding: 20px 20px;
   margin-top: 10px;
+
+  @media (max-width: 375px) {
+    display: none;
+  }
 }
 
 .tv__side-panel.power-on .tv__control__channel {
@@ -96,4 +113,8 @@
   width: 100%;
   /* height: 20%; */
   background: repeating-linear-gradient(0deg, rgb(175, 175, 175) 0%, rgb(0, 0, 0) 3%);
+
+  @media (max-width: 375px) {
+    flex: 1 0 auto;
+  }
 }

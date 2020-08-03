@@ -1,30 +1,49 @@
 .virtual-game-pad-controller {
-    display: flex;
     background-color: #aaa;
     max-width: 600px;
     height: 300px;
     margin: auto;
     margin-top: 50px;
     padding: 20px;
+
+    @media (max-width: 375px) {
+        height: initial;
+    }
 }
 
 .virtual-game-pad-controller__matte {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     align-items: center;
     background-color: #333;;
     width: 100%;
     height: 100%;
     padding: 20px;
+
+    @media (max-width: 375px) {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0;
+    }
 }
 
 .virtual-game-pad-controller__group-dpad {
     display: grid;
     flex: 0 0 33.3333%;
-    // height: 100%;
     height: 190px;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 33.33333% 33.333333% 33.33333%;
     padding: 15px;
+
+    @media (max-width: 375px) {
+        padding: 5px;
+    }
+}
+
+.virtual-game-pad-controller__center {
+    @media (max-width: 375px) {
+        order: 3;
+        grid-column: span 2;
+    }
 }
 
 .virtual-game-pad-controller__group-start-select,

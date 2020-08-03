@@ -12,7 +12,7 @@ import { loadBinary } from "./utils";
 
 import VirtualGamePadController from './VirtualGamePadController';
 
-import "./RunPage.css";
+import "./RunPage.scss";
 
 // clip path for TV screen shape
 const clipPath = <svg width="0" height="0">
@@ -211,7 +211,15 @@ class RunPage extends Component {
     this.screenContainer.style.height = `${window.innerHeight -
       navbarHeight}px`;
 
-    this.screenContainer.style.height = `${this.screenContainer.getBoundingClientRect().width * .75}px`;
+    if (window.innerWidth <= 375) {
+      this.screenContainer.style.height = `${this.screenContainer.getBoundingClientRect().width * .95}px`;
+    }
+    else {
+      this.screenContainer.style.height = `${this.screenContainer.getBoundingClientRect().width * .75}px`;
+    }
+
+
+
 
     if (this.emulator) {
       this.emulator.fitInParent();

@@ -80,7 +80,19 @@
         height: 100%;
         border-radius: 50%;
         box-shadow: inset 0px 0px 10px 15px rgba(#444, .5);
+
+        @media (max-width: 375px) {
+            // box-shadow: inset 0px 0px 10px 15px rgba(#444, .5);
+            width: 60%;
+            height: 60%;
+            border-radius: 50%;
+            box-shadow: inset 0px 0px 10px 15px rgba(68, 68, 68, 0.5);
+            left: 20%;
+            top: 20%;
+        }
     }
+
+   
 }
 
 .button-dpad__arrow {
@@ -98,8 +110,8 @@
         content: "";
         position: absolute;
         width: 18px;
-        height: 18px;
-        left: -36px;
+        height: 16px;
+        left: -30px;
         /* top: 6px; */
         top: -8px;
         box-shadow: inset 0px 0px 10px 20px #222;
@@ -116,5 +128,12 @@
 
     .button-dpad__left & {
         transform: rotate(180deg);
+    }
+
+    @media (max-width: 375px) {
+        border-top: 12px solid transparent;
+        border-left: 20px solid #222;
+        // left: -36px;
+        border-bottom: 12px solid transparent;
     }
 }
