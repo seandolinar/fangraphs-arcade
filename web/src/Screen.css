@@ -7,6 +7,6 @@
 /* super hacky to get this to work on safari */
 @media not all and (min-resolution:.001dpcm) { 
   @media {
-    .Screen {clip-path: initial; }
+    .Screen {clip-path: initial !important; }
   }
 }
