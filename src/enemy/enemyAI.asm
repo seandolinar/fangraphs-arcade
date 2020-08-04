@@ -12,14 +12,26 @@
 ; figure out if I can use the stack here for a loop
 
 runEnemyAI:
-
+    
     TYA                                 ; use Y for the randomizer
     PHA
     TXA
     PHA
-    LDX #$00                            ; initialize X for array length
-                                        ; this affects the subs...guh not very well "scoped"
 
+    ;;clear for debug;;
+    LDA #$00
+    STA enemyDirectionArray
+    STA enemyDirectionArray + 1
+    STA enemyDirectionArray + 2
+
+    STA enemyDistance
+    STA enemyDistance + 1
+    STA enemyDistance + 2
+    STA enemyDistance + 3
+    STA enemyDistance + 4
+    STA enemyDistance + 5
+
+    
     LDA enemyBufferDirectionCurrent     ; going to have to change this for multiples
     CMP #$01                            ; TODO: make these constants
     BEQ dumpAvailableUp
@@ -46,6 +58,185 @@ runEnemyAI:
         JMP chooseFromAvailableDirections
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Checks the three directions;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+subAvailableUp:
+    ; I'm not resetting X going into here.
+    ; We need X coming out of here
+    LDX #$00
+
+    @checkUp:
+    JSR enemyMoveUp
+    JSR checkBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    BNE @checkLeft
+    
+    JSR computeDistance
+
+    LDA #DIRECTION_UP
+    STA enemyDirectionArray, X
+    INX
+
+    @checkLeft:
+    JSR enemyMoveLeft
+    JSR checkBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    BNE @checkRight
+
+    JSR computeDistance
+
+    LDA #DIRECTION_LEFT
+    STA enemyDirectionArray, X
+    INX
+
+    @checkRight:
+    JSR enemyMoveRight
+    JSR checkBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    BNE @break
+
+    JSR computeDistance
+
+    LDA #DIRECTION_RIGHT
+    STA enemyDirectionArray, X
+    INX
+
+    @break:
+    DEX
+    STX enemyDirectionIndex
+    RTS
+
+subAvailableDown:
+    LDX #$00
+
+    @checkDown:
+    JSR enemyMoveDown
+    JSR checkBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
+    BNE @checkLeft
+
+    JSR computeDistance
+
+    LDA #DIRECTION_DOWN
+    STA enemyDirectionArray, X
+    INX
+
+    @checkLeft:
+    JSR enemyMoveLeft
+    JSR checkBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    BNE @checkRight
+
+    JSR computeDistance
+    LDA #DIRECTION_LEFT
+    STA enemyDirectionArray, X
+    INX
+
+    @checkRight:
+    JSR enemyMoveRight
+    JSR checkBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    BNE @break
+
+    JSR computeDistance
+    LDA #DIRECTION_RIGHT
+    STA enemyDirectionArray, X
+    INX
+
+    @break:
+    DEX
+    STX enemyDirectionIndex
+    RTS
+
+subAvailableLeft: 
+    LDX #$00
+
+    @checkUp:
+    JSR enemyMoveUp
+    JSR checkBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
+    BNE @checkDown
+
+    JSR computeDistance
+
+    LDA #DIRECTION_UP
+    STA enemyDirectionArray, X
+    INX
+
+    @checkDown:
+    JSR enemyMoveDown
+    JSR checkBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
+    BNE @checkLeft
+
+    JSR computeDistance ; not working might have to increment with X
+    LDA #DIRECTION_DOWN
+    STA enemyDirectionArray, X
+    INX
+
+    @checkLeft:
+    JSR enemyMoveLeft
+    JSR checkBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
+    BNE @break
+
+    JSR computeDistance
+    LDA #DIRECTION_LEFT
+    STA enemyDirectionArray, X
+    INX
+
+    @break:
+    DEX
+    STX enemyDirectionIndex
+    RTS
+
+subAvailableRight:
+    LDX #$00
+
+    @checkUp:
+    JSR enemyMoveUp
+    JSR checkBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
+    BNE @checkDown
+
+    JSR computeDistance
+
+    LDA #DIRECTION_UP
+    STA enemyDirectionArray, X
+    INX
+
+    @checkDown:
+    JSR enemyMoveDown
+    JSR checkBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    BNE @checkRight
+
+    JSR computeDistance
+    LDA #DIRECTION_DOWN
+    STA enemyDirectionArray, X
+    INX
+
+
+    @checkRight:
+    JSR enemyMoveRight
+    JSR checkBackgroundCollisionEnemy
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    BNE @break
+
+    JSR computeDistance
+    LDA #DIRECTION_RIGHT
+    STA enemyDirectionArray, X
+    INX
+
+    @break:
+    DEX
+    STX enemyDirectionIndex
+    RTS
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Chooses the direction based on the direction ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 chooseFromAvailableDirections:
 
     ; resetting buffer
@@ -54,55 +245,66 @@ chooseFromAvailableDirections:
     LDA enemyYWork
     STA enemyYBuffer
 
+    ; going to have to rework this
+    LDX enemyDirectionIndex
     STX enemyTempForLoop ; move this?
-    DEC enemyTempForLoop
+
+    LDA #$00
+    STA enemyDirectionIndex
+    
     LDX #$00
-    STX enemyDirectionIndex
     LDY #$02
     
     ; Loops so that we remove the stack pushes we did...variable length array
     ; X is the length of the array
     ; X is from the subAvailable[Direction] subroutine
     ; turning off the loop for now
+    ; DEC enemyTempForLoop
     @loop:
-    CPX enemyTempForLoop        ; this might be one short
-    BCS commitMove
+    ; yuck ; if we only have one direction
+    LDA enemyTempForLoop        ; this might be one short
+    CMP #$00
+    BEQ commitMove
 
-    ; finish working here
-    ; it's sort working but not
     @continue:
     
-    ; X doesn't go up by 1
+    @checkHiByte:
+    STX consoleLog
     LDA enemyDistance + 1, X    ; high byte;        ; register
     CMP enemyDistance + 1, Y    ; high byte + 2     ; data 
     BCC @registerIsLower        ; branches if  data (Y) < register (X)
     BNE @registerIsHigher       ; branches if equal
 
                                 ; happens if register (X) < data (Y)
-    @checkLowerByte:
+    @checkLowByte:
     LDA enemyDistance, X        ; low byte
     CMP enemyDistance, Y        ; low byte + 1
     BCC @registerIsLower
     BNE @registerIsHigher
 
-    @registerIsLower:           ; happens if register (X) < data (Y)  
-    LDA gameStateIsPowered      ; swap if we are powered up
+    @registerIsLower:               ; happens if register (X) < data (Y)  
+    LDA enemyDistance, X 
+    ; STA consoleLog
+    LDA gameStateIsPowered          ; swap if we are powered up
     CMP #$00
     BNE @registerIsLowerPowerUp
 
-    JMP commitMove              ; commits the move on the current index
+    JMP commitMove                  ; commits the move on the current index
 
     @registerIsLowerPowerUp:  
     INC enemyDirectionIndex
-    JMP commitMove              ; commits the move on the second index
+    JMP commitMove                  ; commits the move on the second index
 
    
-    @registerIsHigher:          ; if  data (Y) < register (X)
-    LDA gameStateIsPowered      ; swap if we are powered up
+    @registerIsHigher:              ; if  data (Y) < register (X)
+    LDA #$09
+    STA consoleLog
+    LDA gameStateIsPowered          ; swap if we are powered up
     CMP #$00
     BNE @registerIsHigherPowerUp
-    INC enemyDirectionIndex      ; commits the move on the second index
-    JMP commitMove              ; commits the move on the second index
+        
+    INC enemyDirectionIndex
+    JMP commitMove              
 
     @registerIsHigherPowerUp:
     JMP commitMove
@@ -121,6 +323,7 @@ chooseFromAvailableDirections:
 commitMove:
 
     LDX enemyDirectionIndex
+    ; DEX
 
     LDA enemyDirectionArray, X          ; get the direction based on which index we picked
 
@@ -165,7 +368,7 @@ commitMove:
     JMP @continueLoop
 
     @continueLoop:
-    INX
+    DEX ; don't know if this does anything
 
     @dumpLoop:
     PLA                 ; put X/Y back
@@ -176,165 +379,9 @@ commitMove:
 
     RTS
 
-subAvailableUp:
-    ; I'm not resetting X going into here.
-    ; We need X coming out of here
-    @checkUp:
-    JSR enemyMoveUp
-    JSR checkBackgroundCollisionEnemy
-    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-    BNE @checkLeft
-    
-    JSR computeDistance
-
-    LDA #DIRECTION_UP
-    STA enemyDirectionArray, X
-    INX
-
-    @checkLeft:
-    JSR enemyMoveLeft
-    JSR checkBackgroundCollisionEnemy
-    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-    BNE @checkRight
-
-    JSR computeDistance
-
-    LDA #DIRECTION_LEFT
-    STA enemyDirectionArray, X
-    INX
-
-    @checkRight:
-    JSR enemyMoveRight
-    JSR checkBackgroundCollisionEnemy
-    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-    BNE @break
-    LDA #DIRECTION_RIGHT
-    STA enemyDirectionArray, X
-    INX
-
-    @break:
-    RTS
-
-subAvailableDown:
-    @checkDown:
-    JSR enemyMoveDown
-    JSR checkBackgroundCollisionEnemy
-    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
-    BNE @checkLeft
-
-    JSR computeDistance
-
-    LDA #DIRECTION_DOWN
-    STA enemyDirectionArray, X
-    INX
-
-    @checkLeft:
-    JSR enemyMoveLeft
-    JSR checkBackgroundCollisionEnemy
-    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-    BNE @checkRight
-
-    JSR computeDistance
-
-    LDA #DIRECTION_LEFT
-    STA enemyDirectionArray, X
-    INX
-
-    @checkRight:
-    JSR enemyMoveRight
-    JSR checkBackgroundCollisionEnemy
-    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-    BNE @break
-
-    JSR computeDistance
-
-    LDA #DIRECTION_RIGHT
-    STA enemyDirectionArray, X
-    INX
-
-    @break:
-    RTS
-
-subAvailableLeft: 
-    @checkUp:
-    JSR enemyMoveUp
-    JSR checkBackgroundCollisionEnemy
-    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
-    BNE @checkDown
-
-    JSR computeDistance
-
-    LDA #DIRECTION_UP
-    STA enemyDirectionArray, X
-    INX
-
-    @checkDown:
-    JSR enemyMoveDown
-    JSR checkBackgroundCollisionEnemy
-    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
-    BNE @checkLeft
-
-    JSR computeDistance ; not working might have to increment with X
-
-    LDA #DIRECTION_DOWN
-    STA enemyDirectionArray, X
-    INX
-
-    @checkLeft:
-    JSR enemyMoveLeft
-    JSR checkBackgroundCollisionEnemy
-    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
-    BNE @break
-
-    JSR computeDistance
-
-    LDA #DIRECTION_LEFT
-    STA enemyDirectionArray, X
-    INX
-
-    @break:
-    RTS
-
-subAvailableRight:
-    @checkUp:
-    JSR enemyMoveUp
-    JSR checkBackgroundCollisionEnemy
-    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
-    BNE @checkDown
-
-    JSR computeDistance
-
-    LDA #DIRECTION_UP
-    STA enemyDirectionArray, X
-    INX
-
-    @checkDown:
-    JSR enemyMoveDown
-    JSR checkBackgroundCollisionEnemy
-    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-    BNE @checkRight
-
-    JSR computeDistance
-
-    LDA #DIRECTION_DOWN
-    STA enemyDirectionArray, X
-    INX
-
-    @checkRight:
-    JSR enemyMoveRight
-    JSR checkBackgroundCollisionEnemy
-    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-    BNE @break
-
-    JSR computeDistance
-
-    LDA #DIRECTION_RIGHT
-    STA enemyDirectionArray, X
-    INX
-
-    @break:
-    RTS
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Changes the enemy buffer ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 enemyMoveUp:
     LDA enemyXWork
     STA enemyXBuffer
@@ -371,6 +418,10 @@ enemyMoveRight:
     STA enemyXBuffer
     RTS
 
+
+;;;;;;;;;;;;;;;;
+;; Math Utils ;;
+;;;;;;;;;;;;;;;;
 ; these "work", but it's doing a signed instead of absolute value
 absX:
     LDA enemyXBuffer
@@ -473,11 +524,11 @@ computeDistance:
     TYA
     PHA
 
-    TXA
+    TXA                             ; stash X to calculate Y 
     PHA
 
     LDY #$00
-    @loopY:
+    @loopY:                         ; multiple X by two to get Y
     CPX #$00
     BEQ @runComp
     INY
@@ -486,7 +537,7 @@ computeDistance:
     JMP @loopY
     
     @runComp:
-    PLA
+    PLA                            ; bring back X
     TAX
 
     JSR absX                                ; hopefully loop this
@@ -496,9 +547,9 @@ computeDistance:
 
     CLC
     LDA sqOut
-    STA enemyDistance, Y
+    STA enemyDistance, Y                    ; lo byte
     LDA sqOut + 1
-    STA enemyDistance + 1, Y
+    STA enemyDistance + 1, Y                ; hi byte
 
     JSR absY
     STA sqIn                                ; change this? would need to be 16-bit
@@ -518,3 +569,6 @@ computeDistance:
     TAY
 
     RTS
+
+
+

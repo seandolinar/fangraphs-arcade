@@ -87,55 +87,52 @@ consoleLog:					.res 1  ; 0028
 gameStateIsPowered: 		.res 1 ; 0029
 
 ; Sometimes this works better than stack
-tempX:					.res 1 ; 002a
-tempY:					.res 1 ; 002b
+tempX:						.res 1 ; 002a
+tempY:						.res 1 ; 002b
 
-powerUpAvailable:		.res 1 ; 002c one byte ;; 7654321 - bit one is if the the first one is available
-powerUpTimer:			.res 1 ; 002d
+powerUpAvailable:			.res 1 ; 002c one byte ;; 7654321 - bit one is if the the first one is available
+powerUpTimer:				.res 1 ; 002d
 
-bufferBackgroundColor:	.res 1 ; 002e
-bufferBackgroundValLo:	.res 1
-bufferBackgroundValHi:	.res 1
+bufferBackgroundColor:		.res 1 ; 002e
+bufferBackgroundValLo:		.res 1
+bufferBackgroundValHi:		.res 1
 
-dotsLeft:				.res 1	;0031 ; this might need to be 2 bytes
-inning:					.res 1
+dotsLeft:					.res 1	;0031 ; this might need to be 2 bytes
+inning:						.res 1	
 
-background_row:         .res $20
-data_x:                 .res 1
-data_y:                 .res 1
+; enemy AI
+playerDirectionCurrent:			.res 1 ; 0033
+enemy1DirectionCurrent:			.res 1 ; 0034
+enemy2DirectionCurrent:			.res 1
+enemy3DirectionCurrent:			.res 1
+enemy4DirectionCurrent:			.res 1
 
-nametable_buffer_lo:	.res 1
-nametable_buffer_hi:	.res 1
+enemyState:						.res 4 ; 0038-003B
 
-; move this
-playerDirectionCurrent:	.res 1
-enemy1DirectionCurrent:	.res 1
-enemy2DirectionCurrent:	.res 1
-enemy3DirectionCurrent:	.res 1
-enemy4DirectionCurrent:	.res 1
+enemyXWork:						.res 1 ; 003C
+enemyYWork:						.res 1 ; 003D
 
-enemyState:				.res 4
+enemyCMPTemp:					.res 1 ; 003E
+enemyAbsX:						.res 1 ; 003F
+enemyAbsY:						.res 1 ; 0040
+sqIn:							.res 1 ; 0041
+sqX:							.res 2 ; 0042, 0043
+sqY:							.res 2 ; 0044, 0045
+sumXY:							.res 2 ; 0046, 0047 
 
-enemyXWork:						.res 1
-enemyYWork:						.res 1
+enemyDistance:					.res 6 ; 0048-004c
+enemyDirectionArray:			.res 3 ; 004e, 004f, 0050
 
-enemyCMPTemp:					.res 1
-enemyAbsX:						.res 1
-enemyAbsY:						.res 1
-sqIn:							.res 1
-sqX:							.res 2
-sqY:							.res 2
-sumXY:							.res 2
-
-enemyDistance:					.res 6
-enemyDirectionArray:			.res 3
-
-sqOut:							.res 2
+sqOut:							.res 2 ; 0051, 0052
 
 
-enemyTempForLoop:				.res 1
-enemyDirectionIndex:			.res 1 ; 007B ; these are probably bad
-enemyBufferDirectionCurrent:	.res 1 ; 007C
+enemyTempForLoop:				.res 1 ; 0053
+enemyDirectionIndex:			.res 1 ; 0054 ; these are probably bad
+enemyBufferDirectionCurrent:	.res 1 ; 0055
+
+
+nametable_buffer_lo:			.res 1
+nametable_buffer_hi:			.res 1
 
 bufferBackgroundTile:			.res 1 ; 007D
 collisionBackgroundTile:		.res 1 ; 007E

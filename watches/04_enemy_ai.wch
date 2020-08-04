@@ -1,0 +1,27 @@
+
+25
+00000	0032	b	u	0	inning (byte)
+00001	0033	b	u	0	playerDirectionCurrent
+00002	0034	b	u	0	enemy1DirectionCurrent
+00003	0035	b	u	0	enemy2DirectionCurrent
+00004	0036	b	u	0	enemy3DirectionCurrent
+00005	0037	b	u	0	enemy4DirectionCurrent
+00006	0038	b	u	0	enemyState1
+00007	0039	b	u	0	enemyState2
+00008	003A	b	u	0	enemyState3
+00009	003B	b	u	0	enemyState4
+00010	003C	b	u	0	enemyXWork
+00011	003D	b	u	0	enemyYWork
+00012	004E	b	u	0	enemyDirectionArray1
+00013	004F	b	u	0	enemyDirectionArray2
+00014	0050	b	u	0	enemyDirectionArray3
+00015	0053	b	u	0	enemyTempForLoop
+00016	0054	b	u	0	enemyDirectionIndex
+00017	0055	b	u	0	enemyBufferDirectionCurrent
+00018	0028	b	u	0	consoleLog
+00019	0048	b	u	0	enemyDistance1
+00020	0049	b	u	0	enemyDistance2
+00021	004A	b	u	0	enemyDistance3
+00022	004B	b	u	0	enemyDistance4
+00023	004C	b	u	0	enemyDistance5
+00024	004D	b	u	0	enemyDistance6
