@@ -187,7 +187,7 @@ subAvailableUp:
     
     JSR computeDistance1
 
-    LDA #$01
+    LDA #DIRECTION_UP
     STA enemyDirectionArray, X
     INX
 
@@ -199,7 +199,7 @@ subAvailableUp:
 
     JSR computeDistance1
 
-    LDA #$03
+    LDA #DIRECTION_LEFT
     STA enemyDirectionArray, X
     INX
 
@@ -208,7 +208,7 @@ subAvailableUp:
     JSR newCheckBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @dump
-    LDA #$04
+    LDA #DIRECTION_RIGHT
     STA enemyDirectionArray, X
     INX
 
@@ -224,7 +224,7 @@ subAvailableDown:
 
     JSR computeDistance1
 
-    LDA #$02
+    LDA #DIRECTION_DOWN
     STA enemyDirectionArray, X
     INX
 
@@ -236,7 +236,7 @@ subAvailableDown:
 
     JSR computeDistance1
 
-    LDA #$03
+    LDA #DIRECTION_LEFT
     STA enemyDirectionArray, X
     INX
 
@@ -248,7 +248,7 @@ subAvailableDown:
 
     JSR computeDistance1
 
-    LDA #$04
+    LDA #DIRECTION_RIGHT
     STA enemyDirectionArray, X
     INX
 
@@ -264,7 +264,7 @@ subAvailableLeft:
 
     JSR computeDistance1
 
-    LDA #$01
+    LDA #DIRECTION_UP
     STA enemyDirectionArray, X
     INX
 
@@ -276,7 +276,7 @@ subAvailableLeft:
 
     JSR computeDistance1 ; not working might have to increment with X
 
-    LDA #$02
+    LDA #DIRECTION_DOWN
     STA enemyDirectionArray, X
     INX
 
@@ -288,7 +288,7 @@ subAvailableLeft:
 
     JSR computeDistance1
 
-    LDA #$03
+    LDA #DIRECTION_LEFT
     STA enemyDirectionArray, X
     INX
 
@@ -304,7 +304,7 @@ subAvailableRight:
 
     JSR computeDistance1
 
-    LDA #$01
+    LDA #DIRECTION_UP
     STA enemyDirectionArray, X
     INX
 
@@ -316,7 +316,7 @@ subAvailableRight:
 
     JSR computeDistance1
 
-    LDA #$02
+    LDA #DIRECTION_DOWN
     STA enemyDirectionArray, X
     INX
 
@@ -328,7 +328,7 @@ subAvailableRight:
 
     JSR computeDistance1
 
-    LDA #$04
+    LDA #DIRECTION_RIGHT
     STA enemyDirectionArray, X
     INX
 

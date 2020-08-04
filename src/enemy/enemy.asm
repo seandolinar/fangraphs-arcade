@@ -17,11 +17,11 @@ battedBall:
     STA enemy_oam + 14, Y
 
     LDA enemy1DirectionCurrent, X
-    CMP #$01 ; UP
+    CMP #DIRECTION_UP ; UP
     BEQ @moveBallDown
-    CMP #$02 ; DOWN
+    CMP #DIRECTION_DOWN ; DOWN
     BEQ @moveBallUp
-    CMP #$03 ; LEFT
+    CMP #DIRECTION_LEFT ; LEFT
     BEQ @moveBallRight
 
     JMP @moveBallLeft ; RIGHT
@@ -49,8 +49,6 @@ battedBall:
     CLC
     LDA enemy_oam + 3, Y    
     ADC #$10
-    ; BCS @stop
-    ; SBC #$04
     STA enemy_oam + 3, Y
     STA enemy_oam + 11, Y
 
@@ -59,11 +57,8 @@ battedBall:
     LDA enemy_oam + 7, Y
     ADC #$10
     BCS @stop
-    ; SBC #$04
     STA enemy_oam + 7, Y
     STA enemy_oam + 15, Y
-
-    ; BCS @stop
    
     JMP @break
 
@@ -72,7 +67,7 @@ battedBall:
 
     CLC
     ADC #$0c
-    BCS @stop ; this might not work
+    BCS @stop
     ADC #$04
     BCS @stop
 
@@ -83,13 +78,13 @@ battedBall:
 
     CLC
     ADC #$0c
-    BCS @stop ; this might not work
+    BCS @stop
     ADC #$04
     BCS @stop
     STA enemy_oam + 8, Y
     STA enemy_oam + 12, Y
 
-    BCS @stop ; this might not work
+    BCS @stop
     ADC #$04
     BCS @stop
 

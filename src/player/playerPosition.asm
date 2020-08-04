@@ -38,28 +38,28 @@ dumpUpdateController:
 UpdatePositionPlayer:
 
     LDA playerDirectionCurrent
-    CMP #$01
+    CMP #DIRECTION_UP
     BNE dumpDirectionUp
     JSR moveUp
     JMP updatePositionSprite
 
 dumpDirectionUp:
     LDA playerDirectionCurrent
-    CMP #$02
+    CMP #DIRECTION_DOWN
     BNE dumpDirectionDown
     JSR moveDown
     JMP updatePositionSprite
     
 dumpDirectionDown:
     LDA playerDirectionCurrent
-    CMP #$03
+    CMP #DIRECTION_LEFT
     BNE dumpDirectionLeft
     JSR moveLeft
     JMP updatePositionSprite
 
 dumpDirectionLeft:
     LDA playerDirectionCurrent
-    CMP #$04
+    CMP #DIRECTION_RIGHT
     BNE dumpDirectionRight
     JSR moveRight
     JMP updatePositionSprite
@@ -124,7 +124,7 @@ setUp:
     LDA collisionFlag
     BEQ @exit ; branch if 0
 
-    LDA #$01 ; UP
+    LDA #DIRECTION_UP ; UP
     STA playerDirectionCurrent
 
     @exit:
@@ -149,7 +149,7 @@ setDown:
     LDA collisionFlag
     BEQ @exit ; branch if 0
 
-    LDA #$02 ; DOWN
+    LDA #DIRECTION_DOWN ; DOWN
     STA playerDirectionCurrent
 
     @exit:
@@ -175,7 +175,7 @@ setLeft:
     LDA collisionFlag
     BEQ @exit ; branch if 0
 
-    LDA #$03 ; LEFT
+    LDA #DIRECTION_LEFT ; LEFT
     STA playerDirectionCurrent
     @exit:
     LDA playerLocationX ;; shouldn't have to have this here
@@ -199,7 +199,7 @@ setRight:
 
     BEQ @exit ; branch if 0
 
-    LDA #$04 ; RIGHT
+    LDA #DIRECTION_RIGHT ; RIGHT
     STA playerDirectionCurrent
 
     @exit:

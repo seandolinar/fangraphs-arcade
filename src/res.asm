@@ -225,6 +225,13 @@ __Z						= $e9
 __0					  	= $f0
 __1					  	= $f1
 
+;constant
+;directions
+DIRECTION_UP 			= $01
+DIRECTION_DOWN			= $02
+DIRECTION_LEFT			= $03
+DIRECTION_RIGHT			= $04
+
 .segment "RAM"
 nametable_buffer:		.res $3C0 	; 960 blocks
 vram_buffer_offset:		.res $01	; 1 byte offset $06C2

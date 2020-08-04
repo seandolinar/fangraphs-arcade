@@ -1,7 +1,7 @@
 setAnimationPlayerDirection:
 
     LDA playerDirectionCurrent
-    CMP #$03
+    CMP #DIRECTION_LEFT
     BEQ @setLeftward
 
     JMP @setNormal
@@ -162,7 +162,7 @@ animatePlayerOut:
 
 
     LDA playerDirectionCurrent
-    CMP #$03
+    CMP #DIRECTION_LEFT
     BEQ @setReverse
     
     ; don't blow away x?
