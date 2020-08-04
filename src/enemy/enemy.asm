@@ -6,7 +6,6 @@ battedBall:
     ; at least the one color...
     ; or we load in different colors into one palette and switch between that somewhere else
     LDA frameTimer
-    STA consoleLog
 
     AND #$01
 
@@ -291,7 +290,6 @@ forEachEnemyMovement:
 
     LDA enemyY, X
     STA enemyYBuffer
-    STA consoleLog
     STA enemyYWork
 
     LDA enemy1DirectionCurrent, X

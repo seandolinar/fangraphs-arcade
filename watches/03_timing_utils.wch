@@ -1,7 +1,9 @@
 
-5
+7
 00000	0025	b	u	0	masterTimer
 00001	0026	b	u	0	animationTimer
 00002	0027	b	u	0	frameTimer
 00003	0028	b	u	0	consoleLog
 00004	0031	b	u	0	dotsLeft
+00005	0029	b	u	0	gameStateIsPowered
+00006	002D	b	u	0	powerUpTimer

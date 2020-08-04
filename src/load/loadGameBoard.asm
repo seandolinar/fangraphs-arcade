@@ -223,6 +223,8 @@ LDA #$00
 STA gameStateIsPowered
 STA gamePlayerReset
 STA animationTimer
+STA powerUpTimer
+
 
 LDA #$02
 STA enemyState
