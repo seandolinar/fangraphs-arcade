@@ -1,4 +1,4 @@
-newCheckBackgroundCollisionEnemy:
+checkBackgroundCollisionEnemy:
     ; this was working before beause we never set the collionsFlagEnemy
     ; now it's outputting 4
     ; which prevents it from moving

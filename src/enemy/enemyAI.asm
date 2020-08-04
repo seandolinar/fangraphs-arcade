@@ -124,43 +124,43 @@ commitMove:
 
     LDA enemyDirectionArray, X          ; get the direction based on which index we picked
 
-    CMP #$01
+    CMP #DIRECTION_UP
     BEQ @moveUp
 
-    CMP #$02
+    CMP #DIRECTION_DOWN
     BEQ @moveDown
 
-    CMP #$03
+    CMP #DIRECTION_LEFT
     BEQ @moveLeft
 
-    CMP #$04
+    CMP #DIRECTION_RIGHT
     BEQ @moveRight
     
     JMP @continueLoop                   ; if we have overflow? this catches bad bytes
 
     @moveUp:
     JSR enemyMoveUp
-    LDA #$01
+    LDA #DIRECTION_UP
     STA enemyBufferDirectionCurrent
 
     JMP @continueLoop
 
     @moveDown:
     JSR enemyMoveDown
-    LDA #$02
+    LDA #DIRECTION_DOWN
     STA enemyBufferDirectionCurrent
 
     JMP @continueLoop
 
     @moveLeft:
     JSR enemyMoveLeft
-    LDA #$03
+    LDA #DIRECTION_LEFT
     STA enemyBufferDirectionCurrent
     JMP @continueLoop
 
     @moveRight:
     JSR enemyMoveRight
-    LDA #$04
+    LDA #DIRECTION_RIGHT
     STA enemyBufferDirectionCurrent
     JMP @continueLoop
 
@@ -181,11 +181,11 @@ subAvailableUp:
     ; We need X coming out of here
     @checkUp:
     JSR enemyMoveUp
-    JSR newCheckBackgroundCollisionEnemy
+    JSR checkBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @checkLeft
     
-    JSR computeDistance1
+    JSR computeDistance
 
     LDA #DIRECTION_UP
     STA enemyDirectionArray, X
@@ -193,11 +193,11 @@ subAvailableUp:
 
     @checkLeft:
     JSR enemyMoveLeft
-    JSR newCheckBackgroundCollisionEnemy
+    JSR checkBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @checkRight
 
-    JSR computeDistance1
+    JSR computeDistance
 
     LDA #DIRECTION_LEFT
     STA enemyDirectionArray, X
@@ -205,24 +205,24 @@ subAvailableUp:
 
     @checkRight:
     JSR enemyMoveRight
-    JSR newCheckBackgroundCollisionEnemy
+    JSR checkBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-    BNE @dump
+    BNE @break
     LDA #DIRECTION_RIGHT
     STA enemyDirectionArray, X
     INX
 
-    @dump:
+    @break:
     RTS
 
 subAvailableDown:
     @checkDown:
     JSR enemyMoveDown
-    JSR newCheckBackgroundCollisionEnemy
+    JSR checkBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
     BNE @checkLeft
 
-    JSR computeDistance1
+    JSR computeDistance
 
     LDA #DIRECTION_DOWN
     STA enemyDirectionArray, X
@@ -230,11 +230,11 @@ subAvailableDown:
 
     @checkLeft:
     JSR enemyMoveLeft
-    JSR newCheckBackgroundCollisionEnemy
+    JSR checkBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @checkRight
 
-    JSR computeDistance1
+    JSR computeDistance
 
     LDA #DIRECTION_LEFT
     STA enemyDirectionArray, X
@@ -242,27 +242,27 @@ subAvailableDown:
 
     @checkRight:
     JSR enemyMoveRight
-    JSR newCheckBackgroundCollisionEnemy
+    JSR checkBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-    BNE @dump
+    BNE @break
 
-    JSR computeDistance1
+    JSR computeDistance
 
     LDA #DIRECTION_RIGHT
     STA enemyDirectionArray, X
     INX
 
-    @dump:
+    @break:
     RTS
 
 subAvailableLeft: 
     @checkUp:
     JSR enemyMoveUp
-    JSR newCheckBackgroundCollisionEnemy
+    JSR checkBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
     BNE @checkDown
 
-    JSR computeDistance1
+    JSR computeDistance
 
     LDA #DIRECTION_UP
     STA enemyDirectionArray, X
@@ -270,11 +270,11 @@ subAvailableLeft:
 
     @checkDown:
     JSR enemyMoveDown
-    JSR newCheckBackgroundCollisionEnemy
+    JSR checkBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
     BNE @checkLeft
 
-    JSR computeDistance1 ; not working might have to increment with X
+    JSR computeDistance ; not working might have to increment with X
 
     LDA #DIRECTION_DOWN
     STA enemyDirectionArray, X
@@ -282,27 +282,27 @@ subAvailableLeft:
 
     @checkLeft:
     JSR enemyMoveLeft
-    JSR newCheckBackgroundCollisionEnemy
+    JSR checkBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
-    BNE @dump
+    BNE @break
 
-    JSR computeDistance1
+    JSR computeDistance
 
     LDA #DIRECTION_LEFT
     STA enemyDirectionArray, X
     INX
 
-    @dump:
+    @break:
     RTS
 
 subAvailableRight:
     @checkUp:
     JSR enemyMoveUp
-    JSR newCheckBackgroundCollisionEnemy
+    JSR checkBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
     BNE @checkDown
 
-    JSR computeDistance1
+    JSR computeDistance
 
     LDA #DIRECTION_UP
     STA enemyDirectionArray, X
@@ -310,11 +310,11 @@ subAvailableRight:
 
     @checkDown:
     JSR enemyMoveDown
-    JSR newCheckBackgroundCollisionEnemy
+    JSR checkBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
     BNE @checkRight
 
-    JSR computeDistance1
+    JSR computeDistance
 
     LDA #DIRECTION_DOWN
     STA enemyDirectionArray, X
@@ -322,17 +322,17 @@ subAvailableRight:
 
     @checkRight:
     JSR enemyMoveRight
-    JSR newCheckBackgroundCollisionEnemy
+    JSR checkBackgroundCollisionEnemy
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
-    BNE @dump
+    BNE @break
 
-    JSR computeDistance1
+    JSR computeDistance
 
     LDA #DIRECTION_RIGHT
     STA enemyDirectionArray, X
     INX
 
-    @dump:
+    @break:
     RTS
 
 enemyMoveUp:
@@ -387,18 +387,18 @@ absX:
     SEC
     LDA playerGridXAI
     SBC enemyGridX
-    JMP @dump
+    JMP @break
 
     @subtractSwap:
     SEC
     LDA enemyGridX
     SBC playerGridXAI
-    JMP @dump
+    JMP @break
 
     @equal:
     LDA #$00
 
-    @dump:
+    @break:
     STA enemyAbsX
     RTS
 
@@ -468,7 +468,7 @@ computeSquare:
     RTS
 
 ;; figure out how to make this work
-computeDistance1:
+computeDistance:
 
     TYA
     PHA

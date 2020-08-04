@@ -8,6 +8,7 @@
 .include "./player/playerReset.asm"
 .include "./enemy/enemy.asm"
 .include "./enemy/enemyAI.asm"
+.include "./enemy/enemyBattedBall.asm"
 .include "./enemy/enemyCollision.asm"
 .include "./enemy/enemyPowerUp.asm"
 .include "./enemy/enemyReset.asm"
@@ -241,7 +242,6 @@ gameMovement:
     JSR nextEnemyMovement   ; move this to main?
     JSR checkCollisionSprites
     JSR checkDoor
-
 
     INC enemyMode
 
