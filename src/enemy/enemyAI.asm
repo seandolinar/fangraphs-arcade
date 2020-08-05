@@ -266,8 +266,8 @@ chooseFromAvailableDirections:
     CMP #$00
     BEQ commitMove
 
-    @continue:
-    
+    firstPhase:
+
     @checkHiByte:
     STX consoleLog
     LDA enemyDistance + 1, X    ; high byte;        ; register
@@ -284,18 +284,23 @@ chooseFromAvailableDirections:
 
     @registerIsLower:               ; happens if register (X) < data (Y)  
     LDA enemyDistance, X 
-    ; STA consoleLog
     LDA gameStateIsPowered          ; swap if we are powered up
     CMP #$00
     BNE @registerIsLowerPowerUp
 
-    JMP commitMove                  ; commits the move on the current index
+    JMP secondPhase    ; change to second phase
 
     @registerIsLowerPowerUp:  
-    INC enemyDirectionIndex
-    JMP commitMove                  ; commits the move on the second index
+    ; INC enemyDirectionIndex
+    LDA #$01
+    STA enemyDirectionIndex
 
-   
+    TYA
+    TAX
+    
+
+    JMP secondPhase    ; change to second phase
+
     @registerIsHigher:              ; if  data (Y) < register (X)
     LDA #$09
     STA consoleLog
@@ -303,12 +308,89 @@ chooseFromAvailableDirections:
     CMP #$00
     BNE @registerIsHigherPowerUp
         
-    INC enemyDirectionIndex
-    JMP commitMove              
+    LDA #$01
+    STA enemyDirectionIndex
+
+    TYA
+    TAX
+    
+
+    ; JMP commitMove ; change to second phase      
 
     @registerIsHigherPowerUp:
-    JMP commitMove
+    ; JMP commitMove ; change to second phase
 
+
+    secondPhase:
+
+    LDA enemyTempForLoop        ; this might be one short
+    CMP #$01
+    BEQ commitMove
+
+    ; X comes from before
+    INY ; should be 4 for Y
+    INY
+
+    @checkHiByte:
+    STX consoleLog
+    LDA enemyDistance + 1, X    ; high byte;        ; register
+    CMP enemyDistance + 1, Y    ; high byte + 2     ; data 
+    BCC @registerIsLower        ; branches if  data (Y) < register (X)
+    BNE @registerIsHigher       ; branches if equal
+
+                                ; happens if register (X) < data (Y)
+    @checkLowByte:
+    LDA enemyDistance, X        ; low byte
+    CMP enemyDistance, Y        ; low byte + 1
+    BCC @registerIsLower
+    BNE @registerIsHigher
+
+    @registerIsLower:               ; happens if register (X) < data (Y)  
+    LDA enemyDistance, X 
+    LDA gameStateIsPowered          ; swap if we are powered up
+    CMP #$00
+    BNE @registerIsLowerPowerUp
+
+    JMP commitMove    ; change to second phase
+
+    @registerIsLowerPowerUp:  
+    ; INC enemyDirectionIndex
+    LDA #$02
+    STA enemyDirectionIndex
+
+    TYA
+    TAX
+    
+
+    JMP commitMove    ; change to second phase
+
+    @registerIsHigher:              ; if  data (Y) < register (X)
+    LDA #$09
+    STA consoleLog
+    LDA gameStateIsPowered          ; swap if we are powered up
+    CMP #$00
+    BNE @registerIsHigherPowerUp
+        
+    LDA #$02
+    STA enemyDirectionIndex
+
+    TYA
+    TAX
+    
+
+    JMP commitMove ; change to second phase      
+
+    @registerIsHigherPowerUp:
+    JMP commitMove ; change to second phase
+
+
+
+
+
+
+    ; X <=> Y then compare X/Y <=> Z
+    ; TYA, TAX, INY, INY
+    ; let's just write this out
 
 
     ; THERE IS NO LOOP because I'm just comparing two items

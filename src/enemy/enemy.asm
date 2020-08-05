@@ -54,7 +54,7 @@ dumpEnemyController:
 ; START
 nextEnemyMovement:
     LDX #$04            ; how many enemies we have
-    ; LDX #$02
+    ; LDX #$01
     LDY #$00
     STX enemyCycleX
 forEachEnemyMovement:
