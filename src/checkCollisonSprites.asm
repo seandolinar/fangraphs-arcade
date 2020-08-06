@@ -8,7 +8,10 @@ checkCollisionSprites:
     LDX #$04
     STX enemyCycleX
 
-    
+    ; DEBUG
+    ; RTS
+
+
     @loop:
     LDX enemyCycleX ; didn't fix anything
     DEX

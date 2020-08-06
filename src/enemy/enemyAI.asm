@@ -11,6 +11,163 @@
 ; then pick one of those 
 ; figure out if I can use the stack here for a loop
 
+
+enemyAIMovementSetup:
+    LDA enemyX, X
+    STA enemyXBuffer            ; buffer is always temp within subroutines
+    STA enemyXWork              ; work will not change, essentially a paramter of pickDirection
+
+    LDA enemyY, X
+    STA enemyYBuffer
+    STA enemyYWork
+
+    LDA enemy1DirectionCurrent, X
+    STA enemyBufferDirectionCurrent
+
+    ; creates the AI position
+    ; different for each enemy
+    LDA playerGridX
+    STA playerGridXAI
+
+    LDA playerGridY
+    STA playerGridYAI
+
+    LDA enemyMode
+    CMP #$D0
+    BCC modeAttack
+
+    JMP modeAlt
+
+    modeAttack:
+    CPX #$03
+    BEQ aiUmp4
+
+    CPX #$02
+    BEQ aiUmp3
+
+    CPX #$01
+    BEQ aiUmp2
+   
+    aiUmp1:
+        ; do nothing
+        JMP mainAI
+
+    aiUmp2:
+        ; targets two tiles below player
+        CLC
+        LDA playerGridY
+        ADC #$02
+        STA playerGridYAI
+        JMP mainAI
+
+    aiUmp3:
+        ; we have this enemy lead the player by two tiles
+
+        LDA playerDirectionCurrent
+        CMP #$01
+        BEQ @playerUp
+        CMP #$02
+        BEQ @playerDown
+        CMP #$03
+        BEQ @playerLeft
+
+        ; player going right
+        @playerRight:
+        CLC
+        LDA playerGridX
+        ADC #$04
+        STA playerGridXAI
+        JMP mainAI
+
+
+        ; player going up
+        @playerUp:
+        SEC
+        LDA playerGridY
+        SBC #$04
+        STA playerGridYAI
+        JMP mainAI
+
+
+        ; player going down
+        @playerDown:
+        CLC
+        LDA playerGridY
+        ADC #$04
+        STA playerGridYAI
+        JMP mainAI
+
+        ; player going left
+        @playerLeft:
+        SEC
+        LDA playerGridX
+        SBC #$04
+        STA playerGridXAI
+        JMP mainAI
+
+    aiUmp4:
+        ; make the fourth ump target 1 tiles to the right
+        LDA playerGridX
+        ADC #$02
+        STA playerGridXAI
+        JMP mainAI
+
+    modeAlt:
+    CPX #$03
+    BEQ aiUmp4Alt
+
+    CPX #$02
+    BEQ aiUmp3Alt
+
+    CPX #$01
+    BEQ aiUmp2Alt
+   
+    ; refactor this because it could loop
+    aiUmp1Alt:
+        ; LDA powerUpX       
+        LDA #$08
+        STA playerGridXAI
+
+        ; LDA powerUpY       
+        LDA #$02
+        STA playerGridYAI
+        JMP mainAI
+
+    aiUmp2Alt:
+        ; LDA powerUpX + 1    
+        LDA #$20  
+        STA playerGridXAI
+
+        ; LDA powerUpY + 1  
+        LDA #$10
+        STA playerGridYAI
+
+        JMP mainAI
+
+    aiUmp3Alt:
+        ; LDA powerUpX + 2       
+        LDA #$00
+        STA playerGridXAI
+
+        ; LDA powerUpY + 2     
+        LDA #$10
+        STA playerGridYAI
+
+        JMP mainAI
+
+    aiUmp4Alt:
+        ; LDA powerUpX + 3  
+        LDA #$10
+        STA playerGridXAI
+
+        ; LDA powerUpY + 3
+        LDA #$20
+        STA playerGridYAI
+        JMP mainAI
+
+
+
+
 runEnemyAI:
     
     TYA                                 ; use Y for the randomizer
