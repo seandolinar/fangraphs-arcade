@@ -394,6 +394,9 @@ subAvailableRight:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Chooses the direction based on the direction ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; this is close to being a loop
+;; not working yet
 chooseFromAvailableDirections:
 
     ; resetting buffer
@@ -411,6 +414,9 @@ chooseFromAvailableDirections:
     
     LDX #$00
     LDY #$02
+
+    LDA #$01
+    STA enemyAIIndex
     
     ; Loops so that we remove the stack pushes we did...variable length array
     ; X is the length of the array
@@ -423,6 +429,7 @@ chooseFromAvailableDirections:
     CMP #$00
     BEQ commitMove
 
+    ; start loop here
     firstPhase:
 
     @checkHiByte:
@@ -448,8 +455,7 @@ chooseFromAvailableDirections:
     JMP secondPhase    ; change to second phase
 
     @registerIsLowerPowerUp:  
-    ; INC enemyDirectionIndex
-    LDA #$01
+    LDA enemyAIIndex
     STA enemyDirectionIndex
 
     TYA
@@ -459,13 +465,11 @@ chooseFromAvailableDirections:
     JMP secondPhase    ; change to second phase
 
     @registerIsHigher:              ; if  data (Y) < register (X)
-    LDA #$09
-    STA consoleLog
     LDA gameStateIsPowered          ; swap if we are powered up
     CMP #$00
     BNE @registerIsHigherPowerUp
         
-    LDA #$01
+    LDA enemyAIIndex
     STA enemyDirectionIndex
 
     TYA
@@ -479,47 +483,56 @@ chooseFromAvailableDirections:
 
 
     secondPhase:
-
-    LDA enemyTempForLoop        ; this might be one short
-    CMP #$01
+    CPY #$04
     BEQ commitMove
-
-    ; X comes from before
-    INY ; should be 4 for Y
+    INY
     INY
 
-    @checkHiByte:
-    STX consoleLog
-    LDA enemyDistance + 1, X    ; high byte;        ; register
-    CMP enemyDistance + 1, Y    ; high byte + 2     ; data 
-    BCC @registerIsLower        ; branches if  data (Y) < register (X)
-    BNE @registerIsHigher       ; branches if equal
+    INC enemyAIIndex
+    JMP firstPhase
 
-                                ; happens if register (X) < data (Y)
-    @checkLowByte:
-    LDA enemyDistance, X        ; low byte
-    CMP enemyDistance, Y        ; low byte + 1
-    BCC @registerIsLower
-    BNE @registerIsHigher
+    ; LDA enemyTempForLoop        ; this might be one short
+    ; CMP #$01
+    ; BEQ commitMove
 
-    @registerIsLower:               ; happens if register (X) < data (Y)  
-    LDA enemyDistance, X 
-    LDA gameStateIsPowered          ; swap if we are powered up
-    CMP #$00
-    BNE @registerIsLowerPowerUp
+    ; ; X comes from before
+    ; ; X is determined in previous section
+    ; ; X doesn't always change
+    ; INY ; should be 4 for Y
+    ; INY
 
-    JMP commitMove    ; change to second phase
+    ; @checkHiByte:
+    ; STX consoleLog
+    ; LDA enemyDistance + 1, X    ; high byte;        ; register
+    ; CMP enemyDistance + 1, Y    ; high byte + 2     ; data 
+    ; BCC @registerIsLower        ; branches if  data (Y) < register (X)
+    ; BNE @registerIsHigher       ; branches if equal
 
-    @registerIsLowerPowerUp:  
-    ; INC enemyDirectionIndex
-    LDA #$02
-    STA enemyDirectionIndex
+    ;                             ; happens if register (X) < data (Y)
+    ; @checkLowByte:
+    ; LDA enemyDistance, X        ; low byte
+    ; CMP enemyDistance, Y        ; low byte + 1
+    ; BCC @registerIsLower
+    ; BNE @registerIsHigher
 
-    TYA
-    TAX
+    ; @registerIsLower:               ; happens if register (X) < data (Y)  
+    ; LDA enemyDistance, X 
+    ; LDA gameStateIsPowered          ; swap if we are powered up
+    ; CMP #$00
+    ; BNE @registerIsLowerPowerUp
+
+    ; JMP commitMove    ; change to second phase
+
+    ; @registerIsLowerPowerUp:  
+    ; ; INC enemyDirectionIndex
+    ; LDA #$02
+    ; STA enemyDirectionIndex
+
+    ; TYA
+    ; TAX
     
 
-    JMP commitMove    ; change to second phase
+    ; JMP commitMove    ; change to second phase
 
     @registerIsHigher:              ; if  data (Y) < register (X)
     LDA #$09
@@ -534,6 +547,7 @@ chooseFromAvailableDirections:
     TYA
     TAX
     
+    DEC enemyTempForLoop
 
     JMP commitMove ; change to second phase      
 
@@ -656,158 +670,5 @@ enemyMoveRight:
     ADC #$08
     STA enemyXBuffer
     RTS
-
-
-;;;;;;;;;;;;;;;;
-;; Math Utils ;;
-;;;;;;;;;;;;;;;;
-; these "work", but it's doing a signed instead of absolute value
-absX:
-    LDA enemyXBuffer
-    LSR ; divide / 2 / 2 / 2 ; divide by 8 -- size of the icon
-    LSR
-    LSR
-    STA enemyGridX; reusing??? see if this works TODO, not neccessarily X
-
-    CMP playerGridXAI
-    BEQ @equal
-    BCS @subtractSwap                    ; if enemyX is greater than playerLocationX
-
-    @subtractNormal:
-    SEC
-    LDA playerGridXAI
-    SBC enemyGridX
-    JMP @break
-
-    @subtractSwap:
-    SEC
-    LDA enemyGridX
-    SBC playerGridXAI
-    JMP @break
-
-    @equal:
-    LDA #$00
-
-    @break:
-    STA enemyAbsX
-    RTS
-
-absY:
-    LDA enemyYBuffer
-    LSR ; divide / 2 / 2 / 2 ; divide by 8 -- size of the icon
-    LSR
-    LSR
-    STA enemyGridX ; reusing??? see if this works TODO, not neccessarily X
-
-    CMP playerGridYAI
-    BEQ @equal
-    BCS @subtractSwap                 ; reverse since Y is different?
-
-    @subtractNormal:
-    SEC
-    LDA playerGridYAI
-    SBC enemyGridX
-    JMP @dump
-
-    @subtractSwap:
-    SEC
-    LDA enemyGridX
-    SBC playerGridYAI
-
-    @equal:
-    LDA #$00
-
-    @dump:
-    STA enemyAbsY
-    RTS
-
-computeSquare:
-    TXA
-    PHA
-
-    LDX sqIn
-    LDA sqIn
-
-    STA sqOut
-    LDA #$00
-    STA sqOut + 1
-
-    CPX #$00
-    BEQ @dump
-    CPX #$01
-    BEQ @dump
-    
-    DEX
-    @additionLoop:
-    CLC
-    LDA sqOut               ; low byte
-    ADC sqIn
-    STA sqOut
-
-    LDA sqOut + 1           ; high byte
-    ADC #$00
-    STA sqOut + 1
-
-    DEX
-    BNE @additionLoop
-
-    @dump:
-    PLA
-    TAX
-
-    RTS
-
-;; figure out how to make this work
-computeDistance:
-
-    TYA
-    PHA
-
-    TXA                             ; stash X to calculate Y 
-    PHA
-
-    LDY #$00
-    @loopY:                         ; multiple X by two to get Y
-    CPX #$00
-    BEQ @runComp
-    INY
-    INY
-    DEX
-    JMP @loopY
-    
-    @runComp:
-    PLA                            ; bring back X
-    TAX
-
-    JSR absX                                ; hopefully loop this
-    LDA enemyAbsX
-    STA sqIn                                ; change this? would need to be 16-bit
-    JSR computeSquare
-
-    CLC
-    LDA sqOut
-    STA enemyDistance, Y                    ; lo byte
-    LDA sqOut + 1
-    STA enemyDistance + 1, Y                ; hi byte
-
-    JSR absY
-    STA sqIn                                ; change this? would need to be 16-bit
-    JSR computeSquare
-
-    CLC
-    LDA sqOut
-    ADC enemyDistance, Y
-    STA enemyDistance, Y
-
-    CLC
-    LDA sqOut + 1
-    ADC enemyDistance + 1, Y
-    STA enemyDistance + 1, Y
-
-    PLA
-    TAY
-
-    RTS
-
 
 

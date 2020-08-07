@@ -176,6 +176,7 @@ tempCatchAll:			.res 1
 enemyCycleX:			.res 1
 isEnemyLeaving:			.res 1
 frameDelay:				.res 1
+enemyAIIndex:			.res 1
 
 
 ; NES-defined RAM locations

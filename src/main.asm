@@ -8,6 +8,7 @@
 .include "./player/playerReset.asm"
 .include "./enemy/enemy.asm"
 .include "./enemy/enemyAI.asm"
+.include "./enemy/enemyAIMath.asm"
 .include "./enemy/enemyBattedBall.asm"
 .include "./enemy/enemyCollision.asm"
 .include "./enemy/enemyPowerUp.asm"
