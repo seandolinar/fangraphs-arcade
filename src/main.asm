@@ -35,9 +35,6 @@
 .segment "TILES"
 .incbin "../chr/nes-fg.chr"
 
-.segment "MUSIC" ; TODO eliminate
-
-
 .segment "CODE"
 NMI:
     ; Preserves the registers during the course of the interrupt
