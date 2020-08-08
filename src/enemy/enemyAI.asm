@@ -391,6 +391,10 @@ subAvailableRight:
     STX enemyDirectionIndex
     RTS
 
+
+
+jmpCommitMove:
+    JMP commitMove ; change to second phase
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Chooses the direction based on the direction ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -423,17 +427,17 @@ chooseFromAvailableDirections:
     ; X is from the subAvailable[Direction] subroutine
     ; turning off the loop for now
     ; DEC enemyTempForLoop
-    @loop:
-    ; yuck ; if we only have one direction
-    LDA enemyTempForLoop        ; this might be one short
-    CMP #$00
-    BEQ commitMove
+   
 
     ; start loop here
-    firstPhase:
+    loopCompareDistance:
+    ; if we only have one direction, commit the move
+    LDA enemyTempForLoop        ; this might be one short
+    CMP #$00
+    BEQ jmpCommitMove
 
     @checkHiByte:
-    STX consoleLog
+    STY consoleLog
     LDA enemyDistance + 1, X    ; high byte;        ; register
     CMP enemyDistance + 1, Y    ; high byte + 2     ; data 
     BCC @registerIsLower        ; branches if  data (Y) < register (X)
@@ -441,18 +445,20 @@ chooseFromAvailableDirections:
 
                                 ; happens if register (X) < data (Y)
     @checkLowByte:
+    LDA #$11
+    STA consoleLog
     LDA enemyDistance, X        ; low byte
     CMP enemyDistance, Y        ; low byte + 1
     BCC @registerIsLower
     BNE @registerIsHigher
 
     @registerIsLower:               ; happens if register (X) < data (Y)  
-    LDA enemyDistance, X 
+    ; LDA enemyDistance, X 
     LDA gameStateIsPowered          ; swap if we are powered up
     CMP #$00
     BNE @registerIsLowerPowerUp
 
-    JMP secondPhase    ; change to second phase
+    JMP readyLoop    ; change to second phase
 
     @registerIsLowerPowerUp:  
     LDA enemyAIIndex
@@ -461,8 +467,7 @@ chooseFromAvailableDirections:
     TYA
     TAX
     
-
-    JMP secondPhase    ; change to second phase
+    JMP readyLoop    ; change to second phase
 
     @registerIsHigher:              ; if  data (Y) < register (X)
     LDA gameStateIsPowered          ; swap if we are powered up
@@ -475,103 +480,21 @@ chooseFromAvailableDirections:
     TYA
     TAX
     
-
-    ; JMP commitMove ; change to second phase      
-
     @registerIsHigherPowerUp:
-    ; JMP commitMove ; change to second phase
+    
 
-
-    secondPhase:
+    readyLoop:
     CPY #$04
     BEQ commitMove
+
     INY
     INY
 
     INC enemyAIIndex
-    JMP firstPhase
-
-    ; LDA enemyTempForLoop        ; this might be one short
-    ; CMP #$01
-    ; BEQ commitMove
-
-    ; ; X comes from before
-    ; ; X is determined in previous section
-    ; ; X doesn't always change
-    ; INY ; should be 4 for Y
-    ; INY
-
-    ; @checkHiByte:
-    ; STX consoleLog
-    ; LDA enemyDistance + 1, X    ; high byte;        ; register
-    ; CMP enemyDistance + 1, Y    ; high byte + 2     ; data 
-    ; BCC @registerIsLower        ; branches if  data (Y) < register (X)
-    ; BNE @registerIsHigher       ; branches if equal
-
-    ;                             ; happens if register (X) < data (Y)
-    ; @checkLowByte:
-    ; LDA enemyDistance, X        ; low byte
-    ; CMP enemyDistance, Y        ; low byte + 1
-    ; BCC @registerIsLower
-    ; BNE @registerIsHigher
-
-    ; @registerIsLower:               ; happens if register (X) < data (Y)  
-    ; LDA enemyDistance, X 
-    ; LDA gameStateIsPowered          ; swap if we are powered up
-    ; CMP #$00
-    ; BNE @registerIsLowerPowerUp
-
-    ; JMP commitMove    ; change to second phase
-
-    ; @registerIsLowerPowerUp:  
-    ; ; INC enemyDirectionIndex
-    ; LDA #$02
-    ; STA enemyDirectionIndex
-
-    ; TYA
-    ; TAX
-    
-
-    ; JMP commitMove    ; change to second phase
-
-    @registerIsHigher:              ; if  data (Y) < register (X)
-    LDA #$09
-    STA consoleLog
-    LDA gameStateIsPowered          ; swap if we are powered up
-    CMP #$00
-    BNE @registerIsHigherPowerUp
-        
-    LDA #$02
-    STA enemyDirectionIndex
-
-    TYA
-    TAX
     
     DEC enemyTempForLoop
 
-    JMP commitMove ; change to second phase      
-
-    @registerIsHigherPowerUp:
-    JMP commitMove ; change to second phase
-
-
-
-
-
-
-    ; X <=> Y then compare X/Y <=> Z
-    ; TYA, TAX, INY, INY
-    ; let's just write this out
-
-
-    ; THERE IS NO LOOP because I'm just comparing two items
-
-    ; CODE that evaluates the direction into the enemyX/Y buffer
-    ; CODE that figures out the distance between two points
-    ; CODE that compares the two values
-
-    ; FOR NOW we are going to try a random 1 or 2
-    ; use Y
+    JMP loopCompareDistance
 
 commitMove:
 

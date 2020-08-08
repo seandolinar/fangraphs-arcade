@@ -24,7 +24,7 @@ checkDoor:
 
     @loop:
     LDA enemyState, X
-    CMP #$02
+    CMP #ENEMY_STATE_DOOR
     BEQ @openDoor
     DEX
     CPX #$00
@@ -83,7 +83,7 @@ checkDoor:
     LDX #$03
     @loopStateNormal:
     LDA enemyState, X
-    CMP #$02
+    CMP #ENEMY_STATE_DOOR
     BEQ @exit
 
     CPX #$00

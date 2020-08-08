@@ -230,8 +230,14 @@ DIRECTION_DOWN			= $02
 DIRECTION_LEFT			= $03
 DIRECTION_RIGHT			= $04
 
+; enemy states
+ENEMY_STATE_GAME_PLAY	= $00
+ENEMY_STATE_BATTED		= $01
+ENEMY_STATE_DOOR		= $02
+ENEMY_STATE_HALT		= $ff
+
 .segment "RAM"
-nametable_buffer:		.res $3C0 	; 960 blocks
+nametable_buffer:		.res $3c0 	; 960 blocks
 vram_buffer_offset:		.res $01	; 1 byte offset $06C2
 vram_buffer:			.res $40	; 32 		   +$0040 = $0702
 

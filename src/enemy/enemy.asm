@@ -73,16 +73,14 @@ forEachEnemyMovement:
     ; this sorta works...we probably loop back around and that's an issue.
     ; need to kill the loop after the last X
     LDA enemyState, X ; we could use the state to store information
-    CMP #$00
+    CMP #ENEMY_STATE_GAME_PLAY
     BEQ enemyAIMovementSetup ; branch to start enemy AI movement
-    CMP #$02
+    CMP #ENEMY_STATE_DOOR
     BEQ @hold
-    CMP #$ff
+    CMP #ENEMY_STATE_HALT
     BEQ @halt
 
-    ; call something else here then JMP forEachEnemyMovement
-    ; i might need a lot of RAM
-    LDX enemyCycleX
+    ; Branch for ENEMY_STATE_BATTED
     JSR battedBall
 
     CLC

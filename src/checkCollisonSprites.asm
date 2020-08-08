@@ -9,7 +9,7 @@ checkCollisionSprites:
     STX enemyCycleX
 
     ; DEBUG
-    RTS
+    ; RTS
 
 
     @loop:
