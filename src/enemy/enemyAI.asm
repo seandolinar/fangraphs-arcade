@@ -458,8 +458,15 @@ chooseFromAvailableDirections:
     JMP readyLoop    ; change to second phase
 
     @registerIsLowerPowerUp:  
+    ; POWER UP
+    LDA frameTimer
+    AND #$01
+    BNE @randomLower
+
     LDA enemyAIIndex
     STA enemyDirectionIndex
+
+    @randomLower:
 
     TYA
     TAX
@@ -478,8 +485,13 @@ chooseFromAvailableDirections:
     TAX
     
     @registerIsHigherPowerUp:
+    ; POWER UP
+    LDA frameTimer
+    AND #$01
+    BNE readyLoop
+    LDA enemyAIIndex
+    STA enemyDirectionIndex
     
-
     readyLoop:
     CPY #$04
     BEQ commitMove
