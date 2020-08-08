@@ -437,7 +437,6 @@ chooseFromAvailableDirections:
     BEQ jmpCommitMove
 
     @checkHiByte:
-    STY consoleLog
     LDA enemyDistance + 1, X    ; high byte;        ; register
     CMP enemyDistance + 1, Y    ; high byte + 2     ; data 
     BCC @registerIsLower        ; branches if  data (Y) < register (X)
@@ -445,8 +444,6 @@ chooseFromAvailableDirections:
 
                                 ; happens if register (X) < data (Y)
     @checkLowByte:
-    LDA #$11
-    STA consoleLog
     LDA enemyDistance, X        ; low byte
     CMP enemyDistance, Y        ; low byte + 1
     BCC @registerIsLower

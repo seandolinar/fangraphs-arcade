@@ -128,6 +128,17 @@ NMI:
 IRQ:
     RTI
 
+
+resetHard:
+    ; right idea, but I need to more gracefully restart
+    ; maybe go back to the title screen?
+    ; maybe break up the reset stuff up so i can resue it
+    LDA #$00  ; disable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+    STA PPU_CTRL_REG1
+    STA PPU_CTRL_REG2
+
+    JMP loadGameOver
+
 ; we are updating the position in MAIN
 ; but checking the position in NMI
 Main:
@@ -153,8 +164,6 @@ Main:
     
     @pauseLoop:
 
-    
-
     LDA gamePaused
     CMP #$00
     BNE @continuePauseLoop
@@ -163,9 +172,6 @@ Main:
    
     LDA #$04
 	JSR FamiToneMusicPlay
-
-    ; LDX #$02
-    ; STX gamePaused
 
     INC gamePaused
 
@@ -181,7 +187,7 @@ Main:
     AND #CONTROL_P1_START  ; zeros out non-start bits
     BEQ @pauseLoop
 
-    LDX #$00 ; i'm not blowing away anything?
+    LDX #$00 ; i'm not blowing away anything? TODO
     STX gamePaused
     JSR FamiToneMusicStop
 
@@ -198,6 +204,8 @@ Main:
     DEY
     STY controlTimer  
 
+    JSR battedBallFlashing
+
     LDX masterTimer
     CPX #$01
     BEQ @runMovement
@@ -212,23 +220,10 @@ Main:
     JSR writeOutScoreVram
     JMP Main
 
-resetHard:
-    ; right idea, but I need to more gracefully restart
-    ; maybe go back to the title screen?
-    ; maybe break up the reset stuff up so i can resue it
-    LDA #$00  ; disable NMI, sprites from Pattern Table 0, background from Pattern Table 1
-    STA PPU_CTRL_REG1
-    STA PPU_CTRL_REG2
-
-    JMP loadGameOver
-
 gameMovement:
     JSR incTimerPowerUp
-
-    JSR UpdatePositionPlayer      ; runs the player updates ;change this to update direction
-
-    ; this should handle when to move the sprites
-    JSR checkCollisionSprites ; I don't think I need this here
+    JSR UpdatePositionPlayer    ; runs the player updates ;change this to update direction
+    JSR checkCollisionSprites   ; this should handle when to move the sprites ; I don't think I need this here
 
     ; skips over this section if we are resetting because of an out
     LDA gamePlayerReset

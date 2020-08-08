@@ -10,15 +10,15 @@ battedBall:
     ; need to put in other values into the palette
     ; at least the one color...
     ; or we load in different colors into one palette and switch between that somewhere else
-    LDA frameTimer
-    AND #$01
+    ; LDA masterTimer
+    ; AND #$01
 
-    ; palette
-    ; it is either 0 or 1
-    STA enemy_oam + 2, Y
-    STA enemy_oam + 6, Y
-    STA enemy_oam + 10, Y
-    STA enemy_oam + 14, Y
+    ; ; palette
+    ; ; it is either 0 or 1
+    ; STA enemy_oam + 2, Y
+    ; STA enemy_oam + 6, Y
+    ; STA enemy_oam + 10, Y
+    ; STA enemy_oam + 14, Y
 
     LDA enemy1DirectionCurrent, X
     CMP #DIRECTION_UP ; UP
@@ -141,5 +141,61 @@ battedBall:
 
     LDA #$02
     STA enemyState, X
+
+    RTS
+
+
+; this gets run in a different part of main so it can happen more often
+ ; flashing batted ball
+battedBallFlashing:
+
+    TYA
+    PHA
+
+    LDX #$00
+    @loop:
+    INX
+    CPX #$04
+    BEQ @continue
+    LDA enemyState, X
+    CMP #ENEMY_STATE_BATTED
+    BNE @loop
+
+    TXA
+    PHA
+
+    INX
+
+    CLC
+    LDA #$00
+    @findYIndex:
+
+    CLC
+    ADC #$10
+    INX
+    CPX #$04
+    BEQ @exitFindYIndex
+    JMP @findYIndex
+
+    @exitFindYIndex:
+    TAY
+    STA consoleLog
+
+    PLA
+    TAX
+
+    LDA masterTimer
+    AND #$01
+    
+    ; palette
+    STA enemy_oam + 2, Y
+    STA enemy_oam + 6, Y
+    STA enemy_oam + 10, Y
+    STA enemy_oam + 14, Y
+
+    @continue:
+
+    PLA
+    TAY
 
     RTS
