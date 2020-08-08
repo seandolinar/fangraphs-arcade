@@ -72,14 +72,16 @@ checkCollisionSprites:
     STY vram_buffer_offset
     STY $7003
 
+    ; reset timer
+    LDA frameTimer
+    ADC #$90
+    STA frameDelay
+
 
     INC gameOuts
     LDA gameOuts
     CMP #$03
     BNE @dumpBad
-
-    LDA #$16
-    STA bufferBackgroundColor
 
     @dumpBad:
     RTS

@@ -104,12 +104,17 @@ NMI:
 
     jsr FamiToneUpdate		;update sound
 
-    JSR readController
-    LDA controllerBits
-    EOR controllerBitsPrev ; difference in buttons
-    AND controllerBits
-    AND #CONTROL_P1_A  ; zeros out non-start bits
-    BEQ @dumpReset
+    ; JSR readController
+    ; LDA controllerBits
+    ; EOR controllerBitsPrev ; difference in buttons
+    ; AND controllerBits
+    ; AND #CONTROL_P1_A  ; zeros out non-start bits
+
+    CLC
+    LDA frameTimer
+    CMP frameDelay
+
+    BNE @dumpReset
     LDA #$00
     STA gamePlayerReset
 
