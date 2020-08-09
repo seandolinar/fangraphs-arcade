@@ -10,6 +10,8 @@
 
     @media (max-width: $width-mobile) {
         height: initial;
+        width: 100%;
+        margin-top: initial;
     }
 }
 
@@ -37,6 +39,7 @@
     padding: 15px;
 
     @media (max-width: $width-mobile) {
+        height: 150px;
         padding: 5px;
     }
 }
@@ -57,6 +60,10 @@
     background-color: #aaa;
     padding: 15px;
     margin: 15px 10px;
+
+    @media (max-width: $width-mobile) {
+        margin: 0;
+    }
 }
 
 .virtual-game-pad-controller__group-start-select__label-wrapper {

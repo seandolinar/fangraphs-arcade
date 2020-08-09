@@ -3,6 +3,13 @@
 .RunPage {
   overflow: hidden;
   color: #000;
+
+  @media (max-width: $width-mobile) {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 }
 
 
@@ -39,6 +46,7 @@
 
   @media (max-width: $width-mobile) {
     flex-direction: column;
+    width: 100%;
   }
 }
 
