@@ -5,20 +5,6 @@
   color: #000;
 }
 
-.instruction-box {
-  max-width: 900px;
-  margin: auto;
-  background-color: lightblue;
-
-  margin-top: 30px;
-  margin-bottom: 30px;
-  padding: 10px;
-
-  @media (max-width: $width-mobile) {
-    position: absolute;
-    z-index: 10;
-  }
-}
 
 
 .RunPage .screen-container {
@@ -74,7 +60,55 @@
 
   @media (max-width: $width-mobile) {
     // width: 100%;
+    display: flex;
     flex: 1 0 auto;
+    align-items: center;
+  }
+}
+
+
+.instruction-box {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;  
+  height: 100%;
+  background-color: rgba(0,0,0, .5);
+
+  @media (max-width: $width-mobile) {
+    // position: absolute;
+    z-index: 10;
+  }
+}
+
+.instruction-box__copy {
+  max-width: 900px;
+  background-color: lightblue;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding: 10px;
+
+  .bi-info-circle-fill {
+    margin-left: 10px;
+    margin-top: -3px;
+  }
+}
+
+.instruction-box__closed {
+  // position: absolute;
+  padding: 5px;
+  background-color: gray;
+
+  .bi-info-circle-fill {
+    width: 30px;
+    height: 30px;
+    color: lightblue;
+
+    @media (max-width: $width-mobile) {
+        width: 20px;
+        height: 20px;
+    }
   }
 }
 
@@ -91,7 +125,8 @@
   border: 5px solid #888;
   padding: 5px;
   margin-left: 10px;
-  flex: 0 0 50px;
+  // flex: 0 0 50px;
+  width: 50px;
 }
 
 .tv__side-panel.power-on .tv__control__power-indicator  {
@@ -121,7 +156,12 @@
   /* height: 20%; */
   background: repeating-linear-gradient(0deg, rgb(175, 175, 175) 0%, rgb(0, 0, 0) 3%);
 
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+
   @media (max-width: $width-mobile) {
-    flex: 1 0 auto;
+    flex: 1 1 auto;
+    
   }
 }

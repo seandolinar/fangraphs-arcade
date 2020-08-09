@@ -10,7 +10,8 @@ import Screen from "./Screen";
 import RomLibrary from "./RomLibrary";
 import { loadBinary } from "./utils";
 
-import VirtualGamePadController from './VirtualGamePadController';
+import VirtualGamePadController from './VirtualGamePadController.js';
+import InstructionBox from './InstructionBox.js';
 
 import "./RunPage.scss";
 
@@ -44,7 +45,6 @@ class RunPage extends Component {
   render() {
     return (
       <div className="RunPage">
-        
         {this.state.error ? (
           this.state.error
         ) : (
@@ -92,8 +92,10 @@ class RunPage extends Component {
                   03
                 </div>
             </div>
-
-            <div className="tv__speaker"></div>
+            <div className="tv__speaker">
+              <div></div>
+              <InstructionBox />
+            </div>
           </div>
           </div>
         )}
