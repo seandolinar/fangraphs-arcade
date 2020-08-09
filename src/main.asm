@@ -102,19 +102,23 @@ NMI:
 
 @resetNMI:
 
-    jsr FamiToneUpdate		;update sound
+    JSR FamiToneUpdate		;update sound
 
-    ; JSR readController
-    ; LDA controllerBits
-    ; EOR controllerBitsPrev ; difference in buttons
-    ; AND controllerBits
-    ; AND #CONTROL_P1_A  ; zeros out non-start bits
+    ; maybe spin this off?
+    ; or spin off of all NMI
+    JSR readController
+    LDA controllerBits
+    EOR controllerBitsPrev ; difference in buttons
+    AND controllerBits
+    AND #CONTROL_P1_A  ; zeros out non-start bits
+    BNE @continuePlayerReset
 
     CLC
     LDA frameTimer
     CMP frameDelay
-
     BNE @dumpReset
+
+    @continuePlayerReset:
     LDA #$00
     STA gamePlayerReset
 
