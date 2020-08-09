@@ -1,3 +1,4 @@
+@import './_variables.scss';
 
 .button-action.virtual-game-pad__button__wrapper {
     width: 70px;
@@ -81,7 +82,7 @@
         border-radius: 50%;
         box-shadow: inset 0px 0px 10px 15px rgba(#444, .5);
 
-        @media (max-width: 375px) {
+        @media (max-width: $width-mobile) {
             // box-shadow: inset 0px 0px 10px 15px rgba(#444, .5);
             width: 60%;
             height: 60%;
@@ -130,7 +131,7 @@
         transform: rotate(180deg);
     }
 
-    @media (max-width: 375px) {
+    @media (max-width: $width-mobile) {
         border-top: 12px solid transparent;
         border-left: 20px solid #222;
         // left: -36px;

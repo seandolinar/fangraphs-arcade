@@ -1,5 +1,6 @@
-@import "node_modules/bootstrap/scss/functions.scss";
-@import "node_modules/bootstrap/scss/variables.scss";
+@import 'node_modules/bootstrap/scss/functions.scss';
+@import 'node_modules/bootstrap/scss/variables.scss';
+@import './_variables.scss';
 
 // Bootstrap customization, where we're supposed to
 $enable-rounded: false;
@@ -41,6 +42,10 @@ $close-text-shadow: none;
 
 html, body, #root {
   height: 100%;
+
+  @media (max-width: $width-mobile) {
+    overflow: hidden;
+  }
 }
 
 .nav-link {

@@ -1,3 +1,5 @@
+@import './_variables.scss';
+
 .RunPage {
   overflow: hidden;
   color: #000;
@@ -11,6 +13,11 @@
   margin-top: 30px;
   margin-bottom: 30px;
   padding: 10px;
+
+  @media (max-width: $width-mobile) {
+    position: absolute;
+    z-index: 10;
+  }
 }
 
 
@@ -23,7 +30,7 @@
   /* background: rgb(91,90,90); */
   /* background: radial-gradient(circle, rgba(91,90,90,1) 0%, rgba(158,158,158,1) 100%); */
 
-  @media (max-width: 375px) {
+  @media (max-width: $width-mobile) {
     display: flex;
   }
 
@@ -44,7 +51,7 @@
   margin: auto;
   background: radial-gradient(circle, rgba(91,90,90,1) 0%, rgba(158,158,158,1) 100%);
 
-  @media (max-width: 375px) {
+  @media (max-width: $width-mobile) {
     flex-direction: column;
   }
 }
@@ -54,7 +61,7 @@
   flex-direction: column;
   width: 20%;
 
-  @media (max-width: 375px) {
+  @media (max-width: $width-mobile) {
     width: 100%;
     flex-direction: row;
   }
@@ -65,7 +72,7 @@
   background: rgb(91,90,90);
   padding: 10px;
 
-  @media (max-width: 375px) {
+  @media (max-width: $width-mobile) {
     // width: 100%;
     flex: 1 0 auto;
   }
@@ -99,7 +106,7 @@
   padding: 20px 20px;
   margin-top: 10px;
 
-  @media (max-width: 375px) {
+  @media (max-width: $width-mobile) {
     display: none;
   }
 }
@@ -114,7 +121,7 @@
   /* height: 20%; */
   background: repeating-linear-gradient(0deg, rgb(175, 175, 175) 0%, rgb(0, 0, 0) 3%);
 
-  @media (max-width: 375px) {
+  @media (max-width: $width-mobile) {
     flex: 1 0 auto;
   }
 }

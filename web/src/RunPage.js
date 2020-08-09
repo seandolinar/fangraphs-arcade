@@ -44,36 +44,7 @@ class RunPage extends Component {
   render() {
     return (
       <div className="RunPage">
-        <div className="instruction-box">
-          Instructions
-          <ul>
-            <li>
-              Click on TV's power button.
-            </li>
-            <li>
-              Keyboard Controls
-              <ul>
-                <li>
-                  Arrow keys are your direction pad or joystick.
-                </li>
-                <li>
-                  The <strong>A Button</strong> corresponds to the <strong>X Key</strong> on the keyboard.
-                </li>
-                <li>
-                  You can pause using the <strong>Start Button</strong> or using the <strong>Enter Key</strong> on the keyboard.
-                </li>
-              </ul>
-            </li>
-            <li>
-              Game Play
-              <ul>
-                <li>You get three outs per inning.</li>
-                <li>Press the "A Button" or "X Key" to continue after an out.</li>
-                <li>Like baseball this game doesn't end.</li>
-              </ul>
-            </li>
-          </ul>
-        </div>
+        
         {this.state.error ? (
           this.state.error
         ) : (
@@ -211,7 +182,7 @@ class RunPage extends Component {
     this.screenContainer.style.height = `${window.innerHeight -
       navbarHeight}px`;
 
-    if (window.innerWidth <= 375) {
+    if (window.innerWidth <= 430) {
       this.screenContainer.style.height = `${this.screenContainer.getBoundingClientRect().width * .95}px`;
     }
     else {

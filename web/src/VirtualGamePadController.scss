@@ -1,3 +1,5 @@
+@import './_variables.scss';
+
 .virtual-game-pad-controller {
     background-color: #aaa;
     max-width: 600px;
@@ -6,7 +8,7 @@
     margin-top: 50px;
     padding: 20px;
 
-    @media (max-width: 375px) {
+    @media (max-width: $width-mobile) {
         height: initial;
     }
 }
@@ -20,7 +22,7 @@
     height: 100%;
     padding: 20px;
 
-    @media (max-width: 375px) {
+    @media (max-width: $width-mobile) {
         grid-template-columns: repeat(2, 1fr);
         padding: 0;
     }
@@ -34,13 +36,13 @@
     grid-template-rows: 33.33333% 33.333333% 33.33333%;
     padding: 15px;
 
-    @media (max-width: 375px) {
+    @media (max-width: $width-mobile) {
         padding: 5px;
     }
 }
 
 .virtual-game-pad-controller__center {
-    @media (max-width: 375px) {
+    @media (max-width: $width-mobile) {
         order: 3;
         grid-column: span 2;
     }
