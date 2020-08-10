@@ -105,10 +105,14 @@
   }
 }
 
-.instruction-box__closed {
+.instruction-box__closed,
+.controls-modal__closed {
   // position: absolute;
   padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
   background-color: gray;
+
 
   .bi-info-circle-fill {
     width: 30px;
@@ -119,6 +123,12 @@
         width: 20px;
         height: 20px;
     }
+  }
+
+  img.controller-icon {
+    width: 30px;
+    height: 30px;
+    margin-top: 0;
   }
 }
 

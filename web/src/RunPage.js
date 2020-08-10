@@ -45,6 +45,38 @@ class RunPage extends Component {
   render() {
     return (
       <div className="RunPage">
+        <nav
+          className="navbar navbar-expand"
+          ref={el => {
+            this.navbar = el;
+          }}
+        >
+          <ul className="navbar-nav" style={{ width: "200px" }}>
+            <li className="navitem">
+              <Link to="/" className="nav-link">
+                &lsaquo; Back
+              </Link>
+            </li>
+          </ul>
+          <ul className="navbar-nav ml-auto mr-auto">
+            <li className="navitem">
+              <span className="navbar-text mr-3">{this.state.romName}</span>
+            </li>
+          </ul>
+          <ul className="navbar-nav" style={{ width: "200px" }}>
+            <li className="navitem">
+              
+              <Button
+                outline
+                color="primary"
+                onClick={this.handlePauseResume}
+                disabled={!this.state.running}
+              >
+                {this.state.paused ? "Resume" : "Pause"}
+              </Button>
+            </li>
+          </ul>
+        </nav>
         {this.state.error ? (
           this.state.error
         ) : (
@@ -94,9 +126,28 @@ class RunPage extends Component {
             </div>
             <div className="tv__speaker">
               <div></div>
+              {!!this.state.isPowered && <div
+                className="controls-modal__closed"
+                onClick={this.toggleControlsModal}
+              >
+                <img class="controller-icon" src="../img/keyboard.png" alt="keyboard" />
+              </div>}
               <InstructionBox />
             </div>
           </div>
+          {this.state.controlsModalOpen && !!this.emulator && (
+              <ControlsModal
+                isOpen={this.state.controlsModalOpen}
+                toggle={this.toggleControlsModal}
+                keys={this.emulator.keyboardController.keys}
+                setKeys={this.emulator.keyboardController.setKeys}
+                promptButton={this.emulator.gamepadController.promptButton}
+                gamepadConfig={this.emulator.gamepadController.gamepadConfig}
+                setGamepadConfig={
+                  this.emulator.gamepadController.setGamepadConfig
+                }
+              />
+            ) } 
           </div>
         )}
         <VirtualGamePadController 
@@ -190,8 +241,6 @@ class RunPage extends Component {
     else {
       this.screenContainer.style.height = `${this.screenContainer.getBoundingClientRect().width * .75}px`;
     }
-
-
 
 
     if (this.emulator) {
