@@ -1,5 +1,5 @@
 #!/bin/bash    
 
 ca65 ./src/main.asm -g -o ./build/main.o
-ld65 -o nes_fg.nes -C segments.config ./build/main.o -m ./build/nes_fg.map.txt -Ln ./build/nes_fg.labels.txt --dbgfile ./build/nes_fg.nes.dbg
-cp nes_fg.nes ./web/public/roms/nes_fg/nes_fg.nes
+ld65 -o fangraphs-arcade.nes -C segments.config ./build/main.o -m ./build/nes_fg.map.txt -Ln ./build/nes_fg.labels.txt --dbgfile ./build/nes_fg.nes.dbg
+cp fangraphs-arcade.nes ./web/public/roms/nes_fg/fangraphs-arcade.nes

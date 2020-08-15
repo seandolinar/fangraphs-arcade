@@ -16,7 +16,7 @@ const config = {
           by Sean Dolinar
                 </span>
             ),
-            url: `${process.env.PUBLIC_URL}/roms/nes_fg/nes_fg.nes`
+            url: `${process.env.PUBLIC_URL}/roms/nes_fg/fangraphs-arcade.nes`
         }
     },
     GOOGLE_ANALYTICS_CODE: process.env.REACT_APP_GOOGLE_ANALYTICS_CODE,
