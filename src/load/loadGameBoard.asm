@@ -225,7 +225,6 @@ STA gamePlayerReset
 STA animationTimer
 STA powerUpTimer
 
-
 LDA #$02
 STA enemyState
 STA enemyState + 1

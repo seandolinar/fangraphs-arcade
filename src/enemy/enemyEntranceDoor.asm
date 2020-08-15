@@ -26,10 +26,12 @@ checkDoor:
     LDA enemyState, X
     CMP #ENEMY_STATE_DOOR
     BEQ @openDoor
-    DEX
     CPX #$00
-    BNE @loop
-
+    BEQ @continue
+    DEX
+    JMP @loop
+    
+    @continue:
     JMP @checkIfDoorClose
    
     @openDoor:

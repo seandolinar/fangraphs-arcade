@@ -21,20 +21,21 @@ battedBall:
     ; STA enemy_oam + 14, Y
 
     LDA enemy1DirectionCurrent, X
-    CMP #DIRECTION_UP ; UP
+    CMP #DIRECTION_UP
     BEQ @moveBallDown
-    CMP #DIRECTION_DOWN ; DOWN
+    CMP #DIRECTION_DOWN
     BEQ @moveBallUp
-    CMP #DIRECTION_LEFT ; LEFT
+    CMP #DIRECTION_LEFT
     BEQ @moveBallRight
-
-    JMP @moveBallLeft ; RIGHT
+    ; #DIRECTION_RIGHT
+    JMP @moveBallLeft 
 
     @moveBallLeft:
     ; leading left edge
     LDA enemy_oam + 3, Y    
     SBC #$10
-    BMI @stopBridge
+    CMP #$f0
+    BCS @stopBridge
     STA enemy_oam + 3, Y
     STA enemy_oam + 11, Y
 
@@ -99,11 +100,14 @@ battedBall:
 
     SEC
     SBC #$0c
+    CMP #$0c
+    BCC @stop
+
     STA enemy_oam, Y
     STA enemy_oam + 4, Y
 
-    SBC #$04
-    BMI @stop
+    ; SBC #$04 ; TODO might not need this
+    
    
     LDA enemy_oam + 8, Y
 
@@ -116,9 +120,10 @@ battedBall:
     @break:
     RTS
 
-    @stop:
+    @stop:  
     ; this is the hard reset at the end of hitting the screen
     ; this location is within the scoreboard
+    ; for the immediate "offs", this is getting hit right away, and it isn't just one direction
     LDA #$80
     STA enemyX, X
     LDA #$38
@@ -154,13 +159,15 @@ battedBallFlashing:
 
     LDX #$00
     @loop:
-    INX
     CPX #$04
     BEQ @continue
     LDA enemyState, X
     CMP #ENEMY_STATE_BATTED
-    BNE @loop
+    BEQ @continueBatted
+    INX
+    JMP @loop
 
+    @continueBatted:
     TXA
     PHA
 
@@ -179,19 +186,25 @@ battedBallFlashing:
 
     @exitFindYIndex:
     TAY
-    STA consoleLog
 
     PLA
     TAX
 
     LDA masterTimer
     AND #$01
+
+    STX consoleLog
     
     ; palette
     STA enemy_oam + 2, Y
     STA enemy_oam + 6, Y
     STA enemy_oam + 10, Y
     STA enemy_oam + 14, Y
+
+    CPX #$04
+    BEQ @continue
+    INX
+    JMP @loop
 
     @continue:
 
