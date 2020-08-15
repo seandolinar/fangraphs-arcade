@@ -154,40 +154,16 @@ changeEnemyColorPowerUp:
     RTS
 
 ; maybe make a reset color one instead of 1    
+; if an enemy is in the middle of auto control, it will retain #$01 as a pallete index
 resetEnemyColorLoop:
-    LDX #$00
+    LDX #$04
+    LDY #$00
+
     @loop:
- 
+    DEX
+
     ; controls the sprite pallete attribute
     TXA
-    STA enemy_oam + 2, Y
-    STA enemy_oam + 6, Y
-    STA enemy_oam + 10, Y
-    STA enemy_oam + 14, Y
-
-    ; adds 16 to Y
-    PHA
-    CLC
-    TYA
-    ADC #$10
-    TAY
-    PLA
-
-    INX
-    CPX #$04
-    BNE @loop
-
-    RTS
-
-
-
-changeEnemyColorLoop:
-    ; A register needs to be "passed" in
-    ; I only call this once
-    LDX #$04
-    @loop:
-    DEX 
-    ; controls the sprite pallete attribute
     STA enemy_oam + 2, Y
     STA enemy_oam + 6, Y
     STA enemy_oam + 10, Y
@@ -204,4 +180,35 @@ changeEnemyColorLoop:
     CPX #$00
     BNE @loop
 
+    RTS
+
+
+
+changeEnemyColorLoop:
+    ; A register needs to be "passed" in
+    ; I only call this once
+    LDY #$00
+    LDX #$04
+    @loop:
+    ; controls the sprite pallete attribute
+    DEX
+    STA enemy_oam + 2, Y
+    STA enemy_oam + 6, Y
+    STA enemy_oam + 10, Y
+    STA enemy_oam + 14, Y
+
+    ; adds 16 to Y
+    PHA
+    CLC
+    TYA
+    ADC #$10
+    TAY
+    PLA
+
+    ; INX
+    CPX #$00
+    BEQ @break
+    JMP @loop
+
+    @break:
     RTS

@@ -55,8 +55,9 @@ dumpEnemyController:
 nextEnemyMovement:
     LDX #$04            ; how many enemies we have
     ; LDX #$01
-    LDY #$00
     STX enemyCycleX
+
+    LDY #$00
 forEachEnemyMovement:
 
     ; this bails out if we ever hit zero
@@ -100,6 +101,12 @@ forEachEnemyMovement:
     CPX isEnemyLeaving
     BEQ @start
 
+    ; putting this in??? should this change?
+    CLC
+    TYA
+    ADC #$10
+    TAY
+
     JMP @halt
 
     @start:
@@ -112,6 +119,21 @@ forEachEnemyMovement:
 
     STX isEnemyLeaving
 
+    LDA gameStateIsPowered
+    CMP #$00
+    BEQ @continuePalette
+    LDA #$03
+    JMP @storePalette
+
+    @continuePalette:
+    TXA
+    @storePalette:
+    STA enemy_oam + 2, Y
+    STA enemy_oam + 6, Y
+    STA enemy_oam + 10, Y
+    STA enemy_oam + 14, Y
+
+    LDA enemyY, X
     CMP #$48
     BCS @setNormal
 

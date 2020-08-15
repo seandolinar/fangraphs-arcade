@@ -134,7 +134,6 @@ Main:
     JMP Main
 
 gameMovement:
-    JSR incTimerPowerUp
     JSR UpdatePositionPlayer    ; runs the player updates ;change this to update direction
     JSR checkCollisionSprites   ; this should handle when to move the sprites ; I don't think I need this here
 
@@ -148,6 +147,7 @@ gameMovement:
     JSR nextEnemyMovement   ; move this to main?
     JSR checkCollisionSprites
     JSR checkDoor
+    JSR incTimerPowerUp
 
     INC enemyMode
 

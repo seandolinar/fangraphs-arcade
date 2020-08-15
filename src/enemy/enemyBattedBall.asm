@@ -129,13 +129,22 @@ battedBall:
     LDA #$38
     STA enemyY, X
 
+    ; turn off because it causes intermittent issues
+    ; during a power down
     ; this should reset the palette
-    LDA #$03
+    ; LDA gameStateIsPowered
+    ; CMP #$00
+    ; BEQ @continuePalette
+    ; LDA #$03
+    ; JMP @storePalette
 
-    STA enemy_oam + 2, Y
-    STA enemy_oam + 6, Y
-    STA enemy_oam + 10, Y
-    STA enemy_oam + 14, Y
+    ; @continuePalette:
+    ; TXA
+    ; @storePalette:
+    ; STA enemy_oam + 2, Y
+    ; STA enemy_oam + 6, Y
+    ; STA enemy_oam + 10, Y
+    ; STA enemy_oam + 14, Y
 
     LDA #$f0
     STA enemy_oam, Y
@@ -192,8 +201,6 @@ battedBallFlashing:
 
     LDA masterTimer
     AND #$01
-
-    STX consoleLog
     
     ; palette
     STA enemy_oam + 2, Y
