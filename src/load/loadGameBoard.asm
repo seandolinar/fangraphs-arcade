@@ -11,17 +11,10 @@ InitialLoad:
     CPX #$10               ; Compare X to hex $10, decimal 16
     BNE @LoadSpritesLoop   ; Branch to LoadSpritesLoop if compare was Not Equal to zero
 
-  ; maybe rename this clearOutEnemySprites
-  ; maybe move that subroutine
   JSR clearOutSprites
 
 
-  ;;; need to build this out for the pointer and stuff
-  ;;; probably should just build out the compression here
   ;;; NAMETABLES
-
-  ; maybe unify our loads
-
   LDA inning
   AND #$03
 
@@ -111,7 +104,7 @@ FillAttrib0Loop:
   CPX #$40                   ; fill 64 bytes
   BNE FillAttrib0Loop
 
-
+  ; this is wrong
   LDX $08
   @loopClearScore:
   LDA #$00
@@ -134,83 +127,6 @@ FillAttrib0Loop:
 
   JSR updateScore
 
-  ; Inning Writer
-  JSR startVramBuffer
-
-  @OnesPlace:
-  INY                                 ; increments it
-  LDA #$20
-  STA (vram_lo), Y                    ; value should have the tile for the digit
-  INY
-
-  LDA #$d4
-  STA (vram_lo), Y
-
-  LDX #$00 ; 0 because I'm only do 1 digit right now
-  LDA inningDigit0 , X                  ; digits are indexed on 0
-  STA tempCatchAll
-
-  INY
-  LDX tempCatchAll    ; X controls the digit
-  LDA NUM, X          ; digit buffer is transformed into tile
-  STA (vram_lo), Y
-
-  LDA inning
-  CMP #$0a
-  BCS @TensPlace
-
-  JMP endInningUpdate
-
-  @TensPlace:
-  INY                                 ; increments it
-  LDA #$20
-  STA (vram_lo), Y                    ; value should have the tile for the digit
-  INY
-
-  LDA #$d3
-  STA (vram_lo), Y
-
-  LDX #$01 ; 0 because I'm only do 1 digit right now
-  LDA inningDigit0 , X                  ; digits are indexed on 0
-  STA tempCatchAll
-
-  INY
-  LDX tempCatchAll    ; X controls the digit
-  LDA NUM, X          ; digit buffer is transformed into tile
-  STA (vram_lo), Y
-
-  LDA inning
-  CMP #$64
-  BCS @HundredsPlace
-
-  JMP endInningUpdate
-
-  @HundredsPlace:
-  INY                                 ; increments it
-  LDA #$20
-  STA (vram_lo), Y                    ; value should have the tile for the digit
-  INY
-
-  ; SEC
-  LDA #$d2
-  STA (vram_lo), Y
-
-  LDX #$02 ; 0 because I'm only do 1 digit right now
-  LDA inningDigit0 , X                  ; digits are indexed on 0
-  STA tempCatchAll
-
-  INY
-  LDX tempCatchAll    ; X controls the digit
-  LDA NUM, X          ; digit buffer is transformed into tile
-  STA (vram_lo), Y
-
-  endInningUpdate:
-  INY
-  STY vram_buffer_offset
-
-; initial parameters
-; can make this into a looping array?
-; it would save ROM code, but probably not cycles
 LDA #$10
 STA masterTimer
 
@@ -238,6 +154,7 @@ LDA #$ff
 STA isEnemyLeaving
 
 countDots:
+    CLC    
 
     LDA #<nametable_buffer
     STA nametable_buffer_lo
@@ -245,25 +162,41 @@ countDots:
     STA nametable_buffer_hi
 
     LDX #$00
-    STX dotsLeft      
+    STX dotsLeft
+    LDY #$00
+
+    ; LDA (nametable_buffer_lo), Y
+    ; LDA nametable_buffer_hi
+    ; STX consoleLog
+
     countDotsLoopOuter:   
     countDotsLoopInner:
-        LDA (nametable_buffer_lo), Y 
-        STX tempX                     ; stash X
+        TXA
+        PHA
+
+        LDA (nametable_buffer_lo), Y
 
         LDX #$00
         @loopCompareTilesDots:
         CMP tilesDots, X
         BEQ @incDotCount
-        INX
+        ; INX
         CPX #$05
-        BNE @loopCompareTilesDots
-       
-        LDX tempX                     ; unstash X
+        BEQ @continueCount
+        INX
+        JMP @loopCompareTilesDots
+        ; BNE @loopCompareTilesDots
+
+        @continueCount:
+        PLA
+        TAX
         JMP countDotsNoInc
 
         @incDotCount:
-        LDX tempX                     ; unstash X
+
+        PLA
+        TAX
+
         INC dotsLeft
 
         countDotsNoInc:
@@ -275,8 +208,8 @@ countDots:
             CPX #$04
             BNE countDotsLoopInner 
 
+  JSR updateInning
 
-   
   ; STARTS VIDEO DISPLAY
   LDA #%10000000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
   STA PPU_CTRL_REG1
