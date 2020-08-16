@@ -3,15 +3,14 @@ updateScore:
     TXA
     PHA
 
-    ; alterative 0 + 12 becomes $12 divide by 
     CLC
     LDA scoreDigit0
-    ADC scoreValue                ; this is where we are going to enter in the points we earn
-    STA scoreDigit0
-    CMP #$0a
-    BCC @continueVram
-    SBC #$0a
-    STA scoreDigit0
+    ADC scoreValue                ; this is where we enter the points we earn
+    STA scoreDigit0               ; store value in 0's place  
+    CMP #$0a                      ; if we are less than 10 break / end
+    BCC @break
+    SBC #$0a                      ; if we are greater than 10 (we assume we only add a max of 10 at a time)
+    STA scoreDigit0               ; store the lowest digit (now < 10)
 
     LDX #$00
 
@@ -22,16 +21,16 @@ updateScore:
     STA scoreDigit1, X
 
     CMP #$0a
-    BNE @continueVram
+    BNE @break
     SBC #$0a
     STA scoreDigit1, X
 
-    CPX #$02
-    BEQ @continueVram
+    CPX #$06
+    BEQ @break
     INX
     JMP @loopDigit
 
-    @continueVram:
+    @break:
 
     PLA
     TAX

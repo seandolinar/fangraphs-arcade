@@ -25,12 +25,14 @@ loadGameOver:
   STA scoreDigit1
   STA scoreDigit2
   STA scoreDigit3
-  ; STA scoreDigit4 ; why don't I have 4?
+  STA scoreDigit4 
   STA scoreDigit5
   STA scoreDigit6
   STA scoreDigit7
   STA scoreDigit8
-
+  STA scoreDigit9
+  STA scoreDigit10
+  STA scoreDigit11
 
   LDA #$01
   STA inningDigit0
