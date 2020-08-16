@@ -112,6 +112,7 @@ enemyAIMovementSetup:
         STA playerGridXAI
         JMP mainAI
 
+    ; this is the retreat to own corner mode
     modeAlt:
     CPX #$03
     BEQ aiUmp4Alt
@@ -124,43 +125,35 @@ enemyAIMovementSetup:
    
     ; refactor this because it could loop
     aiUmp1Alt:
-        ; LDA powerUpX       
         LDA #$08
         STA playerGridXAI
 
-        ; LDA powerUpY       
         LDA #$02
         STA playerGridYAI
         JMP mainAI
 
     aiUmp2Alt:
-        ; LDA powerUpX + 1    
         LDA #$20  
         STA playerGridXAI
 
-        ; LDA powerUpY + 1  
         LDA #$10
         STA playerGridYAI
 
         JMP mainAI
 
     aiUmp3Alt:
-        ; LDA powerUpX + 2       
         LDA #$00
         STA playerGridXAI
 
-        ; LDA powerUpY + 2     
         LDA #$10
         STA playerGridYAI
 
         JMP mainAI
 
     aiUmp4Alt:
-        ; LDA powerUpX + 3  
         LDA #$10
         STA playerGridXAI
 
-        ; LDA powerUpY + 3
         LDA #$20
         STA playerGridYAI
         JMP mainAI
@@ -460,6 +453,7 @@ chooseFromAvailableDirections:
     @registerIsLowerPowerUp:  
     ; POWER UP
     LDA frameTimer
+    ADC animationTimer
     AND #$01
     BNE @randomLower
 
@@ -487,6 +481,7 @@ chooseFromAvailableDirections:
     @registerIsHigherPowerUp:
     ; POWER UP
     LDA frameTimer
+    ADC animationTimer
     AND #$01
     BNE readyLoop
     LDA enemyAIIndex
@@ -508,8 +503,6 @@ chooseFromAvailableDirections:
 commitMove:
 
     LDX enemyDirectionIndex
-    ; DEX
-
     LDA enemyDirectionArray, X          ; get the direction based on which index we picked
 
     CMP #DIRECTION_UP
