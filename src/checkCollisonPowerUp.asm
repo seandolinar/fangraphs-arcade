@@ -21,15 +21,15 @@ checkCollisionPowerUp:
     JSR removePowerUp
 
     LDA dotsLeft
-    BNE @exit
+    BNE @normalPowerUp
     LDA powerUpAvailable
     CMP #$05
-    BNE @exit
+    BNE @normalPowerUp
 
     LDA frameTimer
     ADC #$30
     STA frameDelay
-    JSR soundCollisionGood
+    JSR soundHomePlateWin
 
     @win:
     CLC
@@ -37,9 +37,15 @@ checkCollisionPowerUp:
     CMP frameDelay
     BNE @win
 
-    @exit:
-    ; JSR soundPowerUp
+    LDA #$ff
+    STA powerUpAvailable
 
+    JMP @break
+
+    @normalPowerUp:
+    JSR soundPowerUp
+
+    @break:
     RTS
 
 @dump:

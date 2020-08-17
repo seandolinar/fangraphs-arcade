@@ -148,6 +148,8 @@ checkWin:
     LDA dotsLeft
     BNE @exit
     LDA powerUpAvailable
+    CMP #$ff
+    BEQ @win
     CMP #$05
     BNE @exit
 

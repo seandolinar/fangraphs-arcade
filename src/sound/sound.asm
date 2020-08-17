@@ -39,7 +39,7 @@ soundDot:
     PHA
     LDA #$01
 
-    LDX #FT_SFX_CH0
+    LDX #FT_SFX_CH1
 	JSR FamiToneSfxPlay
     PLA
     TAX
@@ -59,10 +59,23 @@ soundNextInning:
 soundPowerUp:
     TXA
     PHA
-    LDA #$02
+
     LDX #FT_SFX_CH0
-    LDA #$01
-	JSR FamiToneMusicPlay
+    LDA #$00
+    JSR FamiToneSfxPlay
+
+    PLA
+    TAX
+    RTS
+
+soundHomePlateWin:
+    TXA
+    PHA
+    
+    LDX #FT_SFX_CH0
+    LDA #$04
+    JSR FamiToneSfxPlay
+
     PLA
     TAX
     RTS

@@ -24,7 +24,7 @@
 .include "./load/loadGameOver.asm"
 .include "../lib/famitone2.s"
 .include "./sound/music.s"
-.include "./sound/SFX_New.s"
+.include "./sound/sfx.s"
 .include "./sound/sound.asm"
 
 
