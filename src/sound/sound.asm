@@ -54,3 +54,15 @@ soundNextInning:
     PLA
     TAX
     RTS
+
+
+soundPowerUp:
+    TXA
+    PHA
+    LDA #$02
+    LDX #FT_SFX_CH0
+    LDA #$01
+	JSR FamiToneMusicPlay
+    PLA
+    TAX
+    RTS

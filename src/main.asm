@@ -18,7 +18,6 @@
 .include "./scoreboard/updateInning.asm"
 .include "./checkCollisonPowerUp.asm"
 .include "./checkCollisonSprites.asm"
-.include "./sound.asm"
 .include "./ppu/ppuUpdates.asm"
 .include "./ppu/vram.asm"
 .include "./load/loadSplashScreen.asm"
@@ -26,6 +25,8 @@
 .include "../lib/famitone2.s"
 .include "./sound/music.s"
 .include "./sound/SFX_New.s"
+.include "./sound/sound.asm"
+
 
 
 .include "./reset.asm"

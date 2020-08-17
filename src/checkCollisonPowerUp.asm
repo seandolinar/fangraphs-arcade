@@ -19,10 +19,26 @@ checkCollisionPowerUp:
     ; dumps out
     JSR enablePowerUp
     JSR removePowerUp
-    ; JSR soundCollision ; Bad collision ; change this!
 
-    LDA #$01
-	JSR FamiToneMusicPlay
+    LDA dotsLeft
+    BNE @exit
+    LDA powerUpAvailable
+    CMP #$05
+    BNE @exit
+
+    LDA frameTimer
+    ADC #$30
+    STA frameDelay
+    JSR soundCollisionGood
+
+    @win:
+    CLC
+    LDA frameTimer
+    CMP frameDelay
+    BNE @win
+
+    @exit:
+    ; JSR soundPowerUp
 
     RTS
 
