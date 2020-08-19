@@ -123,8 +123,26 @@ removePowerUp:
 
 ; start the timer
 setTimerPowerUp:
-    LDA #$60 ;#$40 ; 32 cycles of something
+    TXA
+    PHA
+
+    ; default time
+    LDA #$60 ; ~12 sec
+
+    LDX inning
+    CPX #$0a
+    BCS @fasterPowerUp
+
+    JMP @storeTimer
+
+    @fasterPowerUp:
+    LDA #$30
+
+    @storeTimer:
     STA powerUpTimer
+
+    PLA
+    TAX
     RTS
 
 ; decrement?

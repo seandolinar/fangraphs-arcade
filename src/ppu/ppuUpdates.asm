@@ -49,7 +49,7 @@ spriteTransfer:
     LDA #$00
     STA PPU_SPR_ADDR               ; set the low byte (00) of the RAM address
     LDA #>player_oam        ; this works and so does $02
-    STA $4014               ; set the high byte (02) of the RAM address, start the transfer
+    STA $4014               ; set the high byte (02) of the RAM address, start the transfer TODO update the macro label
 
     RTS
 

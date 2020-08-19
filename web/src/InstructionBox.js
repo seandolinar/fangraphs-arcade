@@ -10,7 +10,7 @@ const InstructionBox = () => {
 
     const [isOpen, setIsOpen] = useState(true);
 
-    return isOpen ? <div 
+    return <>{ isOpen && <div 
         className={`instruction-box`}
         onClick={() => setIsOpen(false)}
     >
@@ -45,13 +45,14 @@ const InstructionBox = () => {
                 </li>
             </ul>
         </div>
-    </div> : 
-        <div 
-            className="instruction-box__closed"
-            onClick={() => setIsOpen(true)}
-        >
-            <IconInfo />
-        </div> ;
+    </div>}
+    <div 
+        className="instruction-box__closed"
+        onClick={() => setIsOpen(true)}
+    >
+        <IconInfo />
+    </div>
+    </>;
 };
 
 export default InstructionBox;

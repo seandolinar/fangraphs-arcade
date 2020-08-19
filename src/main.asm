@@ -137,13 +137,14 @@ Main:
 
 gameMovement:
     JSR UpdatePositionPlayer    ; runs the player updates ;change this to update direction
+    JSR setAnimationPlayerDirection
+
     JSR checkCollisionSprites   ; this should handle when to move the sprites ; I don't think I need this here
 
     ; skips over this section if we are resetting because of an out
     LDA gamePlayerReset
     BNE @dump
 
-    JSR setAnimationPlayerDirection
     JSR checkCollisionPowerUp
 
     JSR nextEnemyMovement   ; move this to main?

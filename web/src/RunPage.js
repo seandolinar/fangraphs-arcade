@@ -45,38 +45,6 @@ class RunPage extends Component {
   render() {
     return (
       <div className="RunPage">
-        <nav
-          className="navbar navbar-expand"
-          ref={el => {
-            this.navbar = el;
-          }}
-        >
-          <ul className="navbar-nav" style={{ width: "200px" }}>
-            <li className="navitem">
-              <Link to="/" className="nav-link">
-                &lsaquo; Back
-              </Link>
-            </li>
-          </ul>
-          <ul className="navbar-nav ml-auto mr-auto">
-            <li className="navitem">
-              <span className="navbar-text mr-3">{this.state.romName}</span>
-            </li>
-          </ul>
-          <ul className="navbar-nav" style={{ width: "200px" }}>
-            <li className="navitem">
-              
-              <Button
-                outline
-                color="primary"
-                onClick={this.handlePauseResume}
-                disabled={!this.state.running}
-              >
-                {this.state.paused ? "Resume" : "Pause"}
-              </Button>
-            </li>
-          </ul>
-        </nav>
         {this.state.error ? (
           this.state.error
         ) : (

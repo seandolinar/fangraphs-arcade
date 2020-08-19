@@ -28,6 +28,8 @@ checkCollisionSprites:
     CMP #$01
     BEQ @collisionGood
 
+    ; RTS ; DEBUG
+
     ; ; Bad collision path
     JSR soundCollision
     JSR animatePlayerOut

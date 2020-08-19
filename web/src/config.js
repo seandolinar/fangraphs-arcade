@@ -2,7 +2,7 @@ import React from "react";
 
 const config = {
     ROMS: {
-        fg_nes: {
+        "fangraphs-arcade": {
             name: "FanGraphs Arcade",
             description: (
                 <span>
@@ -16,7 +16,7 @@ const config = {
           by Sean Dolinar
                 </span>
             ),
-            url: `${process.env.PUBLIC_URL}/roms/nes_fg/fangraphs-arcade.nes`
+            url: `${process.env.PUBLIC_URL}/roms/fangraphs-arcade/fangraphs-arcade.nes`
         }
     },
     GOOGLE_ANALYTICS_CODE: process.env.REACT_APP_GOOGLE_ANALYTICS_CODE,
