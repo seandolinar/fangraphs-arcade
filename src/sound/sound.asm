@@ -1,14 +1,14 @@
 .segment "CODE"
-soundCollision:
+soundCollisionBad:
 
     TXA
     PHA
     LDA #$00
 
-    ; ldx #FT_SFX_CH0
-	; jsr FamiToneSfxPlay
-    LDA #$02
-	JSR FamiToneMusicPlay
+    LDX #FT_SFX_CH0
+	JSR FamiToneSfxPlay
+    ; LDA #$02
+	; JSR FamiToneMusicPlay
 
     PLA
     TAX
@@ -60,7 +60,7 @@ soundPowerUp:
     TXA
     PHA
 
-    LDX #FT_SFX_CH0
+    LDX #FT_SFX_CH2
     LDA #$00
     JSR FamiToneSfxPlay
 

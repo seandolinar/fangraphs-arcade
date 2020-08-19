@@ -31,7 +31,7 @@ checkCollisionSprites:
     ; RTS ; DEBUG
 
     ; Bad collision path
-    JSR soundCollision
+    JSR soundCollisionBad
     JSR animatePlayerOut
     JSR playerReset
     
