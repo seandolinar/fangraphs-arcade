@@ -52,6 +52,9 @@ checkCollisionSprites:
     LDA #$01
     STA gamePlayerReset
 
+    ;;;
+    ; PPU update update outs graphic
+    ;;; 
     JSR startVramBuffer
     INY
 
@@ -72,7 +75,7 @@ checkCollisionSprites:
     STA (vram_lo), Y
 
     STY vram_buffer_offset
-    STY $7003
+    ; STY $7003 ; don't think I need this
 
     ; reset timer
     LDA frameTimer
@@ -143,4 +146,24 @@ clearOutSprites:
     CPX #$40
     BNE @LoadEnemyLoop   ; Branch to LoadSpritesLoop if compare was Not Equal to zero
     
+    RTS
+
+clearOutSpritesPlayer:
+    LDA #$00
+    LDX #$00
+
+    @clearPlayerLoop:
+    STA player_oam, X
+    STA player_oam + 1, X
+    STA player_oam + 2, X
+    STA player_oam + 3, X
+
+    INX
+    INX
+    INX
+    INX
+
+    CPX #$10
+    BNE @clearPlayerLoop
+
     RTS

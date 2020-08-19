@@ -189,6 +189,8 @@ PPU_SCROLL_REG       	= $2005
 PPU_ADDRESS           	= $2006
 PPU_DATA         		= $2007
 
+CONTROLLER_P1 			= $4016
+
 ; TEXT constants
 ; alphabetical 
 APH					  	= $d0

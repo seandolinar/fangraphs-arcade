@@ -8,7 +8,7 @@ RESET:
 	STA $2001 ; disable rendering
 	STA $4010 ; disable DMC IRQ
 	CLD       ; disable decimal mode
-	LDX #$FF
+	LDX #$ff
 	TXS       ; initialize stack
 
   ; CLEAR MEMORY
@@ -22,23 +22,25 @@ ClearMemory:
   STA $0500, X
   STA $0600, X
   STA $0700, X
-  LDA #$FE
+  LDA #$fe
   STA $0200, X
   INX
   BNE ClearMemory
 
-    WarmUp:
-        BIT PPU_STATUS
-		BPL WarmUp
+  WarmUp:
+      BIT PPU_STATUS
+  BPL WarmUp
+
+  JSR clearOutSprites
+  JSR clearOutSpritesPlayer
 
   LDA #$01
   STA inning
   STA inningDigit0
 
-
-
   LDA #$00
   STA controllerBits
+  STA controllerBitsPrev
   STA inningDigit1
   STA inningDigit2
   STA scoreDigit0
@@ -56,17 +58,22 @@ ClearMemory:
 
   STA scoreValue
 
+  ; new
+  LDA #$00
+  STA gameOuts
+
   LDA #$19
   STA bufferBackgroundColor
 
-  ldx #<fg_arcade_music_music_data	;initialize using the first song data, as it contains the DPCM sound effect
+  ldx #<fg_arcade_music_music_data	; set the music data location
 	ldy #>fg_arcade_music_music_data
-	lda #$0F ;NTSC_MODE
-	jsr FamiToneInit		;init FamiTone
-  lda #$00
-	jsr FamiToneMusicPlay
+	lda #$0f                          ; NTSC_MODE
+	jsr FamiToneInit		              ;init FamiTone
 
-  ldx #<sounds			;set sound effects data location
+  lda #$00                          ; plays the take me out to the ball game song
+	jsr FamiToneMusicPlay 
+
+  ldx #<sounds			                ; set sound effects data location
 	ldy #>sounds
 	jsr FamiToneSfxInit
 
@@ -74,4 +81,4 @@ ClearMemory:
   STA PPU_CTRL_REG1
   STA PPUState
 
-  JMP splashScreen
+  JMP loadSplashScreen

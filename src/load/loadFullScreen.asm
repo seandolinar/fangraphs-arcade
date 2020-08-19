@@ -1,13 +1,4 @@
-loadSplashScreen:
-
-  ;;; need to build this out for the pointer and stuff
-  ;;; probably should just build out the compression here
-  ;;; NAMETABLES
-  LDA #<splash_screen
-  STA backgroundPointerLo
-  LDA #>splash_screen
-  STA backgroundPointerHi
-
+loadFullScreen:
   ; need this for the FillBackground subroutine
   LDA #<nametable_buffer
   STA nametable_buffer_lo
@@ -16,6 +7,8 @@ loadSplashScreen:
 
   JSR FillBackground
 
+
+  ;; HAVE TO Reunderstand this
   ;; LOADING PALETTE
   LDA PPU_STATUS    ; read PPU status to reset the high/low latch to high
 
@@ -25,7 +18,7 @@ loadSplashScreen:
   STA PPU_ADDRESS    ; write the low byte of $3F10 address
 
 
-  LDX #$00                ; start out at 0
+LDX #$00                ; start out at 0
 @LoadPalettesLoop:
   LDA pallete_splash, X      ; load data from address (PaletteData + the value in x)
                           ; 1st time through loop it will load PaletteData+0
@@ -48,7 +41,7 @@ loadSplashScreen:
 
   LDX #$00
 @FillAttrib0Loop:
-
+  ; LDA attribute_table, X
   LDA #$00
   STA PPU_DATA
   INX
@@ -58,31 +51,27 @@ loadSplashScreen:
   LDA #$1D
   STA bufferBackgroundColor
 
-  LDA #%00001110   ; disable sprites, enable background, no clipping on left side
+  LDA #$00
+  STA PPU_SCROLL_REG
+  STA PPU_SCROLL_REG
+
+  LDA PPUState
+  STA PPU_CTRL_REG1
+
+  LDA #%00001110   ; enable sprites, enable background, no clipping on left side
   STA PPU_CTRL_REG2
 
-  LDA #$00
-  STA PPU_SCROLL_REG
-  STA PPU_SCROLL_REG
-
-  LDA #$00
-  STA controllerBits
-  STA controllerBitsPrev
   @loop:
+
   JSR readController
   LDA controllerBits
-  EOR controllerBitsPrev ; difference in buttons
-  AND controllerBits
   AND #CONTROL_P1_A
+
   BEQ @loop
-
-  LDA #$19
-  STA bufferBackgroundColor
-
-  jsr FamiToneMusicStop		;stop music
 
   LDA #$00
 	STA PPU_CTRL_REG1               ; disable NMI
 	STA PPU_CTRL_REG2               ; disable rendering
 
-  JMP InitialLoad
+
+  RTS

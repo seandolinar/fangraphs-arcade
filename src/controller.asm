@@ -8,15 +8,15 @@ readController:
         STA controllerBits
 
         LDA #$01
-        STA $4016
+        STA CONTROLLER_P1
         LDA #$00
         ; STA controllerBits
-        STA $4016       ; tell both the controllers to latch buttons
+        STA CONTROLLER_P1      ; tell both the controllers to latch buttons
    
     ; we'll read 4016 8 times
     ReadA: 
 
-        LDA $4016       
+        LDA CONTROLLER_P1      
         AND #%00000001  ;
         BEQ ReadADone  
 
@@ -28,7 +28,7 @@ readController:
     ReadADone:
 
     ReadB: 
-        LDA $4016      
+        LDA CONTROLLER_P1      
         AND #%00000001  
         BEQ ReadBDone  
 
@@ -41,7 +41,7 @@ readController:
     ReadBDone:
 
      ReadSelect: 
-        LDA $4016       
+        LDA CONTROLLER_P1     
         AND #%00000001  
         BEQ ReadSelectDone   
 
@@ -53,7 +53,7 @@ readController:
     ReadSelectDone:
 
      ReadStart: 
-        LDA $4016      
+        LDA CONTROLLER_P1      
         AND #%00000001 
         BEQ ReadStartDone  
         
@@ -65,7 +65,7 @@ readController:
     ReadStartDone:
 
     ReadUp: 
-        LDA $4016      
+        LDA CONTROLLER_P1     
         AND #%00000001 
         BEQ ReadUpDone  
      
@@ -77,7 +77,7 @@ readController:
     ReadUpDone:
 
     ReadDown: 
-        LDA $4016       
+        LDA CONTROLLER_P1   
         AND #%00000001  
         BEQ ReadDownDone   
 
@@ -89,7 +89,7 @@ readController:
     ReadDownDone:
 
     ReadLeft: 
-        LDA $4016       
+        LDA CONTROLLER_P1       
         AND #%00000001 
         BEQ ReadLeftDone   
 
@@ -101,7 +101,7 @@ readController:
     ReadLeftDone:
 
     ReadRight: 
-        LDA $4016      
+        LDA CONTROLLER_P1      
         AND #%00000001  
         BEQ ReadRightDone   
 
@@ -112,27 +112,4 @@ readController:
         
     ReadRightDone:
 
-    ; this looks like it's metering the controls
-    ; left over from the older mechanic?
-    ; LDA controllerBits ; probably don't need this
-    ; BEQ resetTimer
-    ; LDA controllerTimer
-    ; BNE dumpTimerController
-    ; LDA #$10
-    ; STA controllerTimer
     RTS
-
-
-; resetTimer:
-;     LDA #$00
-;     STA controllerTimer
-;     STA controllerBits
-;     RTS
-
-; dumpTimerController:
-;     LDA #$00 
-;     STA controllerBits
-
-;     DEC controllerTimer
-
-;     RTS

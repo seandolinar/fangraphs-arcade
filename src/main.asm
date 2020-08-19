@@ -22,6 +22,10 @@
 .include "./ppu/vram.asm"
 .include "./load/loadSplashScreen.asm"
 .include "./load/loadGameOver.asm"
+.include "./load/loadWinScreen.asm"
+.include "./load/loadFullScreen.asm"
+
+; sound files
 .include "../lib/famitone2.s"
 .include "./sound/music.s"
 .include "./sound/sfx.s"
