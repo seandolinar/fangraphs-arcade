@@ -4,22 +4,6 @@ battedBall:
     ; the enemy then flies off the screen 
     ; opposite of the direction they were traveling
 
-
-
-    ; this does every other frame
-    ; need to put in other values into the palette
-    ; at least the one color...
-    ; or we load in different colors into one palette and switch between that somewhere else
-    ; LDA masterTimer
-    ; AND #$01
-
-    ; ; palette
-    ; ; it is either 0 or 1
-    ; STA enemy_oam + 2, Y
-    ; STA enemy_oam + 6, Y
-    ; STA enemy_oam + 10, Y
-    ; STA enemy_oam + 14, Y
-
     LDA enemy1DirectionCurrent, X
     CMP #DIRECTION_UP
     BEQ @moveBallDown
@@ -27,6 +11,7 @@ battedBall:
     BEQ @moveBallUp
     CMP #DIRECTION_LEFT
     BEQ @moveBallRight
+
     ; #DIRECTION_RIGHT
     JMP @moveBallLeft 
 
@@ -105,10 +90,7 @@ battedBall:
 
     STA enemy_oam, Y
     STA enemy_oam + 4, Y
-
-    ; SBC #$04 ; TODO might not need this
-    
-   
+       
     LDA enemy_oam + 8, Y
 
     SEC
@@ -129,23 +111,6 @@ battedBall:
     LDA #$38
     STA enemyY, X
 
-    ; turn off because it causes intermittent issues
-    ; during a power down
-    ; this should reset the palette
-    ; LDA gameStateIsPowered
-    ; CMP #$00
-    ; BEQ @continuePalette
-    ; LDA #$03
-    ; JMP @storePalette
-
-    ; @continuePalette:
-    ; TXA
-    ; @storePalette:
-    ; STA enemy_oam + 2, Y
-    ; STA enemy_oam + 6, Y
-    ; STA enemy_oam + 10, Y
-    ; STA enemy_oam + 14, Y
-
     LDA #$f0
     STA enemy_oam, Y
     STA enemy_oam + 4, Y
@@ -159,8 +124,8 @@ battedBall:
     RTS
 
 
-; this gets run in a different part of main so it can happen more often
- ; flashing batted ball
+; this gets run in a different part of Main Loop so it can happen more often
+; flashing batted ball
 battedBallFlashing:
 
     TYA

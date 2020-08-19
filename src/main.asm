@@ -1,5 +1,6 @@
 .include "./res.asm"
 .include "./header.asm"
+.include "./reset.asm"
 .include "./controller.asm"
 .include "./player/playerCollision.asm"
 .include "./player/playerDots.asm"
@@ -16,14 +17,16 @@
 .include "./enemy/enemyEntranceDoor.asm"
 .include "./scoreboard/updateScore.asm"
 .include "./scoreboard/updateInning.asm"
-.include "./checkCollisonPowerUp.asm"
-.include "./checkCollisonSprites.asm"
+.include "./checkCollision/checkCollisonPowerUp.asm"
+.include "./checkCollision/checkCollisonSprites.asm"
 .include "./ppu/ppuUpdates.asm"
 .include "./ppu/vram.asm"
 .include "./load/loadSplashScreen.asm"
 .include "./load/loadGameOver.asm"
 .include "./load/loadWinScreen.asm"
 .include "./load/loadFullScreen.asm"
+.include "./load/loadGameBoard.asm"
+
 
 ; sound files
 .include "../lib/famitone2.s"
@@ -31,12 +34,9 @@
 .include "./sound/sfx.s"
 .include "./sound/sound.asm"
 
-
-
-.include "./reset.asm"
-.include "./pallete.asm"
-.include "./load/loadGameBoard.asm"
-.include "./tiles.asm";
+; graphics
+.include "./graphics/pallete.asm"
+.include "./graphics/tiles.asm";
 
 .segment "TILES"
 .incbin "../chr/nes-fg.chr"

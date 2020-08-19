@@ -44,15 +44,13 @@ changeBackground:
 
 
 spriteTransfer:       
-    ; SPRITE TRANSFER
-    ; does this every frame
+    ; SPRITE DMA TRANSFER
     LDA #$00
-    STA PPU_SPR_ADDR               ; set the low byte (00) of the RAM address
-    LDA #>player_oam        ; this works and so does $02
-    STA $4014               ; set the high byte (02) of the RAM address, start the transfer TODO update the macro label
+    STA PPU_SPR_ADDR
+    LDA #>player_oam
+    STA OAM_DMA
 
     RTS
-
 
 clearVRAMBuffer:
     LDA #<vram_buffer
@@ -66,7 +64,7 @@ clearVRAMBuffer:
     STA vram_buffer_offset
     LDA #$00
     @loop:
-    STA (vram_lo), Y ; not working
+    STA (vram_lo), Y
     DEY
     CPY #$00
     BNE @loop
@@ -78,5 +76,3 @@ endGame:
 	STA PPU_CTRL_REG1               ; disable NMI
 	STA PPU_CTRL_REG2  
     RTS
-
-; move

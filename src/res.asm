@@ -181,6 +181,8 @@ PPU_SCROLL_REG       	= $2005
 PPU_ADDRESS           	= $2006
 PPU_DATA         		= $2007
 
+OAM_DMA 				= $4014
+
 ; Controller values
 CONTROLLER_P1 			= $4016
 
