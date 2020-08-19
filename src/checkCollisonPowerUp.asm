@@ -169,6 +169,6 @@ incTimerPowerUp:
     BNE dumpIncTimerPowerUp
 
     JSR disablePowerUp
-    RTS
+    
     dumpIncTimerPowerUp:
     RTS
