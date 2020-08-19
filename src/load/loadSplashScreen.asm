@@ -81,8 +81,14 @@ loadSplashScreen:
 
   jsr FamiToneMusicStop		;stop music
 
+  ; wait for vblank to stop
+  ; this caused many errors
+  ; @vBlankLoop:
+	;   LDA PPU_STATUS   
+  ;   BPL @vBlankLoop
+
   LDA #$00
 	STA PPU_CTRL_REG1               ; disable NMI
 	STA PPU_CTRL_REG2               ; disable rendering
 
-  JMP InitialLoad
+  JMP loadGameBoard

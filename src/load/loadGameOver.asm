@@ -38,7 +38,7 @@ loadGameOver:
   STA inningDigit0
   STA inning
 
-  JMP InitialLoad
+  JMP loadGameBoard
 
 
 

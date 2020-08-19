@@ -24,6 +24,12 @@ loadWinScreen:
 
 
   @continueGameOver:
+
+  ; wait for vblank to restart
+  @vBlankLoop:
+	LDA PPU_STATUS   
+    BPL @vBlankLoop
+
   LDA #$00
   STA PPU_CTRL_REG2
 
@@ -76,4 +82,4 @@ loadWinScreen:
 
 
   @break:
-  JMP InitialLoad
+  JMP loadGameBoard

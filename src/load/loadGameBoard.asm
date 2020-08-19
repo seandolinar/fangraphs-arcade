@@ -1,5 +1,5 @@
 .segment "CODE"
-InitialLoad:
+loadGameBoard:
   LoadSprites:
     LDX #$00              ; start at 0
   @LoadSpritesLoop:
@@ -165,10 +165,6 @@ countDots:
     STX dotsLeft
     LDY #$00
 
-    ; LDA (nametable_buffer_lo), Y
-    ; LDA nametable_buffer_hi
-    ; STX consoleLog
-
     countDotsLoopOuter:   
     countDotsLoopInner:
         TXA
@@ -180,12 +176,11 @@ countDots:
         @loopCompareTilesDots:
         CMP tilesDots, X
         BEQ @incDotCount
-        ; INX
+
         CPX #$05
         BEQ @continueCount
         INX
         JMP @loopCompareTilesDots
-        ; BNE @loopCompareTilesDots
 
         @continueCount:
         PLA
@@ -210,6 +205,11 @@ countDots:
 
   JSR updateInning
 
+  ; wait for vblank to restart
+  @vBlankLoop:
+	  LDA PPU_STATUS   
+    BPL @vBlankLoop
+
   ; STARTS VIDEO DISPLAY
   LDA #%10000000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
   STA PPU_CTRL_REG1
@@ -225,29 +225,3 @@ countDots:
 
   JMP Main
 
-
-
-FillBackground:
-  ; LDA PPU_STATUS           ; read PPU status to reset the high/low latch
-  LDA #$20
-  STA PPU_ADDRESS             ; write the high byte of $2000 address (nametable 0)
-  LDA #$00
-  STA PPU_ADDRESS             ; write the low byte of $2000 address
-
-  LDX #$00
-  LDY #$00         
-  @loop:
-    LDA (backgroundPointerLo), Y
-    STA PPU_DATA
-    STA (nametable_buffer_lo), Y ; not working
-
-    INY                 ; inside loop counter
-    CPY #$00            ; run the inside loop 256 times before continuing down
-    BNE @loop 
-    INC backgroundPointerHi
-    INC nametable_buffer_hi 
-    INX
-    CPX #$04
-    BNE @loop 
-
-  RTS

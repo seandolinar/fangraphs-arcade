@@ -21,6 +21,7 @@
 .include "./checkCollision/checkCollisonSprites.asm"
 .include "./ppu/ppuUpdates.asm"
 .include "./ppu/vram.asm"
+.include "./ppu/FillBackground.asm"
 .include "./load/loadSplashScreen.asm"
 .include "./load/loadGameOver.asm"
 .include "./load/loadWinScreen.asm"
