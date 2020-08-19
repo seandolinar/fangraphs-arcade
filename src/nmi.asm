@@ -39,14 +39,14 @@ NMI:
     STA PPU_SCROLL_REG 
     STA PPU_SCROLL_REG
 
-    LDA gamePlayerReset ; $01 means we are in the middle of a reset
+    LDA gamePlayerReset     ; $01 means we are in the middle of a reset
     BNE @resetNMI
 
     LDX masterTimer
     DEX
     STX masterTimer
     BNE @dumpNMI
-    LDA #$08            ; makes sure we don't loop backwards
+    LDA #$08                ; makes sure we don't loop backwards
     STA masterTimer
 
 @dumpNMI:

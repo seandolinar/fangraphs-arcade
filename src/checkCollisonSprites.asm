@@ -30,7 +30,7 @@ checkCollisionSprites:
 
     ; RTS ; DEBUG
 
-    ; ; Bad collision path
+    ; Bad collision path
     JSR soundCollision
     JSR animatePlayerOut
     JSR playerReset
@@ -75,7 +75,6 @@ checkCollisionSprites:
     STA (vram_lo), Y
 
     STY vram_buffer_offset
-    ; STY $7003 ; don't think I need this
 
     ; reset timer
     LDA frameTimer

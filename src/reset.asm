@@ -61,6 +61,7 @@ ClearMemory:
   ; new
   LDA #$00
   STA gameOuts
+  STA gamePlayerReset
 
   LDA #$19
   STA bufferBackgroundColor
