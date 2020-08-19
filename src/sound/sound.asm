@@ -3,12 +3,12 @@ soundCollisionBad:
 
     TXA
     PHA
-    LDA #$00
+    ; LDA #$03
 
-    LDX #FT_SFX_CH0
-	JSR FamiToneSfxPlay
-    ; LDA #$02
-	; JSR FamiToneMusicPlay
+    ; LDX #FT_SFX_CH0
+	; JSR FamiToneSfxPlay
+    LDA #$02
+	JSR FamiToneMusicPlay
 
     PLA
     TAX
