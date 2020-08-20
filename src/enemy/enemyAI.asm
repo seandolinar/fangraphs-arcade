@@ -452,7 +452,8 @@ chooseFromAvailableDirections:
 
     @registerIsLowerPowerUp:  
     ; POWER UP
-    LDA frameTimer
+    TXA
+    ADC frameTimer
     ADC animationTimer
     AND #$01
     BNE @randomLower
@@ -480,7 +481,8 @@ chooseFromAvailableDirections:
     
     @registerIsHigherPowerUp:
     ; POWER UP
-    LDA frameTimer
+    TXA
+    ADC frameTimer
     ADC animationTimer
     AND #$01
     BNE readyLoop
