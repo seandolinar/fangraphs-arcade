@@ -10,15 +10,15 @@ NMI:
     CMP #$03
     BEQ @endGame
 
-
+; TODO removed this
 ; vBlankWait:	
-@vBlankLoop:
-	LDA PPU_STATUS   
-    BPL @vBlankLoop
+; @vBlankLoop:
+; 	LDA PPU_STATUS   
+;     BPL @vBlankLoop
 
-    LDA #$00
-	STA PPU_CTRL_REG1               ; disable NMI
-	STA PPU_CTRL_REG2               ; disable rendering
+    ; LDA #$00
+	; STA PPU_CTRL_REG1               ; disable NMI
+	; STA PPU_CTRL_REG2               ; disable rendering
 
     INC frameTimer
 

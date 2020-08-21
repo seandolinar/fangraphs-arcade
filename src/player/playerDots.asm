@@ -139,6 +139,7 @@ collideDot:
 ; not sure why we are putting this here
 checkWin:
 
+    ; TODO:
     ; !!DEBUG
     LDA controllerBits
     AND #CONTROL_P1_B

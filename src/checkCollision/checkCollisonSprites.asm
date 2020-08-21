@@ -8,6 +8,7 @@ checkCollisionSprites:
     LDX #$04
     STX enemyCycleX
 
+    ; TODO:
     ; DEBUG
     ; RTS
 
@@ -28,6 +29,7 @@ checkCollisionSprites:
     CMP #$01
     BEQ @collisionGood
 
+    ; TODO:
     ; RTS ; DEBUG
 
     ; Bad collision path

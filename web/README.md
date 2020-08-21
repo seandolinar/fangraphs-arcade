@@ -13,4 +13,4 @@ This is a JavaScript Web application based on [JSNES-Web](https://github.com/bfi
 
     $ npm run build
 
-The built app will be in `build/`.
+The built app will be in `build/`.  The project is configured to be servere from a `/nes` subdirectory.
