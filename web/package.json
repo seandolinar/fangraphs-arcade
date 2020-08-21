@@ -5,7 +5,7 @@
   "private": true,
   "homepage": "https://www.fangraphs.com/nes",
   "dependencies": {
-    "bootstrap": "4.2.1",
+    "bootstrap": "4.3.1",
     "jsnes": "^1.1.0",
     "node-sass": "^4.13.1",
     "prop-types": "^15.7.2",
@@ -21,7 +21,7 @@
     "canvas": "^2.6.1",
     "prettier": "^1.16.4",
     "prettier-check": "^2.0.0",
-    "react-scripts": "3.4.1"
+    "react-scripts": "^3.4.3"
   },
   "scripts": {
     "start": "react-scripts start",
