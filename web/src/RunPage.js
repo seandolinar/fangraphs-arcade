@@ -23,6 +23,10 @@ const clipPath = <svg width="0" height="0">
     </defs>
 </svg>
 
+const iconArrow =  <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-arrow-up-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fillRule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 8.354a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 6.207V11a.5.5 0 0 1-1 0V6.207L5.354 8.354z"/>
+</svg>
+
 /*
  * The UI for the emulator. Also responsible for loading ROM from URL or file.
  */
@@ -30,6 +34,7 @@ class RunPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      badClicks: 0,
       romName: null,
       romData: null,
       running: false,
@@ -87,6 +92,14 @@ class RunPage extends Component {
                 }>
                   Power
                   <div className="tv__control__power-indicator"></div>
+                  { !this.state.isPowered && this.state.badClicks > 5 && <div className="tv__control__power-indicator__arrow">
+                    <div>
+                      { iconArrow }
+                    </div>
+                    <div>
+                    Click here to start!
+                    </div>
+                    </div>}
                 </div>
                 <div className="tv__control__channel">
                   03
@@ -98,7 +111,7 @@ class RunPage extends Component {
                 className="controls-modal__closed"
                 onClick={this.toggleControlsModal}
               >
-                <img class="controller-icon" src="../img/keyboard.png" alt="keyboard" />
+                <img className="controller-icon" src="../img/keyboard.png" alt="keyboard" />
               </div>}
               <InstructionBox />
             </div>
@@ -128,9 +141,14 @@ class RunPage extends Component {
 
   componentDidMount() {
     window.addEventListener("resize", this.layout);
+    window.addEventListener('click', this.handleHint);
     this.layout();
     this.load();
   }
+
+//   if (!!this.state.isPowered) {
+//     window.removeEventListener('click', handleHint);
+// }
 
   componentWillUnmount() {
     window.removeEventListener("resize", this.layout);
@@ -138,6 +156,14 @@ class RunPage extends Component {
       this.currentRequest.abort();
     }
   }
+
+  handleHint = () => {
+    this.setState({ badClicks: this.state.badClicks + 1 })
+    if (!!this.state.isPowered) {
+      window.removeEventListener('click', this.handleHint)
+      this.setState({ badClicks: -1 })
+    }
+  };
 
   load = () => {
     if (this.props.match.params.slug) {

@@ -45,10 +45,12 @@
   max-width: 900px;
   margin: auto;
   background: radial-gradient(circle, rgba(91,90,90,1) 0%, rgba(158,158,158,1) 100%);
+  margin-top: 30px;
 
   @media (max-width: $width-mobile) {
     flex-direction: column;
     width: 100%;
+    margin-top: 0;
   }
 }
 
@@ -135,6 +137,7 @@
 
 .tv__control__power {
   display: flex;
+  position: relative;
   padding: 10px;
   justify-content: space-evenly;
   align-items: center;
@@ -148,6 +151,14 @@
   margin-left: 10px;
   // flex: 0 0 50px;
   width: 50px;
+}
+
+.tv__control__power-indicator__arrow {
+  background-color: yellow;
+  position: absolute;
+  padding: 5px;
+  text-align: center;
+  top: 100%;
 }
 
 .tv__side-panel.power-on .tv__control__power-indicator  {
