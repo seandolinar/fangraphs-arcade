@@ -13,7 +13,12 @@ import { loadBinary } from "./utils";
 import VirtualGamePadController from './VirtualGamePadController.js';
 import InstructionBox from './InstructionBox.js';
 
-import { clipPath, IconArrow } from './svg';
+import { 
+  clipPath, 
+  IconArrow,
+  IconMute,
+  IconFull
+ } from './svg';
 
 import "./RunPage.scss";
 
@@ -101,7 +106,7 @@ class RunPage extends Component {
                   this.setState({ muted: !this.state.muted });
                   !this.state.muted ? this.emulator.unMute() : this.emulator.mute()}
                 }>
-                  { !this.state.muted ? 'Unmute' : 'Mute' }
+                  { this.state.muted ? <IconFull /> : <IconMute /> }
                 </div>
               <div
                 className="controls-modal__closed"

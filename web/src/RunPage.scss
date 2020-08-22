@@ -94,7 +94,7 @@
 }
 
 .instruction-box__copy {
-  max-width: 900px;
+  max-width: 1000px;
   background-color: lightblue;
   margin: auto;
   margin-top: 30px;
@@ -133,6 +133,14 @@
     width: 30px;
     height: 30px;
     margin-top: 0;
+  }
+}
+
+.controls-mute {
+  svg {
+    width: 30px;
+    height: 30px;
+    color: #fff;
   }
 }
 
