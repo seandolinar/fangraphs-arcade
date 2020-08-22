@@ -29,17 +29,6 @@
   BEQ @break
   JMP @loop
 
-;   INY                                 
-;   LDA #$20
-;   STA (vram_lo), Y                    
-  
-;   INY
-;   LDA #$af
-;   STA (vram_lo), Y
-
-;   INY
-;   LDA #__H
-;   STA (vram_lo), Y
   @break:
   STY vram_buffer_offset
 
