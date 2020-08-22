@@ -23,6 +23,9 @@
   LDA inning
   CMP #$0a
   BCS @TensPlace
+  LDA inningDigit0 + 1
+  CMP #$01
+  BCS @TensPlace
 
   JMP endInningUpdate
 
@@ -46,6 +49,8 @@
 
   LDA inning
   CMP #$64
+  LDA inningDigit0 + 2
+  CMP #$01
   BCS @HundredsPlace
 
   JMP endInningUpdate

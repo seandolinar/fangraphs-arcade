@@ -2,6 +2,8 @@ loadWinScreen:
   ; Inning Digit Carrying Logic
   INC inning
 
+  CLC ; guards agaist overflow?
+
   INC inningDigit0
 
   LDA inningDigit0

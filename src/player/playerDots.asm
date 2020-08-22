@@ -142,7 +142,9 @@ checkWin:
     ; TODO:
     ; !!DEBUG
     ; JSR readController
-    ; LDA controllerBits
+    LDA controllerBits
+    AND #CONTROL_P1_B
+    BNE @continueWin
     ; EOR controllerBitsPrev ; difference in buttons
 
     @skip:
