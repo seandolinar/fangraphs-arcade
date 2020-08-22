@@ -56,15 +56,7 @@ class RunPage extends Component {
           >
             {clipPath}
             {this.state.loading ? (
-              <Progress
-                value={this.state.loadedPercent}
-                style={{
-                  position: "absolute",
-                  width: "70%",
-                  left: "15%",
-                  top: "48%"
-                }}
-              />
+              <div></div>
             ) : this.state.romData && this.state.isPowered  ? 
               // container div determines the screen size
               (<Emulator
