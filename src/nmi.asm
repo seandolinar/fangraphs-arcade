@@ -55,6 +55,8 @@ NMI:
 
     JSR clearVRAMBuffer
 
+    ; JSR readController
+
 
     CLC
     LDA frameTimer

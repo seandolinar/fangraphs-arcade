@@ -454,7 +454,7 @@ chooseFromAvailableDirections:
     ; POWER UP
     LDA enemyCycleX
     ADC frameTimer
-    AND animationTimer
+    ADC animationTimer
     AND #$01
     BEQ @randomLower
 
@@ -483,7 +483,7 @@ chooseFromAvailableDirections:
     ; POWER UP
     LDA enemyCycleX
     ADC frameTimer
-    AND animationTimer
+    ADC animationTimer
     AND #$01
     BNE readyLoop
     LDA enemyAIIndex
