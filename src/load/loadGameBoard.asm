@@ -140,6 +140,7 @@ STA gameStateIsPowered
 STA gamePlayerReset
 STA animationTimer
 STA powerUpTimer
+STA konamiCode
 
 LDA #$02
 STA enemyState

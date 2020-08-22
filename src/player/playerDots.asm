@@ -141,11 +141,11 @@ checkWin:
 
     ; TODO:
     ; !!DEBUG
-    LDA controllerBits
-    AND #CONTROL_P1_B
-    BNE @continueWin
-    ; DEBUG!!
+    ; JSR readController
+    ; LDA controllerBits
+    ; EOR controllerBitsPrev ; difference in buttons
 
+    @skip:
     LDA dotsLeft
     BNE @exit
     LDA powerUpAvailable
@@ -171,6 +171,7 @@ checkWin:
     JSR FamiToneMusicStop		; stop music
 
     LDA #$00  ; disable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+    STA konamiCode
     STA PPU_CTRL_REG1
     STA PPU_CTRL_REG2
 

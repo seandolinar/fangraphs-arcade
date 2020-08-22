@@ -19,6 +19,7 @@ checkCollisionPowerUp:
     ; dumps out
     JSR enablePowerUp
     JSR removePowerUp
+    INC powerUpAvailable
 
     LDA dotsLeft
     BNE @normalPowerUp
@@ -59,8 +60,6 @@ enablePowerUp:
     JSR changeEnemyColor ; make this enemyState?
     JSR setTimerPowerUp
     
-    INC powerUpAvailable
-
     RTS
 
 warnPowerUp:

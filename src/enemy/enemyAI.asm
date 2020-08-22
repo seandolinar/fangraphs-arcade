@@ -452,11 +452,11 @@ chooseFromAvailableDirections:
 
     @registerIsLowerPowerUp:  
     ; POWER UP
-    TXA
+    LDA enemyCycleX
     ADC frameTimer
-    ADC animationTimer
+    AND animationTimer
     AND #$01
-    BNE @randomLower
+    BEQ @randomLower
 
     LDA enemyAIIndex
     STA enemyDirectionIndex
@@ -481,9 +481,9 @@ chooseFromAvailableDirections:
     
     @registerIsHigherPowerUp:
     ; POWER UP
-    TXA
+    LDA enemyCycleX
     ADC frameTimer
-    ADC animationTimer
+    AND animationTimer
     AND #$01
     BNE readyLoop
     LDA enemyAIIndex

@@ -55,6 +55,16 @@ NMI:
 
     JSR clearVRAMBuffer
 
+
+    CLC
+    LDA frameTimer
+    CMP buttonDelay
+    BNE @continue
+
+    LDA #$00
+    STA konamiCode
+
+    @continue:
     PLA
     TAY
     PLA

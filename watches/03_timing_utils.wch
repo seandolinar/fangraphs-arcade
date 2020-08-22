@@ -1,5 +1,5 @@
 
-8
+11
 00000	0025	b	u	0	masterTimer
 00001	0026	b	u	0	animationTimer
 00002	0027	b	u	0	frameTimer
@@ -8,3 +8,6 @@
 00005	0032	b	u	0	inning
 00006	0029	b	u	0	gameStateIsPowered
 00007	002D	b	u	0	powerUpTimer
+00008	007C	b	u	0	buttonDebounce
+00009	007D	b	u	0	buttonDelay
+00010	007E	b	u	0	konamiCode

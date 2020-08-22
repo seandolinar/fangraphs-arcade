@@ -169,6 +169,11 @@ enemyCycleX:			.res 1
 isEnemyLeaving:			.res 1
 frameDelay:				.res 1
 enemyAIIndex:			.res 1
+buttonDebounce:			.res 1
+buttonDelay:			.res 1
+konamiCode:				.res 1
+hasCheated:				.res 1
+
 
 
 ; NES-defined RAM locations

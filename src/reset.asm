@@ -57,11 +57,9 @@ ClearMemory:
   STA scoreDigit11
 
   STA scoreValue
-
-  ; new
-  LDA #$00
   STA gameOuts
   STA gamePlayerReset
+  STA konamiCode
 
   LDA #$19
   STA bufferBackgroundColor
