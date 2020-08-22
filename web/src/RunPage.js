@@ -13,19 +13,13 @@ import { loadBinary } from "./utils";
 import VirtualGamePadController from './VirtualGamePadController.js';
 import InstructionBox from './InstructionBox.js';
 
+import { clipPath, IconArrow } from './svg';
+
 import "./RunPage.scss";
 
-// clip path for TV screen shape
-const clipPath = <svg width="0" height="0">
-    <defs>
-        <clipPath id="svgPath" clipPathUnits="objectBoundingBox">
-        <path d="M0.022,0.033c0.147,-0.018 0.306,-0.028 0.472,-0.028c0.169,0 0.331,0.01 0.482,0.029c0.014,0.149 0.022,0.307 0.022,0.471c0,0.161 -0.008,0.317 -0.021,0.464c-0.151,0.019 -0.314,0.03 -0.483,0.03c-0.166,0 -0.325,-0.01 -0.473,-0.029c-0.014,-0.147 -0.021,-0.303 -0.021,-0.465c0,-0.164 0.008,-0.323 0.022,-0.472Z"/>        </clipPath>
-    </defs>
-</svg>
 
-const iconArrow =  <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-arrow-up-square-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path fillRule="evenodd" d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 8.354a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 6.207V11a.5.5 0 0 1-1 0V6.207L5.354 8.354z"/>
-</svg>
+
+
 
 /*
  * The UI for the emulator. Also responsible for loading ROM from URL or file.
@@ -94,7 +88,7 @@ class RunPage extends Component {
                   <div className="tv__control__power-indicator"></div>
                   { !this.state.isPowered && this.state.badClicks > 5 && <div className="tv__control__power-indicator__arrow">
                     <div>
-                      { iconArrow }
+                      <IconArrow />
                     </div>
                     <div>
                     Click here to start!

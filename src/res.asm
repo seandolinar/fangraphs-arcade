@@ -252,7 +252,7 @@ vram_buffer:			.res $40	; 32 		   +$0040 = $0702
 ; BASE CORDINATES -- HARD CODED 
 .segment "CODE"
 powerUpX:
-.byte $E8, $80, $10, $80
+.byte $e8, $80, $10, $80, $ff
 powerUpY:
-.byte $60, $10, $60, $D0
+.byte $60, $10, $60, $d0, $ff
 

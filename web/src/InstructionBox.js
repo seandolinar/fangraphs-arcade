@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import React, { useState } from 'react';
-import { IconInfo } from './icons';
+import { IconInfo } from './svg';
 
 const InstructionBox = () => {
 
@@ -24,10 +24,11 @@ const InstructionBox = () => {
                   Arrow keys are your direction pad or joystick.
                         </li>
                         <li>
-                  The <strong>A Button</strong> corresponds to the <strong>X Key</strong> on the keyboard.
+                  The <strong>A Button</strong> corresponds to the <strong>A Key</strong> on the keyboard.
                         </li>
                         <li>
-                  You can pause using the <strong>Start Button</strong> or using the <strong>Enter Key</strong> on the keyboard.
+                  You can pause using the <strong>Start Button</strong> 
+                  or using the <strong>Enter Key</strong> on the keyboard.
                         </li>
                     </ul>
                 </li>
@@ -35,7 +36,7 @@ const InstructionBox = () => {
               Game Play
                     <ul>
                         <li>You get three outs per inning.</li>
-                        <li>Press the "A Button" or "X Key" to continue after an out.</li>
+                        <li>Press the "A Button" or "A Key" to continue after an out.</li>
                         <li>Like baseball this game doesn't end.</li>
                     </ul>
                 </li>
