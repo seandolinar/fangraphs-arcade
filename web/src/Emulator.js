@@ -163,6 +163,14 @@ class Emulator extends Component {
     clearInterval(this.fpsInterval);
   };
 
+  mute = () => {
+    this.speakers.stop();
+  };
+
+  unMute = () => {
+    this.speakers.start();
+  };
+
   /*
    * Fill parent element with screen. Typically called if parent element changes size.
    */

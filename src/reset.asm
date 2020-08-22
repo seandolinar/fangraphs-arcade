@@ -60,6 +60,7 @@ ClearMemory:
   STA gameOuts
   STA gamePlayerReset
   STA konamiCode
+  STA hasCheated
 
   LDA #$19
   STA bufferBackgroundColor

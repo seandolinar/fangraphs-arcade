@@ -37,7 +37,8 @@ class RunPage extends Component {
       loading: true,
       loadedPercent: 3,
       error: null,
-      isPowered: false
+      isPowered: false,
+      muted: true
     };
   }
 
@@ -93,12 +94,21 @@ class RunPage extends Component {
             </div>
             <div className="tv__speaker">
               <div></div>
-              {!!this.state.isPowered && <div
+              {!!this.state.isPowered && <>
+              <div 
+                className="controls-mute"
+                onClick={() => {
+                  this.setState({ muted: !this.state.muted });
+                  !this.state.muted ? this.emulator.unMute() : this.emulator.mute()}
+                }>
+                  { !this.state.muted ? 'Unmute' : 'Mute' }
+                </div>
+              <div
                 className="controls-modal__closed"
                 onClick={this.toggleControlsModal}
               >
                 <img className="controller-icon" src="../img/keyboard.png" alt="keyboard" />
-              </div>}
+              </div></>}
               <InstructionBox />
             </div>
           </div>
