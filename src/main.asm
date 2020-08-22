@@ -18,6 +18,7 @@
 .include "./enemy/enemyEntranceDoor.asm"
 .include "./scoreboard/updateScore.asm"
 .include "./scoreboard/updateInning.asm"
+.include "./scoreboard/updateKonami.asm"
 .include "./checkCollision/checkCollisonPowerUp.asm"
 .include "./checkCollision/checkCollisonSprites.asm"
 .include "./ppu/ppuUpdates.asm"

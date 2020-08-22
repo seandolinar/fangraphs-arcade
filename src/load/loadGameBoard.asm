@@ -127,84 +127,92 @@ FillAttrib0Loop:
 
   JSR updateScore
 
-LDA #$10
-STA masterTimer
+  LDA #$10
+  STA masterTimer
 
 ; debug == UNCOMMENT
 ; LDA #$01
 ; STA gameStateIsPowered
 
 
-LDA #$00
-STA gameStateIsPowered
-STA gamePlayerReset
-STA animationTimer
-STA powerUpTimer
-STA konamiCode
+  LDA #$00
+  STA gameStateIsPowered
+  STA gamePlayerReset
+  STA animationTimer
+  STA powerUpTimer
+  STA konamiCode
 
-LDA #$02
-STA enemyState
-STA enemyState + 1
-STA enemyState + 2
-STA enemyState + 3
 
-LDA #$01
-STA powerUpAvailable ; first base power up is loaded first
+  LDA #$02
+  STA enemyState
+  STA enemyState + 1
+  STA enemyState + 2
+  STA enemyState + 3
 
-LDA #$ff
-STA isEnemyLeaving
+  LDA #$01
+  STA powerUpAvailable ; first base power up is loaded first
+
+  LDA #$ff
+  STA isEnemyLeaving
 
 countDots:
-    CLC    
+  CLC    
 
-    LDA #<nametable_buffer
-    STA nametable_buffer_lo
-    LDA #>nametable_buffer
-    STA nametable_buffer_hi
+  LDA #<nametable_buffer
+  STA nametable_buffer_lo
+  LDA #>nametable_buffer
+  STA nametable_buffer_hi
 
-    LDX #$00
-    STX dotsLeft
-    LDY #$00
+  LDX #$00
+  STX dotsLeft
+  LDY #$00
 
-    countDotsLoopOuter:   
-    countDotsLoopInner:
-        TXA
-        PHA
+  countDotsLoopOuter:   
+  countDotsLoopInner:
+      TXA
+      PHA
 
-        LDA (nametable_buffer_lo), Y
+      LDA (nametable_buffer_lo), Y
 
-        LDX #$00
-        @loopCompareTilesDots:
-        CMP tilesDots, X
-        BEQ @incDotCount
+      LDX #$00
+      @loopCompareTilesDots:
+      CMP tilesDots, X
+      BEQ @incDotCount
 
-        CPX #$05
-        BEQ @continueCount
-        INX
-        JMP @loopCompareTilesDots
+      CPX #$05
+      BEQ @continueCount
+      INX
+      JMP @loopCompareTilesDots
 
-        @continueCount:
-        PLA
-        TAX
-        JMP countDotsNoInc
+      @continueCount:
+      PLA
+      TAX
+      JMP countDotsNoInc
 
-        @incDotCount:
+      @incDotCount:
 
-        PLA
-        TAX
+      PLA
+      TAX
 
-        INC dotsLeft
+      INC dotsLeft
 
-        countDotsNoInc:
-            INY                 ; inside loop counter
-            CPY #$00            ; run the inside loop 256 times before continuing down
-            BNE countDotsLoopInner 
-            INC nametable_buffer_hi 
-            INX
-            CPX #$04
-            BNE countDotsLoopInner 
+      countDotsNoInc:
+          INY                 ; inside loop counter
+          CPY #$00            ; run the inside loop 256 times before continuing down
+          BNE countDotsLoopInner 
+          INC nametable_buffer_hi 
+          INX
+          CPX #$04
+          BNE countDotsLoopInner 
 
   JSR updateInning
+
+  LDA hasCheated
+  BEQ @hasNotCheated
+  JSR updateKonami
+
+  @hasNotCheated:
+
 
   ; wait for vblank to restart
   @vBlankLoop:

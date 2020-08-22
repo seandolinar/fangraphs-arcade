@@ -126,6 +126,10 @@ readKonamiCode:
     JSR enablePowerUp
     LDA #$01
     STA hasCheated
+
+    JSR updateKonami
+
+
     JMP @exit
 
 

@@ -70,7 +70,7 @@
   STA (vram_lo), Y
 
   endInningUpdate:
-  INY
+  ; INY
   STY vram_buffer_offset
 
   RTS
