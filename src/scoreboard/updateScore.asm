@@ -41,7 +41,7 @@ updateScore:
 writeOutScoreVram:
 
     JSR startVramBuffer
-    INY                                 ; increments it
+    INY                                
 
     LDX #$00
     STX tempX1

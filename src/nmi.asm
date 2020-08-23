@@ -10,16 +10,6 @@ NMI:
     CMP #$03
     BEQ @endGame
 
-; TODO removed this
-; vBlankWait:	
-; @vBlankLoop:
-; 	LDA PPU_STATUS   
-;     BPL @vBlankLoop
-
-    ; LDA #$00
-	; STA PPU_CTRL_REG1               ; disable NMI
-	; STA PPU_CTRL_REG2               ; disable rendering
-
     INC frameTimer
 
     JSR changeBackground
@@ -27,10 +17,10 @@ NMI:
 
 
     ; STARTS VIDEO DISPLAY
-    LDA PPUState            ; using state from the code
+    LDA PPUState                ; using state from the code
     STA PPU_CTRL_REG1
 
-    LDA #%00011110          ; enable sprites, enable background, no clipping on left side
+    LDA #%00011110          
     STA PPU_CTRL_REG2
 
     ; resets scroll
@@ -39,24 +29,21 @@ NMI:
     STA PPU_SCROLL_REG 
     STA PPU_SCROLL_REG
 
-    LDA gamePlayerReset     ; $01 means we are in the middle of a reset
+    LDA gamePlayerReset         ; $01 means we are in the middle of a reset
     BNE @resetNMI
 
     LDX masterTimer
     DEX
     STX masterTimer
     BNE @dumpNMI
-    LDA #$08                ; makes sure we don't loop backwards
+    LDA #$08               
     STA masterTimer
 
 @dumpNMI:
 
-    JSR FamiToneUpdate		;update sound
+    JSR FamiToneUpdate		    ; update sound
 
     JSR clearVRAMBuffer
-
-    ; JSR readController
-
 
     CLC
     LDA frameTimer

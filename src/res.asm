@@ -1,21 +1,3 @@
-
-
-
-; famitone 2
-; FT_BASE_ADR		= $0700	;page in the RAM used for FT2 variables, should be $xx00
-; FT_TEMP			= $00	;3 bytes in zeropage used by the library as a scratchpad
-; FT_DPCM_OFF		= $c000	;$c000..$ffc0, 64-byte steps
-; FT_SFX_STREAMS	= 4		;number of sound effects played at once, 1..4
-
-; FT_DPCM_ENABLE			;undefine to exclude all DMC code
-; FT_SFX_ENABLE			;undefine to exclude all sound effects code
-; FT_THREAD				;undefine if you are calling sound effects from the same thread as the sound update call
-
-; FT_PAL_SUPPORT			;undefine to exclude PAL support
-; FT_NTSC_SUPPORT			;undefine to exclude NTSC support
-
-
-
 .segment "VECTORS" ; ADDRESSES FOR INTERUPTS
 .word NMI
 .word RESET
@@ -82,7 +64,7 @@ gameStateIsPowered: 		.res 1 ; 0029
 tempX:						.res 1 ; 002a
 tempY:						.res 1 ; 002b
 
-powerUpAvailable:			.res 1 ; 002c one byte ;; 7654321 - bit one is if the the first one is available
+powerUpAvailable:			.res 1 ; 002c 
 powerUpTimer:				.res 1 ; 002d
 
 bufferBackgroundColor:		.res 1 ; 002e
@@ -119,7 +101,7 @@ sqOut:							.res 2 ; 0051, 0052
 
 
 enemyTempForLoop:				.res 1 ; 0053
-enemyDirectionIndex:			.res 1 ; 0054 ; these are probably bad
+enemyDirectionIndex:			.res 1 ; 0054 
 enemyBufferDirectionCurrent:	.res 1 ; 0055
 
 
@@ -133,7 +115,7 @@ controlTimer:					.res 1 ; 007F
 playerGridXAI:					.res 1 ; 0080
 playerGridYAI:					.res 1 ; 0081
 
-gamePaused:						.res 1 ; 0086 ; these are right
+gamePaused:						.res 1 ; 0086 
 PPUState:						.res 1 ; 0087
 PPUState2:						.res 1 ; 0088
 gamePlayerReset:				.res 1 ; 0089

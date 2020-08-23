@@ -3,10 +3,7 @@ soundCollisionBad:
 
     TXA
     PHA
-    ; LDA #$03
-
-    ; LDX #FT_SFX_CH0
-	; JSR FamiToneSfxPlay
+   
     LDA #$02
 	JSR FamiToneMusicPlay
 

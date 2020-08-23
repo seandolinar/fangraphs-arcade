@@ -53,10 +53,7 @@ IRQ:
 
 
 resetHard:
-    ; right idea, but I need to more gracefully restart
-    ; maybe go back to the title screen?
-    ; maybe break up the reset stuff up so i can resue it
-    LDA #$00  ; disable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+    LDA #$00  
     STA PPU_CTRL_REG1
     STA PPU_CTRL_REG2
 
@@ -65,12 +62,10 @@ resetHard:
 ; we are updating the position in MAIN
 ; but checking the position in NMI
 Main:
-    ; have to write this branch
+    
     LDA gameOuts
     CMP #$03
     BEQ resetHard
-
-    ; WIN
 
     LDA gamePlayerReset
     BNE Main
@@ -107,12 +102,12 @@ Main:
 
     JSR readController
     LDA controllerBits
-    EOR controllerBitsPrev ; difference in buttons
+    EOR controllerBitsPrev      ; difference in buttons
     AND controllerBits
-    AND #CONTROL_P1_START  ; zeros out non-start bits
+    AND #CONTROL_P1_START       ; zeros out non-start bits
     BEQ @pauseLoop
 
-    LDX #$00 ; i'm not blowing away anything? TODO
+    LDX #$00 
     STX gamePaused
     JSR FamiToneMusicStop
 
@@ -120,7 +115,6 @@ Main:
     LDY controlTimer
     CPY #$00
     BNE @exit
-    ; JSR readController
 
     JSR updateDirection
     LDY #$30
@@ -134,10 +128,10 @@ Main:
     LDX masterTimer
     CPX #$01
     BEQ @runMovement
-    JMP Main                ; loops because of end
+    JMP Main               
 
     @runMovement:
-    LDX #$08                ; need to reset this
+    LDX #$08               
     STX masterTimer
     
     JSR clearVRAMBuffer
@@ -146,26 +140,26 @@ Main:
     JMP Main
 
 gameMovement:
-    JSR UpdatePositionPlayer    ; runs the player updates ;change this to update direction
+    JSR UpdatePositionPlayer            ; runs the player direction updates 
     JSR setAnimationPlayerDirection
 
-    JSR checkCollisionSprites   ; this should handle when to move the sprites ; I don't think I need this here
+    JSR checkCollisionSprites           
 
     ; skips over this section if we are resetting because of an out
     LDA gamePlayerReset
-    BNE @dump
+    BNE @break
 
     JSR checkCollisionPowerUp
 
-    JSR nextEnemyMovement   ; move this to main?
+    JSR nextEnemyMovement   
     JSR checkCollisionSprites
     JSR checkDoor
     JSR incTimerPowerUp
 
     INC enemyMode
 
-    JSR checkWin          ; maybe this sits well here?
+    JSR checkWin         
 
-@dump:
+@break:
     RTS
 

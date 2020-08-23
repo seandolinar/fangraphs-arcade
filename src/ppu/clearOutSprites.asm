@@ -3,17 +3,17 @@ clearOutSprites:
     @LoadEnemy:
     LDX #$00
     @LoadEnemyLoop:
-    LDA enemy_array, X       ; load data from address (sprites +  x) ; Y    
-    STA enemy_oam , X          ; store into RAM address ($0200 + x)
+    LDA enemy_array, X      
+    STA enemy_oam , X        
 
-    LDA enemy_array + 1, X        ; load data from address (sprites +  x) ; TILE
-    STA enemy_oam + 1 , X         ; store into RAM address ($0200 + x)
+    LDA enemy_array + 1, X        
+    STA enemy_oam + 1 , X         
 
-    LDA enemy_array + 2, X        ; load data from address (sprites +  x) ; ATTR
-    STA enemy_oam + 2, X         ; store into RAM address ($0200 + x)
+    LDA enemy_array + 2, X       
+    STA enemy_oam + 2, X         
 
     LDA enemy_array+3, X
-    STA enemy_oam+3, X              ; X = X + 1 ; X
+    STA enemy_oam+3, X             
 
     INX
     INX
@@ -21,7 +21,7 @@ clearOutSprites:
     INX
     
     CPX #$40
-    BNE @LoadEnemyLoop   ; Branch to LoadSpritesLoop if compare was Not Equal to zero
+    BNE @LoadEnemyLoop  
     
     RTS
 

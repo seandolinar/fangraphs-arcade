@@ -9,9 +9,9 @@
   JSR startVramBuffer
 
   @loop:
-  INY                                 ; increments it
+  INY                                 
   LDA #$20
-  STA (vram_lo), Y                    ; value should have the tile for the digit
+  STA (vram_lo), Y                    
   
   INY
   CLC

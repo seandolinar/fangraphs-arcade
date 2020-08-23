@@ -11,13 +11,13 @@
   LDA #$d4
   STA (vram_lo), Y
 
-  LDX #$00 ; 0 because I'm only do 1 digit right now
-  LDA inningDigit0 , X                  ; digits are indexed on 0
+  LDX #$00                        
+  LDA inningDigit0 , X                ; digits are indexed on 0
   STA tempCatchAll
 
   INY
-  LDX tempCatchAll    ; X controls the digit
-  LDA NUM, X          ; digit buffer is transformed into tile
+  LDX tempCatchAll                    ; X controls the digit
+  LDA NUM, X                          ; digit buffer is transformed into tile
   STA (vram_lo), Y
 
   LDA inning
@@ -30,7 +30,7 @@
   JMP endInningUpdate
 
   @TensPlace:
-  INY                                 ; increments it
+  INY                                
   LDA #$20
   STA (vram_lo), Y                    ; value should have the tile for the digit
   INY
@@ -38,13 +38,13 @@
   LDA #$d3
   STA (vram_lo), Y
 
-  LDX #$01 ; 0 because I'm only do 1 digit right now
-  LDA inningDigit0 , X                  ; digits are indexed on 0
+  LDX #$01 
+  LDA inningDigit0 , X               
   STA tempCatchAll
 
   INY
-  LDX tempCatchAll    ; X controls the digit
-  LDA NUM, X          ; digit buffer is transformed into tile
+  LDX tempCatchAll    
+  LDA NUM, X                        ; digit buffer is transformed into tile
   STA (vram_lo), Y
 
   LDA inning
@@ -56,26 +56,24 @@
   JMP endInningUpdate
 
   @HundredsPlace:
-  INY                                 ; increments it
+  INY                                 
   LDA #$20
-  STA (vram_lo), Y                    ; value should have the tile for the digit
+  STA (vram_lo), Y                    
   INY
 
-  ; SEC
   LDA #$d2
   STA (vram_lo), Y
 
-  LDX #$02 ; 0 because I'm only do 1 digit right now
-  LDA inningDigit0 , X                  ; digits are indexed on 0
+  LDX #$02 
+  LDA inningDigit0 , X                  
   STA tempCatchAll
 
   INY
-  LDX tempCatchAll    ; X controls the digit
-  LDA NUM, X          ; digit buffer is transformed into tile
+  LDX tempCatchAll   
+  LDA NUM, X        
   STA (vram_lo), Y
 
   endInningUpdate:
-  ; INY
   STY vram_buffer_offset
 
   RTS

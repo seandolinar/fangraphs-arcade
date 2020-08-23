@@ -65,19 +65,19 @@ ClearMemory:
   LDA #$19
   STA bufferBackgroundColor
 
-  ldx #<fg_arcade_music_music_data	; set the music data location
+  ldx #<fg_arcade_music_music_data	  ; set the music data location
 	ldy #>fg_arcade_music_music_data
-	lda #$0f                          ; NTSC_MODE
-	jsr FamiToneInit		              ;init FamiTone
+	lda #$0f                            ; NTSC_MODE
+	jsr FamiToneInit		                ; init FamiTone
 
-  lda #$00                          ; plays the take me out to the ball game song
+  lda #$00                            ; plays the take me out to the ball game song
 	jsr FamiToneMusicPlay 
 
-  ldx #<sounds			                ; set sound effects data location
+  ldx #<sounds			                  ; set sound effects data location
 	ldy #>sounds
 	jsr FamiToneSfxInit
 
-  LDA #%10010000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+  LDA #%10010000  
   STA PPU_CTRL_REG1
   STA PPUState
 
