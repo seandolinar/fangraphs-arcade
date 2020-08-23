@@ -37,7 +37,6 @@ checkCollisionSprites:
     JSR animatePlayerOut
     JSR playerReset
     
-    ; might be able to put this into the playerReset SUB
     LDA #$02
     STA enemyState
     STA enemyState + 1

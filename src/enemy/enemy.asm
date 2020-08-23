@@ -101,7 +101,6 @@ forEachEnemyMovement:
     CPX isEnemyLeaving
     BEQ @start
 
-    ; putting this in??? should this change?
     CLC
     TYA
     ADC #$10
@@ -150,7 +149,6 @@ forEachEnemyMovement:
     LDA #$ff
     STA isEnemyLeaving
 
-    ; need this to prevent the "skipping"
     JMP noAI
 
     @halt:

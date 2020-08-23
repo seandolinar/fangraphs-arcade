@@ -49,11 +49,13 @@ enemyAIMovementSetup:
     BEQ aiUmp2
    
     aiUmp1:
-        ; do nothing
+        ; BLUE
+        ; do nothing -- targets straight at the player
         JMP mainAI
 
     aiUmp2:
-        ; targets two tiles below player
+        ; ORANGE ?
+        ; targets 2 tiles below player
         CLC
         LDA playerGridY
         ADC #$02
@@ -61,14 +63,14 @@ enemyAIMovementSetup:
         JMP mainAI
 
     aiUmp3:
-        ; we have this enemy lead the player by two tiles
-
+        ; GREEN ?
+        ; we have this enemy lead the player by 4 tiles
         LDA playerDirectionCurrent
-        CMP #$01
+        CMP #DIRECTION_UP
         BEQ @playerUp
-        CMP #$02
+        CMP #DIRECTION_DOWN
         BEQ @playerDown
-        CMP #$03
+        CMP #DIRECTION_LEFT
         BEQ @playerLeft
 
         ; player going right
@@ -106,7 +108,8 @@ enemyAIMovementSetup:
         JMP mainAI
 
     aiUmp4:
-        ; make the fourth ump target 1 tiles to the right
+        ; PINK ?
+        ; make the fourth ump target 2 tiles to the right
         LDA playerGridX
         ADC #$02
         STA playerGridXAI
@@ -125,6 +128,8 @@ enemyAIMovementSetup:
    
     ; refactor this because it could loop
     aiUmp1Alt:
+        ; TOP LEFT
+        ; BLUE
         LDA #$08
         STA playerGridXAI
 
@@ -133,6 +138,8 @@ enemyAIMovementSetup:
         JMP mainAI
 
     aiUmp2Alt:
+        ; FIRST BASE
+        ; ORANGE
         LDA #$20  
         STA playerGridXAI
 
@@ -142,6 +149,8 @@ enemyAIMovementSetup:
         JMP mainAI
 
     aiUmp3Alt:
+        ; THIRD BASE
+        ; GREEN
         LDA #$00
         STA playerGridXAI
 
@@ -151,6 +160,8 @@ enemyAIMovementSetup:
         JMP mainAI
 
     aiUmp4Alt:
+        ; HOME PLATE
+        ; PINK
         LDA #$10
         STA playerGridXAI
 
