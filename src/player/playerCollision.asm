@@ -1,18 +1,15 @@
 checkCollision:
     ; set the collision flag to 0 -- or false
-    LDA #$01         ; 0 means there is a collision
+    LDA #$01                ; 0 means there is a collision
     STA collisionFlag
     LDX #$00
 
 checkBackgroundCollisionLoop:
 
-    ; find 
     ; use a grid system so we can make this easy and only check 255 items
     ; or 960 items
     ; i have the X/Y coordinate for the 
     ; can get the index by dividing by 8
-    ; fetch the metatitle index and do a compare?
-    ; how does this scale to a 16x16 pixel meta tile?
 
     ; put lower byte into RAM
     ; then store the high byte into X
@@ -80,22 +77,19 @@ dumpFirstMult:
 
 dumpSecondMult:
     
-    LDA playerPointerLo ; loads the low byte of where the player is
+    LDA playerPointerLo             ; loads the low byte of where the player is
     CLC 
-    ADC collisionPointerLo ; adds to the collision pointer?
-    STA backgroundPointerLo ; saves into the background pointer
-    LDA playerPointerHi ; loads the player high byte
-    ADC collisionPointerHi ; adds to high
-    STA backgroundPointerHi ; saves to high
+    ADC collisionPointerLo          ; adds to the collision pointer?
+    STA backgroundPointerLo         ; saves into the background pointer
+    LDA playerPointerHi             ; loads the player high byte
+    ADC collisionPointerHi          ; adds to high
+    STA backgroundPointerHi         ; saves to high
 
-    LDY #$00 ; resets Y
-    LDA (backgroundPointerLo), Y ; probably don't need to index this, but I do, why?
-    ; I do, this is indirect, I think I have to do it this way
+    LDY #$00                        ; resets Y
+    LDA (backgroundPointerLo), Y 
     STA collisionBackgroundTile
 
-    ; this is causing some issues i should spin this out so the subroutine can be used more
     ; this checks for the dots, but the dots never change
-    ; this could cause other issues, plus I have to add in the extra blank tile
     CMP #$03
     BEQ @collideDotBranch
     CMP #$04
@@ -114,13 +108,12 @@ dumpSecondMult:
     JMP @loopBases
 
     @continueToBlank:
-    CMP #$02 ;; whatever are loading it's all 0s
+    CMP #$02
     BNE collide
 
     JMP @dump
 
     @collideDotBranch:
-    ; JSR collideDot
 
     @dump:
     RTS
@@ -132,7 +125,6 @@ allowPass:
     INX
     INX
     INX
-    ; why am I incrementing here
 
     LDA #$01
     STA collisionFlag

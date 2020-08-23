@@ -4,12 +4,12 @@ loadGameBoard:
     LDX #$00              ; start at 0
   @LoadSpritesLoop:
     LDA sprites, X        ; load data from address (sprites +  x)
-    STA player_oam, X          ; store into RAM address ($0200 + x)
+    STA player_oam, X     ; store into shadow OAM
     
     INX   
 
     CPX #$10               ; Compare X to hex $10, decimal 16
-    BNE @LoadSpritesLoop   ; Branch to LoadSpritesLoop if compare was Not Equal to zero
+    BNE @LoadSpritesLoop   
 
   JSR clearOutSprites
 
@@ -65,36 +65,34 @@ loadGameBoard:
   JSR FillBackground
 
 
-  ;; HAVE TO Reunderstand this
   ;; LOADING PALETTE
-  LDA PPU_STATUS    ; read PPU status to reset the high/low latch to high
+  LDA PPU_STATUS          
 
   LDA #$3F
-  STA PPU_ADDRESS    ; write the high byte of $3F10 address
+  STA PPU_ADDRESS           ; write the high byte of $3F10 address
   LDA #$10
-  STA PPU_ADDRESS    ; write the low byte of $3F10 address
+  STA PPU_ADDRESS           ; write the low byte of $3F10 address
 
 
-  LDX #$00                ; start out at 0
+  LDX #$00                  ; start out at 0
   LoadPalettesLoop:
-    LDA pallete, X      ; load data from address (PaletteData + the value in x)
+    LDA pallete, X          ; load data from address (PaletteData + the value in x)
                             ; 1st time through loop it will load PaletteData+0
                             ; 2nd time through loop it will load PaletteData+1
                             ; 3rd time through loop it will load PaletteData+2
                             ; etc
-    STA PPU_DATA               ; write to PPU
-    INX                     ; X = X + 1
-    CPX #$20               ; Compare X to hex $20, decimal 32
+    STA PPU_DATA            ; write to PPU
+    INX                    
+    CPX #$20                ; Compare X to hex $20, decimal 32
     BNE LoadPalettesLoop 
 
 
-; putting this after fixes things
 FillAttrib0:
   LDA PPU_STATUS             ; read PPU status to reset the high/low latch
   LDA #$23
-  STA PPU_ADDRESS             ; write the high byte of $23C0 address (nametable 0 attributes)
+  STA PPU_ADDRESS            ; write the high byte of $23C0 address (nametable 0 attributes)
   LDA #$C0
-  STA PPU_ADDRESS             ; write the low byte of $23C0 address
+  STA PPU_ADDRESS            ; write the low byte of $23C0 address
 
   LDX #$00            
 FillAttrib0Loop:
@@ -104,7 +102,6 @@ FillAttrib0Loop:
   CPX #$40                   ; fill 64 bytes
   BNE FillAttrib0Loop
 
-  ; this is wrong
   LDX $08
   @loopClearScore:
   LDA #$00
@@ -129,11 +126,6 @@ FillAttrib0Loop:
 
   LDA #$10
   STA masterTimer
-
-; debug == UNCOMMENT
-; LDA #$01
-; STA gameStateIsPowered
-
 
   LDA #$00
   STA gameStateIsPowered
@@ -197,8 +189,8 @@ countDots:
       INC dotsLeft
 
       countDotsNoInc:
-          INY                 ; inside loop counter
-          CPY #$00            ; run the inside loop 256 times before continuing down
+          INY                         ; inside loop counter
+          CPY #$00                    ; run the inside loop 256 times before continuing down
           BNE countDotsLoopInner 
           INC nametable_buffer_hi 
           INX
@@ -220,12 +212,12 @@ countDots:
     BPL @vBlankLoop
 
   ; STARTS VIDEO DISPLAY
-  LDA #%10000000   ; enable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+  LDA #%10000000  
   STA PPU_CTRL_REG1
   STA PPUState
 
 
-  LDA #%00011110   ; enable sprites, enable background, no clipping on left side
+  LDA #%00011110 
   STA PPU_CTRL_REG2
 
   LDA #$00

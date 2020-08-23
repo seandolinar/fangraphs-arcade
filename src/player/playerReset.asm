@@ -10,7 +10,6 @@ playerReset:
   LDA #$00
   STA playerDirectionCurrent
 
-
   RTS
 
 renderOuts:

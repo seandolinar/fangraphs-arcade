@@ -8,8 +8,6 @@ checkCollideDot:
     LDX #$00  
     LDA collisionBackgroundTile
 
-    ; probably should refactor the loop 
-    ; once I have more efficient methods understood better
     @loopCompareTilesDots:
     CMP tilesDots, X
     BEQ @collideDotBranch
@@ -37,7 +35,6 @@ collideDot:
     PHA
     LDY #$00
 
-    ; could make this programatic, but it's hardcoded now
     CLC
     LDA playerPointerLo
     ADC #$00
@@ -136,7 +133,6 @@ collideDot:
     RTS
 
 
-; not sure why we are putting this here
 checkWin:
 
     ; TODO:
@@ -145,7 +141,6 @@ checkWin:
     LDA controllerBits
     AND #CONTROL_P1_B
     BNE @continueWin
-    ; EOR controllerBitsPrev ; difference in buttons
 
     @skip:
     LDA dotsLeft
@@ -172,7 +167,7 @@ checkWin:
     @continueWin:
     JSR FamiToneMusicStop		; stop music
 
-    LDA #$00  ; disable NMI, sprites from Pattern Table 0, background from Pattern Table 1
+    LDA #$00  
     STA konamiCode
     STA PPU_CTRL_REG1
     STA PPU_CTRL_REG2

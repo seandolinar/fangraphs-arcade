@@ -1,4 +1,3 @@
-; Does this work? YES
 ; moved this up here because of 128 line branching limit
 mainAI:
 
@@ -54,7 +53,6 @@ dumpEnemyController:
 ; START
 nextEnemyMovement:
     LDX #$04            ; how many enemies we have
-    ; LDX #$01
     STX enemyCycleX
 
     LDY #$00

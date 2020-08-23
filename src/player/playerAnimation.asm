@@ -154,8 +154,6 @@ animationReverse:
     .byte $73, $72, $83, $82
 
 animatePlayerOut:
-    ; this is getting run
-
 
     LDA #$00
     STA frameTimer
@@ -165,7 +163,6 @@ animatePlayerOut:
     CMP #DIRECTION_LEFT
     BEQ @setReverse
     
-    ; don't blow away x?
     LDX #$00
     @loopAnimation:
     LDA #$00

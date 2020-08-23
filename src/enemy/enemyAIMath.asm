@@ -1,17 +1,16 @@
 ;;;;;;;;;;;;;;;;
 ;; Math Utils ;;
 ;;;;;;;;;;;;;;;;
-; these "work", but it's doing a signed instead of absolute value
 absX:
     LDA enemyXBuffer
     LSR ; divide / 2 / 2 / 2 ; divide by 8 -- size of the icon
     LSR
     LSR
-    STA enemyGridX; reusing??? see if this works TODO, not neccessarily X
+    STA enemyGridX
 
     CMP playerGridXAI
     BEQ @equal
-    BCS @subtractSwap                    ; if enemyX is greater than playerLocationX
+    BCS @subtractSwap                   
 
     @subtractNormal:
     SEC
@@ -37,11 +36,11 @@ absY:
     LSR ; divide / 2 / 2 / 2 ; divide by 8 -- size of the icon
     LSR
     LSR
-    STA enemyGridX ; reusing??? see if this works TODO, not neccessarily X
+    STA enemyGridX
 
     CMP playerGridYAI
     BEQ @equal
-    BCS @subtractSwap                 ; reverse since Y is different?
+    BCS @subtractSwap
 
     @subtractNormal:
     SEC
@@ -103,11 +102,11 @@ computeDistance:
     TYA
     PHA
 
-    TXA                             ; stash X to calculate Y 
+    TXA                               ; stash X to calculate Y 
     PHA
 
     LDY #$00
-    @loopY:                         ; multiple X by two to get Y
+    @loopY:                           ; multiple X by two to get Y
     CPX #$00
     BEQ @runComp
     INY
@@ -116,22 +115,22 @@ computeDistance:
     JMP @loopY
     
     @runComp:
-    PLA                            ; bring back X
+    PLA                                ; bring back X
     TAX
 
-    JSR absX                                ; hopefully loop this
+    JSR absX                           ; hopefully loop this
     LDA enemyAbsX
-    STA sqIn                                ; change this? would need to be 16-bit
+    STA sqIn                           ; change this? would need to be 16-bit
     JSR computeSquare
 
     CLC
     LDA sqOut
-    STA enemyDistance, Y                    ; lo byte
+    STA enemyDistance, Y               ; lo byte
     LDA sqOut + 1
-    STA enemyDistance + 1, Y                ; hi byte
+    STA enemyDistance + 1, Y           ; hi byte
 
     JSR absY
-    STA sqIn                                ; change this? would need to be 16-bit
+    STA sqIn                           ; change this? would need to be 16-bit
     JSR computeSquare
 
     CLC

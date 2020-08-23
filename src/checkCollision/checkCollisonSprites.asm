@@ -1,17 +1,7 @@
-; this is actually doing something
-; but it's not right
-; let's get rid of the X loop
-; let's make this separate so it just checks if they are in the same place.
-; if this is kept on a grid, we can just compare the straight up X/Y RAM coords without much math
 .segment "CODE"
 checkCollisionSprites:
     LDX #$04
     STX enemyCycleX
-
-    ; TODO:
-    ; DEBUG
-    ; RTS
-
 
     @loop:
     LDX enemyCycleX ; didn't fix anything
@@ -28,9 +18,6 @@ checkCollisionSprites:
     LDA gameStateIsPowered
     CMP #$01
     BEQ @collisionGood
-
-    ; TODO:
-    ; RTS ; DEBUG
 
     ; Bad collision path
     JSR soundCollisionBad

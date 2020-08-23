@@ -2,7 +2,7 @@ loadWinScreen:
   ; Inning Digit Carrying Logic
   INC inning
 
-  CLC ; guards agaist overflow?
+  CLC ; guards agaist overflow
 
   INC inningDigit0
 
@@ -35,7 +35,7 @@ loadWinScreen:
   LDA #$00
   STA PPU_CTRL_REG2
 
-  LDA #%00010000   ; disables the NMI and puts the background into bank 1
+  LDA #%00010000  
   STA PPUState
   STA PPU_CTRL_REG1
 
@@ -48,8 +48,6 @@ loadWinScreen:
 
   JSR loadFullScreen
 
-  ; how to get every 4? just divide by 4?
-  ; how does 0 - 3 work 
   LDA inning
   AND #$03
 
@@ -68,16 +66,19 @@ loadWinScreen:
   STA bufferBackgroundColor
   JMP @break
 
+  ; GAME BOARD 1
   @board1:
   LDA #$19
   STA bufferBackgroundColor
   JMP @break
 
+ ; GAME BOARD 2
   @board2:
   LDA #$14
   STA bufferBackgroundColor
   JMP @break
 
+  ; GAME BOARD 3
   @board3:
   LDA #$12
   STA bufferBackgroundColor

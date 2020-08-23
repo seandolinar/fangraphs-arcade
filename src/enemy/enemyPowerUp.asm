@@ -8,7 +8,7 @@ changeEnemyColor:
     LDY #$00
 
     LDA gameStateIsPowered
-    BNE changeEnemyColorPowerUp ; BNE branches if we LDA a #$00
+    BNE changeEnemyColorPowerUp 
 
 
     changeEnemyColorPowerDown:
@@ -205,7 +205,6 @@ changeEnemyColorLoop:
     TAY
     PLA
 
-    ; INX
     CPX #$00
     BEQ @break
     JMP @loop

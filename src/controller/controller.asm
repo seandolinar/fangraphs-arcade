@@ -17,7 +17,7 @@ readController:
     ReadA: 
 
         LDA CONTROLLER_P1      
-        AND #%00000001  ;
+        AND #%00000001  
         BEQ ReadADone  
 
         CLC

@@ -6,7 +6,6 @@ checkBackgroundCollisionEnemy:
     LDA #$00
     STA collisionFlagEnemy
 
-    ; can I blow away X?
     LDA inning
     AND #$03
 
@@ -65,7 +64,8 @@ checkBackgroundCollisionEnemy:
 me1:
 
     ; short cutting this because I shouldn't have a carry
-    ; mult x 2 x 2 ;; divide by 8 pixels then multiply by 32 items across 
+    ; mult x 2 x 2 
+    ; divide by 8 pixels then multiply by 32 items across 
     CLC
     LDA enemyPointerHi 
     ASL                    ; needed to multiply the high byte
@@ -117,8 +117,7 @@ dumpSecondMultEnemy:
     STX tempX
 
     LDY #$00 ; resets Y
-    LDA (backgroundPointerLo), Y ; i'm getting 1 here
-    ; I do, this is indirect, I think I have to do it this way
+    LDA (backgroundPointerLo), Y
     LDY tempY 
   
     ; I'm looping through some duplicate dots here
@@ -132,7 +131,6 @@ dumpSecondMultEnemy:
     BEQ collideEnemy
     INX
     JMP @loopBases2
-    ; might have to do something to increase to compare tilesDots
 
 
 collideEnemy:

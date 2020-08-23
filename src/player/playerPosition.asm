@@ -1,40 +1,36 @@
 .segment "CODE"
 ; this will have to change to read controller
-; rename this it's just reading the controller now
 updateDirection:
 
-  LDA playerLocationX ; i changed these from the buffer, it should be the original, but in case something breaks
+  LDA playerLocationX
   STA collisionTestX
 
   LDA playerLocationY
   STA collisionTestY
 
   LDA controllerBits
-  AND #CONTROL_P1_UP ;UP
-  BEQ dumpControlUp ; dumps if we have no A push
+  AND #CONTROL_P1_UP
+  BEQ dumpControlUp 
   JSR setUp
 dumpControlUp:
   LDA controllerBits
-  AND #CONTROL_P1_DOWN ;DOWN
-  BEQ dumpControlDown ; dumps if we have no UP push
+  AND #CONTROL_P1_DOWN 
+  BEQ dumpControlDown
   JSR setDown
 dumpControlDown:
   LDA controllerBits
-  AND #CONTROL_P1_LEFT ;LEFT
-  BEQ dumpControlLeft ; dumps if we have no DOWN push
+  AND #CONTROL_P1_LEFT
+  BEQ dumpControlLeft 
   JSR setLeft
 dumpControlLeft:
   LDA controllerBits
-  AND #CONTROL_P1_RIGHT ;RIGHT
-  BEQ dumpUpdateController ; dumps if we have no LEFT push
+  AND #CONTROL_P1_RIGHT 
+  BEQ dumpUpdateController
   JSR setRight
 
 dumpUpdateController:
   RTS
   
-; i can make this separate from the the controller 
-; this will basically become the update position
-; rename this
 UpdatePositionPlayer:
 
     LDA playerDirectionCurrent
@@ -70,17 +66,17 @@ updatePositionSprite:
     LDA playerLocationX
     SEC
     SBC #$04
-    STA player_oam + 3 ; place in RAM where the sprite Y is controlled
-    STA player_oam + 7 ; place in RAM where the sprite Y is controlled
+    STA player_oam + 3  ; place in RAM where the sprite Y is controlled
+    STA player_oam + 7  ; place in RAM where the sprite Y is controlled
 
 
     CLC
-    ADC #$08           ; check on the number
+    ADC #$08            ; check on the number
     STA player_oam + 11 ; place in RAM where the sprite Y is controlled
     STA player_oam + 15 ; place in RAM where the sprite Y is controlled
 
     LDA playerLocationX
-    LSR ; divide / 2 / 2 / 2 ; divide by 8 -- size of the icon
+    LSR                 ; divide / 2 / 2 / 2 ; divide by 8 -- size of the icon
     LSR
     LSR
     STA playerGridX 
@@ -88,8 +84,8 @@ updatePositionSprite:
     LDA playerLocationY
     SEC
     SBC #$04
-    STA player_oam ; place in RAM where the sprite X is controlled
-    STA player_oam + 8 ; place in RAM where the sprite X is controlled
+    STA player_oam      ; place in RAM where the sprite X is controlled
+    STA player_oam + 8  ; place in RAM where the sprite X is controlled
 
     CLC
     ADC #$08
@@ -97,15 +93,11 @@ updatePositionSprite:
     STA player_oam + 12
 
     LDA playerLocationY
-    LSR ; divide / 2 / 2 / 2 ; divide by 8 -- size of the icon
+    LSR                 ; divide / 2 / 2 / 2 ; divide by 8 -- size of the icon
     LSR
     LSR
     STA playerGridY
 
-    ; took this out
-    ; not sure if this is neccessary
-    ; LDA #00
-    ; STA controllerBits
     RTS
 
 setUp:
@@ -115,20 +107,18 @@ setUp:
     SBC #$08   
     STA collisionTestY  
 
-    ; I shouldn't need this, but yet I do
-    ; somewhere the collisionTestY gets clobbered after setting it earlier.
     LDA playerLocationX
     STA collisionTestX
     
     JSR checkCollision
     LDA collisionFlag
-    BEQ @exit ; branch if 0
+    BEQ @exit 
 
-    LDA #DIRECTION_UP ; UP
+    LDA #DIRECTION_UP
     STA playerDirectionCurrent
 
     @exit:
-    LDA playerLocationY ;; shouldn't have to have this here
+    LDA playerLocationY 
     STA collisionTestY 
     
     RTS
@@ -140,20 +130,18 @@ setDown:
     ADC #$08   
     STA collisionTestY  
 
-    ; I shouldn't need this, but yet I do
-    ; somewhere the collisionTestY gets clobbered after setting it earlier.
     LDA playerLocationX
     STA collisionTestX
     
     JSR checkCollision
     LDA collisionFlag
-    BEQ @exit ; branch if 0
+    BEQ @exit 
 
-    LDA #DIRECTION_DOWN ; DOWN
+    LDA #DIRECTION_DOWN 
     STA playerDirectionCurrent
 
     @exit:
-    LDA playerLocationY ;; shouldn't have to have this here
+    LDA playerLocationY 
     STA collisionTestY 
     
     RTS
@@ -165,20 +153,18 @@ setLeft:
     SBC #$08   
     STA collisionTestX  
 
-    ; I shouldn't need this, but yet I do
-    ; somewhere the collisionTestY gets clobbered after setting it earlier.
     LDA playerLocationY
     STA collisionTestY  
 
 
     JSR checkCollision
     LDA collisionFlag
-    BEQ @exit ; branch if 0
+    BEQ @exit 
 
-    LDA #DIRECTION_LEFT ; LEFT
+    LDA #DIRECTION_LEFT 
     STA playerDirectionCurrent
     @exit:
-    LDA playerLocationX ;; shouldn't have to have this here
+    LDA playerLocationX 
     STA collisionTestX  
     RTS
 
@@ -189,44 +175,42 @@ setRight:
     ADC #$08   
     STA collisionTestX  
 
-    ; I shouldn't need this, but yet I do
-    ; somewhere the collisionTestY gets clobbered after setting it earlier.
     LDA playerLocationY
     STA collisionTestY  
 
-    JSR checkCollision ; i could be clobbering something by repeatly calling this while holding down a button
+    JSR checkCollision 
     LDA collisionFlag
 
-    BEQ @exit ; branch if 0
+    BEQ @exit 
 
-    LDA #DIRECTION_RIGHT ; RIGHT
+    LDA #DIRECTION_RIGHT 
     STA playerDirectionCurrent
 
     @exit:
-    LDA playerLocationX ;; shouldn't have to have this here
+    LDA playerLocationX 
     STA collisionTestX  
     RTS
 
 moveRight:
         LDX #$00
         LDA playerLocationX
-        CMP #$ff                ;; CHECK COLLISION
+        CMP #$ff                
         BCS dumpMoveRight
         CLC
         ADC #$08
         STA playerLocationXBuffer
-        STA collisionTestX      ; only need the added value for rigth
+        STA collisionTestX      
 
         LDA playerLocationY
-        STA collisionTestY     ; ugh, see if we need this
+        STA collisionTestY     
 
 
         JSR checkCollision
-        JSR checkCollideDot     ; calling this here. there might be a better way to do this.
+        JSR checkCollideDot     
 
 
         LDA collisionFlag
-        BEQ dumpMoveRight ; branch if 0
+        BEQ dumpMoveRight 
         
         LDA playerLocationXBuffer
         STA playerLocationX
@@ -244,7 +228,7 @@ dumpMoveRight:
 
 moveLeft:
         LDX #$00
-        LDA #$00                ;; CHECK COLLISION
+        LDA #$00             
         CMP playerLocationX
         BCS dumpMoveLeft
         LDA playerLocationX
@@ -254,13 +238,13 @@ moveLeft:
         STA collisionTestX
 
         LDA playerLocationY
-        STA collisionTestY     ; ugh, see if we need this
+        STA collisionTestY    
 
         JSR checkCollision
         JSR checkCollideDot
 
         LDA collisionFlag
-        BEQ dumpMoveLeft ; branch if 0
+        BEQ dumpMoveLeft 
 
         LDA playerLocationXBuffer
         STA playerLocationX
@@ -277,7 +261,7 @@ dumpMoveLeft:
 
 moveUp:
         LDX #$00
-        LDA #$00                ;; CHECK COLLISION
+        LDA #$00                
         CMP playerLocationY
         BCS dumpMoveUp
 
@@ -291,7 +275,7 @@ moveUp:
         JSR checkCollideDot
 
         LDA collisionFlag
-        BEQ dumpMoveUp ; branch if 0
+        BEQ dumpMoveUp 
 
         LDA playerLocationYBuffer
         STA playerLocationY
@@ -307,7 +291,7 @@ dumpMoveUp:
 
 moveDown:
         LDX #$00
-        LDA playerLocationY               ;; CHECK COLLISION
+        LDA playerLocationY      
         CMP #$d0
         BCS dumpMoveDown
 
@@ -323,7 +307,7 @@ moveDown:
 
 
         LDA collisionFlag
-        BEQ dumpMoveDown ; branch if 0
+        BEQ dumpMoveDown 
         
         LDA playerLocationYBuffer
         STA playerLocationY

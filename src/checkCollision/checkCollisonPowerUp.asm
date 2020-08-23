@@ -1,8 +1,3 @@
-; this is actually doing something
-; but it's not right
-; let's get rid of the X loop
-; let's make this separate so it just checks if they are in the same place.
-; if this is kept on a grid, we can just compare the straight up X/Y RAM coords without much math
 .segment "CODE"
 checkCollisionPowerUp:
     LDX powerUpAvailable
@@ -57,7 +52,7 @@ enablePowerUp:
     STA gameStateIsPowered
 
 
-    JSR changeEnemyColor ; make this enemyState?
+    JSR changeEnemyColor 
     JSR setTimerPowerUp
     
     RTS
@@ -72,17 +67,16 @@ warnPowerUp:
 
 disablePowerUp:
     LDA #$00
-    STA gameStateIsPowered ; debug == COMMENT OUT
+    STA gameStateIsPowered 
     STA powerUpTimer
 
-    JSR changeEnemyColor ; make this enemyState?
+    JSR changeEnemyColor 
 
     RTS
   
 
 ; turns off sprite and takes off grid
-; this might not be pretty but let's try this
-; have to change this
+; this might not be pretty
 removePowerUp:
     PHA
     TXA
@@ -129,9 +123,21 @@ setTimerPowerUp:
     LDA #$60 ; ~12 sec
 
     LDX inning
+    CPX #$21
+    BCS @noPowerUp
+    CPX #$1a
+    BCS @fastestPowerUp
     CPX #$0a
     BCS @fasterPowerUp
+    
+    JMP @storeTimer
 
+    @noPowerUp:
+    LDA #$01
+    JMP @storeTimer
+
+    @fastestPowerUp:
+    LDA #$10
     JMP @storeTimer
 
     @fasterPowerUp:

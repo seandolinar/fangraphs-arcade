@@ -174,7 +174,7 @@ enemyAIMovementSetup:
 
 runEnemyAI:
     
-    TYA                                 ; use Y for the randomizer
+    TYA                                
     PHA
     TXA
     PHA
@@ -230,7 +230,7 @@ subAvailableUp:
     @checkUp:
     JSR enemyMoveUp
     JSR checkBackgroundCollisionEnemy
-    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
     BNE @checkLeft
     
     JSR computeDistance
@@ -242,7 +242,7 @@ subAvailableUp:
     @checkLeft:
     JSR enemyMoveLeft
     JSR checkBackgroundCollisionEnemy
-    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
     BNE @checkRight
 
     JSR computeDistance
@@ -286,7 +286,7 @@ subAvailableDown:
     @checkLeft:
     JSR enemyMoveLeft
     JSR checkBackgroundCollisionEnemy
-    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
     BNE @checkRight
 
     JSR computeDistance
@@ -297,7 +297,7 @@ subAvailableDown:
     @checkRight:
     JSR enemyMoveRight
     JSR checkBackgroundCollisionEnemy
-    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will no move
+    LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
     BNE @break
 
     JSR computeDistance
@@ -331,7 +331,7 @@ subAvailableLeft:
     LDA collisionFlagEnemy ; 0 will allow a pass, 1 will not move
     BNE @checkLeft
 
-    JSR computeDistance ; not working might have to increment with X
+    JSR computeDistance
     LDA #DIRECTION_DOWN
     STA enemyDirectionArray, X
     INX
@@ -398,7 +398,7 @@ subAvailableRight:
 
 
 jmpCommitMove:
-    JMP commitMove ; change to second phase
+    JMP commitMove 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Chooses the direction based on the direction ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -413,9 +413,8 @@ chooseFromAvailableDirections:
     LDA enemyYWork
     STA enemyYBuffer
 
-    ; going to have to rework this
     LDX enemyDirectionIndex
-    STX enemyTempForLoop ; move this?
+    STX enemyTempForLoop 
 
     LDA #$00
     STA enemyDirectionIndex
@@ -426,12 +425,6 @@ chooseFromAvailableDirections:
     LDA #$01
     STA enemyAIIndex
     
-    ; Loops so that we remove the stack pushes we did...variable length array
-    ; X is the length of the array
-    ; X is from the subAvailable[Direction] subroutine
-    ; turning off the loop for now
-    ; DEC enemyTempForLoop
-   
 
     ; start loop here
     loopCompareDistance:
@@ -454,7 +447,6 @@ chooseFromAvailableDirections:
     BNE @registerIsHigher
 
     @registerIsLower:               ; happens if register (X) < data (Y)  
-    ; LDA enemyDistance, X 
     LDA gameStateIsPowered          ; swap if we are powered up
     CMP #$00
     BNE @registerIsLowerPowerUp
@@ -559,7 +551,7 @@ commitMove:
     JMP @continueLoop
 
     @continueLoop:
-    DEX ; don't know if this does anything
+    DEX 
 
     @dumpLoop:
     PLA                 ; put X/Y back
