@@ -1,7 +1,6 @@
 readKonamiCode:
-    ; TODO
-    ; refactor into loop
-   
+  
+    ; checks the code sequence
     LDA konamiCode
     CMP #$00
     BEQ @buttonUp
@@ -99,40 +98,37 @@ readKonamiCode:
     INC konamiCode
     JMP @continueCode
    
+    ; starts button delay
+    ; sets timeout for code
     @continueCode:
     CLC
     LDA frameTimer
     ADC #$30
     STA buttonDelay
 
-    ; LDA #$05
-    ; STA buttonDebounce
-
-    ; CLC
-    ; LDA frameTimer
-    ; ADC #$05
-    ; STA buttonDebounce
-    ; JMP @exit
-
+    ; see if we sucessfully entered code
     LDA konamiCode
     CMP #$13
-    BEQ @continueLoop
+    BEQ @enableCheat
 
-    JMP @skip
+    ; no cheat
+    JMP @break
     
-    @continueLoop:
+    ; successful cheat
+    @enableCheat:
     JSR FamiToneMusicStop
     JSR soundPowerUp
     JSR enablePowerUp
     LDA #$01
     STA hasCheated
 
+    ; writes cheat indicator
     JSR updateKonami
-
 
     JMP @exit
 
-
+    ; button was pressed 
+    ; was wrong button
     @skipButton:
     LDA controllerBits
     CMP #$00
@@ -146,17 +142,16 @@ readKonamiCode:
     EOR controllerBitsPrev ; difference in buttons
     BNE @exit
 
-    JMP @resetKonamiCode
-
-    ; JMP @exit
-;
+    ; error entering code
+    ; reset    
     @resetKonamiCode:
     LDA #$00
     STA konamiCode
 
     JMP @exit
 
-    @skip:
+    ; debounce so that we don't read the controller every frame
+    @break:
     LDA frameTimer
     ADC #$10
     STA buttonDebounce

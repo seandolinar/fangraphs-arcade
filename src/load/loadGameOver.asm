@@ -33,6 +33,7 @@ loadGameOver:
   STA scoreDigit9
   STA scoreDigit10
   STA scoreDigit11
+  STA hasCheated
 
   LDA #$01
   STA inningDigit0
