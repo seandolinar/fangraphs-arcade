@@ -194,7 +194,7 @@ runEnemyAI:
 
     
     LDA enemyBufferDirectionCurrent     ; going to have to change this for multiples
-    CMP #$01                            ; TODO: make these constants
+    CMP #$01                            
     BEQ dumpAvailableUp
     CMP #$02
     BEQ dumpAvailableDown
